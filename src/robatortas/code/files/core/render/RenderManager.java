@@ -27,9 +27,11 @@ public class RenderManager {
 		}
 	}
 	
-	public void clear() {
-		for(int i = 0; i < pixels.length; i++) {
-			pixels[i] = 0;
+	public void clear(boolean clears) {
+		if(clears) {
+			for(int i = 0; i < pixels.length; i++) {
+				pixels[i] = 0;
+			}
 		}
 	}
 	
