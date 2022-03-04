@@ -1,8 +1,8 @@
 package robatortas.code.files.core.utils;
 
-import robatortas.code.files.GameManager;
+import robatortas.code.files.project.GameManager;
 
-public class ThreadManager {
+public class ThreadUtils{
 	
 	public GameManager game;
 	

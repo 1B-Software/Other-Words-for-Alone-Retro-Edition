@@ -7,8 +7,6 @@ public class SpriteManager {
 	public SpriteSheetManager sheet;
 	public int[] pixels;
 	
-	public static SpriteManager grass = new SpriteManager(16, 0, 0, SpriteSheetManager.nature);
-	
 	public SpriteManager(int size, int x, int y, SpriteSheetManager sheet) {
 		this.SIZE = size;
 		this.x = x * SIZE;

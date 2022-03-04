@@ -12,8 +12,6 @@ public class SpriteSheetManager {
 	public final int SIZE;
 	public String path;
 	
-	public static SpriteSheetManager nature = new SpriteSheetManager("/textures/spritesheet/nature/nature.png", 144);
-	
 	public SpriteSheetManager(String path, int size) {
 		this.path = path;
 		this.SIZE = size;
