@@ -1,0 +1,25 @@
+Color Values for Map
+
+//USE PAINT.NET FOR THE BEST MODDING EXPERIENCE//
+
+00ff00 = grass
+ffff00 = flower
+ff000f = flowerRed
+71000F = flowersRed
+A0A0A0 = rock
+404040 = rock2
+873C00 = woodFloor
+724227 = dirt
+808080 = cobblestone
+61705F = cobblePath
+8D8D8D = stoneBricks
+9B6666 = bricks
+ff6666 = flowersRedDouble
+286d1f = bush
+3D2D19 = woodWall
+0xff72692f = dirtGrass
+0xff683A14 = table
+0xff000000 = void
+0xffa05920 = chair
+0xff003D00 = tree
+0xff00e5ff = bed
