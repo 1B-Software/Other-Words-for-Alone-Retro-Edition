@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
 import robatortas.code.files.core.input.InputManager;
+import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.Renderer;
 import robatortas.code.files.core.utils.LoopingUtils;
@@ -37,14 +38,23 @@ public class GameManager extends Canvas implements Runnable {
 	
 	private Constants constants = new Constants();
 	
+	
+	// General Declarations
+	private LevelManager level;
+	
 	// DECLARATIONS END
 	
 	
 	// Main
+	@SuppressWarnings("unused")
 	public GameManager() {
 		renderManager = new RenderManager(Constants.WIDTH, Constants.HEIGHT);
 		display =  new DisplayManager(Constants.WIDTH, Constants.HEIGHT, Constants.TITLE, this);
-
+		
+		
+		if(Constants.levelPath != "/textures/level/level/level.png") System.err.println("Level file location denied.");
+		else level = LevelManager.level;
+		
 		addKeyListener(input);
 	}
 	

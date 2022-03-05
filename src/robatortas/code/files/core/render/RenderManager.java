@@ -2,6 +2,8 @@ package robatortas.code.files.core.render;
 
 import java.util.Random;
 
+import robatortas.code.files.core.level.tiles.TileManager;
+
 // AKA: Screen
 public class RenderManager {
 	
@@ -48,7 +50,7 @@ public class RenderManager {
 		}
 	}
 	
-	public void renderTile(int xp, int yp) {
+	public void renderTile(int xp, int yp, TileManager tile) {
 		for(int y = 0; y < height; y++) {
 			int ya = y+yp;
 			if(ya < 0 || ya >= height) continue;

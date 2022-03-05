@@ -5,6 +5,8 @@ public class Constants {
 	public static final int WIDTH = 250;
 	public static final int HEIGHT = 150;
 	public static final int SCALE = 3;
+	
+	public static final String levelPath = "/textures/level/level/level.png";
 
 	public int ticks = 0;
 }
