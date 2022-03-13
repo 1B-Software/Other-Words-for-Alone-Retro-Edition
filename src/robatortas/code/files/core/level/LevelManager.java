@@ -2,8 +2,7 @@ package robatortas.code.files.core.level;
 
 import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
-import robatortas.code.files.core.utils.IOUtils;
-import robatortas.code.files.project.archive.SpriteArchive;
+import robatortas.code.files.project.level.LevelRenderManager;
 import robatortas.code.files.project.settings.Constants;
 import robatortas.code.files.project.tileArchive.TileArchive;
 
@@ -26,6 +25,7 @@ public class LevelManager {
 		
 	}
 	
+	// MY MIND IS NOT THINKING CLEARLY! Because it's FUCKING 2 AM
 	public void render(int xScroll, int yScroll, RenderManager screen) {
 		screen.setOffset(xScroll, yScroll);
 		int x0 = xScroll >> 4;
@@ -37,7 +37,10 @@ public class LevelManager {
 			for(int x = x0; x < x1; x++) {
 				if(x < 0 || y < 0 || x >= screen.width|| y >= screen.height) continue;
 				
-				getLevel(x, y).render(x, y, screen);
+				LevelRenderManager render = new LevelRenderManager();
+				
+				render.render(x, y, screen ,this);
+				
 			}
 		}
 	}
