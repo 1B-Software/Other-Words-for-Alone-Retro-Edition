@@ -6,5 +6,6 @@ import robatortas.code.files.project.tileArchive.nature.GrassTile;
 
 public class TileArchive {
 	
-	public static TileManager grass = new GrassTile(SpriteArchive.grass, 1);
+	public static TileManager voidTile = new VoidTile(SpriteArchive.voidSprite, 0);
+	public static TileManager grass = new GrassTile(SpriteArchive.grassSprite, 1);
 }
