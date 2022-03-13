@@ -1,6 +1,7 @@
 package robatortas.code.files.core.utils;
 
 import robatortas.code.files.project.GameManager;
+import robatortas.code.files.project.settings.Constants;
 
 public class LoopingUtils {
 	
@@ -28,10 +29,11 @@ public class LoopingUtils {
 		}
 	}
 	
-	public void timerLoop() {
+	public void timerLoop(String consolePrint) {
 		if(System.currentTimeMillis() - timer > 1000) {
 			timer+=1000;
-			System.out.println("ticks: " + ticks + "  ||  " + "fps: " + frames);
+			System.out.println(consolePrint);
+			GameManager.frame.setTitle(Constants.TITLE + "  ||  " + ticks + " TPS " + frames + " FPS");
 			frames = 0;
 			ticks = 0;
 		}

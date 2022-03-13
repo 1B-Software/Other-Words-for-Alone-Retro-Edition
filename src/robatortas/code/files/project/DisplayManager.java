@@ -8,8 +8,6 @@ import robatortas.code.files.project.settings.Constants;
 
 public class DisplayManager {
 	
-	public JFrame frame = new JFrame();
-	
 	private GameManager game;
 	
 	public DisplayManager(int width, int height, String title, GameManager game) {
@@ -17,16 +15,16 @@ public class DisplayManager {
 		
 		Dimension size = new Dimension(width*Constants.SCALE, height*Constants.SCALE);
 		
-		frame.setTitle(title);
-		frame.pack();
-		frame.add(game);
+		game.frame.setTitle(title);
+		game.frame.pack();
+		game.frame.add(game);
 		game.start();
-		frame.setSize(size);
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+		game.frame.setSize(size);
+		game.frame.setResizable(false);
+		game.frame.setLocationRelativeTo(null);
+		game.frame.setVisible(true);
 		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public DisplayManager getDisplay() {

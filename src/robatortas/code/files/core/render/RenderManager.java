@@ -7,9 +7,11 @@ import robatortas.code.files.core.level.tiles.TileManager;
 // AKA: Screen
 public class RenderManager {
 	
-	private int width, height;
+	public int width, height;
 	private int tileSize = 16;
 	public int[] pixels;
+	
+	public int xOffset, yOffset;
 	
 	public int[] tiles = new int[tileSize*tileSize];
 	
@@ -51,19 +53,25 @@ public class RenderManager {
 	}
 	
 	public void renderTile(int xp, int yp, TileManager tile) {
-		for(int y = 0; y < height; y++) {
+		xp -= xOffset;
+		yp -= yOffset;
+		
+		for(int y = 0; y < tile.sprite.SIZE; y++) {
 			int ya = y+yp;
-			if(ya < 0 || ya >= height) continue;
-			for(int x = 0; x < width; x++) {
+			for(int x = 0; x < tile.sprite.SIZE; x++) {
 				int xa = x+xp;
-				if(xa < 0 || xa >= width) continue;
-				int i = ((xa >> 4) & 15) + ((ya >> 4) & 15) * 16;
-				pixels[xa+ya*width] = tiles[i];
+				if(xa < -tile.sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
+				if(xa < 0) xa = 0;
+				int color = tile.sprite.pixels[x+y*tile.sprite.SIZE];
+				pixels[xa+ya*width] = color;
 			}
 		}
 	}
 	
 	public void renderSprite(int xp, int yp, SpriteManager sprite) {
+		xp -= xOffset;
+		yp -= yOffset;
+		
 		for(int y = 0; y < sprite.SIZE; y++) {
 			int ya = y+yp;
 			for(int x = 0; x < sprite.SIZE; x++) {
@@ -74,5 +82,10 @@ public class RenderManager {
 				pixels[xa+ya*width] = color;
 			}
 		}
+	}
+	
+	public void setOffset(int xOffset, int yOffset) {
+		this.xOffset = xOffset;
+		this.yOffset = yOffset;
 	}
 }
