@@ -6,10 +6,12 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
+import javax.swing.JFrame;
+
 import robatortas.code.files.core.input.InputManager;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.RenderManager;
-import robatortas.code.files.core.render.Renderer;
+import robatortas.code.files.core.render.RenderMethod;
 import robatortas.code.files.core.utils.LoopingUtils;
 import robatortas.code.files.core.utils.ThreadUtils;
 import robatortas.code.files.project.settings.Constants;
@@ -24,9 +26,10 @@ public class GameManager extends Canvas implements Runnable {
 	
 	// Screen declarations
 	public DisplayManager display;
+	public static JFrame frame = new JFrame();
 
-	public RenderManager renderManager;
-	private Renderer render = new Renderer();
+	public RenderManager screen;
+	private RenderMethod renderMethod = new RenderMethod();
 	
 	protected BufferedImage image = new BufferedImage(Constants.WIDTH, Constants.HEIGHT, BufferedImage.TYPE_INT_RGB);
 	public int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
@@ -40,7 +43,7 @@ public class GameManager extends Canvas implements Runnable {
 	
 	
 	// General Declarations
-	private LevelManager level;
+	public LevelManager level;
 	
 	// DECLARATIONS END
 	
@@ -48,12 +51,13 @@ public class GameManager extends Canvas implements Runnable {
 	// Main
 	@SuppressWarnings("unused")
 	public GameManager() {
-		renderManager = new RenderManager(Constants.WIDTH, Constants.HEIGHT);
+		screen = new RenderManager(Constants.WIDTH, Constants.HEIGHT);
+		level = LevelManager.level;
 		display =  new DisplayManager(Constants.WIDTH, Constants.HEIGHT, Constants.TITLE, this);
 		
 		
 		if(Constants.levelPath != "/textures/level/level/level.png") System.err.println("Level file location denied.");
-		else level = LevelManager.level;
+		else {}
 		
 		addKeyListener(input);
 	}
@@ -75,9 +79,10 @@ public class GameManager extends Canvas implements Runnable {
 	
 	public void run() {
 		while(threadUtils.running) {
+			String consolePrint = "ticks: " + looping.ticks + "  ||  " + "fps: " + looping.frames;
 			looping.whileRunning();
 			looping.deltaLoop(this);
-			looping.timerLoop();
+			looping.timerLoop(consolePrint);
 			
 			// Rendering
 			looping.frames++;
@@ -111,7 +116,7 @@ public class GameManager extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		
-		render.render(this);
+		renderMethod.render(this);
 		
 		g.dispose();
 		bs.show();
