@@ -27,20 +27,14 @@ public class LevelManager {
 	
 	// MY MIND IS NOT THINKING CLEARLY! Because it's FUCKING 2 AM
 	public void render(int xScroll, int yScroll, RenderManager screen) {
-		screen.setOffset(xScroll, yScroll);
-		int x0 = xScroll >> 4;
-		int x1 = (xScroll + screen.width + 16) >> 4;
-		int y0 = yScroll >> 4;
-		int y1 = (yScroll + screen.height + 16) >> 4;
+		LevelRenderManager levelRender = new LevelRenderManager(screen);
 		
-		for(int y = y0; y < y1; y++) {
-			for(int x = x0; x < x1; x++) {
+		levelRender.pinPoints(xScroll, yScroll);
+		
+		for(int y = levelRender.y0; y < levelRender.y1; y++) {
+			for(int x = levelRender.x0; x < levelRender.x1; x++) {
 				if(x < 0 || y < 0 || x >= screen.width|| y >= screen.height) continue;
-				
-				LevelRenderManager render = new LevelRenderManager();
-				
-				render.render(x, y, screen ,this);
-				
+				levelRender.render(x, y, this);
 			}
 		}
 	}
