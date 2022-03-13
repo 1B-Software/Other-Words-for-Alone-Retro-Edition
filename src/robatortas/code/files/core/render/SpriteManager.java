@@ -16,6 +16,15 @@ public class SpriteManager {
 		load();
 	}
 	
+	public SpriteManager(int size, int color) {
+		this.SIZE = size;
+		pixels = new int[SIZE*SIZE];
+		
+		for(int i = 0; i < SIZE*SIZE; i++) {
+			pixels[i] = color;
+		}
+	}
+	
 	public void load() {
 		for(int y = 0; y < SIZE; y++) {
 			for(int x = 0; x < SIZE; x++) {

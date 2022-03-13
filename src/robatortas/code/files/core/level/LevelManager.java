@@ -40,8 +40,8 @@ public class LevelManager {
 	}
 	
 	public TileManager getLevel(int x, int y) {
-		if(x < 0 || x > width || y < 0 || y > height) return  TileArchive.grass;
+		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
 		if(tiles[x+y*width] == 0x00BC0F) return TileArchive.grass;
-		return TileArchive.grass;
+		return TileArchive.voidTile;
 	}
 }
