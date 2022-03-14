@@ -55,7 +55,6 @@ public class GameManager extends Canvas implements Runnable {
 		level = LevelManager.level;
 		display =  new DisplayManager(Constants.WIDTH, Constants.HEIGHT, Constants.TITLE, this);
 		
-		
 		if(Constants.levelPath != "/textures/level/level/level.png") System.err.println("Level file location denied.");
 		else {}
 		
