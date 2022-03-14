@@ -6,8 +6,10 @@ import robatortas.code.files.core.render.RenderManager;
 public class LevelRenderManager {
 	
 	private RenderManager screen;
+	private LevelManager level;
 	
-	public LevelRenderManager(RenderManager screen) {
+	public LevelRenderManager(LevelManager level, RenderManager screen) {
+		this.level = level;
 		this.screen = screen;
 	}
 	
@@ -24,5 +26,11 @@ public class LevelRenderManager {
 		x1 = (xScroll + screen.width + 16) >> 4;
 		y0 = yScroll >> 4;
 		y1 = (yScroll + screen.height + 16) >> 4;
+	}
+
+	public void renderEntities(int x, int y) {
+		for(int i = 0; i < level.entities.size(); i++) {
+			level.entities.get(i).render(x, y, screen);
+		}
 	}
 }
