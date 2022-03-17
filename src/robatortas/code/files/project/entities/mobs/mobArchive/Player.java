@@ -8,23 +8,26 @@ import robatortas.code.files.project.archive.SheetArchive;
 
 public class Player extends Mob {
 	
-	public InputManager input = new InputManager();
+	public InputManager input;
 	
 	public Player(int x, int y, InputManager input) {
 		this.x = x;
 		this.y = y;
+		this.input = input;
 	}
 	
 	public static int velX = 1;
 	public static int velY = 1;	
 	
 	public void update() {
-		System.out.println("Player tick");
 		
 		int xa = 0, ya = 0;
 		//Controls the offset of the tiles with keys
 		
-		if(input.up) ya -= velY;
+		if(input.up) {
+			ya -= velY;
+			System.out.println("Up!");
+		}
 		if(input.down) ya += velY;
 		if(input.left) xa -= velX;
 		if(input.right) xa += velX;
@@ -33,20 +36,11 @@ public class Player extends Mob {
 			move(xa, ya);
 			System.out.println("moving!");
 		}
-		
-		x++;
-	}
-	
-	public int getX() {
-		return x;
-	}
-	
-	public int getY() {
-		return y;
 	}
 	
 	public void render(int x, int y, RenderManager screen) {
 		screen.renderSprite(x, y, testPlayerRender);
+		System.out.println(x);
 	}
 	
 	public SpriteManager testPlayerRender = new SpriteManager(16, 1, 1, SheetArchive.player);

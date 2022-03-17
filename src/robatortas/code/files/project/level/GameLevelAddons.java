@@ -12,7 +12,7 @@ public class GameLevelAddons {
 	}
 	
 	public void spawn() {
-		level.add(new Player(10, 10, level.input));
+//		level.add(new Player(10, 10, level.input));
 	}
 	
 	public void update() {

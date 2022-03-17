@@ -34,10 +34,10 @@ public class LevelManager {
 	
 	public void loadLevel(String path) {
 	}
-	
+		
 	// Input Declarations
 	public InputManager input = new InputManager();
-		
+	
 	public void update() {
 		addons.update();
 		input.update();

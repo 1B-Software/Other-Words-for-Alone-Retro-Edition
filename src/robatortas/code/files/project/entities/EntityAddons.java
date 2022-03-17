@@ -1,11 +1,11 @@
 package robatortas.code.files.project.entities;
 
 import robatortas.code.files.core.entities.EntityManager;
-import robatortas.code.files.core.input.InputManager;
 import robatortas.code.files.core.render.RenderManager;
 
 public class EntityAddons {
 	
+	@SuppressWarnings("unused")
 	private EntityManager entity;
 	
 	private int x, y;
@@ -24,7 +24,9 @@ public class EntityAddons {
 		
 	}
 	
-	public void move() {
+	public void move(int xa, int ya) {
+		this.x = xa;
+		this.y = ya;
 		
 	}
 	

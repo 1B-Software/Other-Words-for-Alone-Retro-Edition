@@ -31,8 +31,8 @@ public class EntityManager {
 	public void update() {
 	}
 	
-	public void move() {
-		addons.move();
+	public void move(int xa, int ya) {
+		addons.move(xa, ya);
 	}
 	
 	public boolean isRemoved() {

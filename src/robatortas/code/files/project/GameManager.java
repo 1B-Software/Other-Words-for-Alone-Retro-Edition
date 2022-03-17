@@ -8,7 +8,6 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
-import robatortas.code.files.core.input.InputManager;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.RenderMethod;
@@ -44,6 +43,8 @@ public class GameManager extends Canvas implements Runnable {
 	// DECLARATIONS END
 	
 	
+	//TODO: CLEAN CODE TOMORROW!!!!!!
+	
 	// Main
 	@SuppressWarnings("unused")
 	public GameManager() {
@@ -53,6 +54,8 @@ public class GameManager extends Canvas implements Runnable {
 		
 		if(Constants.levelPath != "/textures/level/level/level.png") System.err.println("Level file location denied.");
 		else {}
+		
+		addKeyListener(level.input);
 	}
 	
 	
