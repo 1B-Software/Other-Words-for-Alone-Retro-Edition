@@ -1,12 +1,15 @@
 package robatortas.code.files.core.render;
 
 
+import robatortas.code.files.core.level.GameLevel;
 import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.archive.SpriteArchive;
 
 public class RenderMethod {
 	
 	private GameManager game;
+	
+	private int xScroll, yScroll;
 	
 	// General settings for the rendering
 	public void generalSettings() {
@@ -21,9 +24,14 @@ public class RenderMethod {
 		pixelIterations();
 		generalSettings();
 		
-		game.level.render(game.x, game.y, game.screen);
+		game.level.render(xScroll, yScroll, game.screen);
 		
 //		game.screen.renderSprite(game.x, game.y, SpriteArchive.grass);
+	}
+	
+	public void scroll() {
+		xScroll = game.level.player.getX();
+		yScroll = game.level.player.getX();
 	}
 	
 	public void pixelIterations() {
