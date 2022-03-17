@@ -18,6 +18,7 @@ public class GameLevel extends LevelManager {
 		this.tiles = data;
 		System.out.println(tiles);
 		
-		add(player = new Player(10, 10, input));
+		player = new Player(0, 0, input);
+		add(player);
 	}
 }
