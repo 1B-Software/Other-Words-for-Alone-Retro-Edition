@@ -35,10 +35,6 @@ public class GameManager extends Canvas implements Runnable {
 	public int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 	
 	
-	// Input Declarations
-	private InputManager input = new InputManager();
-	
-	
 	private Constants constants = new Constants();
 	
 	
@@ -57,8 +53,6 @@ public class GameManager extends Canvas implements Runnable {
 		
 		if(Constants.levelPath != "/textures/level/level/level.png") System.err.println("Level file location denied.");
 		else {}
-		
-		addKeyListener(input);
 	}
 	
 	
@@ -96,11 +90,13 @@ public class GameManager extends Canvas implements Runnable {
 	public void update() {
 		constants.ticks++;
 		
-		input.update();
-		if(input.up) y--;
-		if(input.down) y++;
-		if(input.left) x--;
-		if(input.right) x++;
+		level.update();
+		
+//		input.update();
+//		if(input.up) y--;
+//		if(input.down) y++;
+//		if(input.left) x--;
+//		if(input.right) x++;
 	}
 	
 	

@@ -7,6 +7,8 @@ public class Mob extends EntityManager {
 
 	private MobAddons addons = new MobAddons();
 	
+	protected boolean walking = false;
+	
 	public int xa, ya;
 	public void move(int xa, int ya) {
 		this.xa = xa;

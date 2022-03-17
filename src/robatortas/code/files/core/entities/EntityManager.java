@@ -13,7 +13,7 @@ public class EntityManager {
 	
 	public boolean removed;
 	
-	public EntityAddons addons = new EntityAddons();
+	public EntityAddons addons = new EntityAddons(this);
 	
 	public EntityManager() {
 		
@@ -25,11 +25,10 @@ public class EntityManager {
 	}
 	
 	public void render(int x, int y, RenderManager screen) {
-		addons.render();
+		addons.render(x, y, screen);
 	}
 	
 	public void update() {
-		addons.update();
 	}
 	
 	public void move() {
@@ -42,5 +41,9 @@ public class EntityManager {
 	
 	public void init(LevelManager level) {
 		this.level = level;
+	}
+
+	public boolean intersects(int x0, int y0, int x1, int y1) {
+		return addons.intersects(x0, y0, x1, y1);
 	}
 }
