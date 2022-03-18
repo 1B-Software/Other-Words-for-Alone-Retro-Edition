@@ -62,7 +62,6 @@ public class LevelManager {
 	}
 	
 	public void add(EntityManager e) {
-		
 		e.init(this);
 		e.removed = false;
 		entities.add(e);

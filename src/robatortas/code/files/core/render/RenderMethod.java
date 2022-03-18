@@ -18,8 +18,8 @@ public class RenderMethod {
 	public void render(GameManager game) {
 		this.game = game;
 		
-		this.xScroll = game.level.player.x;
-		this.yScroll = game.level.player.y;
+		this.xScroll = game.level.player.x / game.screen.width;
+		this.yScroll = game.level.player.y / game.screen.height;
 		
 		pixelIterations();
 		generalSettings();

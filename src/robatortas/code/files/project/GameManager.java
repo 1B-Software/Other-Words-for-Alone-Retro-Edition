@@ -94,12 +94,6 @@ public class GameManager extends Canvas implements Runnable {
 		constants.ticks++;
 		
 		level.update();
-		
-//		input.update();
-//		if(input.up) y--;
-//		if(input.down) y++;
-//		if(input.left) x--;
-//		if(input.right) x++;
 	}
 	
 	
