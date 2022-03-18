@@ -2,6 +2,7 @@ package robatortas.code.files.project.entities;
 
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.render.RenderManager;
+import robatortas.code.files.core.render.SpriteManager;
 
 public class EntityAddons {
 	
@@ -16,7 +17,7 @@ public class EntityAddons {
 		this.y = entity.y;
 	}
 	
-	public void render(int x, int y, RenderManager screen) {
+	public void render(RenderManager screen) {
 		
 	}
 	
@@ -28,6 +29,10 @@ public class EntityAddons {
 		this.x = xa;
 		this.y = ya;
 		
+	}
+	
+	public SpriteManager getSprite() {
+		return entity.sprite;
 	}
 	
 	public boolean intersects(int x0, int y0, int x1, int y1) {

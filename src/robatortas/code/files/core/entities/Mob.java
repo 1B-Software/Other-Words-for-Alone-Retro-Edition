@@ -5,10 +5,9 @@ import robatortas.code.files.project.entities.mobs.MobAddons;
 
 public class Mob extends EntityManager {
 
-	private MobAddons addons = new MobAddons();
+	private MobAddons addons = new MobAddons(this);
 	
 	protected boolean walking = false;
-	
 	public int dir = 0;
 	
 	public int xa, ya;

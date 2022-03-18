@@ -30,7 +30,7 @@ public class LevelRenderManager {
 
 	public void renderEntities(int x, int y) {
 		for(int i = 0; i < level.entities.size(); i++) {
-			level.entities.get(i).render(x, y, screen);
+			level.entities.get(i).render(screen);
 		}
 	}
 }

@@ -10,10 +10,13 @@ public class Player extends Mob {
 	
 	public InputManager input;
 	
+	public SpriteManager testPlayerRender = new SpriteManager(32, 0, 0, SheetArchive.player);
+	
 	public Player(int x, int y, InputManager input) {
 		this.x = x;
 		this.y = y;
 		this.input = input;
+		this.sprite = testPlayerRender;
 	}
 	
 	public static int velX = 1;
@@ -24,24 +27,19 @@ public class Player extends Mob {
 		int xa = 0, ya = 0;
 		//Controls the offset of the tiles with keys
 		
-		if(input.up) {
-			ya -= velY;
-			System.out.println("Up!");
-		}
+		if(input.up) ya -= velY;
 		if(input.down) ya += velY;
 		if(input.left) xa -= velX;
 		if(input.right) xa += velX;
 		
 		if(xa != 0 || ya != 0) {
 			move(xa, ya);
-			System.out.println("moving!");
 		}
 	}
 	
-	public void render(int x, int y, RenderManager screen) {
-		screen.renderSprite(x, y, testPlayerRender);
-		System.out.println(x);
+	public void render(RenderManager screen) {
+		sprite = testPlayerRender;
+		
+		screen.renderMob(x, y, this, sprite);
 	}
-	
-	public SpriteManager testPlayerRender = new SpriteManager(16, 1, 1, SheetArchive.player);
 }

@@ -24,8 +24,8 @@ public class EntityManager {
 		this.y = y;
 	}
 	
-	public void render(int x, int y, RenderManager screen) {
-		addons.render(x, y, screen);
+	public void render(RenderManager screen) {
+		addons.render(screen);
 	}
 	
 	public void update() {
@@ -37,6 +37,10 @@ public class EntityManager {
 	
 	public boolean isRemoved() {
 		return removed;
+	}
+	
+	public SpriteManager getSprite() {
+		return addons.getSprite();
 	}
 	
 	public void init(LevelManager level) {

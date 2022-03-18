@@ -2,6 +2,7 @@ package robatortas.code.files.core.render;
 
 import java.util.Random;
 
+import robatortas.code.files.core.entities.Mob;
 import robatortas.code.files.core.level.tiles.TileManager;
 
 // AKA: Screen
@@ -79,7 +80,23 @@ public class RenderManager {
 				if(xa < -sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
 				if(xa < 0) xa = 0;
 				int color = sprite.pixels[x+y*sprite.SIZE];
-				pixels[xa+ya*width] = color;
+				if(color != 0xffff00ff) pixels[xa+ya*width] = color;
+			}
+		}
+	}
+	
+	public void renderMob(int xp, int yp, Mob mob, SpriteManager sprite) {
+		xp -= xOffset;
+		yp -= yOffset;
+		
+		for(int y = 0; y < sprite.SIZE; y++) {
+			int ya = y+yp;
+			for(int x = 0; x < sprite.SIZE; x++) {
+				int xa = x+xp;
+				if(xa < -32 || xa >= width || ya < 0 || ya >= height) break;
+				if(xa < 0) xa = 0;
+				int color = mob.getSprite().pixels[x + y * sprite.SIZE];
+				if(color != 0xffff00ff) pixels[xa+ya*width] = color;
 			}
 		}
 	}

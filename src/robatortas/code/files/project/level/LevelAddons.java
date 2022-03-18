@@ -30,7 +30,10 @@ public class LevelAddons {
 	}
 	
 	public void update() {
-		
+		entityUpdates();
+	}
+	
+	public void entityUpdates() {
 		//entity ticks
 		for (int i = 0; i < entities.size(); i++) {
 			EntityManager e = entities.get(i);

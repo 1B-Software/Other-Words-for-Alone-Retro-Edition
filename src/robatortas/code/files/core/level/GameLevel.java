@@ -6,7 +6,7 @@ import robatortas.code.files.project.level.GameLevelAddons;
 
 public class GameLevel extends LevelManager {
 	
-	private GameLevelAddons addons = new GameLevelAddons(this);
+	private GameLevelAddons addons = new GameLevelAddons();
 	
 	public GameLevel(String path) {
 		super(path);
@@ -18,7 +18,10 @@ public class GameLevel extends LevelManager {
 		this.tiles = data;
 		System.out.println(tiles);
 		
-		player = new Player(0, 0, input);
+//		addons.spawn();
+		
+		player = new Player(10, 10, input);
 		add(player);
+		
 	}
 }
