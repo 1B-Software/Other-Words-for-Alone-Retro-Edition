@@ -1,6 +1,7 @@
 package robatortas.code.files.core.render;
 
 import robatortas.code.files.project.GameManager;
+import robatortas.code.files.project.settings.Constants;
 
 public class RenderMethod {
 	
@@ -18,8 +19,8 @@ public class RenderMethod {
 	public void render(GameManager game) {
 		this.game = game;
 		
-		this.xScroll = game.level.player.x / game.screen.width;
-		this.yScroll = game.level.player.y / game.screen.height;
+		this.xScroll = (int) (game.level.player.x - Constants.WIDTH / 2.5f);
+		this.yScroll = (int) (game.level.player.y - Constants.HEIGHT / 2.5f);
 		
 		pixelIterations();
 		generalSettings();

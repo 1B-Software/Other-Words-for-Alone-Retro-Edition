@@ -20,7 +20,7 @@ public class DisplayManager {
 		game.frame.add(game);
 		game.start();
 		game.frame.setSize(size);
-		game.frame.setResizable(false);
+		game.frame.setResizable(true);
 		game.frame.setLocationRelativeTo(null);
 		game.frame.setVisible(true);
 		

@@ -29,11 +29,11 @@ public class LoopingUtils {
 		}
 	}
 	
-	public void timerLoop(String consolePrint) {
+	public void timerLoop(String consolePrint, GameManager game) {
 		if(System.currentTimeMillis() - timer > 1000) {
 			timer+=1000;
 			System.out.println(consolePrint);
-			GameManager.frame.setTitle(Constants.TITLE + "  ||  " + ticks + " TPS " + frames + " FPS");
+			game.frame.setTitle(Constants.TITLE + "  ||  " + ticks + " TPS " + frames + " FPS");
 			frames = 0;
 			ticks = 0;
 		}
