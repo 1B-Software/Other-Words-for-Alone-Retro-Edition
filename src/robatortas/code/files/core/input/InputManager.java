@@ -7,11 +7,15 @@ public class InputManager implements KeyListener {
 	public boolean[] keys = new boolean[120];
 	public boolean up, down, left, right;
 	
+	public boolean f;
+	
 	public void update() {
 		up = keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP];
 		down = keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN];
 		left = keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT];
 		right = keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT];
+		
+		f = keys[KeyEvent.VK_F];
 	}
 	
 	public void keyTyped(KeyEvent e) {

@@ -1,6 +1,7 @@
 package robatortas.code.files.project;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -25,7 +26,7 @@ public class GameManager extends Canvas implements Runnable {
 	
 	// Screen declarations
 	public DisplayManager display;
-	public static JFrame frame = new JFrame();
+	public JFrame frame = new JFrame();
 
 	public RenderManager screen;
 	private RenderMethod renderMethod = new RenderMethod();
@@ -78,7 +79,7 @@ public class GameManager extends Canvas implements Runnable {
 			String consolePrint = "ticks: " + looping.ticks + "  ||  " + "fps: " + looping.frames;
 			looping.whileRunning();
 			looping.deltaLoop(this);
-			looping.timerLoop(consolePrint);
+			looping.timerLoop(consolePrint, this);
 			
 			// Rendering
 			looping.frames++;
@@ -105,7 +106,13 @@ public class GameManager extends Canvas implements Runnable {
 			return;
 		}
 		
+		int xScalable = 600;
+		
 		Graphics g = bs.getDrawGraphics();
+		g.setColor(Color.magenta);
+		g.fillRect(0, 0, getWidth(), getHeight());
+//		g.drawImage(image, (getWidth() / 2) - Constants.WIDTH, (getHeight() / 2) - Constants.HEIGHT, Constants.WIDTH + (getWidth() - 600), Constants.HEIGHT - (getHeight() - 600), null); // HMM, HOW COULD I MAKE CUSTOM RESOLUTIONS WITHOUT DISTORTING THE IMAGE?
+		
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		
 		renderMethod.render(this);
