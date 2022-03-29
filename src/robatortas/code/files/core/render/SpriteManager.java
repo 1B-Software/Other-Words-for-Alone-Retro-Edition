@@ -4,6 +4,7 @@ public class SpriteManager {
 	
 	public int x, y;
 	public int SIZE;
+	public int width, height;
 	public SpriteSheetManager sheet;
 	public int[] pixels;
 	
@@ -22,6 +23,27 @@ public class SpriteManager {
 		
 		for(int i = 0; i < SIZE*SIZE; i++) {
 			pixels[i] = color;
+		}
+	}
+	
+	public SpriteManager(SpriteSheetManager sheet, int width, int height) {
+		SIZE = (width == height) ? width: -1;
+		this.width = width;
+		this.height = height;
+		this.sheet = sheet;
+	}
+	
+	public SpriteManager(int[] pixels, int width, int height) {
+		//this is the same as if(width == height) {size = width} else {size = -1;}
+		//? = if true
+		//: = else
+		this.SIZE = (width == height) ? width : -1;
+		this.width = width;
+		this.height = height;
+		this.pixels = new int[pixels.length];
+		// Copies pixels info to this.pixels info
+		for(int i = 0; i < pixels.length; i++) {
+			this.pixels[i] = pixels[i];
 		}
 	}
 	
