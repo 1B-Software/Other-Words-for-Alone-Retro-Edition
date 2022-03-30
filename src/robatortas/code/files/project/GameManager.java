@@ -106,14 +106,21 @@ public class GameManager extends Canvas implements Runnable {
 			return;
 		}
 		
-		int xScalable = 600;
-		
 		Graphics g = bs.getDrawGraphics();
-		g.setColor(Color.magenta);
+		g.setColor(new Color(0x1F1F1F));
 		g.fillRect(0, 0, getWidth(), getHeight());
 //		g.drawImage(image, (getWidth() / 2) - Constants.WIDTH, (getHeight() / 2) - Constants.HEIGHT, Constants.WIDTH + (getWidth() - 600), Constants.HEIGHT - (getHeight() - 600), null); // HMM, HOW COULD I MAKE CUSTOM RESOLUTIONS WITHOUT DISTORTING THE IMAGE?
 		
-		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+		// Relative Width
+		
+		int ww = getWindowSize().width;
+		int hh = getWindowSize().height;
+		int rWidth = (getWidth() - (Constants.WIDTH*Constants.SCALE)) /2; // + SCALED OF DISPLAY
+		int rHeight = getHeight() - (Constants.HEIGHT*Constants.SCALE);
+		
+		System.out.println(rWidth);
+		
+		g.drawImage(image, 10,10, (ww + rWidth)+100, (ww + rWidth), null);
 		
 		renderMethod.render(this);
 		
@@ -121,6 +128,9 @@ public class GameManager extends Canvas implements Runnable {
 		bs.show();
 	}
 	
+	static java.awt.Dimension getWindowSize() {
+		return new java.awt.Dimension((int) (Constants.WIDTH * Constants.SCALE), (int) (Constants.HEIGHT * Constants.SCALE));
+	}
 	
 	// Main Method
 	public static void main(String[] args) {

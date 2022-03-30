@@ -64,7 +64,6 @@ public class Player extends Mob {
 		if(attackTime > 0) {
 			sprite = punchSprite;
 		}
-		System.out.println(attackTime);
 		
 		screen.renderMob(x, y, this, sprite);
 	}
