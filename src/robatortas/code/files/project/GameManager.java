@@ -113,14 +113,12 @@ public class GameManager extends Canvas implements Runnable {
 		
 		// Relative Width
 		
-		int ww = getWindowSize().width;
-		int hh = getWindowSize().height;
-		int rWidth = (getWidth() - (Constants.WIDTH*Constants.SCALE)) /2; // + SCALED OF DISPLAY
-		int rHeight = getHeight() - (Constants.HEIGHT*Constants.SCALE);
+		int ww = Constants.WIDTH * 3;
+		int hh = Constants.HEIGHT * 3;
+		int xo = (getWidth() - ww) / 2;
+		int yo = (getHeight() - hh) / 2;
 		
-		System.out.println(rWidth);
-		
-		g.drawImage(image, 10,10, (ww + rWidth)+100, (ww + rWidth), null);
+		g.drawImage(image, xo, yo, ww, hh, null);
 		
 		renderMethod.render(this);
 		
