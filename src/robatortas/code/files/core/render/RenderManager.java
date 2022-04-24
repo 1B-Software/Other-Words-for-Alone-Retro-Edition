@@ -69,17 +69,21 @@ public class RenderManager {
 		}
 	}
 	
-	public void renderSprite(int xp, int yp, SpriteManager sprite) {
+	public void renderSprite(int xp, int yp, SpriteManager sprite, int flip) {
 		xp -= xOffset;
 		yp -= yOffset;
 		
 		for(int y = 0; y < sprite.SIZE; y++) {
 			int ya = y+yp;
+			int ys = y;
+			if(flip == 2 || flip == 3) ys = 15 - y;
 			for(int x = 0; x < sprite.SIZE; x++) {
 				int xa = x+xp;
+				int xs = x;
+				if(flip == 1 || flip == 3) xs = 15 - x;
 				if(xa < -sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
 				if(xa < 0) xa = 0;
-				int color = sprite.pixels[x+y*sprite.SIZE];
+				int color = sprite.pixels[xs+ys*sprite.SIZE];
 				if(color != 0xffff00ff) pixels[xa+ya*width] = color;
 			}
 		}
