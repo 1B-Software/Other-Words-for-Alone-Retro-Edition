@@ -55,11 +55,11 @@ public class SpriteSheetManager {
 		int frames = 0;
 		
 		sprites = new SpriteManager[width * height];
-		//TILE precision
+		// TILE precision
 		for(int y0 = 0; y0 < height; y0++) {
 			for(int x0 = 0; x0 < width; x0++) {
 				int[] spritePixels = new int[frameSize * frameSize];
-				//PIXEL precision
+				// PIXEL precision
 				for(int y1 = 0; y1 < frameSize; y1++) {
 					for(int x1 = 0; x1 < frameSize; x1++) {
 						spritePixels[x1 + y1 * frameSize] = pixels[(x1 + x0 * frameSize) + (y1 + y0 * frameSize) * frameSize];
@@ -71,7 +71,7 @@ public class SpriteSheetManager {
 		}
 	}
 	
-	//gets Sprites from animation and stores them in an array
+	// gets Sprites from animation and stores them in an array
 	public SpriteManager[] getSprites() {
 		return sprites;
 	}

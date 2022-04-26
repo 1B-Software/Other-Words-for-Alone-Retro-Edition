@@ -22,6 +22,5 @@ public class GameLevel extends LevelManager {
 		
 		player = new Player(10, 10, input);
 		add(player);
-		
 	}
 }
