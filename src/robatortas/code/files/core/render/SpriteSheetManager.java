@@ -22,6 +22,15 @@ public class SpriteSheetManager {
 		load();
 	}
 	
+	public SpriteSheetManager(String path, int width, int height) {
+		this.path = path;
+		this.SIZE = width * height;
+		this.WIDTH = width;
+		this.HEIGHT = height;
+		pixels = new int[width*height];
+		load();
+	}
+	
 	public SpriteSheetManager(SpriteSheetManager sheet, int x, int y, int width, int height, int frameSize) {
 		int xx = x * frameSize;
 		int yy = y * frameSize;
