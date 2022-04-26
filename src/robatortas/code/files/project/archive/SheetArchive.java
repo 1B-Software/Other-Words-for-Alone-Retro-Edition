@@ -5,6 +5,7 @@ import robatortas.code.files.core.render.SpriteSheetManager;
 public class SheetArchive {
 	
 	public static SpriteSheetManager nature = new SpriteSheetManager("/textures/spritesheet/nature/nature.png", 144);
+	public static SpriteSheetManager newNature = new SpriteSheetManager("/textures/spritesheet/newnature/newnaturespritesheet.png", 304, 208);
 	
 	public static SpriteSheetManager solids = new SpriteSheetManager("/textures/spritesheet/interior/interior.png", 144);
 
