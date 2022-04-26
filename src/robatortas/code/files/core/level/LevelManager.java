@@ -7,11 +7,12 @@ import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.input.InputManager;
 import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
+import robatortas.code.files.project.archive.SpriteArchive;
+import robatortas.code.files.project.archive.tileArchive.TileArchive;
 import robatortas.code.files.project.entities.mobs.mobArchive.Player;
 import robatortas.code.files.project.level.LevelAddons;
 import robatortas.code.files.project.level.LevelRenderManager;
 import robatortas.code.files.project.settings.Constants;
-import robatortas.code.files.project.tileArchive.TileArchive;
 
 public class LevelManager {
 
@@ -83,7 +84,24 @@ public class LevelManager {
 	
 	public TileManager getLevel(int x, int y) {
 		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
-		if(tiles[x+y*width] == 0x00BC0F) return TileArchive.grass;
+		if(tiles[x + y * width] == SpriteArchive.col_grass) return TileArchive.grass;
+		if(tiles[x + y * width] == SpriteArchive.col_water) return TileArchive.water;
+		if(tiles[x + y * width] == SpriteArchive.col_flower) return TileArchive.grass;
+		if(tiles[x + y * width] == SpriteArchive.col_flowerRed) return TileArchive.grass;
+		if(tiles[x + y * width] == SpriteArchive.col_solidRock) return TileArchive.solidRock;
+		if(tiles[x + y * width] == SpriteArchive.col_woodFloor) return TileArchive.woodFloor;
+		if(tiles[x + y * width] == SpriteArchive.col_dirt) return TileArchive.dirtTile;
+		if(tiles[x + y * width] == SpriteArchive.col_cobblestone) return TileArchive.cobblestone;
+		if(tiles[x + y * width] == SpriteArchive.col_cobblePath) return TileArchive.cobblePath;
+		if(tiles[x + y * width] == SpriteArchive.col_stoneBricks) return TileArchive.stoneBricks;
+		if(tiles[x + y * width] == SpriteArchive.col_bricks) return TileArchive.bricksTile;
+		if(tiles[x + y * width] == SpriteArchive.col_bush) return TileArchive.bushTile;
+		if(tiles[x + y * width] == SpriteArchive.col_void) return TileArchive.voidTile;
+		if(tiles[x + y * width] == SpriteArchive.col_woodWall) return TileArchive.woodWall;
+		if(tiles[x + y * width] == SpriteArchive.col_chair) return TileArchive.woodFloor;
+		if(tiles[x + y * width] == SpriteArchive.col_table) return TileArchive.woodFloor;
+		if(tiles[x + y * width] == SpriteArchive.col_tree) return TileArchive.grass;
+		if(tiles[x + y * width] == SpriteArchive.col_bed) return TileArchive.woodFloor;
 		return TileArchive.voidTile;
 	}
 }
