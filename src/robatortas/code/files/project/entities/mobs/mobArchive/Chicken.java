@@ -55,20 +55,26 @@ public class Chicken extends Mob {
 		} else walking = false;
 	}
 	
-	public void attack() {
-		attackDir = dir;
-		attackTime = 5;
-	}
 	
+	// TODO: FIX THIS!
 	public void render(RenderManager screen) {
 		if(walking) {
-			if(dir == 0 || dir == 2) {
-				int side = random.nextInt();
-				if(side == 1) animSprite = left;
-				else animSprite = right;
+			switch(dir) {
+			case 0: animSprite = left;
+			break;
+			case 1: animSprite = right;
+			break;
+			case 2: animSprite = left;
+			break;
+			case 3: animSprite = left;
+			break;
 			}
-			if(dir == 1) animSprite = right;
-			else animSprite = left;
+			
+			if(dir == 3 && dir == 0) animSprite = left;
+			if(dir == 3 && dir == 2) animSprite = left;
+			
+			if(dir == 1 && dir == 0) animSprite = right;
+			if(dir == 1 && dir == 2) animSprite = right;
 		}
 		
 		sprite = animSprite.getSprite();
@@ -80,5 +86,5 @@ public class Chicken extends Mob {
 	private Animate left = new Animate(Animations.chickenLeft, 1, 3, 3);
 	private Animate right = new Animate(Animations.chickenRight, 1, 3, 3);
 	
-	private Animate animSprite = left;
+	private Animate animSprite = right;
 }
