@@ -14,19 +14,16 @@ public class LevelAddons {
 	
 	private int width, height;
 	
-	private List<EntityManager>[] entitiesInTiles;
+	public List<EntityManager>[] entitiesInTiles;
 	private List<EntityManager> entities = new LinkedList<EntityManager>();
 	
+	@SuppressWarnings("unchecked")
 	public LevelAddons(LevelManager level) {
 		this.level = level;
 		this.width = level.width;
 		this.height = level.height;
 		this.entitiesInTiles = level.entitiesInTiles;
 		this.entities = level.entities;
-		
-		for(int i = 0; i < width*height; i++) {
-			entitiesInTiles[i] = new ArrayList<EntityManager>();
-		}
 	}
 	
 	public void update() {
@@ -60,13 +57,13 @@ public class LevelAddons {
 	}
 	
 	public void insertEntity(int x, int y, EntityManager e) {
-		if (x < 0 || y < 0 || x >= width || y >= height) return;
-			entitiesInTiles[x + y * width].add(e);
+		if(x < 0 || y < 0 || x >= width || y >= height) return;
+		entitiesInTiles[x+y*width].add(e);
 	}
-
+	
 	public void removeEntity(int x, int y, EntityManager e) {
-		if (x < 0 || y < 0 || x >= width || y >= height) return;
-		entitiesInTiles[x + y * width].remove(e);
+		if(x < 0 || y < 0 || x > width || y > height) return;
+		entitiesInTiles[x+y*width].remove(e);
 	}
 	
 	public List<EntityManager> getEntities(int x0, int y0, int x1, int y1) {

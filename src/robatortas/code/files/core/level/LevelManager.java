@@ -20,17 +20,21 @@ public class LevelManager {
 	
 	public int[] tiles;
 	
+	// Lists
 	public List<EntityManager> entities = new LinkedList<EntityManager>();
 	public List<EntityManager>[] entitiesInTiles;
 	
 	public static LevelManager level = new GameLevel(Constants.levelPath);
 	
-	public LevelAddons addons = new LevelAddons(this);
+	// Classes
+	public LevelAddons addons;
 	
+	// Mobs
 	public Player player;
 	
 	public LevelManager(String path) {
 		loadLevel(path);
+		addons = new LevelAddons(this);
 	}
 	
 	public void loadLevel(String path) {
@@ -86,7 +90,7 @@ public class LevelManager {
 		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
 		if(tiles[x + y * width] == SpriteArchive.col_grass) return TileArchive.grass;
 		if(tiles[x + y * width] == SpriteArchive.col_water) return TileArchive.water;
-		if(tiles[x + y * width] == SpriteArchive.col_flower) return TileArchive.grass;
+		if(tiles[x + y * width] == SpriteArchive.col_yellowDahlia) return TileArchive.grass;
 		if(tiles[x + y * width] == SpriteArchive.col_flowerRed) return TileArchive.grass;
 		if(tiles[x + y * width] == SpriteArchive.col_solidRock) return TileArchive.solidRock;
 		if(tiles[x + y * width] == SpriteArchive.col_woodFloor) return TileArchive.woodFloor;
@@ -102,6 +106,13 @@ public class LevelManager {
 		if(tiles[x + y * width] == SpriteArchive.col_table) return TileArchive.woodFloor;
 		if(tiles[x + y * width] == SpriteArchive.col_tree) return TileArchive.grass;
 		if(tiles[x + y * width] == SpriteArchive.col_bed) return TileArchive.woodFloor;
+		return TileArchive.voidTile;
+	}
+	
+	public TileManager getFront(int x, int y) {
+		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
+		if(tiles[x + y * width] == SpriteArchive.col_flowerRed) return TileArchive.flowerRed;
+		if(tiles[x + y * width] == SpriteArchive.col_yellowDahlia) return TileArchive.yellowDahlia;
 		return TileArchive.voidTile;
 	}
 }

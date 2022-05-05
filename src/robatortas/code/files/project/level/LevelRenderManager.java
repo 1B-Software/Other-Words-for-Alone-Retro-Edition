@@ -15,7 +15,8 @@ public class LevelRenderManager {
 	
 	// Level Rendering goes here!
 	public void render(int x, int y, LevelManager level) {
-		level.getLevel(x, y).render(x, y, screen);
+		level.getLevel(x, y).render(x, y, level, screen);
+		level.getFront(x, y).render(x, y, level, screen);
 	}
 	
 	// pinPoint settings

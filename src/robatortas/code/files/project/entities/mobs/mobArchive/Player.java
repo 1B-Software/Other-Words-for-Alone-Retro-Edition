@@ -104,10 +104,10 @@ public class Player extends Mob {
 	
 	
 	// Animations
-	public Animate up = new Animate(Animations.playerUp, 3, 3, 3);
-	public Animate right = new Animate(Animations.playerRight, 3, 3, 3);
-	public Animate down = new Animate(Animations.playerDown, 3, 3, 3);
-	public Animate left = new Animate(Animations.playerLeft, 3, 3, 3);
+	public Animate up = new Animate(Animations.playerUp, 1, 3, 3);
+	public Animate right = new Animate(Animations.playerRight, 1, 3, 3);
+	public Animate down = new Animate(Animations.playerDown, 1, 3, 3);
+	public Animate left = new Animate(Animations.playerLeft, 1, 3, 3);
 	
 	public Animate punchDown = new Animate(Animations.playerPunchDown, 2, 2, 2);
 	public Animate punchUp = new Animate(Animations.playerPunchUp, 2, 2, 2);

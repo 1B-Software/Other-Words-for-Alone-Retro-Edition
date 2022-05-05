@@ -13,7 +13,7 @@ public class IOUtils {
 		
 	}
 	
-	public int[] createBufferedImage(int width, int height, String path, int[] data) {
+	public void createBufferedImage(int width, int height, String path, int[] data) {
 		try {
 			BufferedImage image = ImageIO.read(IOUtils.class.getResource(path));
 			int w = width = image.getWidth();
@@ -24,6 +24,5 @@ public class IOUtils {
 			e.printStackTrace();
 			System.err.println(errorMsg);
 		}
-		return data;
 	}
 }
