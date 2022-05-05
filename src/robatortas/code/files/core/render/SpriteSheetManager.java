@@ -78,11 +78,12 @@ public class SpriteSheetManager {
 	
 	public void load() {
 		try {
-			System.out.println("Loading " + path + " ------->");
+			System.out.print("Loading " + path + " ------->");
 			BufferedImage image = ImageIO.read(SpriteSheetManager.class.getResource(path));
 			int w = image.getWidth();
 			int h = image.getHeight();
 			image.getRGB(0, 0, w, h, pixels, 0, w);
+			System.out.println(" Loaded");
 		} catch(IOException e) {
 			System.err.println("Unable to load SpriteSheet.");
 		}

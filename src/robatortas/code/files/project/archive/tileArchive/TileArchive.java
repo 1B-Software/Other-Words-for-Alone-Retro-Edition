@@ -25,7 +25,7 @@ public class TileArchive {
 	
 	// Nature
 	public static TileManager voidTile = new VoidTile(SpriteArchive.voidSprite, 0);
-	public static TileManager grass = new GrassTile(SpriteArchive.grassSprite, 1);
+	public static TileManager grass = new GrassTile(SpriteArchive.grass, 1);
 	public static TileManager water = new WaterTile(SpriteArchive.voidSprite, 3);
 	public static TileManager rock = new PebbleTile(SpriteArchive.pebble, 4);
 	public static TileManager yellowDahlia = new FlowerTile(SpriteArchive.yellowDahlia, 7);

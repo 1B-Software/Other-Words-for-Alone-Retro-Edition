@@ -1,11 +1,15 @@
 package robatortas.code.files.core.entities;
 
+import java.util.Random;
+
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.project.entities.mobs.MobAddons;
 
 public class Mob extends EntityManager {
 
 	private MobAddons addons = new MobAddons(this);
+	
+	protected Random random = new Random();
 	
 	protected boolean walking = false;
 	public int dir = 3;

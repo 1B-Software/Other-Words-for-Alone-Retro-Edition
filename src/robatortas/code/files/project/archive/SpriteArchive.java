@@ -9,13 +9,13 @@ public class SpriteArchive {
 	private static SpriteSheetManager solids = SheetArchive.solids;
 	private static SpriteSheetManager interior = SheetArchive.interior;
 	
-	public static SpriteManager voidSprite = new SpriteManager(16, 0, 0, SheetArchive.nature);
+	public static SpriteManager voidSprite = new SpriteManager(16, 0xffffffff);
 	
 	//////////////
 	// NATURE!! //
 	//////////////
 	
-	public static SpriteManager grassSprite = new SpriteManager(16, 0xffffffff);
+	public static SpriteManager grass = new SpriteManager(16, 0, 0, SheetArchive.nature);
 	public static SpriteManager tree = new SpriteManager(16, 1, 3, nature);
 	public static SpriteManager tree2 = new SpriteManager(16, 2, 3, nature);
 	public static SpriteManager pebble = new SpriteManager(16, 2, 0, nature);
@@ -78,8 +78,8 @@ public class SpriteArchive {
 	////////////
 	
 	//Tile Values in hex
-	public static final int col_grass = 0xff188F00;
-	public static final int col_flower = 0xffffff00;
+	public static final int col_grass = 0xff00BC0F;
+	public static final int col_yellowDahlia = 0xffE2B500;
 	public static final int col_flowerRed = 0xffff000f;
 	public static final int col_flowersRed = 0xff71000f;
 	public static final int col_solidRock = 0xffA0A0A0;
