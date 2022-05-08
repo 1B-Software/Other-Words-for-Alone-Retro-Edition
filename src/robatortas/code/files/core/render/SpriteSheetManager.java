@@ -24,7 +24,7 @@ public class SpriteSheetManager {
 	
 	public SpriteSheetManager(String path, int width, int height) {
 		this.path = path;
-		this.SIZE = width * height;
+		this.SIZE = -1;
 		this.WIDTH = width;
 		this.HEIGHT = height;
 		pixels = new int[width*height];

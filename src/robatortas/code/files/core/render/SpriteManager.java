@@ -12,6 +12,8 @@ public class SpriteManager {
 		this.SIZE = size;
 		this.x = x * SIZE;
 		this.y = y * SIZE;
+		this.width = size;
+		this.height = size;
 		this.sheet = sheet;
 		pixels = new int[SIZE*SIZE];
 		load();
@@ -19,6 +21,8 @@ public class SpriteManager {
 	
 	public SpriteManager(int size, int color) {
 		this.SIZE = size;
+		this.width = size;
+		this.height = size;
 		pixels = new int[SIZE*SIZE];
 		
 		for(int i = 0; i < SIZE*SIZE; i++) {
@@ -48,9 +52,9 @@ public class SpriteManager {
 	}
 	
 	public void load() {
-		for(int y = 0; y < SIZE; y++) {
-			for(int x = 0; x < SIZE; x++) {
-				pixels[x+y*SIZE] = sheet.pixels[(x+this.x) + (y+this.y) * sheet.SIZE];
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				pixels[x+y*width] = sheet.pixels[(x+this.x) + (y+this.y) * sheet.WIDTH];
 			}
 		}
 	}

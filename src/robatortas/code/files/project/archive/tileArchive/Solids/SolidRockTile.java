@@ -18,7 +18,7 @@ public class SolidRockTile extends TileManager {
 	//TODO: Fix perf issue!!! (Guess what, I never fixed it... Such a fucking troll ain't it).
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
 		// << equals multiply because its a binary operation
-//		screen.renderSprite(x << 4, y << 4, SpriteArchive.rock, 0);
+//		screen.renderTile(x, y, this);
 	}
 	
 	public boolean solid(LevelManager level, int x, int y, EntityManager e) {

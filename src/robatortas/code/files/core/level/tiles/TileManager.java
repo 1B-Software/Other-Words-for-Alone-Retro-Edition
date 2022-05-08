@@ -18,6 +18,8 @@ public class TileManager {
 		if(tiles[id] != null) System.err.println("Duplicate Tile ID's");
 	}
 	
+	public boolean connectsToWater = false;
+	
 	public void render(int x, int y, RenderManager screen) {
 		
 	}
