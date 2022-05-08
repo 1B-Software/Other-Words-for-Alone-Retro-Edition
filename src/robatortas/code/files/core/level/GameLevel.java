@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.project.entities.mobs.mobArchive.Chicken;
 import robatortas.code.files.project.entities.mobs.mobArchive.Player;
+import robatortas.code.files.project.level.TerrainGen.NoiseMap;
 
 public class GameLevel extends LevelManager {
 	
@@ -17,6 +18,7 @@ public class GameLevel extends LevelManager {
 	}
 	
 	public void loadLevel(String path) {
+		NoiseMap.main(null);
 		levelReader(path);
 		entitiesIteration();
 		

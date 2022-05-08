@@ -11,7 +11,7 @@ import robatortas.code.files.project.archive.SpriteArchive;
 
 public class Player extends Mob {
 	
-	public InputManager input;
+	private InputManager input;
 	
 	public boolean punch = true;
 	public int attackTime, attackDir;

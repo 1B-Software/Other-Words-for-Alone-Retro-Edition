@@ -36,6 +36,7 @@ public class Chicken extends Mob {
 		if(tickTime % (random.nextInt(30) + 30) == 0) {
 			xa = random.nextInt(3)-1;
 			ya = random.nextInt(3)-1;
+			// Chance of staying static
 			if(random.nextInt(2) == 0) {
 				xa = 0;
 				ya = 0;
