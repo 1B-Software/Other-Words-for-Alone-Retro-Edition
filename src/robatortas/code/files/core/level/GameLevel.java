@@ -18,7 +18,7 @@ public class GameLevel extends LevelManager {
 	}
 	
 	public void loadLevel(String path) {
-		NoiseMap.main(null);
+//		NoiseMap.main(null);
 		levelReader(path);
 		entitiesIteration();
 		

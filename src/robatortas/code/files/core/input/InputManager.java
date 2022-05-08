@@ -12,10 +12,6 @@ public class InputManager extends AssignInput implements KeyListener {
 		assignKeys();
 	}
 	
-	public void keyTyped(KeyEvent e) {
-		keys[e.getKeyCode()] = false;
-	}
-	
 	public void keyPressed(KeyEvent e) {
 		keys[e.getKeyCode()] = true;
 	}
@@ -24,5 +20,7 @@ public class InputManager extends AssignInput implements KeyListener {
 		keys[e.getKeyCode()] = false;
 	}
 	
-	
+	public void keyTyped(KeyEvent e) {
+		keys[e.getKeyCode()] = false;
+	}
 }

@@ -5,6 +5,7 @@ import robatortas.code.files.core.input.InputManager;
 import robatortas.code.files.core.render.Animate;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
+import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.archive.Animations;
 import robatortas.code.files.project.archive.SheetArchive;
 import robatortas.code.files.project.archive.SpriteArchive;
@@ -23,33 +24,26 @@ public class Player extends Mob {
 		this.sprite = new SpriteManager(16, 0, 0, SheetArchive.player);
 	}
 	
-	public static int velX = 1;
-	public static int velY = 1;	
+	private static int velX = 1;
+	private static int velY = 1;	
+	private int xs, ys;
 	
 	public int tickTime;
 	
 	public void update() {
-		tickTime++;
-		int xa = 0, ya = 0;
+		this.xs = 0;
+		this.ys = 0;
 		
-		animSprite.resetAnimation(animSprite, walking);
+		tickTime++;
 		
 		// Controls
-		if(input.up) ya -= velY;
-		if(input.down) ya += velY;
-		if(input.left) xa -= velX;
-		if(input.right) xa += velX;
+		controls();
 		
-		if(input.f) {;
-			if(punch == false) {
-				punch = true;
-				attack();
-			}
-		} else punch = false;
-		if(attackTime > 0) attackTime--;
+		// Reset Animations (AVOIDS CRASHING!)
+		animSprite.resetAnimation(animSprite, walking);
 		
-		if(xa != 0 || ya != 0) {
-			move(xa, ya);
+		if(xs != 0 || ys != 0) {
+			move(xs, ys);
 			walking = true;
 		} else walking = false;
 	}
@@ -102,6 +96,32 @@ public class Player extends Mob {
 		}
 	}
 	
+	
+	public void controls() {
+		// Controls
+		if(input.up) ys -= velY;
+		if(input.down) ys += velY;
+		if(input.left) xs -= velX;
+		if(input.right) xs += velX;
+		
+		if(input.f) {;
+			if(punch == false) {
+				punch = true;
+				attack();
+			}
+		} else punch = false;
+		if(attackTime > 0) attackTime--;
+		
+		if(GameManager.DEV_MODE) {
+			if(input.shift) {
+				velX = 2;
+				velY = 2;
+			} else {
+				velX = 1;
+				velY = 1;
+			}
+		}
+	}
 	
 	// Animations
 	public Animate up = new Animate(Animations.playerUp, 1, 3, 3);

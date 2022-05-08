@@ -99,12 +99,18 @@ public class LevelManager {
 		if(tiles[x + y * width] == SpriteArchive.col_cobblePath) return TileArchive.cobblePath;
 		if(tiles[x + y * width] == SpriteArchive.col_stoneBricks) return TileArchive.stoneBricks;
 		if(tiles[x + y * width] == SpriteArchive.col_bricks) return TileArchive.bricksTile;
-		if(tiles[x + y * width] == SpriteArchive.col_bush) return TileArchive.bushTile;
 		if(tiles[x + y * width] == SpriteArchive.col_void) return TileArchive.voidTile;
 		if(tiles[x + y * width] == SpriteArchive.col_woodWall) return TileArchive.woodWall;
 		if(tiles[x + y * width] == SpriteArchive.col_chair) return TileArchive.woodFloor;
 		if(tiles[x + y * width] == SpriteArchive.col_table) return TileArchive.woodFloor;
-		if(tiles[x + y * width] == SpriteArchive.col_tree) return TileArchive.grass;
+		
+		// Nature
+		if(tiles[x + y * width] == SpriteArchive.col_bush) return TileArchive.grass;
+		
+		// Trees
+		if(tiles[x + y * width] == SpriteArchive.col_oakTree) return TileArchive.grass;
+		if(tiles[x + y * width] == SpriteArchive.col_birchTree) return TileArchive.grass;
+		
 		if(tiles[x + y * width] == SpriteArchive.col_bed) return TileArchive.woodFloor;
 		return TileArchive.voidTile;
 	}
@@ -113,6 +119,7 @@ public class LevelManager {
 		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
 		if(tiles[x + y * width] == SpriteArchive.col_flowerRed) return TileArchive.flowerRed;
 		if(tiles[x + y * width] == SpriteArchive.col_yellowDahlia) return TileArchive.yellowDahlia;
+		if(tiles[x + y * width] == SpriteArchive.col_bush) return TileArchive.bushTile;
 		return TileArchive.voidTile;
 	}
 }
