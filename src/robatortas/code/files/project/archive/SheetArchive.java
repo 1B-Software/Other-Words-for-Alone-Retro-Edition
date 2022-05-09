@@ -15,8 +15,8 @@ public class SheetArchive {
 	public static SpriteSheetManager gui = new SpriteSheetManager("/textures/spritesheet/gui/gui.png", 144);
 	
 	// Mobs
-	public static SpriteSheetManager player = new SpriteSheetManager("/textures/spritesheet/mob/mobtest.png", 256);
-	public static SpriteSheetManager chicken = new SpriteSheetManager("/textures/spritesheet/mob/chicken.png", 48);
+	public static SpriteSheetManager player = new SpriteSheetManager("/textures/spritesheet/mob/mobtest.png", 128, 176);
+	public static SpriteSheetManager chicken = new SpriteSheetManager("/textures/spritesheet/mob/chicken.png", 16, 48);
 	
 	
 	public static SpriteSheetManager fx = new SpriteSheetManager("/textures/spritesheet/fx/fx.png", 128);

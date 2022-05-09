@@ -9,6 +9,7 @@ import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.archive.tileArchive.TileArchive;
+import robatortas.code.files.project.archive.tileArchive.Nature.WaterTile;
 import robatortas.code.files.project.entities.mobs.mobArchive.Player;
 import robatortas.code.files.project.level.LevelAddons;
 import robatortas.code.files.project.level.LevelRenderManager;
@@ -45,6 +46,7 @@ public class LevelManager {
 	
 	public void update() {
 		addons.update();
+		WaterTile.tick();
 		input.update();
 	}
 	

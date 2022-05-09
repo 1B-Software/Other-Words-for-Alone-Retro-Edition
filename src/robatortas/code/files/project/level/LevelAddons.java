@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import robatortas.code.files.core.entities.EntityManager;
-import robatortas.code.files.core.input.InputManager;
 import robatortas.code.files.core.level.LevelManager;
 
 public class LevelAddons {
