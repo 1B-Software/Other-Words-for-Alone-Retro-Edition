@@ -7,33 +7,19 @@ import robatortas.code.files.project.entities.mobs.MobAddons;
 
 public class Mob extends EntityManager {
 
-	private MobAddons addons = new MobAddons(this);
+	public int xa, ya;
 	
 	protected Random random = new Random();
 	
 	protected boolean walking = false;
 	public int dir = 3;
 	
-	public int xa, ya;
 	public void move(int xa, int ya) {
-		this.xa = xa;
-		this.ya = ya;
 		
-		if(xa != 0 && ya != 0) {
-			move(xa, 0);
-			move(0, ya);
-			return;
-		}
-		
-		x += xa;
-		y += ya;
-		
-		if(xa > 0) dir = 1;
-		if(xa < 0) dir = 3;
-		if(ya > 0) dir = 2;
-		if(ya < 0) dir = 0;
-		
-		addons.move();
+	}
+	
+	public boolean collision(int xs, int ys) {
+		return false;
 	}
 	
 	public void update() {
@@ -41,6 +27,6 @@ public class Mob extends EntityManager {
 	}
 	
 	public void render(int x, int y, RenderManager screen) {
-		addons.render();
+		
 	}
 }

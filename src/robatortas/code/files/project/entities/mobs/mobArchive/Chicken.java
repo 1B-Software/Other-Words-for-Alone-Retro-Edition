@@ -1,13 +1,13 @@
 package robatortas.code.files.project.entities.mobs.mobArchive;
 
-import robatortas.code.files.core.entities.Mob;
 import robatortas.code.files.core.render.Animate;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
 import robatortas.code.files.project.archive.Animations;
 import robatortas.code.files.project.archive.SheetArchive;
+import robatortas.code.files.project.entities.mobs.MobAddons;
 
-public class Chicken extends Mob {
+public class Chicken extends MobAddons {
 	
 	public boolean punch = true;
 	public int attackTime, attackDir;
@@ -56,35 +56,22 @@ public class Chicken extends Mob {
 		} else walking = false;
 	}
 	
-	
-	// TODO: FIX THIS!
 	public void render(RenderManager screen) {
-		if(walking) {
-			switch(dir) {
-			case 0: animSprite = left;
-			break;
-			case 1: animSprite = right;
-			break;
-			case 2: animSprite = left;
-			break;
-			case 3: animSprite = left;
-			break;
-			}
-			
-			if(dir == 3 && dir == 0) animSprite = left;
-			if(dir == 3 && dir == 2) animSprite = left;
-			
-			if(dir == 1 && dir == 0) animSprite = right;
-			if(dir == 1 && dir == 2) animSprite = right;
-		}
+		int spriteFlip = 0;
+		
+		if(dir == 0) spriteFlip = 1;
+		if(dir == 1) animSprite = right;
+		if(dir == 2) animSprite = right;
+		if(dir == 3) spriteFlip = 1;
+		
+		if(xa >= 1 && ya < 1) animSprite = right;
+		if(xa < 1 && ya >= 1) spriteFlip = 1;
 		
 		sprite = animSprite.getSprite();
 		
-		screen.renderMob(x, y, this, sprite);
+		screen.renderMob(x, y, this, sprite, spriteFlip);
 	}
 	
-
-	private Animate left = new Animate(Animations.chickenLeft, 1, 3, 3);
 	private Animate right = new Animate(Animations.chickenRight, 1, 3, 3);
 	
 	private Animate animSprite = right;

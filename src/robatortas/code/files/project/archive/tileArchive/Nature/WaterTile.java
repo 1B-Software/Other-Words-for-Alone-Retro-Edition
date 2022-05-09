@@ -25,8 +25,8 @@ import robatortas.code.files.project.archive.SheetArchive;
 
 public class WaterTile extends TileManager {
 	
-	static int anim = 0;
-	static int s = 1;
+	private static int anim = 0;
+	private static int s = 1;
 	
 	public WaterTile(SpriteManager sprite, int id) {
 		super(sprite, id);

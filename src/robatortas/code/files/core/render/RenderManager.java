@@ -81,17 +81,21 @@ public class RenderManager {
 	}
 	
 	// Rendering Mobs
-	public void renderMob(int xp, int yp, Mob mob, SpriteManager sprite) {
+	public void renderMob(int xp, int yp, Mob mob, SpriteManager sprite, int flip) {
 		xp -= xOffset;
 		yp -= yOffset;
 		
 		for(int y = 0; y < sprite.SIZE; y++) {
 			int ya = y+yp;
+			int ys = y;
+			if(flip == 2 || flip == 3) ys = 15 - y;
 			for(int x = 0; x < sprite.SIZE; x++) {
 				int xa = x+xp;
+				int xs = x;
+				if(flip == 1 || flip == 3) xs = 15 - x;
 				if(xa < -32 || xa >= width || ya < 0 || ya >= height) break;
 				if(xa < 0) xa = 0;
-				int color = mob.getSprite().pixels[x + y * sprite.width];
+				int color = mob.getSprite().pixels[xs + ys * sprite.width];
 				if(color != 0xffff00ff) pixels[xa+ya*width] = color;
 			}
 		}
