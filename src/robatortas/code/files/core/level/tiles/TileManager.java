@@ -19,9 +19,9 @@ public class TileManager {
 		if(tiles[id] != null) System.err.println("Duplicate Tile ID's");
 	}
 	
-	public boolean connectsToWater = true;
-	public boolean connectsToGrass = true;
-	public boolean connectsToRock = true;
+	public boolean seamsToWater = false;
+	public boolean seamsToGrass = false;
+	public boolean seamsToRock = false;
 	
 	public void render(int x, int y, RenderManager screen) {
 		

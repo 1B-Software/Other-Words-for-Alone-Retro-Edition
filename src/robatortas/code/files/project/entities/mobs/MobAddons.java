@@ -14,8 +14,7 @@ public class MobAddons extends Mob {
 			move(0, ya);
 			return;
 		}
-		
-		if(!collision(xa, ya)) {
+		if(!collision(super.xa, super.ya)) {
 			x += xa;
 			y += ya;
 		}
@@ -41,10 +40,13 @@ public class MobAddons extends Mob {
 	public boolean collision(int xs, int ys) {
 		boolean solid = false;
 		for(int c = 0; c < 4; c++) {
-			int xt = ((super.x+xs) + c % 2 * 8 - 3) >> 4;
-			int yt = ((super.y+ys) + c / 2 * 2) >> 4;
+			int xt = ((super.x+xs) + c % 2 * 8 + 12) >> 4;
+			int yt = ((super.y+ys) + c / 2 * 1 + 22) >> 4;
 			// if (SolidMethod() == true) solid = true 
 			if(level.getLevel(xt, yt).solid(level, xt, yt, this)) {
+				solid = true;
+			}
+			if(level.getFront(xt, yt).solid(level, xt, yt, this)) {
 				solid = true;
 			}
 		}

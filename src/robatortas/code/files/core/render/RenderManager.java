@@ -30,14 +30,14 @@ public class RenderManager {
 	// Rendering single pixel (DEPRECATED)
 	private int[] tiles = new int[tileSize*tileSize];
 	public void renderPixel(int xOffset, int yOffset) {
-		for(int y = 0; y < height; y++) {
+		for(int y = 0; y < 50; y++) {
 			int yy = y+yOffset;
 			if(yy < 0 || yy >= height) continue;
-			for(int x = 0; x < width; x++) {
+			for(int x = 0; x < 50; x++) {
 				int xx = x+xOffset;
 				if(xx < 0 || xx >= width) continue;
 				int i = ((xx >> 4) & 15) + ((yy >> 4) & 15) * 16;
-				pixels[x+y*width] = tiles[i];
+				pixels[xx+yy*width] = 0x32ff00ff;
 			}
 		}
 	}

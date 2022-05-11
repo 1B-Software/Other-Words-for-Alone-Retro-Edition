@@ -31,7 +31,7 @@ public class LevelManager {
 	public LevelAddons addons;
 	
 	// Mobs
-	public Player player;
+	public static Player player;
 	
 	public LevelManager(String path) {
 		loadLevel(path);
@@ -64,6 +64,8 @@ public class LevelManager {
 				levelRender.render(x, y, this);
 
 				levelRender.renderEntities(x, y);
+//				screen.renderPixel(20, 20);
+//				screen.renderPixel(60, 60);
 			}
 		}
 	}

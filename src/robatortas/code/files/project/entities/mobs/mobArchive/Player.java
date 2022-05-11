@@ -55,24 +55,26 @@ public class Player extends MobAddons {
 	}
 	
 	public void render(RenderManager screen) {
+		
+		if(dir == 0) animSprite = up;
+		if(dir == 1) animSprite = right;
+		if(dir == 2) animSprite = down;
+		if(dir == 3) animSprite = left;
+		
 		if(!walking) {
-			if(dir == 0) animSprite = up;
-			if(dir == 1) animSprite = right;
-			if(dir == 2) animSprite = down;
-			if(dir == 3) animSprite = left;
 			if(attackTime > 0) {
-				animSprite.setFrameRate(1);
 				if(dir == 0) animSprite = punchUp;
 				if(dir == 1) animSprite = punchUp;
 				if(dir == 2) animSprite = punchDown;
 				if(dir == 3) animSprite = punchUp;
+				
+				if((tickTime / 8) % 2 == 0) {
+					animSprite.setFrame(1);
+				}
 			}
-		} else {
-			if(dir == 0) animSprite = up;
-			if(dir == 1) animSprite = right;
-			if(dir == 2) animSprite = down;
-			if(dir == 3) animSprite = left;
 		}
+		
+		System.out.println(tickTime/32);
 		
 		sprite = animSprite.getSprite();
 		
