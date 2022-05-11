@@ -31,6 +31,7 @@ public class SpriteSheetManager {
 		load();
 	}
 	
+	// NSS
 	public SpriteSheetManager(SpriteSheetManager sheet, int x, int y, int width, int height, int frameSize) {
 		int xx = x * frameSize;
 		int yy = y * frameSize;
@@ -48,7 +49,6 @@ public class SpriteSheetManager {
 			for(int x0 = 0; x0 < w; x0++) {
 				//x position
 				int xp = xx + x0;
-				System.out.println(w);
 				pixels[x0 + y0 * w] = sheet.pixels[xp + yp * sheet.WIDTH];
 			}
 		}

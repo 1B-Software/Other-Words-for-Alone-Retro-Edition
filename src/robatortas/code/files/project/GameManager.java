@@ -1,8 +1,11 @@
 package robatortas.code.files.project;
 
+import java.awt.AlphaComposite;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -108,21 +111,24 @@ public class GameManager extends Canvas implements Runnable {
 			return;
 		}
 		
-		Graphics g = bs.getDrawGraphics();
+		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 		g.setColor(new Color(0x1F1F1F));
 		g.fillRect(0, 0, getWidth(), getHeight());
-//		g.drawImage(image, (getWidth() / 2) - Constants.WIDTH, (getHeight() / 2) - Constants.HEIGHT, Constants.WIDTH + (getWidth() - 600), Constants.HEIGHT - (getHeight() - 600), null); // HMM, HOW COULD I MAKE CUSTOM RESOLUTIONS WITHOUT DISTORTING THE IMAGE?
-		
-		// Relative Width
 		
 		int ww = Constants.WIDTH * 3;
 		int hh = Constants.HEIGHT * 3;
 		int xo = (getWidth() - ww) / 2;
 		int yo = (getHeight() - hh) / 2;
+
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 		
 		g.drawImage(image, xo, yo, ww, hh, null);
 		
 		renderMethod.render(this);
+		
+		g.setColor(Color.magenta);
+		g.setFont(new Font("Verdana", 1, 1).deriveFont(30f));
+		g.drawString("X: " + (LevelManager.player.x >> 4) + " Y: " + (LevelManager.player.y >> 4), 20, 30);
 		
 		g.dispose();
 		bs.show();

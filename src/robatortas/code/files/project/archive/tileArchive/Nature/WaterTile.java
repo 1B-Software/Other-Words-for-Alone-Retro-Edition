@@ -30,6 +30,9 @@ public class WaterTile extends TileManager {
 	
 	public WaterTile(SpriteManager sprite, int id) {
 		super(sprite, id);
+		
+		super.seamsToGrass = true;
+		super.seamsToRock = true;
 	}
 	
 	public static void tick() {

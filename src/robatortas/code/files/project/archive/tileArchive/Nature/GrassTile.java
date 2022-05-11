@@ -21,15 +21,28 @@ import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
+import robatortas.code.files.project.archive.SpriteArchive;
 
 public class GrassTile extends TileManager {
 	
 	public GrassTile(SpriteManager sprite, int id) {
 		super(sprite, id);
+		
+		super.seamsToRock = true;
 	}
 	
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
 		// << equals multiply because its a binary operation
 		screen.renderTile(x << 4, y << 4, this);
+		
+		//For detecting water near grass
+		boolean up = level.getLevel(x , y -1 ).seamsToGrass;
+		boolean down = level.getLevel(x, y +1 ).seamsToGrass;
+		boolean left = level.getLevel(x - 1, y).seamsToGrass;
+		boolean right = level.getLevel(x + 1, y).seamsToGrass;
+		
+		if(up) {
+			screen.renderSprite(x << 4, y << 4, SpriteArchive.bed, 0);
+		}
 	}
 }
