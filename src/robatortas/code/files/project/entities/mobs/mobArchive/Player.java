@@ -56,6 +56,8 @@ public class Player extends MobAddons {
 	
 	public void render(RenderManager screen) {
 		
+		int flip = 0;
+		
 		if(dir == 0) animSprite = up;
 		if(dir == 1) animSprite = right;
 		if(dir == 2) animSprite = down;
@@ -64,9 +66,9 @@ public class Player extends MobAddons {
 		if(!walking) {
 			if(attackTime > 0) {
 				if(dir == 0) animSprite = punchUp;
-				if(dir == 1) animSprite = punchUp;
+				if(dir == 1) animSprite = punchRight;
 				if(dir == 2) animSprite = punchDown;
-				if(dir == 3) animSprite = punchUp;
+				if(dir == 3) animSprite = punchLeft;
 				
 				if((tickTime / 8) % 2 == 0) {
 					animSprite.setFrame(1);
@@ -74,12 +76,10 @@ public class Player extends MobAddons {
 			}
 		}
 		
-		System.out.println(tickTime/32);
-		
 		sprite = animSprite.getSprite();
 		
 		beforeLayer(screen);
-		screen.renderMob(x, y, this, sprite, 0);
+		screen.renderMob(x, y, this, sprite, flip);
 		afterLayer(screen);
 	}
 	
@@ -139,12 +139,11 @@ public class Player extends MobAddons {
 	public Animate down = new Animate(Animations.playerDown, 1, 3, 3);
 	public Animate left = new Animate(Animations.playerLeft, 1, 3, 3);
 	
-	public Animate punchDown = new Animate(Animations.playerPunchDown, 2, 1, 2);
-	public Animate punchUp = new Animate(Animations.playerPunchUp, 2, 1, 2);
+	public Animate punchDown = new Animate(Animations.playerPunchDown, 1, 2, 2);
+	public Animate punchUp = new Animate(Animations.playerPunchUp, 1, 2, 2);
 	
-	
-	public SpriteManager punchLeft = new SpriteManager(32, 1, 3, SheetArchive.player);
-	public SpriteManager punchRight = new SpriteManager(32, 2, 3, SheetArchive.player);
+	public Animate punchRight = new Animate(Animations.playerPunchRight, 1, 2, 2);
+	public Animate punchLeft = new Animate(Animations.playerPunchLeft, 1, 2, 2);
 	
 	private Animate animSprite = down;
 }

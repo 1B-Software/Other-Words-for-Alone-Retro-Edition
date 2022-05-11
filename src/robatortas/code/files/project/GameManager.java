@@ -119,8 +119,6 @@ public class GameManager extends Canvas implements Runnable {
 		int hh = Constants.HEIGHT * 3;
 		int xo = (getWidth() - ww) / 2;
 		int yo = (getHeight() - hh) / 2;
-
-		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 		
 		g.drawImage(image, xo, yo, ww, hh, null);
 		
@@ -136,10 +134,5 @@ public class GameManager extends Canvas implements Runnable {
 	
 	static java.awt.Dimension getWindowSize() {
 		return new java.awt.Dimension((int) (Constants.WIDTH * Constants.SCALE), (int) (Constants.HEIGHT * Constants.SCALE));
-	}
-	
-	// Main Method
-	public static void main(String[] args) {
-		new GameManager();
 	}
 }
