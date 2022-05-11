@@ -14,9 +14,15 @@ public class LevelRenderManager {
 	}
 	
 	// Level Rendering goes here!
-	public void render(int x, int y, LevelManager level) {
-		level.getLevel(x, y).render(x, y, level, screen);
-		level.getFront(x, y).render(x, y, level, screen);
+	public void render(LevelManager level) {
+		for(int y = y0; y < y1; y++) {
+			for(int x = x0; x < x1; x++) {
+				if(x < 0 || y < 0 || x >= screen.width|| y >= screen.height) continue;
+				level.getLevel(x, y).render(x, y, level, screen);
+				level.getFront(x, y).render(x, y, level, screen);
+				renderEntities(x, y);
+			}
+		}
 	}
 	
 	// pinPoint settings

@@ -56,18 +56,8 @@ public class LevelManager {
 		LevelRenderManager levelRender = new LevelRenderManager(this ,screen);
 		
 		levelRender.pinPoints(xScroll, yScroll);
-		
-		for(int y = levelRender.y0; y < levelRender.y1; y++) {
-			for(int x = levelRender.x0; x < levelRender.x1; x++) {
-				if(x < 0 || y < 0 || x >= screen.width|| y >= screen.height) continue;
 				
-				levelRender.render(x, y, this);
-
-				levelRender.renderEntities(x, y);
-//				screen.renderPixel(20, 20);
-//				screen.renderPixel(60, 60);
-			}
-		}
+		levelRender.render(this);
 	}
 	
 	public void add(EntityManager e) {
