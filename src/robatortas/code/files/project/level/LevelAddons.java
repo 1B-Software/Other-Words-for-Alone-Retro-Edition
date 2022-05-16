@@ -35,7 +35,7 @@ public class LevelAddons {
 			EntityManager e = entities.get(i);
 			int xto = e.x >> 4;
 			int yto = e.y >> 4;
-				
+			
 			e.update();
 			
 			//this removes entities
@@ -56,12 +56,11 @@ public class LevelAddons {
 	}
 	
 	public void insertEntity(int x, int y, EntityManager e) {
-		if(x < 0 || y < 0 || x >= width || y >= height) return;
-		entitiesInTiles[x+y*width].add(e);
+		
 	}
 	
 	public void removeEntity(int x, int y, EntityManager e) {
-		if(x < 0 || y < 0 || x > width || y > height) return;
+		if(x < 0 || y < 0 || x >= width || y >= height) return;
 		entitiesInTiles[x+y*width].remove(e);
 	}
 	

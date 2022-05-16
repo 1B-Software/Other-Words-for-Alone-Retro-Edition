@@ -29,14 +29,23 @@ public class EntityManager {
 	}
 	
 	public void update() {
+		System.out.println("ENTITY!");
 	}
 	
 	public void move(int xa, int ya) {
 		addons.move(xa, ya);
 	}
 	
+	public void hurt(Mob mob, int damage, int attackDir) {
+		
+	}
+	
 	public boolean isRemoved() {
 		return removed;
+	}
+	
+	public void remove() {
+		removed = true;
 	}
 	
 	public SpriteManager getSprite() {

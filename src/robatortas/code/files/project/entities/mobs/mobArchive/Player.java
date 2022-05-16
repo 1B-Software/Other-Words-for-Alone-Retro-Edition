@@ -1,5 +1,8 @@
 package robatortas.code.files.project.entities.mobs.mobArchive;
 
+import java.util.List;
+
+import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.input.InputManager;
 import robatortas.code.files.core.render.Animate;
 import robatortas.code.files.core.render.RenderManager;
@@ -32,6 +35,7 @@ public class Player extends MobAddons {
 	public int tickTime;
 	
 	public void update() {
+		super.update();
 		this.xs = 0;
 		this.ys = 0;
 		
@@ -52,6 +56,17 @@ public class Player extends MobAddons {
 	public void attack() {
 		attackDir = dir;
 		attackTime = 5;
+	}
+	
+	public void hurt(int x0, int y0, int x1, int y1) {
+		List<EntityManager> entities = level.getEntities(x0, y0, x1, y1);
+		for(int i = 0; i > entities.size(); i++) {
+			EntityManager e = entities.get(i);
+			if(e != this) {
+				e.hurt(this, 1, attackDir);
+				System.out.println("attacked!");
+			}	
+		}
 	}
 	
 	public void render(RenderManager screen) {

@@ -64,11 +64,28 @@ public class LevelManager {
 		e.init(this);
 		e.removed = false;
 		entities.add(e);
+		
+		int xp = e.x >> 4;
+		int yp = e.y >> 4;
+		
+		insertEntity(xp, yp, e);
+	}
+	
+	public void remove(EntityManager e) {
+		e.removed = true;
+		e.remove();
+		entities.remove(e);
+		
+		int xp = e.x >> 4;
+		int yp = e.y >> 4;
+		
+		removeEntity(xp, yp, e);
 	}
 	
 	//Inserts Entities in entitiesInTile list (To know where entities are in tiles)
 	public void insertEntity(int x, int y, EntityManager e) {
-		addons.insertEntity(x, y, e);
+		if(x < 0 || y < 0 || x >= width || y >= height) return;
+		entitiesInTiles[x+y*width].add(e);
 	}
 	
 	//remove entities from the entitiesInTiles list (When mobs are killed, it calls this method to remove the entity from the list.)

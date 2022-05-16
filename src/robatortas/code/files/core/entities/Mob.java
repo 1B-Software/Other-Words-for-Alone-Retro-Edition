@@ -9,6 +9,9 @@ public class Mob extends EntityManager {
 
 	public int xa, ya;
 	
+	protected int avgHealth = 10;
+	protected int health = avgHealth;
+	
 	protected Random random = new Random();
 	
 	protected boolean walking = false;
@@ -18,12 +21,7 @@ public class Mob extends EntityManager {
 		
 	}
 	
-	public boolean collision(int xs, int ys) {
-		return false;
-	}
-	
 	public void update() {
-		addons.update();
 	}
 	
 	public void render(int x, int y, RenderManager screen) {
