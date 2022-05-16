@@ -12,6 +12,11 @@ public class Mob extends EntityManager {
 	protected int avgHealth = 10;
 	protected int health = avgHealth;
 	
+	// Time the enemy will stay hurt
+	public int hurtTime = 0;
+	
+	protected int xKnockback, yKnockback;
+	
 	protected Random random = new Random();
 	
 	protected boolean walking = false;
