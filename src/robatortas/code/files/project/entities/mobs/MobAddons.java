@@ -2,6 +2,7 @@ package robatortas.code.files.project.entities.mobs;
 
 import robatortas.code.files.core.entities.Mob;
 import robatortas.code.files.core.render.SpriteManager;
+import robatortas.code.files.project.entities.mobs.mobArchive.Chicken;
 
 public class MobAddons extends Mob {
 	
@@ -26,7 +27,7 @@ public class MobAddons extends Mob {
 	}
 	
 	public void update() {
-		
+		if(health <= 0) die();
 	}
 	
 	public void render() {
@@ -54,8 +55,17 @@ public class MobAddons extends Mob {
 		return solid;
 	}
 	
+	public void hurt(Mob mob, int damage, int attackDir) {
+		health -= 10;
+	}
+	
+	public void doHurt() {
+		
+	}
+	
 	// TODO: Make death! for much later in development tho..
 	public void die() {
-		
+		remove();
+		System.out.println("DEAD!");
 	}
 }
