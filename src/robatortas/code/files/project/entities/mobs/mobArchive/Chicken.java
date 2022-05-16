@@ -27,6 +27,7 @@ public class Chicken extends MobAddons {
 	public int tickTime = 0;
 	
 	public void update() {
+		super.update();
 		tickTime++;
 		
 		animSprite.resetAnimation(animSprite, walking);
