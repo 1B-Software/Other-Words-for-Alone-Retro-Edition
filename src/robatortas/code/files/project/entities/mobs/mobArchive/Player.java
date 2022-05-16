@@ -56,15 +56,22 @@ public class Player extends MobAddons {
 	public void attack() {
 		attackDir = dir;
 		attackTime = 5;
+		
+		int xRange = 10;
+		int yRange = 20;
+		// coordinate parameters: -- ++
+		if (dir == 0) hurt(x + 5, y, x - 5, y - yRange + 4);
+		if (dir == 1) hurt(x + xRange + 5, y + 10, x, y - 10);
+		if (dir == 3) hurt(x, y, x - xRange - 5, y - 10);
+		if (dir == 2) hurt(x, y + yRange - 2, x - 5, y);
 	}
 	
 	public void hurt(int x0, int y0, int x1, int y1) {
 		List<EntityManager> entities = level.getEntities(x0, y0, x1, y1);
-		for(int i = 0; i > entities.size(); i++) {
+		for(int i = 0; i < entities.size(); i++) {
 			EntityManager e = entities.get(i);
 			if(e != this) {
-				e.hurt(this, 1, attackDir);
-				System.out.println("attacked!");
+				e.hurt(this, 10, attackDir);
 			}	
 		}
 	}
