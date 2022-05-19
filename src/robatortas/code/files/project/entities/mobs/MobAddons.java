@@ -28,6 +28,8 @@ public class MobAddons extends Mob {
 	
 	public void update() {
 		die();
+		
+		if(hurtTime > 0) hurtTime--;
 	}
 	
 	public void render() {
@@ -45,9 +47,11 @@ public class MobAddons extends Mob {
 	
 	public void hurt(Mob mob, int damage, int attackDir) {
 		doHurt(damage, attackDir);
+		System.out.println("OUCH!");
 	}
 	
 	public void doHurt(int damage, int attackDir) {
+		if(hurtTime > 0) return;
 		health -= damage;
 		if (attackDir == 0) yKnockback = -10;
 		if (attackDir == 1) xKnockback = 10;

@@ -25,7 +25,7 @@ public class GameLevel extends LevelManager {
 		player = new Player(10, 10, input);
 		add(player);
 		
-		add(new Chicken(10, 10));
+		add(new Chicken(50, 50));
 	}
 	
 	public void levelReader(String path) {

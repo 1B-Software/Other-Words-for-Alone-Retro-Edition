@@ -71,9 +71,9 @@ public class LevelAddons {
 		int xt1 = (x1 >> 4) + 1;
 		int yt1 = (y1 >> 4) + 1;
 		
-		for(int y = 0; y <= yt1; y++) {
-			for(int x = 0; x <= xt1; x++) {
-				if(x < 0 || x > width || y < 0 || y > height) continue;
+		for(int y = yt0; y <= yt1; y++) {
+			for(int x = xt0; x <= xt1; x++) {
+				if(x < 0 || y < 0 || x >= width || y >= height) continue;
 				for(int i = 0; i < entities.size(); i++) {
 					EntityManager e = entities.get(i);
 					if(e.intersects(x0, y0, x1, y1)) result.add(e);

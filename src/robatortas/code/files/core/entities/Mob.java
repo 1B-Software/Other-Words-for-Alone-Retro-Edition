@@ -27,6 +27,7 @@ public class Mob extends EntityManager {
 	}
 	
 	public void update() {
+		
 	}
 	
 	public void render(int x, int y, RenderManager screen) {
