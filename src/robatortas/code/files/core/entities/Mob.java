@@ -30,7 +30,7 @@ public class Mob extends EntityManager {
 		
 	}
 	
-	public void render(int x, int y, RenderManager screen) {
+	public void render(RenderManager screen) {
 		
 	}
 }

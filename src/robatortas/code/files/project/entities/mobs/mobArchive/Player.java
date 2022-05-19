@@ -44,7 +44,7 @@ public class Player extends MobAddons {
 		// Controls
 		controls();
 		
-		if(dir == 1) hurt(x, y, x-35, y);
+		if(tickTime % 60 == 0) health--;
 		
 		// Reset Animations (AVOIDS CRASHING!)
 		animSprite.resetAnimation(animSprite, walking);
@@ -62,10 +62,10 @@ public class Player extends MobAddons {
 		int xRange = 10;
 		int yRange = 20;
 		// coordinate parameters: -- ++
-		if(dir == 0) hurt(x+5, y, x, y-20);
-		
-		if(dir == 3) hurt(x, y, x, y);
-		if(dir == 2) hurt(x, y, x, y);
+		if (dir == 0) hurt(x + 5, y, x - 5, y - yRange + 4);
+		if (dir == 1) hurt(x + xRange + 5, y + 10, x, y - 10);
+		if (dir == 3) hurt(x, y, x - xRange - 5, y - 10);
+		if (dir == 2) hurt(x, y + yRange - 2, x - 5, y);
 	}
 	
 	public void hurt(int x0, int y0, int x1, int y1) {

@@ -97,6 +97,8 @@ public class RenderManager {
 				if(xa < 0) xa = 0;
 				int color = mob.getSprite().pixels[xs + ys * sprite.width];
 				if(color != 0xffff00ff) pixels[xa+ya*width] = color;
+				
+				if(mob.hurtTime > 0) color = 0x000000;
 			}
 		}
 	}

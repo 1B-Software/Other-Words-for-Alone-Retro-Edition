@@ -1,6 +1,7 @@
 package robatortas.code.files.project.entities.mobs;
 
 import robatortas.code.files.core.entities.Mob;
+import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
 import robatortas.code.files.project.entities.mobs.mobArchive.Chicken;
 
@@ -32,7 +33,7 @@ public class MobAddons extends Mob {
 		if(hurtTime > 0) hurtTime--;
 	}
 	
-	public void render() {
+	public void render(RenderManager screen) {
 		
 	}
 	
