@@ -58,6 +58,7 @@ public class LevelManager {
 		levelRender.pinPoints(xScroll, yScroll);
 				
 		levelRender.render(this);
+		levelRender.renderEntities(xScroll, yScroll);
 	}
 	
 	public void add(EntityManager e) {
