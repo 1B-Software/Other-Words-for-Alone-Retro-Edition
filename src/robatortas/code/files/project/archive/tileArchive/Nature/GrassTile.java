@@ -35,14 +35,5 @@ public class GrassTile extends TileManager {
 		// << equals multiply because its a binary operation
 		screen.renderTile(x << 4, y << 4, this);
 		
-		//For detecting water near grass
-		boolean up = level.getLevel(x , y -1 ).seamsToGrass;
-		boolean down = level.getLevel(x, y +1 ).seamsToGrass;
-		boolean left = level.getLevel(x - 1, y).seamsToGrass;
-		boolean right = level.getLevel(x + 1, y).seamsToGrass;
-		
-		if(up) {
-			screen.renderSprite(x << 4, y << 4, SpriteArchive.bed, 0);
-		}
 	}
 }

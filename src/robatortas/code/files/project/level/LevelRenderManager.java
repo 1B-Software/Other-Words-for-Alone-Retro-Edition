@@ -20,7 +20,7 @@ public class LevelRenderManager {
 				if(x < 0 || y < 0 || x >= screen.width|| y >= screen.height) continue;
 				level.getLevel(x, y).render(x, y, level, screen);
 				level.getFront(x, y).render(x, y, level, screen);
-				renderEntities(x, y);
+				
 			}
 		}
 	}
@@ -29,9 +29,9 @@ public class LevelRenderManager {
 	public int x0,y0,x1,y1; 
 	public void pinPoints(int xScroll, int yScroll) {
 		screen.setOffset(xScroll, yScroll);
-		x0 = xScroll >> 4;
+		x0 = (xScroll) >> 4;
 		x1 = (xScroll + screen.width + 16) >> 4;
-		y0 = yScroll >> 4;
+		y0 = (yScroll) >> 4;
 		y1 = (yScroll + screen.height + 16) >> 4;
 	}
 
