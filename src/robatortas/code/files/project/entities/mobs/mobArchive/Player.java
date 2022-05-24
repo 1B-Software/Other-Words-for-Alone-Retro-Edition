@@ -7,6 +7,7 @@ import robatortas.code.files.core.input.InputManager;
 import robatortas.code.files.core.render.Animate;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
+import robatortas.code.files.core.sound.SoundEngine;
 import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.archive.Animations;
 import robatortas.code.files.project.archive.SheetArchive;
@@ -43,8 +44,6 @@ public class Player extends MobAddons {
 		
 		// Controls
 		controls();
-		
-		if(tickTime % 60 == 0) health--;
 		
 		// Reset Animations (AVOIDS CRASHING!)
 		animSprite.resetAnimation(animSprite, walking);
