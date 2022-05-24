@@ -3,10 +3,8 @@ package robatortas.code.files.project.entities.mobs;
 import robatortas.code.files.core.entities.Mob;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
-import robatortas.code.files.core.sound.SoundEngine;
-import robatortas.code.files.project.entities.mobs.mobArchive.Chicken;
 
-public class MobAddons extends Mob {
+public class MobAddons extends Mob{
 	
 	public void move(int xa, int ya) {
 		super.xa = xa;

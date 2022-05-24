@@ -19,6 +19,7 @@ public class TileManager {
 		if(tiles[id] != null) System.err.println("Duplicate Tile ID's");
 	}
 	
+	// What I mean with SEAMS is that they react to each other when touching.
 	public boolean seamsToWater = false;
 	public boolean seamsToGrass = false;
 	public boolean seamsToRock = false;
