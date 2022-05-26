@@ -42,7 +42,7 @@ public class GrassTile extends TileManager {
 		boolean right = level.getLevel(x, y).seamsToGrass;
 		
 		if(up) {
-			level.getLevel(x, y);
+			level.insertTile(x, y , SpriteArchive.col_bush);
 		}
 	}
 	

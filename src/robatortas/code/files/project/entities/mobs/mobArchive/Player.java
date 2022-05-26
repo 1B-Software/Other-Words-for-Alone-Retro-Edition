@@ -12,6 +12,7 @@ import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.archive.Animations;
 import robatortas.code.files.project.archive.SheetArchive;
 import robatortas.code.files.project.archive.SpriteArchive;
+import robatortas.code.files.project.archive.tileArchive.TileArchive;
 import robatortas.code.files.project.entities.mobs.MobAddons;
 
 public class Player extends MobAddons {
