@@ -19,6 +19,10 @@ public class TileManager {
 		if(tiles[id] != null) System.err.println("Duplicate Tile ID's");
 	}
 	
+	public TileManager(SpriteManager sprite) {
+		this.sprite = sprite;
+	}
+	
 	// What I mean with SEAMS is that they react to each other when touching.
 	public boolean seamsToWater = false;
 	public boolean seamsToGrass = false;
@@ -30,6 +34,10 @@ public class TileManager {
 	
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
 	
+	}
+	
+	public void add(TileManager tile) {
+		
 	}
 
 	public boolean solid(LevelManager level, int x, int y, EntityManager e) {
