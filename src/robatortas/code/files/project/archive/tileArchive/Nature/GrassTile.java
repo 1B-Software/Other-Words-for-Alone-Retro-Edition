@@ -31,17 +31,20 @@ public class GrassTile extends TileManager {
 		super.seamsToRock = true;
 	}
 	
+	// TODO: FIX BUG ASAP!!!!
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
 		// << equals multiply because its a binary operation
 		screen.renderTile(x << 4, y << 4, this);
 		
-		boolean up = !level.getLevel(x, y - 1).seamsToGrass;
+		boolean up = level.getLevel(x, y - 1).seamsToGrass;
 		boolean down = level.getLevel(x, y).seamsToGrass;
 		boolean left = level.getLevel(x, y).seamsToGrass;
 		boolean right = level.getLevel(x, y).seamsToGrass;
 		
 		if(up) {
-			super.sprite = SpriteArchive.bed;
+			level.getLevel(x, y);
 		}
 	}
+	
+	public TileManager grassUp = new TileManager(SpriteArchive.bed);
 }
