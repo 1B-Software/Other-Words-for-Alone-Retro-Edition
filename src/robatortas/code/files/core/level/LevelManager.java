@@ -98,9 +98,9 @@ public class LevelManager {
 		return addons.getEntities(x0, y0, x1, y1);
 	}
 	
-	public void insertTile(int x, int y, TileManager tile) {
+	public void insertTile(int x, int y, int color) {
 		if(x < 0 || y < 0 || x >= width || y >= height) return;
-		tiles[x+y*width] = tile.id;
+		tiles[x+y*width] = color;
 	}
 	
 	public TileManager getLevel(int x, int y) {
