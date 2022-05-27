@@ -20,6 +20,8 @@ public class LevelManager {
 	public int width, height;
 	
 	public int[] tiles;
+	// TODO: FILL THIS WITH ID DATA OF THE LEVEL!
+	public int[] tilesId;
 	
 	// Lists
 	public List<EntityManager> entities = new LinkedList<EntityManager>();

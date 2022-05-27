@@ -143,6 +143,7 @@ public class Player extends MobAddons {
 			if(punch == false) {
 				punch = true;
 				attack();
+				level.insertTile(x >> 4, y >> 4, SpriteArchive.col_water);
 			}
 		} else punch = false;
 		if(attackTime > 0) attackTime--;
