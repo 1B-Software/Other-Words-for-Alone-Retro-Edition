@@ -47,19 +47,22 @@ public class GrassTile extends TileManager {
 		boolean ul = level.getLevel(x - 1, y - 1).seamsToGrass;
 		boolean dl = level.getLevel(x - 1, y + 1).seamsToGrass;
 		
+		int xt = x << 4;
+		int yt = y << 4;
+		
 		// Only renders when necessary
-		// TODO: THIS BULSHITT!!!
+		// TODO: THIS BULSHITT!!! (I can't think)
 		if(up || down || left || right) {
 			
-			if(up) screen.renderSprite(x << 4, y << 4, upSprite, 0);
-			
-			if(down) screen.renderSprite(x << 4, y << 4, downSprite, 0);
-			if(left) screen.renderSprite(x << 4, y << 4, leftSprite, 0);
-			if(right) screen.renderSprite(x << 4, y << 4, rightSprite, 0);
+//			if(up) screen.renderSprite(x << 4, y << 4, upSprite, 0);
+//			
+//			if(down) screen.renderSprite(xt, yt, downSprite, 0);
+//			if(left) screen.renderSprite(xt, yt, leftSprite, 0);
+//			if(right) screen.renderSprite(xt, yt, rightSprite, 0);
 			
 			if(down && left) {
-				screen.renderSprite(x << 4, y << 4, downSprite, 0);
-				if(dl) screen.renderSprite(x << 4, y << 4, dlSprite, 0);
+				if(dl) screen.renderSprite(xt, yt, dlSprite, 0);
+				else screen.renderSprite(xt, yt, SpriteArchive.bed, 0);
 			}
 			
 		}
