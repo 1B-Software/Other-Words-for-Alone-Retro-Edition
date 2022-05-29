@@ -109,6 +109,7 @@ public class GameManager extends Canvas implements Runnable {
 			return;
 		}
 		
+		
 		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 		g.setColor(new Color(0x1F1F1F));
 		g.fillRect(0, 0, getWidth(), getHeight());

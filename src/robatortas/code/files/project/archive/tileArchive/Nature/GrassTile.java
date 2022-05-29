@@ -32,20 +32,35 @@ public class GrassTile extends TileManager {
 		super.seamsToRock = true;
 	}
 	
-	// TODO: FIX BUG ASAP!!!!
+	// Efficient connected textures rendering!
+	// Connects when for example down = there is water one tile down the grass tile!!!
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
 		// << equals multiply because its a binary operation
 		
 		boolean up = level.getLevel(x, y - 1).seamsToGrass;
 		boolean down = level.getLevel(x, y + 1).seamsToGrass;
-		boolean left = level.getLevel(x, y).seamsToGrass;
-		boolean right = level.getLevel(x, y).seamsToGrass;
+		boolean left = level.getLevel(x - 1, y).seamsToGrass;
+		boolean right = level.getLevel(x + 1, y).seamsToGrass;
+		
+		boolean ur = level.getLevel(x + 1, y - 1).seamsToGrass;
+		boolean dr = level.getLevel(x + 1, y + 1).seamsToGrass;
+		boolean ul = level.getLevel(x - 1, y - 1).seamsToGrass;
+		boolean dl = level.getLevel(x - 1, y + 1).seamsToGrass;
 		
 		// Only renders when necessary
+		// TODO: THIS BULSHITT!!!
 		if(up || down || left || right) {
 			
 			if(up) screen.renderSprite(x << 4, y << 4, upSprite, 0);
-			if(down) screen.renderSprite(x << 4, y << 4, SpriteArchive.table, 0);
+			
+			if(down) screen.renderSprite(x << 4, y << 4, downSprite, 0);
+			if(left) screen.renderSprite(x << 4, y << 4, leftSprite, 0);
+			if(right) screen.renderSprite(x << 4, y << 4, rightSprite, 0);
+			
+			if(down && left) {
+				screen.renderSprite(x << 4, y << 4, downSprite, 0);
+				if(dl) screen.renderSprite(x << 4, y << 4, dlSprite, 0);
+			}
 			
 		}
 		else {
@@ -57,4 +72,9 @@ public class GrassTile extends TileManager {
 	
 	private SpriteManager upSprite = new SpriteManager(16, 1, 0, ground);
 	private SpriteManager downSprite = new SpriteManager(16, 1, 2, ground);
+	private SpriteManager leftSprite = new SpriteManager(16, 0, 1, ground);
+	private SpriteManager rightSprite = new SpriteManager(16, 2, 1, ground);
+
+	private SpriteManager urSprite = new SpriteManager(16, 2, 2, ground);
+	private SpriteManager dlSprite = new SpriteManager(16, 0, 2, ground);
 }
