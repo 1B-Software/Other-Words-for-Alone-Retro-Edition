@@ -21,6 +21,7 @@ import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
+import robatortas.code.files.core.render.SpriteSheetManager;
 import robatortas.code.files.project.archive.SpriteArchive;
 
 public class GrassTile extends TileManager {
@@ -34,17 +35,26 @@ public class GrassTile extends TileManager {
 	// TODO: FIX BUG ASAP!!!!
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
 		// << equals multiply because its a binary operation
-		screen.renderTile(x << 4, y << 4, this);
 		
 		boolean up = level.getLevel(x, y - 1).seamsToGrass;
-		boolean down = level.getLevel(x, y).seamsToGrass;
+		boolean down = level.getLevel(x, y + 1).seamsToGrass;
 		boolean left = level.getLevel(x, y).seamsToGrass;
 		boolean right = level.getLevel(x, y).seamsToGrass;
 		
-		if(up) {
-			level.insertTile(x, y , SpriteArchive.col_bush);
+		// Only renders when necessary
+		if(up || down || left || right) {
+			
+			if(up) screen.renderSprite(x << 4, y << 4, upSprite, 0);
+			if(down) screen.renderSprite(x << 4, y << 4, SpriteArchive.table, 0);
+			
+		}
+		else {
+			screen.renderTile(x << 4, y << 4, this);
 		}
 	}
 	
-	public TileManager grassUp = new TileManager(SpriteArchive.bed);
+	SpriteSheetManager ground = new SpriteSheetManager("/textures/spritesheet/nature/ground.png", 208, 96);
+	
+	private SpriteManager upSprite = new SpriteManager(16, 1, 0, ground);
+	private SpriteManager downSprite = new SpriteManager(16, 1, 2, ground);
 }

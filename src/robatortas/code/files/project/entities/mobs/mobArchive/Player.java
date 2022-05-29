@@ -93,6 +93,7 @@ public class Player extends MobAddons {
 				if(dir == 0) animSprite = punchUp;
 				if(dir == 1) animSprite = punchRight;
 				if(dir == 2) animSprite = punchDown;
+				
 				if(dir == 3) animSprite = punchLeft;
 				
 				if((tickTime / 8) % 2 == 0) {
@@ -143,7 +144,6 @@ public class Player extends MobAddons {
 			if(punch == false) {
 				punch = true;
 				attack();
-				level.insertTile(x >> 4, y >> 4, SpriteArchive.col_water);
 			}
 		} else punch = false;
 		if(attackTime > 0) attackTime--;
