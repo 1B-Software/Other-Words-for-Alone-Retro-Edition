@@ -3,6 +3,7 @@ package robatortas.code.files.core.level.tiles;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
+import robatortas.code.files.project.archive.SpriteArchive;
 
 public class ConnectTile {
 
@@ -14,7 +15,21 @@ public class ConnectTile {
 	
 	private boolean diagonal;
 	
+	private RenderManager screen;
+	private LevelManager level;
+	
+	private int x, y;
+	
 	public ConnectTile(RenderManager screen, LevelManager level, int x, int y) {
+		this.screen = screen;
+		this.level = level;
+		this.x = x;
+		this.y = y;
+	}
+	
+	public void init() {
+		int xt = x << 4;
+		int yt = y << 4;
 		
 		up = level.getLevel(x, y - 1).seamsToGrass;
 		down = level.getLevel(x, y + 1).seamsToGrass;
@@ -35,9 +50,8 @@ public class ConnectTile {
 		if(up && right || up && left || down && right || down && left) {
 			diagonal = true;
 			
-			screen.renderSprite(x, y, urSprite, 0);
+			screen.renderSprite(xt, yt, urSprite, 0);
 		}
-		
 	}
 	
 	public void full(SpriteManager up, SpriteManager down, SpriteManager left, SpriteManager right) {
@@ -52,5 +66,10 @@ public class ConnectTile {
 		this.urSprite = ur;
 		this.dlSprite = dl;
 		this.drSprite = dr;
+	}
+	
+	public boolean connects() {
+		if(up || down || left || right) return true;
+		else return false;
 	}
 }

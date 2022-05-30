@@ -17,6 +17,8 @@
 
 package robatortas.code.files.project.archive.tileArchive.Nature;
 
+import javax.sql.ConnectionPoolDataSource;
+
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.ConnectTile;
 import robatortas.code.files.core.level.tiles.TileManager;
@@ -38,18 +40,12 @@ public class GrassTile extends TileManager {
 	// Connects when for example down = there is water one tile down the grass tile!!!
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
 		// << equals multiply because its a binary operation
-		
-		int xt = x << 4;
-		int yt = y << 4;
-		
-		connect = new ConnectTile(screen, level, xt, yt);
-		
-		// Only renders when necessary
-		// TODO: THIS BULSHITT!!! (I can't think)
+		connect = new ConnectTile(screen, level, x, y);
 		connect.full(upSprite, downSprite, leftSprite, rightSprite);
 		connect.sides(ulSprite, urSprite, drSprite, dlSprite);
+		connect.init();
 		
-//		screen.renderTile(x << 4, y << 4, this);
+		if(!connect.connects()) screen.renderTile(x << 4, y << 4, this);
 	}
 	
 	SpriteSheetManager ground = new SpriteSheetManager("/textures/spritesheet/nature/ground.png", 208, 96);
