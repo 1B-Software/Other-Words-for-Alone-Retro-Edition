@@ -41,23 +41,20 @@ public class ConnectTile {
 		ul = level.getLevel(x - 1, y - 1).seamsToGrass;
 		dl = level.getLevel(x - 1, y + 1).seamsToGrass;
 		
-		// THINK!
+		// ALMOST DONE!!
+		// just need to make it actually efficient
+
+		if(down && right || down && left || up && right || up && left) {
+			if(up && right) screen.renderSprite(xt, yt, urSprite, 0); 
+			else if(up && left) screen.renderSprite(xt, yt, ulSprite, 0);
 		
-		if(up || down || left || right) {
-			diagonal = false;
+			if(down && right) screen.renderSprite(xt, yt, drSprite, 0);
+			else if(down && left) screen.renderSprite(xt, yt, dlSprite, 0);
+		} else if(up || down || left || right){
 			if(up) screen.renderSprite(xt, yt, upSprite, 0);
 			if(down) screen.renderSprite(xt, yt, downSprite, 0);
 			if(left) screen.renderSprite(xt, yt, leftSprite, 0);
 			if(right) screen.renderSprite(xt, yt, rightSprite, 0);
-		}
-		
-		if(up && right || up && left || down && right || down && left) {
-			diagonal = true;
-			
-			if(up && right) screen.renderSprite(xt, yt, urSprite, 0);
-			if(up && left) screen.renderSprite(xt, yt, ulSprite, 0);
-			if(down && right) screen.renderSprite(xt, yt, drSprite, 0);
-			if(down && left) screen.renderSprite(xt, yt, dlSprite, 0);
 		}
 	}
 	
