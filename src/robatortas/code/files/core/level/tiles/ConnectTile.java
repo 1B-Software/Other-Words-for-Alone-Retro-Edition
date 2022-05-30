@@ -45,12 +45,19 @@ public class ConnectTile {
 		
 		if(up || down || left || right) {
 			diagonal = false;
+			if(up) screen.renderSprite(xt, yt, upSprite, 0);
+			if(down) screen.renderSprite(xt, yt, downSprite, 0);
+			if(left) screen.renderSprite(xt, yt, leftSprite, 0);
+			if(right) screen.renderSprite(xt, yt, rightSprite, 0);
 		}
 		
 		if(up && right || up && left || down && right || down && left) {
 			diagonal = true;
 			
-			screen.renderSprite(xt, yt, urSprite, 0);
+			if(up && right) screen.renderSprite(xt, yt, urSprite, 0);
+			if(up && left) screen.renderSprite(xt, yt, ulSprite, 0);
+			if(down && right) screen.renderSprite(xt, yt, drSprite, 0);
+			if(down && left) screen.renderSprite(xt, yt, dlSprite, 0);
 		}
 	}
 	

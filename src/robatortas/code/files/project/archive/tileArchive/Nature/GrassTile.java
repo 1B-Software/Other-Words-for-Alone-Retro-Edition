@@ -42,7 +42,7 @@ public class GrassTile extends TileManager {
 		// << equals multiply because its a binary operation
 		connect = new ConnectTile(screen, level, x, y);
 		connect.full(upSprite, downSprite, leftSprite, rightSprite);
-		connect.sides(ulSprite, urSprite, drSprite, dlSprite);
+		connect.sides(ulSprite, urSprite, dlSprite, drSprite);
 		connect.init();
 		
 		if(!connect.connects()) screen.renderTile(x << 4, y << 4, this);
@@ -55,8 +55,8 @@ public class GrassTile extends TileManager {
 	private SpriteManager leftSprite = new SpriteManager(16, 0, 1, ground);
 	private SpriteManager rightSprite = new SpriteManager(16, 2, 1, ground);
 
-	private SpriteManager urSprite = new SpriteManager(16, 2, 2, ground);
-	private SpriteManager ulSprite = new SpriteManager(16, 2, 2, ground);
+	private SpriteManager urSprite = new SpriteManager(16, 2, 0, ground);
+	private SpriteManager ulSprite = new SpriteManager(16, 0, 0, ground);
 	private SpriteManager drSprite = new SpriteManager(16, 2, 2, ground);
 	private SpriteManager dlSprite = new SpriteManager(16, 0, 2, ground);
 }
