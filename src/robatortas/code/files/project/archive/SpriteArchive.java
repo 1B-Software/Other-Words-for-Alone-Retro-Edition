@@ -11,7 +11,7 @@ public class SpriteArchive {
 	private static SpriteSheetManager solids = SheetArchive.solids;
 	private static SpriteSheetManager interior = SheetArchive.interior;
 	
-	public static SpriteManager voidSprite = new SpriteManager(16, 0xffffffff);
+	public static SpriteManager voidSprite = new SpriteManager(16, 0x1B87E0);
 	
 	//////////////
 	// NATURE!! //

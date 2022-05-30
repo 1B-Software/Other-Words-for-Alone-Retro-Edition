@@ -23,9 +23,9 @@ public class SpriteManager {
 		this.SIZE = size;
 		this.width = size;
 		this.height = size;
-		pixels = new int[SIZE*SIZE];
+		pixels = new int[size*size];
 		
-		for(int i = 0; i < SIZE*SIZE; i++) {
+		for(int i = 0; i < size*size; i++) {
 			pixels[i] = color;
 		}
 	}
