@@ -1,0 +1,56 @@
+package robatortas.code.files.core.level.tiles;
+
+import robatortas.code.files.core.level.LevelManager;
+import robatortas.code.files.core.render.RenderManager;
+import robatortas.code.files.core.render.SpriteManager;
+
+public class ConnectTile {
+
+	private SpriteManager upSprite, downSprite, leftSprite, rightSprite;
+	private SpriteManager ulSprite, urSprite, dlSprite, drSprite;
+	
+	public boolean up, down, left, right;
+	public boolean ur, ul, dr, dl;
+	
+	private boolean diagonal;
+	
+	public ConnectTile(RenderManager screen, LevelManager level, int x, int y) {
+		
+		up = level.getLevel(x, y - 1).seamsToGrass;
+		down = level.getLevel(x, y + 1).seamsToGrass;
+		left = level.getLevel(x - 1, y).seamsToGrass;
+		right = level.getLevel(x + 1, y).seamsToGrass;
+		
+		ur = level.getLevel(x + 1, y - 1).seamsToGrass;
+		dr = level.getLevel(x + 1, y + 1).seamsToGrass;
+		ul = level.getLevel(x - 1, y - 1).seamsToGrass;
+		dl = level.getLevel(x - 1, y + 1).seamsToGrass;
+		
+		// THINK!
+		
+		if(up || down || left || right) {
+			diagonal = false;
+		}
+		
+		if(up && right || up && left || down && right || down && left) {
+			diagonal = true;
+			
+			screen.renderSprite(x, y, urSprite, 0);
+		}
+		
+	}
+	
+	public void full(SpriteManager up, SpriteManager down, SpriteManager left, SpriteManager right) {
+		this.upSprite = up;
+		this.downSprite = down;
+		this.leftSprite = left;
+		this.rightSprite = right;
+	}
+	
+	public void sides(SpriteManager ul, SpriteManager ur, SpriteManager dl, SpriteManager dr) {
+		this.ulSprite = ul;
+		this.urSprite = ur;
+		this.dlSprite = dl;
+		this.drSprite = dr;
+	}
+}
