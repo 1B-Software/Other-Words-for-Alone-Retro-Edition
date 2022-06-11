@@ -139,6 +139,7 @@ public class LevelManager {
 		if(tiles[x + y * width] == SpriteArchive.col_flowerRed) return TileArchive.flowerRed;
 		if(tiles[x + y * width] == SpriteArchive.col_yellowDahlia) return TileArchive.yellowDahlia;
 		if(tiles[x + y * width] == SpriteArchive.col_bush) return TileArchive.bushTile;
+		if(tiles[x + y * width] == SpriteArchive.col_oakTree) return TileArchive.tree;
 		return TileArchive.voidTile;
 	}
 }

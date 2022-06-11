@@ -46,7 +46,7 @@ public class ConnectTile {
 		// ALMOST DONE!!
 		// just need to make it actually efficient
 
-		if(below()) screen.renderSprite(x << 4, y << 4, below, 0);
+		if(below() && connects()) screen.renderSprite(x << 4, y << 4, below, 0);
 		
 		if(down && right || down && left || up && right || up && left) {
 			if(up && right) screen.renderSprite(xt, yt, urSprite, 0); 
