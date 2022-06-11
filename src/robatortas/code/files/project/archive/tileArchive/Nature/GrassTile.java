@@ -25,6 +25,8 @@ import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
 import robatortas.code.files.core.render.SpriteSheetManager;
+import robatortas.code.files.project.archive.SpriteArchive;
+import robatortas.code.files.project.archive.tileArchive.TileArchive;
 
 public class GrassTile extends TileManager {
 	
@@ -40,9 +42,11 @@ public class GrassTile extends TileManager {
 	// Connects when for example down = there is water one tile down the grass tile!!!
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
 		// << equals multiply because its a binary operation
+		
 		connect = new ConnectTile(screen, level, x, y);
 		connect.full(upSprite, downSprite, leftSprite, rightSprite);
 		connect.sides(ulSprite, urSprite, dlSprite, drSprite);
+		connect.below = TileArchive.water.sprite;
 		connect.init();
 		
 		if(!connect.connects()) screen.renderTile(x << 4, y << 4, this);

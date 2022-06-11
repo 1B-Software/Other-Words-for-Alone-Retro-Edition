@@ -10,6 +10,8 @@ public class ConnectTile {
 	private SpriteManager upSprite, downSprite, leftSprite, rightSprite;
 	private SpriteManager ulSprite, urSprite, dlSprite, drSprite;
 	
+	public SpriteManager below;
+	
 	public boolean up, down, left, right;
 	public boolean ur, ul, dr, dl;
 	
@@ -44,6 +46,8 @@ public class ConnectTile {
 		// ALMOST DONE!!
 		// just need to make it actually efficient
 
+		if(below()) screen.renderSprite(x << 4, y << 4, below, 0);
+		
 		if(down && right || down && left || up && right || up && left) {
 			if(up && right) screen.renderSprite(xt, yt, urSprite, 0); 
 			else if(up && left) screen.renderSprite(xt, yt, ulSprite, 0);
@@ -72,8 +76,13 @@ public class ConnectTile {
 		this.drSprite = dr;
 	}
 	
+	public boolean below() {
+		if(below != null) return true;
+		else return false;
+	}
+	
 	public boolean connects() {
-		if(up || down || left || right) return true;
+		if(up || down || left || right || down && right || down && left || up && right || up && left) return true;
 		else return false;
 	}
 }

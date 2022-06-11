@@ -48,8 +48,10 @@ public class WaterTile extends TileManager {
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
 		//WATER EARLY TESTING!!!
 		
-		if(s == -1) screen.renderSprite(x << 4, y << 4, water1, 0);
-		if(s == 1) screen.renderSprite(x << 4, y << 4, water2, 0);
+		if(s == -1) sprite = water1;
+		if(s == 1) sprite = water2;
+		
+		screen.renderSprite(x << 4, y << 4, sprite, 0);
 		
 		
 	}
