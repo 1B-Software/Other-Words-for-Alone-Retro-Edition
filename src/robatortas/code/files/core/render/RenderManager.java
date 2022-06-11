@@ -65,16 +65,16 @@ public class RenderManager {
 		yp -= yOffset;
 		
 		for(int y = 0; y < sprite.height; y++) {
-			int ya = y+yp;
+			int ya = y + yp;
 			int ys = y;
-			if(flip == 2 || flip == 3) ys = 15 - y;
+			if(flip == 2 || flip == 3) ys = (sprite.height- 1) - y;
 			for(int x = 0; x < sprite.width; x++) {
-				int xa = x+xp;
+				int xa = x + xp;
 				int xs = x;
-				if(flip == 1 || flip == 3) xs = 15 - x;
+				if(flip == 1 || flip == 3) xs = (sprite.width - 1) - x;
 				if(xa < -sprite.width || xa >= width || ya < 0 || ya >= height) break;
 				if(xa < 0) xa = 0;
-				int color = sprite.pixels[xs+ys*sprite.SIZE];
+				int color = sprite.pixels[xs+ys*sprite.width];
 				if(color != 0xffff00ff) pixels[xa+ya*width] = color;
 			}
 		}

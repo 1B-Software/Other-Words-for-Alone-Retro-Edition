@@ -15,7 +15,7 @@ public class SpriteManager {
 		this.width = size;
 		this.height = size;
 		this.sheet = sheet;
-		pixels = new int[SIZE*SIZE];
+		pixels = new int[size*size];
 		load();
 	}
 	
@@ -35,6 +35,8 @@ public class SpriteManager {
 		this.width = width;
 		this.height = height;
 		this.sheet = sheet;
+		pixels = new int[width*height];
+		load();
 	}
 	
 	public SpriteManager(int[] pixels, int width, int height) {

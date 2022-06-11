@@ -11,14 +11,14 @@ public class SpriteArchive {
 	private static SpriteSheetManager solids = SheetArchive.solids;
 	private static SpriteSheetManager interior = SheetArchive.interior;
 	
-	public static SpriteManager voidSprite = new SpriteManager(16, 0x1B87E0);
+	public static SpriteManager voidSprite = new SpriteManager(16, 0, 0, new SpriteSheetManager("/textures/spritesheet/NULL_TEXTURE.png", 16));
 	
 	//////////////
 	// NATURE!! //
 	//////////////
 	
 	public static SpriteManager grass = new SpriteManager(16, 1, 1, groundNature);
-	public static SpriteManager tree = new SpriteManager(16, 1, 3, nature);
+	public static SpriteManager tree = new SpriteManager(31, 0, 0, foliage);
 	public static SpriteManager tree2 = new SpriteManager(16, 2, 3, nature);
 	public static SpriteManager pebble = new SpriteManager(16, 2, 0, nature);
 	public static SpriteManager dirt = new SpriteManager(16, 5, 0, nature);
