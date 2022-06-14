@@ -28,10 +28,6 @@ public class TileManager {
 	public boolean seamsToGrass = false;
 	public boolean seamsToRock = false;
 	
-	public void render(int x, int y, RenderManager screen) {
-		
-	}
-	
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
 	
 	}

@@ -17,10 +17,17 @@ public class LevelRenderManager {
 	public void render(LevelManager level) {
 		for(int y = y0; y < y1; y++) {
 			for(int x = x0; x < x1; x++) {
-				if(x < 0 || y < 0 || x >= screen.width|| y >= screen.height) continue;
+				if(x < 0 || y < 0 || x >= level.width|| y >= level.height) continue;
 				level.getLevel(x, y).render(x, y, level, screen);
-				level.getFront(x, y).render(x, y, level, screen);
 				
+			}
+			
+			for(int yy = y0; yy < y1; yy++) {
+				for(int xx = x0; xx < x1; xx++) {
+					if(xx < 0 || yy < 0 || xx >= level.width|| yy >= level.height) continue;
+					level.getFront(xx, yy).render(xx, yy, level, screen);
+					
+				}
 			}
 		}
 	}
