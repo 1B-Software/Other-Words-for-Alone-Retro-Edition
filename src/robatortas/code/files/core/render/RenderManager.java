@@ -47,9 +47,9 @@ public class RenderManager {
 		xp -= xOffset;
 		yp -= yOffset;
 		
-		for(int y = 0; y < tile.sprite.width; y++) {
+		for(int y = 0; y < tile.sprite.height; y++) {
 			int ya = y+yp;
-			for(int x = 0; x < tile.sprite.height; x++) {
+			for(int x = 0; x < tile.sprite.width; x++) {
 				int xa = x+xp;
 				if(xa < -tile.sprite.width || xa >= width || ya < 0 || ya >= height) break;
 				if(xa < 0) xa = 0;

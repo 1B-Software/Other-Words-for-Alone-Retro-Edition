@@ -22,6 +22,7 @@ import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
+import robatortas.code.files.project.archive.SpriteArchive;
 
 public class BushTile extends TileManager {
 
