@@ -18,7 +18,7 @@ public class SpriteArchive {
 	//////////////
 	
 	public static SpriteManager grass = new SpriteManager(16, 1, 1, groundNature);
-	public static SpriteManager tree = new SpriteManager(31, 0, 0, foliage);
+	public static SpriteManager tree = new SpriteManager(32, 0, 0, foliage);
 	public static SpriteManager tree2 = new SpriteManager(16, 2, 3, nature);
 	public static SpriteManager pebble = new SpriteManager(16, 2, 0, nature);
 	public static SpriteManager dirt = new SpriteManager(16, 5, 0, nature);

@@ -29,9 +29,9 @@ public class LevelRenderManager {
 	public int x0,y0,x1,y1; 
 	public void pinPoints(int xScroll, int yScroll) {
 		screen.setOffset(xScroll, yScroll);
-		x0 = (xScroll) >> 4;
+		x0 = (xScroll - 6) >> 4;
 		x1 = (xScroll + screen.width + 16) >> 4;
-		y0 = (yScroll) >> 4;
+		y0 = (yScroll - 6) >> 4;
 		y1 = (yScroll + screen.height + 16) >> 4;
 	}
 

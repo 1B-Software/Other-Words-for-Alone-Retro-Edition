@@ -10,8 +10,8 @@ public class SpriteManager {
 	
 	public SpriteManager(int size, int x, int y, SpriteSheetManager sheet) {
 		this.SIZE = size;
-		this.x = x * SIZE;
-		this.y = y * SIZE;
+		this.x = x * size;
+		this.y = y * size;
 		this.width = size;
 		this.height = size;
 		this.sheet = sheet;
@@ -54,8 +54,8 @@ public class SpriteManager {
 	}
 	
 	public void load() {
-		for(int y = 0; y < height; y++) {
-			for(int x = 0; x < width; x++) {
+		for(int y = 0; y < SIZE; y++) {
+			for(int x = 0; x < SIZE; x++) {
 				pixels[x+y*width] = sheet.pixels[(x+this.x) + (y+this.y) * sheet.WIDTH];
 			}
 		}
