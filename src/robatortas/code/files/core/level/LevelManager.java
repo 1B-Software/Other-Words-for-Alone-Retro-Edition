@@ -1,5 +1,7 @@
 package robatortas.code.files.core.level;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -60,7 +62,6 @@ public class LevelManager {
 		levelRender.pinPoints(xScroll, yScroll);
 				
 		levelRender.render(this);
-		levelRender.renderEntities(xScroll, yScroll);
 	}
 	
 	public void add(EntityManager e) {
@@ -93,7 +94,8 @@ public class LevelManager {
 	
 	//remove entities from the entitiesInTiles list (When mobs are killed, it calls this method to remove the entity from the list.)
 	public void removeEntity(int x, int y, EntityManager e) {
-		addons.removeEntity(x, y, e);
+		if(x < 0 || y < 0 || x >= width || y >= height) return;
+		entitiesInTiles[x+y*width].remove(e);
 	}
 	
 	public List<EntityManager> getEntities(int x0, int y0, int x1, int y1) {
@@ -134,12 +136,18 @@ public class LevelManager {
 		return TileArchive.voidTile;
 	}
 	
-	public TileManager getFront(int x, int y) {
+	public TileManager getPost(int x, int y) {
 		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
 		if(tiles[x + y * width] == SpriteArchive.col_flowerRed) return TileArchive.flowerRed;
 		if(tiles[x + y * width] == SpriteArchive.col_yellowDahlia) return TileArchive.yellowDahlia;
 		if(tiles[x + y * width] == SpriteArchive.col_bush) return TileArchive.bushTile;
 		if(tiles[x + y * width] == SpriteArchive.col_oakTree) return TileArchive.tree;
+		return TileArchive.voidTile;
+	}
+	
+	public TileManager getFront(int x, int y) {
+		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
+		
 		return TileArchive.voidTile;
 	}
 }
