@@ -34,15 +34,15 @@ public class Chicken extends MobAddons {
 		
 		// TODO: Movements
 		
-//		if(tickTime % (random.nextInt(30) + 30) == 0) {
-//			xa = random.nextInt(3)-1;
-//			ya = random.nextInt(3)-1;
-//			// Chance of staying static
-//			if(random.nextInt(2) == 0) {
-//				xa = 0;
-//				ya = 0;
-//			}
-//		}
+		if(tickTime % (random.nextInt(30) + 30) == 0) {
+			xa = random.nextInt(3)-1;
+			ya = random.nextInt(3)-1;
+			// Chance of staying static
+			if(random.nextInt(2) == 0) {
+				xa = 0;
+				ya = 0;
+			}
+		}
 		
 		if(xa == 1) dir = 1;
 		if(xa == -1) dir = 3;

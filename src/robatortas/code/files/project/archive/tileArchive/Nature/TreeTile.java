@@ -22,6 +22,6 @@ public class TreeTile extends TileManager {
 //		screen.renderSprite(x << 4, y << 4, treeDL, 0);
 //		screen.renderSprite((x + 1) << 4 , (y << 4) - 10, treeDR, 0);
 		
-		screen.renderTile(x << 4, y << 4, this);
+		screen.renderTile((x - 1) << 4, (y - 1) << 4, this);
 	}
 }

@@ -41,27 +41,18 @@ public class LevelAddons {
 			//this removes entities
 			if (e.removed) {
 				entities.remove(i--);
-				removeEntity(xto, yto, e);
+				level.removeEntity(xto, yto, e);
 			} else {
 				int xt = e.x >> 4;
 				int yt = e.y >> 4;
 				
 				//if the x != x or y != or x = x or y = y
 				if (xto != xt || yto != yt || xto == xt || yto == yt) {
-					removeEntity(xto, yto, e);
-					insertEntity(xt, yt, e);
+					level.removeEntity(xto, yto, e);
+					level.insertEntity(xt, yt, e);
 				}
 			}
 		}
-	}
-	
-	public void insertEntity(int x, int y, EntityManager e) {
-		
-	}
-	
-	public void removeEntity(int x, int y, EntityManager e) {
-		if(x < 0 || y < 0 || x >= width || y >= height) return;
-		entitiesInTiles[x+y*width].remove(e);
 	}
 	
 	public List<EntityManager> getEntities(int x0, int y0, int x1, int y1) {
