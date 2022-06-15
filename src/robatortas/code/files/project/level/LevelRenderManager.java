@@ -31,6 +31,11 @@ public class LevelRenderManager {
 	
 	// Level Rendering goes here!
 	public void render(LevelManager level) {
+		/* These act like layers, stack em up, the lower layers are the ones rendered last (meaning they are on top)
+		 * and the top layer is the one rendering on the bottom of the game.
+		 * It's just following basic programming logic.
+		 */
+		
 		for(int y = y0; y < y1; y++) {
 			for(int x = x0; x < x1; x++) {
 				if(x < 0 || y < 0 || x >= level.width|| y >= level.height) continue;
@@ -55,7 +60,7 @@ public class LevelRenderManager {
 		}
 	}
 
-	
+	// RENDERS ENTITIES
 	private List<EntityManager> entityRowSprites = new ArrayList<EntityManager>();
 	public void renderEntities() {
 		for(int y = y0; y < y1; y++) {
