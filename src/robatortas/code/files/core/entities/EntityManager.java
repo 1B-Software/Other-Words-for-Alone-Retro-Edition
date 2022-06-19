@@ -59,4 +59,8 @@ public class EntityManager {
 	public boolean intersects(int x0, int y0, int x1, int y1) {
 		return addons.intersects(x0, y0, x1, y1);
 	}
+
+	public boolean canSwim() {
+		return false;
+	}
 }

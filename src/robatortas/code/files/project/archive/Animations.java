@@ -14,6 +14,11 @@ public class Animations {
 	public static SpriteSheetManager playerPunchRight = new SpriteSheetManager(SheetArchive.player, 2, 3, 1, 2, 32);
 	public static SpriteSheetManager playerPunchLeft = new SpriteSheetManager(SheetArchive.player, 1, 3, 1, 2, 32);
 	
+	public static SpriteSheetManager playerUpSwim = new SpriteSheetManager(SheetArchive.playerSwim, 3, 0, 1, 3, 32);
+	public static SpriteSheetManager playerRightSwim = new SpriteSheetManager(SheetArchive.playerSwim, 2, 0, 1, 3, 32);
+	public static SpriteSheetManager playerDownSwim = new SpriteSheetManager(SheetArchive.playerSwim, 0, 0, 1, 3, 32);
+	public static SpriteSheetManager playerLeftSwim = new SpriteSheetManager(SheetArchive.playerSwim, 1, 0, 1, 3, 32);
+	
 	// Chicken
 	public static SpriteSheetManager chickenLeft = new SpriteSheetManager(SheetArchive.chicken, 0, 0, 1, 3, 16);
 	public static SpriteSheetManager chickenRight = new SpriteSheetManager(SheetArchive.chicken, 0, 0, 1, 3, 16);

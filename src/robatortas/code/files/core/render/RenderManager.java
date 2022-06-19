@@ -1,5 +1,7 @@
 package robatortas.code.files.core.render;
 
+import java.util.Random;
+
 import robatortas.code.files.core.entities.Mob;
 import robatortas.code.files.core.level.tiles.TileManager;
 
@@ -11,6 +13,8 @@ public class RenderManager {
 	public int[] pixels;
 	
 	public int xOffset, yOffset;
+	
+	private Random random = new Random();
 	
 	public RenderManager(int width, int height) {
 		this.width = width;
@@ -38,6 +42,21 @@ public class RenderManager {
 				if(xx < 0 || xx >= width) continue;
 				int i = ((xx >> 4) & 15) + ((yy >> 4) & 15) * 16;
 				pixels[xx+yy*width] = 0x32ff00ff;
+			}
+		}
+	}
+	
+	public void renderBox(int xp, int yp, int w, int h, int color) {
+		xp -= xOffset;
+		yp -= yOffset;
+		
+		for(int y = 0; y < h; y++) {
+			int ya = y+yp;
+			for(int x = 0; x < w; x++) {
+				int xa = x+xp;
+				if(xa < -w || xa >= width || ya < 0 || ya >= height) break;
+				if(xa < 0) xa = 0;
+				pixels[xa+ya*width] = color;
 			}
 		}
 	}
@@ -96,9 +115,10 @@ public class RenderManager {
 				if(xa < -sprite.width || xa >= width || ya < 0 || ya >= height) break;
 				if(xa < 0) xa = 0;
 				int color = mob.getSprite().pixels[xs + ys * sprite.width];
-				if(color != 0xffff00ff) pixels[xa+ya*width] = color;
-				
-				if(mob.hurtTime > 0) color = 0x000000;
+				if(color != 0xffff00ff) {
+					pixels[xa+ya*width] = color;
+					if(mob.hurtTime > 0) pixels[xa+ya*width] = random.nextInt(0xffffff);
+				}
 			}
 		}
 	}

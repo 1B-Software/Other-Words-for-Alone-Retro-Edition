@@ -41,16 +41,24 @@ public class Player extends MobAddons {
 		this.xs = 0;
 		this.ys = 0;
 		
+		int speed = 1;
+		
 		tickTime++;
 		
 		// Controls
 		controls();
 		
+		if(isSwimming) {
+			swimTime++;
+			speed = tickTime & 1;
+		}
+		else swimTime = 0;
+		
 		// Reset Animations (AVOIDS CRASHING!)
 		animSprite.resetAnimation(animSprite, walking);
 		
 		if(xs != 0 || ys != 0) {
-			move(xs, ys);
+			move(xs * speed, ys * speed);
 			walking = true;
 		} else walking = false;
 	}
@@ -73,16 +81,19 @@ public class Player extends MobAddons {
 		for(int i = 0; i < entities.size(); i++) {
 			EntityManager e = entities.get(i);
 			if(e != this) {
-//				e.hurt(this, 5, attackDir);
-				System.out.println("INTERSECTS");
+				e.hurt(this, 5, attackDir);
+//				System.out.println("INTERSECTS");
 			}	
 		}
 	}
 	
 	public void render(RenderManager screen) {
+		int renderAxysConstX = 18;
+		int renderAxysConstY = 23;
 		
-		int flip = 0;
-		
+		////////////
+		// GROUND //
+		////////////
 		if(dir == 0) animSprite = up;
 		if(dir == 1) animSprite = right;
 		if(dir == 2) animSprite = down;
@@ -102,10 +113,36 @@ public class Player extends MobAddons {
 			}
 		}
 		
+		
+		//////////////
+		// SWIMMING //
+		//////////////
+		isSwimming = false;
+		if(level.getLevel(x >> 4, y >> 4) == TileArchive.water) {
+			if(swimTime == 1) SoundEngine.splash.play();
+			
+			if(dir == 0) animSprite = upSwim;
+			if(dir == 1) animSprite = rightSwim;
+			if(dir == 2) animSprite = downSwim;
+			if(dir == 3) animSprite = leftSwim;
+			
+			// Swimming sillhouete
+			if((tickTime / 32) % 2 == 0) screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 1, 10, SheetArchive.player), 0);
+			else screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 2, 10, SheetArchive.player), 0);
+			
+			if(walking) {
+				if(tickTime % 17 == 0) SoundEngine.swim.play();
+			}
+			
+			isSwimming = true;
+		}
+		if(isSwimming) renderAxysConstY = 15;
+		
+		// Render Mob
 		sprite = animSprite.getSprite();
 		
 		beforeLayer(screen);
-		screen.renderMob(x-16, y-16, this, sprite, flip);
+		screen.renderMob(x-renderAxysConstX, y-renderAxysConstY, this, sprite, 0);
 		afterLayer(screen);
 	}
 	
@@ -113,13 +150,13 @@ public class Player extends MobAddons {
 		// Finally using switch case huh?
 			switch(attackDir) {
 			case 0: 
-				if(attackTime > 0) screen.renderSprite(x+8, y-3, SpriteArchive.swingFx, 0);
+				if(attackTime > 0) screen.renderSprite(x-10, y-26, SpriteArchive.swingFx, 0);
 				break;
 			case 1:
-				if(attackTime > 0) screen.renderSprite(x+20, y+6, SpriteArchive.swingFx_Sides, 1);
+				if(attackTime > 0) screen.renderSprite(x+1, y-16, SpriteArchive.swingFx_Sides, 1);
 				break;
 			case 3:
-				if(attackTime > 0) screen.renderSprite(x-3, y+6, SpriteArchive.swingFx_Sides, 0);
+				if(attackTime > 0) screen.renderSprite(x-20, y-16, SpriteArchive.swingFx_Sides, 0);
 				break;
 			}
 	}
@@ -127,7 +164,7 @@ public class Player extends MobAddons {
 	public void afterLayer(RenderManager screen) {
 		switch(attackDir) {
 		case 2:
-			if(attackTime > 0) screen.renderSprite(x+8, y+15, SpriteArchive.swingFx, 2);
+			if(attackTime > 0) screen.renderSprite(x-8, y-1, SpriteArchive.swingFx, 2);
 			break;
 		}
 	}
@@ -144,7 +181,7 @@ public class Player extends MobAddons {
 			if(punch == false) {
 				punch = true;
 				attack();
-				level.insertTile(x >> 4, y >> 4, SpriteArchive.col_oakTree);
+				level.insertTile((x >> 4) + 1, y >> 4, SpriteArchive.col_bricks);
 			}
 		} else punch = false;
 		if(attackTime > 0) attackTime--;
@@ -160,11 +197,21 @@ public class Player extends MobAddons {
 		}
 	}
 	
+	// PLAYER CAN SWIM!!! (The other entities can't now, so fuck 'em)
+	public boolean canSwim() {
+		return true;
+	}
+	
 	// Animations
 	public Animate up = new Animate(Animations.playerUp, 1, 3, 3);
 	public Animate right = new Animate(Animations.playerRight, 1, 3, 3);
 	public Animate down = new Animate(Animations.playerDown, 1, 3, 3);
 	public Animate left = new Animate(Animations.playerLeft, 1, 3, 3);
+	
+	public Animate upSwim = new Animate(Animations.playerUpSwim, 1, 3, 3);
+	public Animate rightSwim = new Animate(Animations.playerRightSwim, 1, 3, 3);
+	public Animate downSwim = new Animate(Animations.playerDownSwim, 1, 3, 3);
+	public Animate leftSwim = new Animate(Animations.playerLeftSwim, 1, 3, 3);
 	
 	public Animate punchDown = new Animate(Animations.playerPunchDown, 1, 2, 2);
 	public Animate punchUp = new Animate(Animations.playerPunchUp, 1, 2, 2);
