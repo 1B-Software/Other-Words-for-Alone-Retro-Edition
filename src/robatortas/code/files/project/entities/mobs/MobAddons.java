@@ -4,7 +4,7 @@ import robatortas.code.files.core.entities.Mob;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
 
-public class MobAddons extends Mob{
+public class MobAddons extends Mob {
 	
 	public void move(int xa, int ya) {
 		super.xa = xa;
@@ -15,9 +15,12 @@ public class MobAddons extends Mob{
 			move(0, ya);
 			return;
 		}
-		if(!collision(super.xa, super.ya)) {
+		
+		collision(xa, ya);
+		if(!collision(xa, ya)) {
 			x += xa;
 			y += ya;
+			walking = false;
 		}
 		
 		if(xa > 0) dir = 1;
@@ -99,10 +102,13 @@ public class MobAddons extends Mob{
 	public boolean collision(int xs, int ys) {
 		boolean solid = false;
 		for(int c = 0; c < 4; c++) {
-			int xt = ((super.x+xs) + c % 2 * 8 + 12) >> 4;
-			int yt = ((super.y+ys) + c / 2 * 1 + 22) >> 4;
+			int xt = ((x + xs) + c % 2 * 8 - 6) >> 4;
+			int yt = ((y + ys) + c / 2 * 4 - 4) >> 4;
 			// if (SolidMethod() == true) solid = true 
 			if(level.getLevel(xt, yt).solid(level, xt, yt, this)) {
+				solid = true;
+			}
+			if(level.getPost(xt, yt).solid(level, xt, yt, this)) {
 				solid = true;
 			}
 			if(level.getFront(xt, yt).solid(level, xt, yt, this)) {

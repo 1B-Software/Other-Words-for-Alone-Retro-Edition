@@ -17,6 +17,7 @@
 
 package robatortas.code.files.project.archive.tileArchive.Nature;
 
+import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
@@ -46,8 +47,6 @@ public class WaterTile extends TileManager {
 	public static SpriteManager water2 = new SpriteManager(16, 3, 2, SheetArchive.nature);
 	
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
-		//WATER EARLY TESTING!!!
-		
 		if(s == -1) sprite = water1;
 		if(s == 1) sprite = water2;
 		
@@ -56,7 +55,7 @@ public class WaterTile extends TileManager {
 		
 	}
 	
-//	public boolean solid(LevelManager level, int x, int y, EntityManager e) {
-//		return e.cantSwim();
-//	}
+	public boolean solid(LevelManager level, int x, int y, EntityManager e) {
+		return !e.canSwim();
+	}
 }

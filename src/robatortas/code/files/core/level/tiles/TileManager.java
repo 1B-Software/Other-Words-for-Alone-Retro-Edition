@@ -1,5 +1,7 @@
 package robatortas.code.files.core.level.tiles;
 
+import java.util.Random;
+
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.RenderManager;
@@ -10,6 +12,9 @@ public class TileManager {
 	public SpriteManager sprite;
 	public int x, y;
 	public int id;
+	public LevelManager level;
+	
+	protected Random random = new Random();
 	
 	public static TileManager[] tiles = new TileManager[256];
 	
@@ -29,7 +34,7 @@ public class TileManager {
 	public boolean seamsToRock = false;
 	
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
-	
+		this.level = level;
 	}
 	
 	public void add(TileManager tile) {

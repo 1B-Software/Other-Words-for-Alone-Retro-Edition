@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import robatortas.code.files.core.entities.EntityManager;
+import robatortas.code.files.project.entities.mobs.mobArchive.Bee;
 import robatortas.code.files.project.entities.mobs.mobArchive.Chicken;
 import robatortas.code.files.project.entities.mobs.mobArchive.Player;
 import robatortas.code.files.project.level.TerrainGen.NoiseMap;
@@ -26,6 +27,8 @@ public class GameLevel extends LevelManager {
 		add(player);
 		
 		add(new Chicken(50, 50));
+		
+		for(int i = 0; i < 10; i++) add(new Bee(7 << 4, 5 << 4));
 	}
 	
 	public void levelReader(String path) {
@@ -40,6 +43,7 @@ public class GameLevel extends LevelManager {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void entitiesIteration() {
 		entitiesInTiles = new ArrayList[width*height];
 		for (int i = 0; i < width*height; i++) {
