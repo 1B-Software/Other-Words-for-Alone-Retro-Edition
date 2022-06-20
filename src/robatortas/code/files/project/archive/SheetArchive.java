@@ -14,9 +14,15 @@ public class SheetArchive {
 	
 	public static SpriteSheetManager gui = new SpriteSheetManager("/textures/spritesheet/gui/gui.png", 144);
 	
-	// Mobs
-	public static SpriteSheetManager player = new SpriteSheetManager("/textures/spritesheet/mob/mobtest.png", 128, 176);
+	//////////
+	// Mobs //
+	//////////
+	
+	// PLAYER
+	private String playerSheet = player.path;
+	public static SpriteSheetManager player = new SpriteSheetManager("/textures/spritesheet/mob/player.png", 128, 176);
 	public static SpriteSheetManager playerSwim = new SpriteSheetManager("/textures/spritesheet/mob/player_swim.png", 128, 96);
+	
 	public static SpriteSheetManager chicken = new SpriteSheetManager("/textures/spritesheet/mob/chicken.png", 16, 48);
 	
 	

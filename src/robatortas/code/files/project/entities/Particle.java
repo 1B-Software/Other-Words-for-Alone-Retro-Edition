@@ -6,12 +6,12 @@ import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.entities.mobs.MobAddons;
 
-public class Particle extends EntityManager {
+public class Particle extends MobAddons {
 	
-	private int life = 60 + random.nextInt(60);
+	public int life = 60 + random.nextInt(60);
 	private int time = 0;
 	
-	private PhysicsEngine physicsEngine;
+	public PhysicsEngine physicsEngine;
 	
 	private int color;
 	
@@ -25,7 +25,7 @@ public class Particle extends EntityManager {
 		time++;
 		
 		physicsEngine.calculations.physics();
-		move((int)physicsEngine.calculations.x0 - x, (int)physicsEngine.calculations.y0 - y);
+		move2((int)physicsEngine.calculations.x0 - x, (int)physicsEngine.calculations.y0 - y);
 		
 		life();
 	}

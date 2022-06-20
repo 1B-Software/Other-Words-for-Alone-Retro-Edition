@@ -51,6 +51,8 @@ public class Player extends MobAddons {
 		// Controls
 		controls();
 		
+		particleEffects();
+		
 		if(isSwimming) {
 			swimTime++;
 			speed = tickTime & 1;
@@ -66,7 +68,7 @@ public class Player extends MobAddons {
 		} else walking = false;
 	}
 	
-	public void attack() {
+	private void attack() {
 		attackDir = dir;
 		attackTime = 5;
 		
@@ -79,7 +81,7 @@ public class Player extends MobAddons {
 		if (dir == 2) hurt(x, y + yRange - 2, x - 5, y);
 	}
 	
-	public void hurt(int x0, int y0, int x1, int y1) {
+	private void hurt(int x0, int y0, int x1, int y1) {
 		List<EntityManager> entities = level.getEntities(x0, y0, x1, y1);
 		for(int i = 0; i < entities.size(); i++) {
 			EntityManager e = entities.get(i);
@@ -126,6 +128,7 @@ public class Player extends MobAddons {
 				SoundEngine.splash.play();
 				level.add(particle = new Particle(x, y));
 				particle.setColor(0xff40AEE5);
+				particle.life = 20 + random.nextInt(20);
 			}
 			
 			if(dir == 0) animSprite = upSwim;
@@ -140,10 +143,6 @@ public class Player extends MobAddons {
 			if(walking) {
 				if(tickTime % 17 == 0) {
 					SoundEngine.swim.play();
-					for(int i = 0; i < 1; i++) {
-						level.add(particle = new Particle(x, y));
-						particle.setColor(0xff40AEE5);
-					}
 				}
 			}
 			
@@ -159,7 +158,7 @@ public class Player extends MobAddons {
 		afterLayer(screen);
 	}
 	
-	public void beforeLayer(RenderManager screen) {
+	private void beforeLayer(RenderManager screen) {
 		// Finally using switch case huh?
 			switch(attackDir) {
 			case 0: 
@@ -174,7 +173,7 @@ public class Player extends MobAddons {
 			}
 	}
 	
-	public void afterLayer(RenderManager screen) {
+	private void afterLayer(RenderManager screen) {
 		switch(attackDir) {
 		case 2:
 			if(attackTime > 0) screen.renderSprite(x-8, y-1, SpriteArchive.swingFx, 2);
@@ -182,8 +181,24 @@ public class Player extends MobAddons {
 		}
 	}
 	
+	private void particleEffects() {
+		if(walking && isSwimming) {
+			if(tickTime % 17 == 0) {
+				for(int i = 0; i < 3; i++) {
+					level.add(particle = new Particle(x, y));
+					particle.setColor(0xff40AEE5);
+					particle.physicsEngine.calculations.elasticity = 0;
+					particle.physicsEngine.calculations.gravityForce = 0.2;
+					particle.physicsEngine.calculations.frictionX = 0.96;
+					particle.physicsEngine.calculations.frictionY = 0.96;
+					particle.life = 20 + random.nextInt(20);
+				}
+			}
+		}
+	}
 	
-	public void controls() {
+	
+	private void controls() {
 		// Controls
 		if(input.up) ys -= velY;
 		if(input.down) ys += velY;
