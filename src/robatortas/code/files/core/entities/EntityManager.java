@@ -1,5 +1,7 @@
 package robatortas.code.files.core.entities;
 
+import java.util.Random;
+
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
@@ -10,6 +12,8 @@ public class EntityManager {
 	public int x, y;
 	public SpriteManager sprite;
 	public LevelManager level;
+	
+	protected Random random = new Random();
 	
 	public boolean removed;
 	
@@ -33,6 +37,10 @@ public class EntityManager {
 	}
 	
 	public void move(int xa, int ya) {
+		addons.move(xa, ya);
+	}
+	
+	public void move2(int xa, int ya) {
 		addons.move(xa, ya);
 	}
 	

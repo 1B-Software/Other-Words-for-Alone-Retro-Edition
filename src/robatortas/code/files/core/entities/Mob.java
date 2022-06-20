@@ -18,8 +18,6 @@ public class Mob extends EntityManager {
 	
 	protected int xKnockback, yKnockback;
 	
-	protected Random random = new Random();
-	
 	protected boolean walking = false;
 	protected boolean isSwimming = false;
 	public int dir = 3;

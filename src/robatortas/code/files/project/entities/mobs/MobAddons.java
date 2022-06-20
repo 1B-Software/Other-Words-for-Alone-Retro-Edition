@@ -16,17 +16,21 @@ public class MobAddons extends Mob {
 			return;
 		}
 		
-		collision(xa, ya);
-		if(!collision(xa, ya)) {
-			x += xa;
-			y += ya;
-			walking = false;
-		}
-		
 		if(xa > 0) dir = 1;
 		if(xa < 0) dir = 3;
 		if(ya > 0) dir = 2;
 		if(ya < 0) dir = 0;
+		
+		move2(xa, ya);
+	}
+	
+	public void move2(int xa, int ya) {
+		collision(xa, ya);
+		if(!collision(xa, ya)) {
+			x += xa;
+			y += ya;
+			walking = true;
+		}
 	}
 	
 	public void update() {

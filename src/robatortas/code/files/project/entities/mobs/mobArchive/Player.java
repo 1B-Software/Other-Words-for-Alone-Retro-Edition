@@ -13,6 +13,7 @@ import robatortas.code.files.project.archive.Animations;
 import robatortas.code.files.project.archive.SheetArchive;
 import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.archive.tileArchive.TileArchive;
+import robatortas.code.files.project.entities.Particle;
 import robatortas.code.files.project.entities.mobs.MobAddons;
 
 public class Player extends MobAddons {
@@ -21,6 +22,8 @@ public class Player extends MobAddons {
 	
 	public boolean punch = true;
 	public int attackTime, attackDir;
+	
+	private Particle particle;
 	
 	public Player(int x, int y, InputManager input) {
 		this.x = x;
@@ -119,7 +122,11 @@ public class Player extends MobAddons {
 		//////////////
 		isSwimming = false;
 		if(level.getLevel(x >> 4, y >> 4) == TileArchive.water) {
-			if(swimTime == 1) SoundEngine.splash.play();
+			if(swimTime == 1) {
+				SoundEngine.splash.play();
+				level.add(particle = new Particle(x, y));
+				particle.setColor(0xff40AEE5);
+			}
 			
 			if(dir == 0) animSprite = upSwim;
 			if(dir == 1) animSprite = rightSwim;
@@ -131,7 +138,13 @@ public class Player extends MobAddons {
 			else screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 2, 10, SheetArchive.player), 0);
 			
 			if(walking) {
-				if(tickTime % 17 == 0) SoundEngine.swim.play();
+				if(tickTime % 17 == 0) {
+					SoundEngine.swim.play();
+					for(int i = 0; i < 1; i++) {
+						level.add(particle = new Particle(x, y));
+						particle.setColor(0xff40AEE5);
+					}
+				}
 			}
 			
 			isSwimming = true;
