@@ -13,7 +13,6 @@ public class Bee extends MobAddons {
 	public Bee(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.sprite = new SpriteManager(16, 0, 0, SheetArchive.player);
 	}
 	
 	public static int velX = 1;
@@ -60,6 +59,11 @@ public class Bee extends MobAddons {
 			screen.renderBox(x+2, y, 2, 2, 0xffffc300);
 			screen.renderBox(x, y, 2, 2, 0xff000000);
 		}
+	}
+	
+	
+	public boolean canSwim() {
+		return true;
 	}
 	
 	public void die() {
