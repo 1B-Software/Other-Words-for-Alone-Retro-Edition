@@ -20,7 +20,7 @@ public class RenderMethod {
 	public void render(GameManager game) {
 		this.game = game;
 		
-		this.xScroll = (int) (LevelManager.player.x - Constants.WIDTH / 2) ;
+		this.xScroll = (int) (LevelManager.player.x - Constants.WIDTH / 2 + 3) ;
 		this.yScroll = (int) (LevelManager.player.y - Constants.HEIGHT / 2);
 		
 		pixelIterations();

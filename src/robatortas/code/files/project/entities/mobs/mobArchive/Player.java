@@ -154,7 +154,7 @@ public class Player extends MobAddons {
 		sprite = animSprite.getSprite();
 		
 		beforeLayer(screen);
-		screen.renderMob(x-renderAxysConstX, y-renderAxysConstY, this, sprite, 0);
+		screen.renderMob(x - renderAxysConstX, y - renderAxysConstY, this, sprite, 0);
 		afterLayer(screen);
 	}
 	

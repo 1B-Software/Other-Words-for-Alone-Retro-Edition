@@ -26,7 +26,7 @@ public class GameLevel extends LevelManager {
 		player = new Player(10, 10, input);
 		add(player);
 		
-		add(new Chicken(50, 50));
+		add(new Chicken(4 << 4, 4 << 4));
 		
 		for(int i = 0; i < 10; i++) add(new Bee(7 << 4, 5 << 4));
 	}
