@@ -70,7 +70,7 @@ public class Chicken extends MobAddons {
 		
 		sprite = animSprite.getSprite();
 		
-		screen.renderMob(x, y, this, sprite, spriteFlip);
+		screen.renderMob(x - 10, y - 15, this, sprite, spriteFlip);
 	}
 	
 	private Animate right = new Animate(Animations.chickenRight, 1, 3, 3);
