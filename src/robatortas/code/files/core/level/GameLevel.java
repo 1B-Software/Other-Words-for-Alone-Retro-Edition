@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.project.entities.mobs.mobArchive.Bee;
+import robatortas.code.files.project.entities.mobs.mobArchive.Butterfly;
 import robatortas.code.files.project.entities.mobs.mobArchive.Chicken;
 import robatortas.code.files.project.entities.mobs.mobArchive.Player;
 import robatortas.code.files.project.level.TerrainGen.NoiseMap;
@@ -29,6 +30,7 @@ public class GameLevel extends LevelManager {
 		add(new Chicken(4 << 4, 4 << 4));
 		
 		for(int i = 0; i < 10; i++) add(new Bee(7 << 4, 5 << 4));
+		for(int i = 0; i < 10; i++) add(new Butterfly(7 << 4, 5 << 4));
 	}
 	
 	public void levelReader(String path) {
