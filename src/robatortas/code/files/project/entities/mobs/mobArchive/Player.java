@@ -183,14 +183,14 @@ public class Player extends MobAddons {
 	
 	private void particleEffects() {
 		if(walking) {
-			if(tickTime % 17 == 0) {
+			if(tickTime % 17 == 0 && !isSwimming) {
 				for(int i = 0; i < 3; i++) {
 					level.add(particle = new Particle(x, y));
-					particle.setColor(0xff7F7F7F);
 					
-					for(int yy = level.getLevel(x,y).sprite.y; yy < level.getLevel(x,y).sprite.height; yy++) {
-						for(int xx = level.getLevel(x,y).sprite.y; xx < level.getLevel(x,y).sprite.width; xx++) {
-						particle.setColor(level.getLevel(x, y).sprite.pixels[xx+yy*level.getLevel(x,y).sprite.width]);
+					// particle colors depend on what the player is standing on. BETA!
+					for(int yy = level.getLevel(x >> 4, y >> 4).sprite.y; yy < level.getLevel(x >> 4, y >> 4).sprite.height; yy++) {
+						for(int xx = level.getLevel(x >> 4, y >> 4).sprite.y; xx < level.getLevel(x >> 4, y >> 4).sprite.width; xx++) {
+							particle.setColor(level.getLevel(x >> 4, y >> 4).sprite.pixels[xx+yy*level.getLevel(x >> 4, y >> 4).sprite.width]);
 						}
 					}
 					
