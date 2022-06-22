@@ -2,6 +2,7 @@ package robatortas.code.files.project.entities.mobs.mobArchive;
 
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
+import robatortas.code.files.core.render.SpriteSheetManager;
 import robatortas.code.files.project.archive.SheetArchive;
 import robatortas.code.files.project.entities.mobs.MobAddons;
 
@@ -28,10 +29,10 @@ public class Butterfly extends MobAddons {
 		tickTime++;
 		
 		// TODO: Movements
-//		if(tickTime % (random.nextInt(5) + 5) == 0) {
-//			xa = random.nextInt(3)-1;
-//			ya = random.nextInt(3)-1;
-//		}
+		if(tickTime % (random.nextInt(5) + 5) == 0) {
+			xa = random.nextInt(3)-1;
+			ya = random.nextInt(3)-1;
+		}
 		
 		if(xa == 1) dir = 1;
 		if(xa == -1) dir = 3;
@@ -45,13 +46,24 @@ public class Butterfly extends MobAddons {
 	}
 	
 	public void render(RenderManager screen) {
-		screen.renderBox(x, y, 2, 2, 0xff216D16);
-		screen.renderBox(x - 1, y + 1, 2, 2, 0xff216D16);
+		int num = 0;
 		
-		if((tickTime / 3) % 2 == 0) screen.renderBox(x - 2, y - 1, 2, 2, randColor);
-		else screen.renderBox(x, y + 1, 2, 2, randColor);
+		if((tickTime / 4) % 2 == 0) sprite = new SpriteManager(8, 0, 0, butterfly);
+		else {
+			sprite = new SpriteManager(8, 1, 0, butterfly);
+			num = 2;
+		}
+		
+		for(int yy = sprite.y; yy < sprite.height; yy++) {
+			for(int xx = sprite.y; xx < sprite.width; xx++) {
+				if(sprite.pixels[xx+yy*sprite.width] == 0xff7F7F7F) sprite.pixels[xx+yy*sprite.width] = randColor;
+			}
+		}
+		
+		screen.renderMob(x - num, y - num, this, sprite, 0);
 	}
 	
+	private static SpriteSheetManager butterfly = new SpriteSheetManager("/textures/spritesheet/mob/butterfly.png", 16, 8);
 	
 	public boolean canSwim() {
 		return true;
