@@ -182,16 +182,33 @@ public class Player extends MobAddons {
 	}
 	
 	private void particleEffects() {
-		if(walking && isSwimming) {
+		if(walking) {
 			if(tickTime % 17 == 0) {
 				for(int i = 0; i < 3; i++) {
 					level.add(particle = new Particle(x, y));
-					particle.setColor(0xff40AEE5);
-					particle.physicsEngine.calculations.elasticity = 0;
-					particle.physicsEngine.calculations.gravityForce = 0.2;
-					particle.physicsEngine.calculations.frictionX = 0.96;
-					particle.physicsEngine.calculations.frictionY = 0.96;
+					particle.setColor(0xff7F7F7F);
+					
+					for(int yy = level.getLevel(x,y).sprite.y; yy < level.getLevel(x,y).sprite.height; yy++) {
+						for(int xx = level.getLevel(x,y).sprite.y; xx < level.getLevel(x,y).sprite.width; xx++) {
+						particle.setColor(level.getLevel(x, y).sprite.pixels[xx+yy*level.getLevel(x,y).sprite.width]);
+						}
+					}
+					
+					particle.physicsEngine.calculations.gravityForce = 0.23;
 					particle.life = 20 + random.nextInt(20);
+				}
+			}
+			if(isSwimming) {
+				if(tickTime % 17 == 0) {
+					for(int i = 0; i < 3; i++) {
+						level.add(particle = new Particle(x, y));
+						particle.setColor(0xff40AEE5);
+						particle.physicsEngine.calculations.elasticity = 0;
+						particle.physicsEngine.calculations.gravityForce = 0.2;
+						particle.physicsEngine.calculations.frictionX = 0.96;
+						particle.physicsEngine.calculations.frictionY = 0.96;
+						particle.life = 10 + random.nextInt(10);
+					}
 				}
 			}
 		}
