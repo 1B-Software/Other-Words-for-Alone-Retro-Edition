@@ -17,15 +17,12 @@
 
 package robatortas.code.files.project.archive.tileArchive.Nature;
 
-import javax.sql.ConnectionPoolDataSource;
-
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.ConnectTile;
 import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
 import robatortas.code.files.core.render.SpriteSheetManager;
-import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.archive.tileArchive.TileArchive;
 
 public class GrassTile extends TileManager {
