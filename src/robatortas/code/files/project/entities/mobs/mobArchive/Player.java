@@ -187,9 +187,9 @@ public class Player extends MobAddons {
 				for(int i = 0; i < 3; i++) {
 					level.add(particle = new Particle(x, y));
 					
-					// particle colors depend on what the player is standing on. BETA!
-					for(int yy = level.getLevel(x >> 4, y >> 4).sprite.y; yy < level.getLevel(x >> 4, y >> 4).sprite.height; yy++) {
-						for(int xx = level.getLevel(x >> 4, y >> 4).sprite.y; xx < level.getLevel(x >> 4, y >> 4).sprite.width; xx++) {
+					// particle colors depend on what the player is standing on. BETA 2.0!
+					for(int yy = 0; yy < level.getLevel(x >> 4, y >> 4).sprite.height; yy++) {
+						for(int xx = 0; xx < level.getLevel(x >> 4, y >> 4).sprite.width; xx++) {
 							particle.setColor(level.getLevel(x >> 4, y >> 4).sprite.pixels[xx+yy*level.getLevel(x >> 4, y >> 4).sprite.width]);
 						}
 					}

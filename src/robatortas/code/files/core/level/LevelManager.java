@@ -120,7 +120,6 @@ public class LevelManager {
 		if(tiles[x + y * width] == SpriteArchive.col_cobblePath) return TileArchive.cobblePath;
 		if(tiles[x + y * width] == SpriteArchive.col_stoneBricks) return TileArchive.stoneBricks;
 		if(tiles[x + y * width] == SpriteArchive.col_bricks) return TileArchive.bricksTile;
-		if(tiles[x + y * width] == SpriteArchive.col_void) return TileArchive.voidTile;
 		if(tiles[x + y * width] == SpriteArchive.col_woodWall) return TileArchive.woodWall;
 		if(tiles[x + y * width] == SpriteArchive.col_chair) return TileArchive.woodFloor;
 		if(tiles[x + y * width] == SpriteArchive.col_table) return TileArchive.woodFloor;
