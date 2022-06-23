@@ -1,5 +1,6 @@
 package robatortas.code.files.project.entities.mobs.mobArchive;
 
+import java.awt.Color;
 import java.util.List;
 
 import robatortas.code.files.core.entities.EntityManager;
@@ -190,7 +191,20 @@ public class Player extends MobAddons {
 					// particle colors depend on what the player is standing on. BETA 2.0!
 					for(int yy = 0; yy < level.getLevel(x >> 4, y >> 4).sprite.height; yy++) {
 						for(int xx = 0; xx < level.getLevel(x >> 4, y >> 4).sprite.width; xx++) {
-							particle.setColor(level.getLevel(x >> 4, y >> 4).sprite.pixels[xx+yy*level.getLevel(x >> 4, y >> 4).sprite.width]);
+							int color = level.getLevel(x >> 4, y >> 4).sprite.pixels[xx+yy*level.getLevel(x >> 4, y >> 4).sprite.width];
+							
+							/* 
+							 * Each hex number = 4 bits.
+							 * It is moved to the right since we don't want the zero's interfering with the data value.
+							 * So now it's just 0x0000ff instead of 0xff0000. It's like having 110000 and 000011
+							 */
+							int r = (color & 0xff0000) >> 16;
+							int g = (color & 0xff00) >> 8;
+							int b = (color & 0xff);
+							
+							int shadedColor = r << 16 | (g - 50) << 8 | b;
+							
+							particle.setColor(shadedColor);
 						}
 					}
 					
