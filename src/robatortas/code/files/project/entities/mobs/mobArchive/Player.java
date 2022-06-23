@@ -202,7 +202,10 @@ public class Player extends MobAddons {
 							int g = (color & 0xff00) >> 8;
 							int b = (color & 0xff);
 							
-							int shadedColor = r << 16 | (g - 50) << 8 | b;
+							int shade= 30;
+							
+							// Reorganizes data to corresponding places.
+							int shadedColor = (r - shade) << 16 | (g - shade) << 8 | (b - shade);
 							
 							particle.setColor(shadedColor);
 						}
