@@ -55,6 +55,20 @@ public class EntityManager {
 	public void remove() {
 		removed = true;
 	}
+
+	public boolean canSwim() {
+		return false;
+	}
+	
+	public boolean isInvincible() {
+		return false;
+	}
+	
+	protected int xp = 8;
+	protected int yp = 8;
+	public boolean intersects(int x0, int y0, int x1, int y1) {
+		return (x + xp < x0 || y + yp < y0 || x - xp > x1 || y - yp > y1);
+	}
 	
 	public SpriteManager getSprite() {
 		return addons.getSprite();
@@ -62,13 +76,5 @@ public class EntityManager {
 	
 	public void init(LevelManager level) {
 		this.level = level;
-	}
-
-	public boolean intersects(int x0, int y0, int x1, int y1) {
-		return addons.intersects(x0, y0, x1, y1);
-	}
-
-	public boolean canSwim() {
-		return false;
 	}
 }

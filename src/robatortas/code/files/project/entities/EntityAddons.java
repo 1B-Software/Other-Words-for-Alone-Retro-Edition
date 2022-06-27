@@ -34,8 +34,4 @@ public class EntityAddons {
 	public SpriteManager getSprite() {
 		return entity.sprite;
 	}
-	
-	public boolean intersects(int x0, int y0, int x1, int y1) {
-		return (x + 8 < x0 || y + 8 < y0 || x - 8 > x1 || y - 8 > y1);
-	}
 }

@@ -1,6 +1,5 @@
 package robatortas.code.files.project.entities.mobs.mobArchive;
 
-import java.awt.Color;
 import java.util.List;
 
 import robatortas.code.files.core.entities.EntityManager;
@@ -75,6 +74,7 @@ public class Player extends MobAddons {
 		
 		int xRange = 10;
 		int yRange = 20;
+		
 		// coordinate parameters: -- ++
 		if (dir == 0) hurt(x + 5, y, x - 5, y - yRange + 4);
 		if (dir == 1) hurt(x + xRange + 5, y + 10, x, y - 10);
@@ -86,11 +86,45 @@ public class Player extends MobAddons {
 		List<EntityManager> entities = level.getEntities(x0, y0, x1, y1);
 		for(int i = 0; i < entities.size(); i++) {
 			EntityManager e = entities.get(i);
-			if(e != this) {
-				e.hurt(this, 5, attackDir);
-//				System.out.println("INTERSECTS");
+			if(e != this && !e.isInvincible()) {
+				e.hurt(this, 2, attackDir);
 			}	
 		}
+	}
+	
+	private void controls() {
+		// Controls
+		if(input.up) ys -= velY;
+		if(input.down) ys += velY;
+		if(input.left) xs -= velX;
+		if(input.right) xs += velX;
+		
+		if(input.f) {;
+			if(punch == false) {
+				punch = true;
+				attack();
+			}
+		} else punch = false;
+		if(attackTime > 0) attackTime--;
+		
+		if(GameManager.DEV_MODE) {
+			if(input.shift) {
+				velX = 2;
+				velY = 2;
+			} else {
+				velX = 1;
+				velY = 1;
+			}
+		}
+	}
+	
+	// PLAYER CAN SWIM!!! (The other entities can't now, so fuck 'em)
+	public boolean canSwim() {
+		return true;
+	}
+	
+	public void die() {
+		if(health <= 0) SoundEngine.dead.play();
 	}
 	
 	public void render(RenderManager screen) {
@@ -177,7 +211,7 @@ public class Player extends MobAddons {
 	private void afterLayer(RenderManager screen) {
 		switch(attackDir) {
 		case 2:
-			if(attackTime > 0) screen.renderSprite(x-8, y-1, SpriteArchive.swingFx, 2);
+			if(attackTime > 0) screen.renderSprite(x-10, y-8, SpriteArchive.swingFx, 2);
 			break;
 		}
 	}
@@ -202,7 +236,7 @@ public class Player extends MobAddons {
 							int g = (color & 0xff00) >> 8;
 							int b = (color & 0xff);
 							
-							int shade= 30;
+							int shade = (random.nextInt(5 + 30));
 							
 							// Reorganizes data to corresponding places.
 							int shadedColor = (r - shade) << 16 | (g - shade) << 8 | (b - shade);
@@ -229,39 +263,6 @@ public class Player extends MobAddons {
 				}
 			}
 		}
-	}
-	
-	
-	private void controls() {
-		// Controls
-		if(input.up) ys -= velY;
-		if(input.down) ys += velY;
-		if(input.left) xs -= velX;
-		if(input.right) xs += velX;
-		
-		if(input.f) {;
-			if(punch == false) {
-				punch = true;
-				attack();
-				level.insertTile((x >> 4) + 1, y >> 4, SpriteArchive.col_bricks);
-			}
-		} else punch = false;
-		if(attackTime > 0) attackTime--;
-		
-		if(GameManager.DEV_MODE) {
-			if(input.shift) {
-				velX = 2;
-				velY = 2;
-			} else {
-				velX = 1;
-				velY = 1;
-			}
-		}
-	}
-	
-	// PLAYER CAN SWIM!!! (The other entities can't now, so fuck 'em)
-	public boolean canSwim() {
-		return true;
 	}
 	
 	// Animations

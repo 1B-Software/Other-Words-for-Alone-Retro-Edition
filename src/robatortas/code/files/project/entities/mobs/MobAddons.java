@@ -1,8 +1,13 @@
 package robatortas.code.files.project.entities.mobs;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.entities.Mob;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
+import robatortas.code.files.core.sound.SoundEngine;
 
 public class MobAddons extends Mob {
 	
@@ -36,6 +41,8 @@ public class MobAddons extends Mob {
 	public void update() {
 		die();
 		
+		knockBack();
+		
 		if(hurtTime > 0) hurtTime--;
 	}
 	
@@ -54,12 +61,13 @@ public class MobAddons extends Mob {
 	
 	public void hurt(Mob mob, int damage, int attackDir) {
 		doHurt(damage, attackDir);
-		System.out.println("OUCH!");
+		System.out.println("hurting: " + mob); 
 	}
 	
 	public void doHurt(int damage, int attackDir) {
 		if(hurtTime > 0) return;
 		health -= damage;
+		SoundEngine.entityHurt.play();
 		if (attackDir == 0) yKnockback = -10;
 		if (attackDir == 1) xKnockback = 10;
 		if (attackDir == 2) yKnockback = 10;
@@ -93,11 +101,8 @@ public class MobAddons extends Mob {
 	public void die() {
 		if(health <= 0) {
 			remove();
-			System.out.println("DEAD!");
-//			SoundEngine.dead.play();
 		}
 	}
-	
 	
 	///////////////
 	// Collision //

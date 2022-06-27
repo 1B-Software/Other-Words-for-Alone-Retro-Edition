@@ -39,7 +39,11 @@ public class Butterfly extends MobAddons {
 		if(ya == 1) dir = 2;
 		if(ya == -1) dir = 0;
 		
-		int speed = tickTime & 1;
+		int speed = 0;
+		
+		if(tickTime % 3 == 0) {
+			speed = tickTime & 2;
+		}
 		
 		move(xa * speed, ya * speed);
 		walking = true;
@@ -60,7 +64,19 @@ public class Butterfly extends MobAddons {
 			}
 		}
 		
-		screen.renderMob(x - num, y - num, this, sprite, 0);
+		int flip = 0;
+		
+		switch(dir) {
+		case 0: flip = 1;
+		break;
+		case 1: flip = 0;
+		break;
+		case 2: flip = 0;
+		break;
+		case 3: flip = 1;
+		}
+		
+		screen.renderMob(x - num, y - num - 13, this, sprite, flip);
 	}
 	
 	private static SpriteSheetManager butterfly = new SpriteSheetManager("/textures/spritesheet/mob/butterfly.png", 16, 8);
@@ -70,5 +86,9 @@ public class Butterfly extends MobAddons {
 	}
 	
 	public void die() {
+	}
+	
+	public boolean isInvincible() {
+		return true;
 	}
 }

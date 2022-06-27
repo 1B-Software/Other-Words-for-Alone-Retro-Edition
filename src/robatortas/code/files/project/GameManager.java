@@ -114,12 +114,21 @@ public class GameManager extends Canvas implements Runnable {
 		g.setColor(new Color(0x1F1F1F));
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
-		int ww = Constants.WIDTH * 3;
-		int hh = Constants.HEIGHT * 3;
-		int xo = (getWidth() - ww) / 2;
-		int yo = (getHeight() - hh) / 2;
+		int w = getWindowSize().width;
+	    int h = getWindowSize().height;
+	    if(getWidth() < w ) {
+			w += (getWidth() - Constants.WIDTH * 3);
+			h += (getWidth() - Constants.HEIGHT* 3);
+		}
+	    if(getHeight() < h) {
+			w += (getHeight() - Constants.HEIGHT * 3);
+			h += (getHeight() - Constants.HEIGHT * 3);
+		}
 		
-		g.drawImage(image, xo, yo, ww, hh, null);
+		int xo = (getWidth() - w) / 2;
+		int yo = (getHeight() - h) / 2;
+		
+		g.drawImage(image, xo, yo, w, h, null);
 		
 		renderMethod.render(this);
 		
