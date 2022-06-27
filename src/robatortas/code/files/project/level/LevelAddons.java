@@ -65,6 +65,7 @@ public class LevelAddons {
 		for(int y = yt0; y <= yt1; y++) {
 			for(int x = xt0; x <= xt1; x++) {
 				if(x < 0 || y < 0 || x >= width || y >= height) continue;
+				List<EntityManager> entities = entitiesInTiles[x + y * this.width];
 				for(int i = 0; i < entities.size(); i++) {
 					EntityManager e = entities.get(i);
 					if(e.intersects(x0, y0, x1, y1)) result.add(e);
