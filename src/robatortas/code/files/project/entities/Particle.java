@@ -52,4 +52,8 @@ public class Particle extends MobAddons {
 	public boolean canSwim() {
 		return true;
 	}
+	
+	public boolean isInvincible() {
+		return true;
+	}
 }

@@ -10,6 +10,7 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
+import robatortas.code.files.core.console.Console;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.RenderMethod;
@@ -52,12 +53,15 @@ public class GameManager extends Canvas implements Runnable {
 	// Main
 	@SuppressWarnings("unused")
 	public GameManager() {
+		if(DEV_MODE) Console.writeSysMsg("Starting: Other Words for Alone RETRO EDITION in Developer Mode" + "\n");
+		else Console.writeSysMsg("Starting: Other Words for Alone RETRO EDITION in Client Mode" + "\n");
+		
 		screen = new RenderManager(Constants.WIDTH, Constants.HEIGHT);
 		level = LevelManager.level;
 		display =  new DisplayManager(Constants.WIDTH, Constants.HEIGHT, Constants.TITLE, this);
 		
-		if(Constants.levelPath != "/textures/level/level/level.png") System.err.println("Level file location denied.");
-		else {}
+		if(Constants.levelPath != "/textures/level/level/level.png") Console.writeErr("Level file location denied.");
+		else Console.writeSysMsg("Level file location approved!" + "\n");
 		
 		addKeyListener(level.input);
 	}
@@ -96,7 +100,6 @@ public class GameManager extends Canvas implements Runnable {
 	public int x, y;
 	public void update() {
 		constants.ticks++;
-		
 		level.update();
 	}
 	
@@ -109,21 +112,20 @@ public class GameManager extends Canvas implements Runnable {
 			return;
 		}
 		
-		
 		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 		g.setColor(new Color(0x1F1F1F));
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
 		int w = getWindowSize().width;
 	    int h = getWindowSize().height;
-	    if(getWidth() < w ) {
-			w += (getWidth() - Constants.WIDTH * 3);
-			h += (getWidth() - Constants.HEIGHT* 3);
-		}
-	    if(getHeight() < h) {
-			w += (getHeight() - Constants.HEIGHT * 3);
-			h += (getHeight() - Constants.HEIGHT * 3);
-		}
+//	    if(getWidth() < w ) {
+//			w += (getWidth() - Constants.WIDTH * 3);
+//			h += (getWidth() - Constants.HEIGHT* 3);
+//		}
+//	    if(getHeight() < h) {
+//			w += (getHeight() - Constants.WIDTH * 3);
+//			h += (getHeight() - Constants.HEIGHT * 3);
+//		}
 		
 		int xo = (getWidth() - w) / 2;
 		int yo = (getHeight() - h) / 2;
@@ -134,6 +136,7 @@ public class GameManager extends Canvas implements Runnable {
 		
 		g.setColor(Color.magenta);
 		g.setFont(new Font("Verdana", 1, 1).deriveFont(30f));
+		g.drawString("E: " + level.entities.size(), 20, 60);
 		g.drawString("X: " + (LevelManager.player.x >> 4) + " Y: " + (LevelManager.player.y >> 4), 20, 30);
 		
 		g.dispose();
