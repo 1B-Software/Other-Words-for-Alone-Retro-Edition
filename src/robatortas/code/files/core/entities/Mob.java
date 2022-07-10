@@ -23,11 +23,11 @@ public class Mob extends EntityManager {
 	public int dir = 3;
 	
 	public void move(int xa, int ya) {
-		
+		super.move(xa, ya);
 	}
 	
 	public void update() {
-		
+		super.update();
 	}
 	
 	public void render(RenderManager screen) {

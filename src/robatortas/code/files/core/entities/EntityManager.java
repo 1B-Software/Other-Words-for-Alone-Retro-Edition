@@ -6,7 +6,6 @@ import java.util.Random;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
-import robatortas.code.files.project.entities.EntityAddons;
 import robatortas.code.files.project.entities.ItemEntity;
 
 public class EntityManager {
@@ -19,29 +18,29 @@ public class EntityManager {
 	
 	public boolean removed;
 	
-	public EntityAddons addons = new EntityAddons(this);
-	
 	protected ItemEntity iE;
 	
 	public EntityManager() {
 		
 	}
 	
-	public EntityManager(int x, int y) {
+	public EntityManager(int x, int y, SpriteManager sprite) {
 		this.x = x;
 		this.y = y;
+		this.sprite = sprite;
 	}
 	
 	public void render(RenderManager screen) {
-		addons.render(screen);
+		
 	}
 	
 	public void update() {
-		System.out.println("ENTITY!");
+		
 	}
 	
 	public void move(int xa, int ya) {
-		addons.move(xa, ya);
+		xa++;
+		ya++;
 	}
 	
 	public void move2(int xa, int ya) {
@@ -51,8 +50,8 @@ public class EntityManager {
 			if(e == this) continue;
 			e.touched(this);
 		}
-		x += xa;
-		y += ya;
+		xa++;
+		ya++;
 	}
 	
 	protected void touched(EntityManager entity) {
@@ -86,10 +85,10 @@ public class EntityManager {
 	}
 	
 	public SpriteManager getSprite() {
-		return addons.getSprite();
+		return this.sprite;
 	}
 	
-	public void touching(EntityManager entity) {
+	public void takeItem(EntityManager entity) {
 		
 	}
 	

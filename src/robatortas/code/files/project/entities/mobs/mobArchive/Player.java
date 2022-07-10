@@ -17,7 +17,6 @@ import robatortas.code.files.project.entities.ItemEntity;
 import robatortas.code.files.project.entities.Particle;
 import robatortas.code.files.project.entities.mobs.MobAddons;
 import robatortas.code.files.project.inventory.Inventory;
-import robatortas.code.files.project.inventory.Item;
 import robatortas.code.files.project.inventory.Resource;
 import robatortas.code.files.project.inventory.ResourceItem;
 
@@ -44,14 +43,14 @@ public class Player extends MobAddons {
 	
 	private static int velX = 1;
 	private static int velY = 1;	
-	private int xs, ys;
+	private int xa, ya;
 	
 	public int tickTime;
 	
 	public void update() {
 		super.update();
-		this.xs = 0;
-		this.ys = 0;
+		this.xa = 0;
+		this.ya = 0;
 		
 		int speed = 1;
 		
@@ -59,7 +58,7 @@ public class Player extends MobAddons {
 		
 		// Controls
 		controls();
-				
+		
 		particleEffects();
 		
 		if(isSwimming) {
@@ -71,8 +70,8 @@ public class Player extends MobAddons {
 		// Reset Animations (AVOIDS CRASHING!)
 		animSprite.resetAnimation(animSprite, walking);
 		
-		if(xs != 0 || ys != 0) {
-			move(xs * speed, ys * speed);
+		if(xa != 0 || ya != 0) {
+			move(xa * speed, ya * speed);
 			walking = true;
 		} else walking = false;
 	}
@@ -100,16 +99,17 @@ public class Player extends MobAddons {
 		}
 	}
 	
-	public void touched(EntityManager entity) {
-		entity.getItem(iE).touching(this);
+	protected void touched(EntityManager entity) {
+		entity.getItem(iE).takeItem(this);
+		System.out.println("touched");
 	}
 	
 	private void controls() {
 		// Controls
-		if(input.up) ys -= velY;
-		if(input.down) ys += velY;
-		if(input.left) xs -= velX;
-		if(input.right) xs += velX;
+		if(input.up) ya -= velY;
+		if(input.down) ya += velY;
+		if(input.left) xa -= velX;
+		if(input.right) xa += velX;
 		
 		if(input.f) {
 			if(punch == false) {
