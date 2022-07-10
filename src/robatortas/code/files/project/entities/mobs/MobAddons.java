@@ -1,9 +1,5 @@
 package robatortas.code.files.project.entities.mobs;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.entities.Mob;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
@@ -36,6 +32,7 @@ public class MobAddons extends Mob {
 			y += ya;
 			walking = true;
 		}
+		
 	}
 	
 	public void update() {
@@ -61,7 +58,6 @@ public class MobAddons extends Mob {
 	
 	public void hurt(Mob mob, int damage, int attackDir) {
 		doHurt(damage, attackDir);
-		System.out.println("hurting: " + mob); 
 	}
 	
 	public void doHurt(int damage, int attackDir) {

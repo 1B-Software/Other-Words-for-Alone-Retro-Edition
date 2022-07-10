@@ -29,7 +29,7 @@ public class Butterfly extends MobAddons {
 		tickTime++;
 		
 		// TODO: Movements
-		if(tickTime % (random.nextInt(5) + 5) == 0) {
+		if(tickTime % (random.nextInt(20) + 20) == 0) {
 			xa = random.nextInt(3)-1;
 			ya = random.nextInt(3)-1;
 		}

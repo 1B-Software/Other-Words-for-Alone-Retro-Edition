@@ -13,8 +13,13 @@ import robatortas.code.files.project.archive.Animations;
 import robatortas.code.files.project.archive.SheetArchive;
 import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.archive.tileArchive.TileArchive;
+import robatortas.code.files.project.entities.ItemEntity;
 import robatortas.code.files.project.entities.Particle;
 import robatortas.code.files.project.entities.mobs.MobAddons;
+import robatortas.code.files.project.inventory.Inventory;
+import robatortas.code.files.project.inventory.Item;
+import robatortas.code.files.project.inventory.Resource;
+import robatortas.code.files.project.inventory.ResourceItem;
 
 public class Player extends MobAddons {
 	
@@ -25,12 +30,16 @@ public class Player extends MobAddons {
 	
 	private Particle particle;
 	
+	public Inventory inventory;
+	
 	public Player(int x, int y, InputManager input) {
 		this.x = x;
 		this.y = y;
 		this.input = input;
 		this.sprite = new SpriteManager(16, 0, 0, SheetArchive.player);
 		super.dir = 2;
+		this.inventory = new Inventory();
+		inventory.add(new ResourceItem(Resource.sample));
 	}
 	
 	private static int velX = 1;
@@ -74,7 +83,6 @@ public class Player extends MobAddons {
 		
 		int xRange = 10;
 		int yRange = 20;
-		
 		// coordinate parameters: -- ++
 		if (dir == 0) hurt(x + 5, y, x - 5, y - yRange + 4);
 		if (dir == 1) hurt(x + xRange + 5, y + 10, x, y - 10);
@@ -99,9 +107,10 @@ public class Player extends MobAddons {
 		if(input.left) xs -= velX;
 		if(input.right) xs += velX;
 		
-		if(input.f) {;
+		if(input.f) {
 			if(punch == false) {
 				punch = true;
+				level.add(new ItemEntity(x, y, new ResourceItem(Resource.sample)));
 				attack();
 			}
 		} else punch = false;
@@ -161,9 +170,6 @@ public class Player extends MobAddons {
 		if(level.getLevel(x >> 4, y >> 4) == TileArchive.water) {
 			if(swimTime == 1) {
 				SoundEngine.splash.play();
-				level.add(particle = new Particle(x, y));
-				particle.setColor(0xff40AEE5);
-				particle.life = 20 + random.nextInt(20);
 			}
 			
 			if(dir == 0) animSprite = upSwim;
@@ -191,6 +197,10 @@ public class Player extends MobAddons {
 		beforeLayer(screen);
 		screen.renderMob(x - renderAxysConstX, y - renderAxysConstY, this, sprite, 0);
 		afterLayer(screen);
+		
+		inventory.find(new ResourceItem(Resource.sample));
+//		System.out.println(inventory.find(new ResourceItem(Resource.sample)));
+		
 	}
 	
 	private void beforeLayer(RenderManager screen) {
@@ -229,8 +239,8 @@ public class Player extends MobAddons {
 							
 							/* 
 							 * Each hex number = 4 bits.
-							 * It is moved to the right since we don't want the zero's interfering with the data value.
-							 * So now it's just 0x0000ff instead of 0xff0000. It's like having 110000 and 000011
+							 * It is moved to the right since we don't want the zeros interfering with the data value.
+							 * So now it's just 0x0000ff instead of 0xff0000. It's like having 110000 converted to just 000011
 							 */
 							int r = (color & 0xff0000) >> 16;
 							int g = (color & 0xff00) >> 8;
@@ -250,6 +260,16 @@ public class Player extends MobAddons {
 				}
 			}
 			if(isSwimming) {
+				if(swimTime == 1) {
+					for(int i = 0; i < 50; i++) {
+						level.add(particle = new Particle(x, y));
+						particle.setColor(0xff40AEE5);
+						particle.physicsEngine.calculations.frictionX = 0.96;
+						particle.physicsEngine.calculations.frictionY = 0.96;
+						particle.life = 20 + random.nextInt(20);
+					}
+				}
+				
 				if(tickTime % 17 == 0) {
 					for(int i = 0; i < 3; i++) {
 						level.add(particle = new Particle(x, y));
