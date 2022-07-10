@@ -59,7 +59,7 @@ public class Player extends MobAddons {
 		
 		// Controls
 		controls();
-		
+				
 		particleEffects();
 		
 		if(isSwimming) {
@@ -98,6 +98,10 @@ public class Player extends MobAddons {
 				e.hurt(this, 2, attackDir);
 			}	
 		}
+	}
+	
+	public void touched(EntityManager entity) {
+		entity.getItem(iE).touching(this);
 	}
 	
 	private void controls() {

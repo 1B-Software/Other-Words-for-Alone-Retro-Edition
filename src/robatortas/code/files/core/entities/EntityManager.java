@@ -1,11 +1,13 @@
 package robatortas.code.files.core.entities;
 
+import java.util.List;
 import java.util.Random;
 
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
 import robatortas.code.files.project.entities.EntityAddons;
+import robatortas.code.files.project.entities.ItemEntity;
 
 public class EntityManager {
 	
@@ -18,6 +20,8 @@ public class EntityManager {
 	public boolean removed;
 	
 	public EntityAddons addons = new EntityAddons(this);
+	
+	protected ItemEntity iE;
 	
 	public EntityManager() {
 		
@@ -41,7 +45,18 @@ public class EntityManager {
 	}
 	
 	public void move2(int xa, int ya) {
-		addons.move(xa, ya);
+		List<EntityManager> in = level.getEntities(x + xp*2, y + ya + yp*2, x - xp, y - yp);
+		for(int i = 0; i < in.size(); i++) {
+			EntityManager e = in.get(i);
+			if(e == this) continue;
+			e.touched(this);
+		}
+		x += xa;
+		y += ya;
+	}
+	
+	protected void touched(EntityManager entity) {
+		
 	}
 	
 	public void hurt(Mob mob, int damage, int attackDir) {
@@ -72,6 +87,14 @@ public class EntityManager {
 	
 	public SpriteManager getSprite() {
 		return addons.getSprite();
+	}
+	
+	public void touching(EntityManager entity) {
+		
+	}
+	
+	public ItemEntity getItem(ItemEntity iE) {
+		return this.iE = iE;
 	}
 	
 	public void init(LevelManager level) {
