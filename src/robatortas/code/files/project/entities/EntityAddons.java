@@ -30,8 +30,4 @@ public class EntityAddons {
 		this.y = ya;
 		
 	}
-	
-	public SpriteManager getSprite() {
-		return entity.sprite;
-	}
 }

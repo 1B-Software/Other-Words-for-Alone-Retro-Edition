@@ -48,10 +48,36 @@ public class LevelManager {
 	// Input Declarations
 	public InputManager input = new InputManager();
 	
+	private int tickTime;
+	
 	public void update() {
-		addons.update();
 		WaterTile.tick();
 		input.update();
+		
+		tickTime++;
+		
+		for (int i = 0; i < entities.size(); i++) {
+			EntityManager e = entities.get(i);
+			int xto = e.x >> 4;
+			int yto = e.y >> 4;
+			
+			e.update();
+			
+			//this removes entities
+			if (e.removed) {
+				entities.remove(i--);
+				this.removeEntity(xto, yto, e);
+			} else {
+				int xt = e.x >> 4;
+				int yt = e.y >> 4;
+				
+				//if the x != x or y != or x = x or y = y
+				if (xto != xt || yto != yt || xto == xt || yto == yt) {
+					this.removeEntity(xto, yto, e);
+					this.insertEntity(xt, yt, e);
+				}
+			}
+		}
 	}
 	
 	// MY MIND IS NOT THINKING CLEARLY! Because it's FUCKING 2 AM

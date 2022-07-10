@@ -50,13 +50,13 @@ public class ItemEntity extends MobAddons {
 		this.remove();
 	}
 	
-	public void touching(EntityManager entity) {
-//		if(((entity.x << 4) + (entity.y << 4)) == ((this.x << 4) + (this.y << 4))) {
-//			System.out.println("Touching!");
-//		}
-		
-		System.out.println("touch");
-		
+	public void takeItem(Player player) {
+		if(physicsEngine.calculations.z1 == 0 && tickTime > 60/2) {
+			player.inventory.add((ResourceItem) item);
+			SoundEngine.take.play();
+			System.out.println("TAKEN!");
+			remove();
+		}
 	}
 	
 	public ItemEntity getItem(ItemEntity iE) {
