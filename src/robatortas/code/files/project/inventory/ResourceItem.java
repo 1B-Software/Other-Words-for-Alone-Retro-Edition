@@ -14,4 +14,8 @@ public class ResourceItem extends Item {
 	public SpriteManager getSprite() {
 		return resource.sprite;
 	}
+	
+	public String getName() {
+		return resource.name;
+	}
 }

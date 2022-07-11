@@ -3,6 +3,7 @@ package robatortas.code.files.core.level.tiles;
 import java.util.Random;
 
 import robatortas.code.files.core.entities.EntityManager;
+import robatortas.code.files.core.entities.Mob;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
@@ -37,8 +38,7 @@ public class TileManager {
 		this.level = level;
 	}
 	
-	public void add(TileManager tile) {
-		
+	public void hurt(LevelManager level, Mob mob, int x, int y, int damage, int dir) {
 	}
 
 	public boolean solid(LevelManager level, int x, int y, EntityManager e) {

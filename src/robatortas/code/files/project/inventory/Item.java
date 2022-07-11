@@ -16,6 +16,10 @@ public class Item extends ItemHandler {
 		return resourceItem.getSprite();
 	}
 	
+	public String getName() {
+		return resourceItem.getName();
+	}
+	
 	public void render(RenderManager screen) {
 		screen.renderSprite(100, 100, SpriteArchive.chair, 0);
 	}

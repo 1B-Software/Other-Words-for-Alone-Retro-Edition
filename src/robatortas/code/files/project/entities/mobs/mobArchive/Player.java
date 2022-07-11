@@ -38,7 +38,7 @@ public class Player extends MobAddons {
 		this.sprite = new SpriteManager(16, 0, 0, SheetArchive.player);
 		super.dir = 2;
 		this.inventory = new Inventory();
-		inventory.add(new ResourceItem(Resource.sample));
+		inventory.add(new ResourceItem(Resource.sword));
 	}
 	
 	private static int velX = 1;
@@ -87,6 +87,18 @@ public class Player extends MobAddons {
 		if (dir == 1) hurt(x + xRange + 5, y + 10, x, y - 10);
 		if (dir == 3) hurt(x, y, x - xRange - 5, y - 10);
 		if (dir == 2) hurt(x, y + yRange - 2, x - 5, y);
+		
+		int xt = x >> 4;
+		int yt = y >> 4;
+		if (attackDir == 0) yt = (y - 16) >> 4;
+		if (attackDir == 1) xt = (x + 16) >> 4;
+		if (attackDir == 3) xt = (x - 16) >> 4;
+		if (attackDir == 2) yt = (y + 16) >> 4;
+		
+		if (xt >= 0 && yt >= 0 && xt < level.width && yt < level.height) {
+			level.getPost(xt, yt).hurt(level, this, xt, yt, 2, attackDir); //Tile tile, int x, int y, int damage
+//			System.out.println("HI!");
+		}
 	}
 	
 	private void hurt(int x0, int y0, int x1, int y1) {
@@ -113,7 +125,7 @@ public class Player extends MobAddons {
 		if(input.f) {
 			if(punch == false) {
 				punch = true;
-				level.add(new ItemEntity(x, y, new ResourceItem(Resource.sample)));
+				level.add(new ItemEntity(x, y, new ResourceItem(Resource.sword)));
 				attack();
 			}
 		} else punch = false;
@@ -200,10 +212,6 @@ public class Player extends MobAddons {
 		beforeLayer(screen);
 		screen.renderMob(x - renderAxysConstX, y - renderAxysConstY, this, sprite, 0);
 		afterLayer(screen);
-		
-		inventory.find(new ResourceItem(Resource.sample));
-//		System.out.println(inventory.find(new ResourceItem(Resource.sample)));
-		
 	}
 	
 	private void beforeLayer(RenderManager screen) {
