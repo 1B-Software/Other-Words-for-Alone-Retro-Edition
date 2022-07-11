@@ -43,17 +43,10 @@ public class ItemEntity extends EntityManager {
 		return true;
 	}
 	
-	public void grabbedBy(Player player) {
-		player.inventory.add((ResourceItem) item);
-		System.out.println("GRABBED");
-		this.remove();
-	}
-	
 	public void takeItem(Player player) {
-		if(physicsEngine.calculations.z0 == 0 && tickTime > 60/2) {
+		if(physicsEngine.calculations.z0 == 0 && tickTime > 60) {
 			player.inventory.add((ResourceItem) item);
 			SoundEngine.take.play();
-			System.out.println("TAKEN!");
 			this.remove();
 		}
 	}
@@ -67,7 +60,11 @@ public class ItemEntity extends EntityManager {
 		if(tickTime >= (lifeTime - 120)) {
 			if((tickTime / 10) % 2 == 0) return;
 		}
-		
-		screen.renderSprite(x, y - (int) physicsEngine.calculations.z0, item.getSprite(), 0);
+		int yy = 0;
+		if(physicsEngine.calculations.z0 == 0 && tickTime > 60) {
+			if((tickTime / 20) % 2 == 0) yy=1;
+			else yy=0;
+		}
+		screen.renderSprite(x, (y + yy)- (int) physicsEngine.calculations.z0, item.getSprite(), 0);
 	}
 }
