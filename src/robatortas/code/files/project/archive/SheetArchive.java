@@ -21,11 +21,12 @@ public class SheetArchive {
 	//////////
 	
 	// PLAYER
-	private String playerSheet = player.path;
 	public static SpriteSheetManager player = new SpriteSheetManager("/textures/spritesheet/mob/player.png", 128, 176);
 	public static SpriteSheetManager playerSwim = new SpriteSheetManager("/textures/spritesheet/mob/player_swim.png", 128, 96);
 	
+	// ANIMALS
 	public static SpriteSheetManager chicken = new SpriteSheetManager("/textures/spritesheet/mob/chicken.png", 16, 48);
+	public static SpriteSheetManager cow = new SpriteSheetManager("/textures/spritesheet/mob/cow.png", 64, 96);
 	
 	
 	public static SpriteSheetManager fx = new SpriteSheetManager("/textures/spritesheet/fx/fx.png", 128);

@@ -3,6 +3,7 @@ package robatortas.code.files.project.entities;
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.physics.PhysicsEngine;
 import robatortas.code.files.core.render.RenderManager;
+import robatortas.code.files.core.render.SpriteManager;
 import robatortas.code.files.core.sound.SoundEngine;
 import robatortas.code.files.project.entities.mobs.mobArchive.Player;
 import robatortas.code.files.project.inventory.Item;
@@ -14,7 +15,7 @@ public class ItemEntity extends EntityManager {
 	private int tickTime = 0;
 	
 	public Item item;
-	private PhysicsEngine physicsEngine;
+	public PhysicsEngine physicsEngine;
 	
 	public ItemEntity(int x, int y, Item item) {
 		this.x = x;
@@ -22,7 +23,6 @@ public class ItemEntity extends EntityManager {
 		this.item = item;
 		SoundEngine.drop.play();
 		physicsEngine = new PhysicsEngine(this.x, this.y);
-		physicsEngine.calculations.settings();
 	}
 	
 	public void update() {
@@ -34,9 +34,7 @@ public class ItemEntity extends EntityManager {
 		}
 		
 		physicsEngine.calculations.physics();
-		
 		move2((int) physicsEngine.calculations.x0 - x, (int) physicsEngine.calculations.y0 - y);
-		
 	}
 	
 	public boolean canSwim() {
@@ -65,6 +63,11 @@ public class ItemEntity extends EntityManager {
 			if((tickTime / 20) % 2 == 0) yy=1;
 			else yy=0;
 		}
-		screen.renderSprite(x, (y + yy)- (int) physicsEngine.calculations.z0, item.getSprite(), 0);
+		
+		int shade = 0;
+		shade += ((int)physicsEngine.calculations.z0 * 2) - 40;
+		if(shade <= 1) screen.renderColorRelativeToLocation(x - 10, (y + 1) - 10, item.getSprite(), -shade, 0, level);
+		screen.renderSprite(x - 10, ((y + yy) - (int) physicsEngine.calculations.z0) - 10, item.getSprite(), 0);
+
 	}
 }

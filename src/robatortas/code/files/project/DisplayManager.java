@@ -4,6 +4,7 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import robatortas.code.files.project.level.TerrainGen.NoiseMap;
 import robatortas.code.files.project.settings.Constants;
 
 public class DisplayManager {
@@ -12,6 +13,8 @@ public class DisplayManager {
 	
 	public DisplayManager(int width, int height, String title, GameManager game) {
 		this.game = game;
+		
+//		NoiseMap.main(null);
 		
 		Dimension size = new Dimension(width*Constants.SCALE, height*Constants.SCALE);
 		
