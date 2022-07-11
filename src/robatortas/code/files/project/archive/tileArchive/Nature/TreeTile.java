@@ -50,7 +50,7 @@ public class TreeTile extends TileManager {
 		
 		if(health <= 0) {
 			level.insertTile(x, y, SpriteArchive.col_grass);
-			for(int i = 0; i < 1000; i++) level.add(wood = new ItemEntity((x << 4) + 8, (y << 4) + 10, new ResourceItem(Resource.wood)));
+			for(int i = 0; i < random.nextInt(1)+2; i++) level.add(wood = new ItemEntity((x << 4) + 8, (y << 4) + 10, new ResourceItem(Resource.wood)));
 			
 			health = 10;
 		}

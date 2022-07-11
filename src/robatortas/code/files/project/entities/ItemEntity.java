@@ -53,6 +53,9 @@ public class ItemEntity extends EntityManager {
 		return iE = this;
 	}
 	
+	private Particle particle;
+
+	int zTime = 0;
 	public void render(RenderManager screen) {
 		// Blinking when death is close
 		if(tickTime >= (lifeTime - 120)) {
@@ -62,6 +65,29 @@ public class ItemEntity extends EntityManager {
 		if(physicsEngine.calculations.z0 == 0 && tickTime > 60) {
 			if((tickTime / 20) % 2 == 0) yy=1;
 			else yy=0;
+		}
+		
+		if(physicsEngine.calculations.z0 == 0) zTime++;
+		else zTime = 0;
+		
+		System.out.println(zTime);
+		if(zTime == 1) {
+			for(int i = 0; i < 3; i++) {
+				level.add(particle = new Particle(x, y));
+				particle.physicsEngine.calculations.gravityForce = 0.23;
+				particle.life = 20 + random.nextInt(20);
+				for(int yyy = 0; yyy < level.getLevel(x >> 4, y >> 4).sprite.height; yyy++) {
+					for(int xxx = 0; xxx < level.getLevel(x >> 4, y >> 4).sprite.width; xxx++) {
+						int color = level.getLevel(x >> 4, y >> 4).sprite.pixels[xxx+yyy*level.getLevel(x >> 4, y >> 4).sprite.width];
+						int r = (color & 0xff0000) >> 16;
+						int g = (color & 0xff00) >> 8;
+						int b = (color & 0xff);
+						int shade = (random.nextInt(5 + 30));
+						int shadedColor = (r - shade) << 16 | (g - shade) << 8 | (b - shade);					
+						particle.setColor(shadedColor);
+					}
+				}
+			}
 		}
 		
 		int shade = 0;
