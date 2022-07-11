@@ -97,7 +97,6 @@ public class Player extends MobAddons {
 		
 		if (xt >= 0 && yt >= 0 && xt < level.width && yt < level.height) {
 			level.getPost(xt, yt).hurt(level, this, xt, yt, 2, attackDir); //Tile tile, int x, int y, int damage
-//			System.out.println("HI!");
 		}
 	}
 	
