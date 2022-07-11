@@ -39,22 +39,19 @@ public class EntityManager {
 	}
 	
 	public void move(int xa, int ya) {
-		xa++;
-		ya++;
+		
 	}
 	
 	public void move2(int xa, int ya) {
-		List<EntityManager> in = level.getEntities(x + xp*2, y + ya + yp*2, x - xp, y - yp);
+		List<EntityManager> in = level.getEntities(x + xp*2, y + yp*2, x - xp, y - yp);
 		for(int i = 0; i < in.size(); i++) {
 			EntityManager e = in.get(i);
 			if(e == this) continue;
 			e.touched(this);
 		}
-		xa++;
-		ya++;
 	}
 	
-	protected void touched(EntityManager entity) {
+	public void touched(EntityManager entity) {
 		
 	}
 	

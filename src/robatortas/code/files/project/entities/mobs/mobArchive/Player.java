@@ -99,9 +99,8 @@ public class Player extends MobAddons {
 		}
 	}
 	
-	protected void touched(EntityManager entity) {
+	public void touched(EntityManager entity) {
 		entity.getItem(iE).takeItem(this);
-		System.out.println("touched");
 	}
 	
 	private void controls() {
