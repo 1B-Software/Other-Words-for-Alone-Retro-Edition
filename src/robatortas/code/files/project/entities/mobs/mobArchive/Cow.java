@@ -10,19 +10,16 @@ import robatortas.code.files.project.entities.mobs.MobAddons;
 import robatortas.code.files.project.inventory.Resource;
 import robatortas.code.files.project.inventory.ResourceItem;
 
-public class Chicken extends MobAddons {
+public class Cow extends MobAddons {
 	
 	public boolean punch = true;
 	public int attackTime, attackDir;
 	
-	public Chicken(int x, int y) {
+	public Cow(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.sprite = new SpriteManager(16, 0, 0, SheetArchive.player);
+		this.sprite = new SpriteManager(16, 0, 0, SheetArchive.cow);
 	}
-	
-	public static int velX = 1;
-	public static int velY = 1;	
 	
 	private int xa = 0; 
 	private int ya = 0;
@@ -37,15 +34,17 @@ public class Chicken extends MobAddons {
 		
 		// TODO: Movements
 		
-		if(tickTime % (random.nextInt(30) + 30) == 0) {
-			xa = random.nextInt(3)-1;
-			ya = random.nextInt(3)-1;
-			// Chance of staying static
-			if(random.nextInt(2) == 0) {
-				xa = 0;
-				ya = 0;
-			}
-		}
+//		if(tickTime % (random.nextInt(30) + 30) == 0) {
+//			xa = random.nextInt(3)-1;
+//			ya = random.nextInt(3)-1;
+//			// Chance of staying static
+//			if(random.nextInt(2) == 0) {
+//				xa = 0;
+//				ya = 0;
+//			}
+//		}
+		
+		xa=1;
 		
 		if(xa == 1) dir = 1;
 		if(xa == -1) dir = 3;
@@ -62,26 +61,27 @@ public class Chicken extends MobAddons {
 	
 	public void die() {
 		super.die();
-		if(health <= 0) level.add(new ItemEntity(x - 10, y - 15, new ResourceItem(Resource.wood)));
+		if(health <= 0) level.add(new ItemEntity(x - (4*2), y - (5*2), new ResourceItem(Resource.wood)));
 	}
 	
 	public void render(RenderManager screen) {
 		int spriteFlip = 0;
 		
-		if(dir == 0) spriteFlip = 1;
+		if(dir == 0) animSprite = left;
 		if(dir == 1) animSprite = right;
 		if(dir == 2) animSprite = right;
-		if(dir == 3) spriteFlip = 1;
+		if(dir == 3) animSprite = left;
 		
 		if(xa >= 1 && ya < 1) animSprite = right;
 		if(xa < 1 && ya >= 1) spriteFlip = 1;
 		
 		sprite = animSprite.getSprite();
 		
-		screen.renderMob(x - 10, y - 15, this, sprite, spriteFlip);
+		screen.renderMob(x - (10*2), y - (12*2), this, sprite, spriteFlip);
 	}
 	
-	private Animate right = new Animate(Animations.chickenRight, 1, 3, 3);
+	private Animate right = new Animate(Animations.cowRight, 1, 3, 3);
+	private Animate left = new Animate(Animations.cowLeft, 1, 3, 3);
 	
 	private Animate animSprite = right;
 }

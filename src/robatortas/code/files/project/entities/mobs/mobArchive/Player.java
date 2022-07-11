@@ -76,6 +76,33 @@ public class Player extends MobAddons {
 		} else walking = false;
 	}
 	
+	private void controls() {
+		// Controls
+		if(input.up) ya -= velY;
+		if(input.down) ya += velY;
+		if(input.left) xa -= velX;
+		if(input.right) xa += velX;
+		
+		if(input.f) {
+			if(punch == false) {
+				punch = true;
+//				level.add(new ItemEntity(x, y, new ResourceItem(Resource.sword)));
+				attack();
+			}
+		} else punch = false;
+		if(attackTime > 0) attackTime--;
+		
+		if(GameManager.DEV_MODE) {
+			if(input.shift) {
+				velX = 2;
+				velY = 2;
+			} else {
+				velX = 1;
+				velY = 1;
+			}
+		}
+	}
+	
 	private void attack() {
 		attackDir = dir;
 		attackTime = 5;
@@ -112,33 +139,6 @@ public class Player extends MobAddons {
 	
 	public void touched(EntityManager entity) {
 		entity.getItem(iE).takeItem(this);
-	}
-	
-	private void controls() {
-		// Controls
-		if(input.up) ya -= velY;
-		if(input.down) ya += velY;
-		if(input.left) xa -= velX;
-		if(input.right) xa += velX;
-		
-		if(input.f) {
-			if(punch == false) {
-				punch = true;
-				level.add(new ItemEntity(x, y, new ResourceItem(Resource.sword)));
-				attack();
-			}
-		} else punch = false;
-		if(attackTime > 0) attackTime--;
-		
-		if(GameManager.DEV_MODE) {
-			if(input.shift) {
-				velX = 2;
-				velY = 2;
-			} else {
-				velX = 1;
-				velY = 1;
-			}
-		}
 	}
 	
 	// PLAYER CAN SWIM!!! (The other entities can't now, so fuck 'em)
@@ -242,7 +242,7 @@ public class Player extends MobAddons {
 				for(int i = 0; i < 3; i++) {
 					level.add(particle = new Particle(x, y));
 					
-					// particle colors depend on what the player is standing on. BETA 2.0!
+					// particle colors depend on what the player is standing on.
 					for(int yy = 0; yy < level.getLevel(x >> 4, y >> 4).sprite.height; yy++) {
 						for(int xx = 0; xx < level.getLevel(x >> 4, y >> 4).sprite.width; xx++) {
 							int color = level.getLevel(x >> 4, y >> 4).sprite.pixels[xx+yy*level.getLevel(x >> 4, y >> 4).sprite.width];

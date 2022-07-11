@@ -39,7 +39,8 @@ public class EntityManager {
 	}
 	
 	public void move(int xa, int ya) {
-		
+		x+=xa;
+		y+=ya;
 	}
 	
 	public void move2(int xa, int ya) {
@@ -49,6 +50,8 @@ public class EntityManager {
 			if(e == this) continue;
 			e.touched(this);
 		}
+		x+=xa;
+		y+=ya;
 	}
 	
 	public void touched(EntityManager entity) {

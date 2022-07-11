@@ -8,11 +8,16 @@ import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
 import robatortas.code.files.project.archive.SheetArchive;
 import robatortas.code.files.project.archive.SpriteArchive;
+import robatortas.code.files.project.entities.ItemEntity;
 import robatortas.code.files.project.entities.Particle;
+import robatortas.code.files.project.inventory.Resource;
+import robatortas.code.files.project.inventory.ResourceItem;
 
 public class TreeTile extends TileManager {
 	
 	private int health = 10;
+	
+	private ItemEntity wood;
 	
 	public TreeTile(SpriteManager sprite, int id) {
 		super(sprite, id);
@@ -45,6 +50,11 @@ public class TreeTile extends TileManager {
 		
 		if(health <= 0) {
 			level.insertTile(x, y, SpriteArchive.col_grass);
+			for(int i = 0; i < 1; i++) {
+				level.add(wood = new ItemEntity((x << 4) + 8, (y << 4) + 10, new ResourceItem(Resource.wood)));
+				wood.physicsEngine.calculations.gravityForce = 0.01f;
+			}
+			
 			health = 10;
 		}
 	}

@@ -32,7 +32,7 @@ public class Calculations {
 		z1 -= gravityForce;
 	}
 	
-	public void settings() {
+	private void settings() {
 		x1 = random.nextGaussian() * 0.3; // Defualt Value = 0.3
 		y1 = random.nextGaussian() * 0.2; // Defualt Value = 0.2
 		z1 = random.nextFloat() * 0.7 + 1; // Defualt Value = 0.7 + 1
