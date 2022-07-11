@@ -11,7 +11,6 @@ import robatortas.code.files.core.sound.SoundEngine;
 public class MobAddons extends Mob {
 	
 	public void move(int xa, int ya) {
-		super.move(xa, ya);
 		super.xa = xa;
 		super.ya = ya;
 		
@@ -30,18 +29,17 @@ public class MobAddons extends Mob {
 	}
 	
 	public void move2(int xa, int ya) {
-		super.move2(xa, ya);
 		collision(xa, ya);
 		if(!collision(xa, ya)) {
 			x += xa;
 			y += ya;
 			walking = true;
 		}
+		
 	}
 	
 	public void update() {
 		super.update();
-		
 		die();
 		
 		knockBack();

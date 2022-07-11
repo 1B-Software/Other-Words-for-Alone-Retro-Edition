@@ -1,9 +1,6 @@
 package robatortas.code.files.core.entities;
 
-import java.util.Random;
-
 import robatortas.code.files.core.render.RenderManager;
-import robatortas.code.files.project.entities.mobs.MobAddons;
 
 public class Mob extends EntityManager {
 
@@ -24,6 +21,10 @@ public class Mob extends EntityManager {
 	
 	public void move(int xa, int ya) {
 		super.move(xa, ya);
+	}
+	
+	public void move2(int xa, int ya) {
+		super.move2(xa, ya);
 	}
 	
 	public void update() {

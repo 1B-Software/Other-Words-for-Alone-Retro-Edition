@@ -4,12 +4,11 @@ import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.physics.PhysicsEngine;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.sound.SoundEngine;
-import robatortas.code.files.project.entities.mobs.MobAddons;
 import robatortas.code.files.project.entities.mobs.mobArchive.Player;
 import robatortas.code.files.project.inventory.Item;
 import robatortas.code.files.project.inventory.ResourceItem;
 
-public class ItemEntity extends MobAddons {
+public class ItemEntity extends EntityManager {
 	
 	private int lifeTime = 60*8;
 	private int tickTime = 0;
@@ -51,11 +50,11 @@ public class ItemEntity extends MobAddons {
 	}
 	
 	public void takeItem(Player player) {
-		if(physicsEngine.calculations.z1 == 0 && tickTime > 60/2) {
+		if(physicsEngine.calculations.z0 == 0 && tickTime > 60/2) {
 			player.inventory.add((ResourceItem) item);
 			SoundEngine.take.play();
 			System.out.println("TAKEN!");
-			remove();
+			this.remove();
 		}
 	}
 	
