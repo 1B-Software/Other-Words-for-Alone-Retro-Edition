@@ -15,7 +15,7 @@ public class RenderManager {
 	
 	public int xOffset, yOffset;
 	
-	private Random random = new Random();
+	public Random random = new Random();
 	
 	public RenderManager(int width, int height) {
 		this.width = width;

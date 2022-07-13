@@ -61,6 +61,10 @@ public class Player extends MobAddons {
 		
 		particleEffects();
 		
+		if(level.getLevel(x >> 4, y >> 4) == TileArchive.water) {
+			if(tickTime % 60 == 0) this.doHurt(1, dir);
+		}
+		
 		if(isSwimming) {
 			swimTime++;
 			speed = tickTime & 1;
@@ -147,6 +151,7 @@ public class Player extends MobAddons {
 	}
 	
 	public void die() {
+		super.die();
 		if(health <= 0) SoundEngine.dead.play();
 	}
 	

@@ -70,6 +70,9 @@ public class MobAddons extends Mob {
 	public void doHurt(int damage, int attackDir) {
 		if(hurtTime > 0) return;
 		health -= damage;
+		
+		SoundEngine.entityHurt.play();
+		
 		if (attackDir == 0) yKnockback = -10;
 		if (attackDir == 1) xKnockback = 10;
 		if (attackDir == 2) yKnockback = 10;

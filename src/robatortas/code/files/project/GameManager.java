@@ -98,8 +98,9 @@ public class GameManager extends Canvas implements Runnable {
 	
 	// Update
 	public int x, y;
+	public int tickTime = 0;
 	public void update() {
-		constants.ticks++;
+		tickTime++;
 		level.update();
 	}
 	
@@ -136,8 +137,8 @@ public class GameManager extends Canvas implements Runnable {
 		
 		g.setColor(Color.magenta);
 		g.setFont(new Font("Verdana", 1, 1).deriveFont(30f));
-		g.drawString("E: " + level.entities.size(), 20, 60);
-		g.drawString("X: " + (LevelManager.player.x >> 4) + " Y: " + (LevelManager.player.y >> 4), 20, 30);
+//		g.drawString("E: " + level.entities.size(), 20, 60);
+//		g.drawString("X: " + (LevelManager.player.x >> 4) + " Y: " + (LevelManager.player.y >> 4), 20, 30);
 		
 		g.dispose();
 		bs.show();
