@@ -6,6 +6,7 @@ import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
+import robatortas.code.files.core.sound.SoundEngine;
 import robatortas.code.files.project.archive.SheetArchive;
 import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.entities.ItemEntity;
@@ -31,13 +32,16 @@ public class TreeTile extends TileManager {
 	public SpriteManager treeUR = new SpriteManager(16, 1, 0, SheetArchive.foliage);
 	
 	public void hurt(LevelManager level, Mob mob, int x, int y, int damage, int dir) {
-		hurt(level, x, y);
+		damage = random.nextInt(2)+1;
+		System.out.println(damage);
+		hurting(level, x, y, damage);
 	}
 	
 	private Particle particle;
 	
-	public void hurt(LevelManager level, int x, int y) {
-		health-=1;
+	public void hurting(LevelManager level, int x, int y, int damage) {
+		health-=damage;
+		SoundEngine.breakTile.play();
 		
 		for(int i = 0; i < 5; i++) {
 			level.add(particle = new Particle((x << 4) + 8, (y << 4) + 10));

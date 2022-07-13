@@ -3,7 +3,6 @@ package robatortas.code.files.project.entities;
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.physics.PhysicsEngine;
 import robatortas.code.files.core.render.RenderManager;
-import robatortas.code.files.core.render.SpriteManager;
 import robatortas.code.files.core.sound.SoundEngine;
 import robatortas.code.files.project.entities.mobs.mobArchive.Player;
 import robatortas.code.files.project.inventory.Item;
@@ -70,7 +69,6 @@ public class ItemEntity extends EntityManager {
 		if(physicsEngine.calculations.z0 == 0) zTime++;
 		else zTime = 0;
 		
-		System.out.println(zTime);
 		if(zTime == 1) {
 			for(int i = 0; i < 3; i++) {
 				level.add(particle = new Particle(x, y));

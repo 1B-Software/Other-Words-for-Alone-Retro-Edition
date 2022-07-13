@@ -61,7 +61,7 @@ public class Cow extends MobAddons {
 	
 	public void die() {
 		super.die();
-		if(health <= 0) level.add(new ItemEntity(x - (4*2), y - (5*2), new ResourceItem(Resource.wood)));
+		if(health <= 0) level.add(new ItemEntity(x - (4*2), y - (5*2), new ResourceItem(Resource.meat)));
 	}
 	
 	public void render(RenderManager screen) {
