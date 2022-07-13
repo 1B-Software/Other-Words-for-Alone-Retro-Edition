@@ -62,7 +62,7 @@ public class Chicken extends MobAddons {
 	
 	public void die() {
 		super.die();
-		if(health <= 0) level.add(new ItemEntity(x - 10, y - 15, new ResourceItem(Resource.wood)));
+		if(health <= 0) level.add(new ItemEntity(x - 10, y - 15, new ResourceItem(Resource.chicken)));
 	}
 	
 	public void render(RenderManager screen) {

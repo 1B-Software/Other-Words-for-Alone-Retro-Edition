@@ -15,6 +15,7 @@ public class SheetArchive {
 	public static SpriteSheetManager gui = new SpriteSheetManager("/textures/spritesheet/gui/gui.png", 144);
 	
 	public static SpriteSheetManager items = new SpriteSheetManager("/textures/spritesheet/item/item.png", 96);
+	public static SpriteSheetManager food = new SpriteSheetManager("/textures/spritesheet/item/food.png", 64, 56);
 	
 	//////////
 	// Mobs //
