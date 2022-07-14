@@ -49,17 +49,15 @@ public class RenderMethod {
 			xa = screen.random.nextInt(2);
 		}
 		
-		for(int i = 0; i < 10; i++) {
-			screen.renderColor(((x + (game.screen.width/3) + 7) + xa) + (i*11), (y + 4) + ya, SpriteArchive.cori, 0, 0xff1F1F1F);
+		// Health
+		screen.renderBox((x + (game.screen.width/3) + 5), y + 8, 84, 12, 0xff1F1F1F);
+		for(int i = 0; i < LevelManager.player.health; i++) {
+			if(LevelManager.player.health <= 3) {if((game.tickTime / 15) % 2 == 0) continue;}
+			screen.renderBox((x + (game.screen.width/3) + 7) + (i*8) + xa, (y + 10) + ya, 8, 8, 0xffFF282C);
 		}
+		if(LevelManager.player.hurtTime > 0 && LevelManager.player.health > 0) screen.renderBox((x + (game.screen.width/3) + 7) + (8*Math.max(LevelManager.player.health, LevelManager.player.health)), y + 10, 8, 8, 0xffffffff);
 		
-		for(int i = 0; i < game.level.player.health; i++) {
-			if(game.level.player.health <= 3) {
-				if((game.tickTime / 15) % 2 == 0) continue;
-			}
-			screen.renderSprite((x + (game.screen.width/3) + 7) + (i*11), y + 4, SpriteArchive.cori, 0);
-		}
-		
+		// Stamina
 		for(int i = 0; i < 5; i++) screen.renderSprite((x + (game.screen.width/3) + 7) + (i*11), y + 16, SpriteArchive.stamina, 0);
 	}
 	
