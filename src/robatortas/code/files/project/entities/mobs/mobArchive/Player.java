@@ -62,7 +62,7 @@ public class Player extends MobAddons {
 		particleEffects();
 		
 		if(level.getLevel(x >> 4, y >> 4) == TileArchive.water) {
-			if(tickTime % 60 == 0) this.doHurt(1, dir);
+			if(tickTime % 60 == 0) this.dealDamage(1, dir);
 		}
 		
 		if(isSwimming) {
@@ -209,6 +209,13 @@ public class Player extends MobAddons {
 			isSwimming = true;
 		}
 		if(isSwimming) renderAxysConstY = 15;
+		
+		
+		if(hurtTime == 1) {
+			for(int i = 0; i < 1; i++) level.add(particle = new Particle(x, y, new SpriteManager(8, 0, 0, SheetArchive.smallFx)));
+			particle.physicsEngine.calculations.gravityForce = 0.05;
+			particle.life = 10 + random.nextInt(20);
+		}
 		
 		// Render Mob
 		sprite = animSprite.getSprite();
