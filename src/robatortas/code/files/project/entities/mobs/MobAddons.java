@@ -61,13 +61,13 @@ public class MobAddons extends Mob {
 	/////////////
 	
 	public void hurt(Mob mob, int damage, int attackDir) {
-		doHurt(damage, attackDir);
+		dealDamage(damage, attackDir);
 
 		SoundEngine.entityHurt.play();
 		SoundEngine.drop.play();
 	}
 	
-	public void doHurt(int damage, int attackDir) {
+	public void dealDamage(int damage, int attackDir) {
 		if(hurtTime > 0) return;
 		health -= damage;
 		

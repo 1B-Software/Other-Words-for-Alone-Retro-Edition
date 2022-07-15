@@ -1,9 +1,8 @@
 package robatortas.code.files.project.entities;
 
-import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.physics.PhysicsEngine;
 import robatortas.code.files.core.render.RenderManager;
-import robatortas.code.files.project.archive.SpriteArchive;
+import robatortas.code.files.core.render.SpriteManager;
 import robatortas.code.files.project.entities.mobs.MobAddons;
 
 public class Particle extends MobAddons {
@@ -14,10 +13,18 @@ public class Particle extends MobAddons {
 	public PhysicsEngine physicsEngine;
 	
 	private int color;
+	private SpriteManager sprite;
 	
 	public Particle(int x, int y) {
 		this.x = x;
 		this.y = y;
+		this.physicsEngine = new PhysicsEngine(x, y);
+	}
+	
+	public Particle(int x, int y, SpriteManager sprite) {
+		this.x = x;
+		this.y = y;
+		this.sprite = sprite;
 		this.physicsEngine = new PhysicsEngine(x, y);
 	}
 	
@@ -39,7 +46,8 @@ public class Particle extends MobAddons {
 	}
 	
 	public void render(RenderManager screen) {
-		screen.renderBox(x, y - (int) physicsEngine.calculations.z0, 2, 2, color);
+		if(sprite == null) screen.renderBox(x, y - (int) physicsEngine.calculations.z0, 2, 2, color);
+		else screen.renderSprite(x, y - (int) physicsEngine.calculations.z0, sprite, 0);
 	}
 	
 	public void life() {

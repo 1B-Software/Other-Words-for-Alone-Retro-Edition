@@ -31,4 +31,5 @@ public class SheetArchive {
 	
 	
 	public static SpriteSheetManager fx = new SpriteSheetManager("/textures/spritesheet/fx/fx.png", 128);
+	public static SpriteSheetManager smallFx = new SpriteSheetManager("/textures/spritesheet/fx/smallFx.png", 32);
 }
