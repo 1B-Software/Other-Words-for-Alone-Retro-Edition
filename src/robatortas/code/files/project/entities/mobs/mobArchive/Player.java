@@ -31,6 +31,8 @@ public class Player extends MobAddons {
 	
 	public Inventory inventory;
 	
+	public int stamina = 0;
+	
 	public Player(int x, int y, InputManager input) {
 		this.x = x;
 		this.y = y;
