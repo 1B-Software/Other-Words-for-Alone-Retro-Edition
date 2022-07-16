@@ -59,7 +59,11 @@ public class RenderMethod {
 		if(LevelManager.player.hurtTime > 0 && LevelManager.player.health > 0) screen.renderBox((x + (game.screen.width/3) + xVal) + (8*Math.max(LevelManager.player.health, LevelManager.player.health)), y + 10, 8, 8, 0xffffffff);
 		
 		// Stamina
-//		for(int i = 0; i < 5; i++) screen.renderSprite((x + (game.screen.width/3) + 7) + (i*11), y + 16, SpriteArchive.stamina, 0);
+		screen.renderBox((x + (game.screen.width/3) - 2), y + 8 + 13, 84, 7, 0xff1F1F1F);
+		for(int i = 0; i < LevelManager.player.health; i++) {
+			if(LevelManager.player.health <= 3) {if((game.tickTime / 15) % 2 == 0) continue;}
+			screen.renderBox((x + (game.screen.width/3) + xVal) + (i*8) + xa, (y + 10) + ya + 13, 8, 3, 0xffFFB200);
+		}
 	}
 	
 	public void pixelIterations() {
