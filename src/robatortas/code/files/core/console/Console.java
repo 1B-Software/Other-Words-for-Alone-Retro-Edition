@@ -25,7 +25,7 @@ public class Console implements Runnable {
 	}
 	
 	public static void writePlayerMsg(String msg) {
-//		from = Player.name;
+		from = "Player";
 		System.out.println("[" + from + "]" + ": " + msg);
 	}
 	
@@ -35,6 +35,8 @@ public class Console implements Runnable {
 	
 	// COMMANDS ALPHA
 	public void commands() {
+		if(!s.startsWith("!")) writePlayerMsg(s);
+		
 		if(readNextLine(0)) writeSysMsg(" I am glad to help here, tho I can't atm!");
 		if(readNextLine(1)) {
 			writeSysMsg(" Quitting...");
@@ -45,7 +47,8 @@ public class Console implements Runnable {
 	}
 	
 	private boolean readNextLine(int index) {
-		return s.contains(cmd[index].toLowerCase());
+		if(s.startsWith("!")) return s.contains(cmd[index].toLowerCase());
+		return false;
 	}
 
 	public synchronized void start() {
