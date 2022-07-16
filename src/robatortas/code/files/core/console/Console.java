@@ -4,11 +4,15 @@ import java.util.Scanner;
 
 // CONSOLE IS IN TESTDEV!
 
-public class Console {
-
-	private static String GREEN = "\033[32m";
+public class Console implements Runnable {
 	
 	private static String from = "void";
+	
+	private Scanner readInput = new Scanner(System.in);
+	private String s;
+	
+	private Thread thread;
+	private boolean running = false;
 	
 	public static void writeSysMsg(String msg) {
 		from = "Console";
@@ -30,16 +34,39 @@ public class Console {
 			};
 	
 	// COMMANDS ALPHA
-	public static void commands() {
+	public void commands() {
 		if(readNextLine(0)) writeSysMsg(" I am glad to help here, tho I can't atm!");
-		if(readNextLine(1)) writeSysMsg(" Quitting..."); System.exit(0);
+		if(readNextLine(1)) {
+			writeSysMsg(" Quitting...");
+			System.exit(0);
+		}
 		if(readNextLine(2)) writeSysMsg(" Hello fellow human!");
+			
 	}
 	
-	private static boolean readNextLine(int index) {
-		Scanner readInput = new Scanner(System.in);
-		String s = readInput.nextLine().toLowerCase();
-		
+	private boolean readNextLine(int index) {
 		return s.contains(cmd[index].toLowerCase());
+	}
+
+	public synchronized void start() {
+		thread = new Thread(this, "Console");
+		thread.start();
+		running = true;
+	}
+	
+	public synchronized void stop() {
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		running = false;
+	}
+	
+	public void run() {
+		while(running) {
+			s = readInput.nextLine().toLowerCase();
+			commands();
+		}
 	}
 }

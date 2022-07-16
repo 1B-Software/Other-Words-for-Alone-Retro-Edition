@@ -4,6 +4,7 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import robatortas.code.files.core.console.Console;
 import robatortas.code.files.project.level.TerrainGen.NoiseMap;
 import robatortas.code.files.project.settings.Constants;
 

@@ -1,0 +1,3 @@
+cd C:\Users\robat\Documents\Programming\Java\OWFA-Workspace\Other-Words-for-Alone-Retro-Edition
+
+gource --user-image-dir "C:\Program Files\Gource\images" --seconds-per-day 5

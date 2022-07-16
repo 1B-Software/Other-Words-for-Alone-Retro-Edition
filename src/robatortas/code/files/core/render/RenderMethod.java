@@ -2,7 +2,6 @@ package robatortas.code.files.core.render;
 
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.project.GameManager;
-import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.settings.Constants;
 
 public class RenderMethod {
