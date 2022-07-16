@@ -1,7 +1,5 @@
 package robatortas.code.files.core.level;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 

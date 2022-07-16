@@ -1,0 +1,30 @@
+Robatortas' guide on:
+HOW TO INSTALL!
+
+You are probably seeing this because you don't know how to install this.
+
+It's ok! I'll lead you to the way on how to download this.
+
+REMEMBER! That you'r OS will detect this software as possible malware. It is not malware.
+Your OS just detects it that way because I haven't signed the game yet. So it is from an unrecognized author.
+Meaning that the OS doesn't know if it is safe or not. In the final release I'll sign the game.
+
+Dont worry about the warning. You can just click on "More Info" and at the bottom it will finally appear "Run anyway" ON WINDOWS.
+
+ON MAC I am not sure, Im not a Mac user, you can search it very easily on google by typing. "How to open unauthorized author program on Mac"
+And google will guide you through the steps! :)
+
+ON LINUX, I guess you can just sudo the program, I don't worry about this too much, becuase Linux is more of a "Tech Smarty" OS. So I guess you'll
+know how to open the file on Linux easily.
+
+!!IMPORTANT!!
+A lot of people don't know how to download the game because it is nowhere to be found on the "main"
+
+To download the game. Just simply go to the "Other Words for Alone" repository, and at the right of your screen, you'll see a "releases button".
+You click that. and all the game releases will be avalable. :D
+
+Thats it folks!
+
+Thanks for Downloading the Game!
+
+-Robatortas

@@ -87,7 +87,7 @@ public class Player extends MobAddons {
 		if(input.left) xa -= velX;
 		if(input.right) xa += velX;
 		
-		if(input.f) {
+		if(input.f || input.space) {
 			if(punch == false) {
 				punch = true;
 //				level.add(new ItemEntity(x, y, new ResourceItem(Resource.sword)));

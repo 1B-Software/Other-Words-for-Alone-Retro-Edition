@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.Scanner;
 
 import javax.swing.JFrame;
 
@@ -45,6 +46,8 @@ public class GameManager extends Canvas implements Runnable {
 	// General Declarations
 	public LevelManager level;
 	
+	private boolean debug = false;
+	
 	// DECLARATIONS END
 	
 	
@@ -65,7 +68,6 @@ public class GameManager extends Canvas implements Runnable {
 		
 		addKeyListener(level.input);
 	}
-	
 	
 	// Threading and game loop
 	protected ThreadUtils threadUtils = new ThreadUtils();
@@ -102,8 +104,8 @@ public class GameManager extends Canvas implements Runnable {
 	public void update() {
 		tickTime++;
 		level.update();
+		generalPurposeKeys();
 	}
-	
 	
 	// Render
 	public void render() {
@@ -119,14 +121,6 @@ public class GameManager extends Canvas implements Runnable {
 		
 		int w = getWindowSize().width;
 	    int h = getWindowSize().height;
-//	    if(getWidth() < w ) {
-//			w += (getWidth() - Constants.WIDTH * 3);
-//			h += (getWidth() - Constants.HEIGHT* 3);
-//		}
-//	    if(getHeight() < h) {
-//			w += (getHeight() - Constants.WIDTH * 3);
-//			h += (getHeight() - Constants.HEIGHT * 3);
-//		}
 		
 		int xo = (getWidth() - w) / 2;
 		int yo = (getHeight() - h) / 2;
@@ -137,11 +131,18 @@ public class GameManager extends Canvas implements Runnable {
 		
 		g.setColor(Color.magenta);
 		g.setFont(new Font("Verdana", 1, 1).deriveFont(30f));
-//		g.drawString("E: " + level.entities.size(), 20, 60);
-//		g.drawString("X: " + (LevelManager.player.x >> 4) + " Y: " + (LevelManager.player.y >> 4), 20, 30);
+		
+		if(debug) {
+			g.drawString("E: " + level.entities.size(), 20, 60);
+			g.drawString("X: " + (LevelManager.player.x >> 4) + " Y: " + (LevelManager.player.y >> 4), 20, 30);
+		}
 		
 		g.dispose();
 		bs.show();
+	}
+	
+	public void generalPurposeKeys() {
+		debug = level.input.toggle(level.input.f3, debug);
 	}
 	
 	static java.awt.Dimension getWindowSize() {
