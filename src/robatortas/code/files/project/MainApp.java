@@ -5,10 +5,12 @@ import robatortas.code.files.core.sound.SoundEngine;
 
 public class MainApp {
 	
+	private static GameManager game;
+	
 	// Main Method
 	public static void main(String[] args) {
 		SoundEngine.enter.play();
-		new GameManager();
-		new Console().start();
+		game = new GameManager();
+		new Console(game).start();
 	}
 }
