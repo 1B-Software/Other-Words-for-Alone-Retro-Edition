@@ -25,7 +25,7 @@ public class GameManager extends Canvas implements Runnable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public static final boolean DEV_MODE = true;
+	public static boolean DEV_MODE = true;
 	
 	// DECLARATIONS
 	

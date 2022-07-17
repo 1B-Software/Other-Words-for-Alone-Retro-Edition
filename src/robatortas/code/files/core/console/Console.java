@@ -3,6 +3,8 @@ package robatortas.code.files.core.console;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import robatortas.code.files.project.GameManager;
+
 // CONSOLE IS IN TESTDEV!
 
 public class Console implements Runnable {
@@ -10,10 +12,16 @@ public class Console implements Runnable {
 	private static String from = "void";
 	
 	private Scanner readInput = new Scanner(System.in);
-	private String s;
+	private String msg;
 	
 	private Thread thread;
 	private boolean running = false;
+	
+	private GameManager game;
+	
+	public Console(GameManager game) {
+		this.game = game;
+	}
 	
 	public static void writeSysMsg(String msg) {
 		from = "Console";
@@ -22,7 +30,7 @@ public class Console implements Runnable {
 	
 	public static void writeErr(String err) {
 		from = "Console";
-		System.err.println(err);
+		System.err.println("[" + from + "]" + ": " + err);
 	}
 	
 	public static void writePlayerMsg(String msg) {
@@ -30,35 +38,68 @@ public class Console implements Runnable {
 		System.out.println("[" + from + "]" + ": " + msg);
 	}
 	
-	private boolean readNextLine(int index) {
-		if(s.startsWith("!")) return s.contains(cmd[index].toLowerCase());
+	private boolean setCommand(int index) {
+		if(msg.startsWith("!")) {
+			if("!".concat(msg.split("", 1)[0].toString()) != "!".concat(getCommand(2))) {
+				writeErr("Command does not exist.");
+			}
+			return msg.contains(cmd[index].toLowerCase());
+		}
 		return false;
 	}
-
-	private static String[] cmd = new String[] {
-			"help", "exit", "hello"
-			};
+	
+	private String getCommand(int index) {
+		return cmd[index].toString();
+	}
 	
 	private String getCommandList() {
 		return Arrays.toString(cmd);
 	}
 	
-	// COMMANDS ALPHA
-	public void commands() {
-		if(!s.startsWith("!")) writePlayerMsg(s);
-		
-		if(readNextLine(0)) {
-			writeSysMsg("Here is the list of commands: \n"
-					+ getCommandList());
+	// When in need of making a command do certain stuff depending if it's true or false
+	private boolean commandSet(int commandIndex) {
+		boolean bool = false;
+		if("!".concat(getCommand(commandIndex)).concat(" = true").equals(msg)) {
+			bool = true;
 		}
-		if(readNextLine(1)) {
+		if("!".concat(getCommand(commandIndex)).concat(" = false").equals(msg)) {
+			bool = false;
+		}
+		return bool;
+	}
+	
+	// LIST OF COMMANDS
+	private static String[] cmd = new String[] {
+			"help", "exit", "devmode", "get"
+			};
+	
+	// COMMAND FUNCTIONS
+	public void commands() {
+		if(!msg.startsWith("!")) writePlayerMsg(msg);
+		
+		if(setCommand(0)) writeSysMsg("Here is the list of commands: \n" + getCommandList());
+		if(setCommand(1)) {
 			writeSysMsg("Quitting...");
 			System.exit(0);
 		}
-		if(readNextLine(2)) writeSysMsg("Hello fellow human!");
-			
+		if(setCommand(2)) {
+			 if(commandSet(2)) {
+				 writeSysMsg("DEVMODE set to true");
+				 GameManager.DEV_MODE = true;
+			 }
+			 if(!commandSet(2)) {
+				 writeSysMsg("DEVMODE set to false");
+				 GameManager.DEV_MODE = false;
+			 }
+		}
+		if(setCommand(3)) {
+			String item = msg.substring("!".concat(getCommand(3)).length() + 1);
+			System.out.println(item);
+		}
 	}
 	
+	
+	// CONSOLE THREAD MANAGER
 	public synchronized void start() {
 		thread = new Thread(this, "Console");
 		thread.start();
@@ -76,7 +117,7 @@ public class Console implements Runnable {
 	
 	public void run() {
 		while(running) {
-			s = readInput.nextLine().toLowerCase();
+			msg = readInput.nextLine().toLowerCase();
 			commands();
 		}
 	}
