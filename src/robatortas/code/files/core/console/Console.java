@@ -37,19 +37,22 @@ public class Console implements Runnable {
 		from = "Player";
 		System.out.println("[" + from + "]" + ": " + msg);
 	}
-	
+
+	int commandIndex = 0;
 	private boolean setCommand(int index) {
-		if(msg.startsWith("!")) {
-			if("!".concat(msg.split("", 1)[0].toString()) != "!".concat(getCommand(2))) {
-				writeErr("Command does not exist.");
-			}
-			return msg.contains(cmd[index].toLowerCase());
-		}
+		commandIndex = index;
+		if(msg.startsWith("!")) return msg.contains(cmd[index].toLowerCase());
 		return false;
 	}
 	
 	private String getCommand(int index) {
 		return cmd[index].toString();
+	}
+	
+	private int getCommandThroughString(String s) {
+		int result = 0;
+		result = getCommandList().indexOf(s);
+		return result;
 	}
 	
 	private String getCommandList() {
@@ -59,12 +62,8 @@ public class Console implements Runnable {
 	// When in need of making a command do certain stuff depending if it's true or false
 	private boolean commandSet(int commandIndex) {
 		boolean bool = false;
-		if("!".concat(getCommand(commandIndex)).concat(" = true").equals(msg)) {
-			bool = true;
-		}
-		if("!".concat(getCommand(commandIndex)).concat(" = false").equals(msg)) {
-			bool = false;
-		}
+		if("!".concat(getCommand(commandIndex)).concat(" = true").equals(msg)) bool = true;
+		if("!".concat(getCommand(commandIndex)).concat(" = false").equals(msg)) bool = false;
 		return bool;
 	}
 	
@@ -93,11 +92,18 @@ public class Console implements Runnable {
 			 }
 		}
 		if(setCommand(3)) {
-			String item = msg.substring("!".concat(getCommand(3)).length() + 1);
+			String item = msg.contains(" ") ? msg.substring("!".concat(getCommand(3)).length() + 1) : "nullItem";
 			System.out.println(item);
 		}
+		
+		errorHandler();
 	}
 	
+	private void errorHandler() {
+		// CHECKS FOR INVALID COMMAND INPUT
+		String get = msg.contains(" ") ? msg.split(" ")[0] : msg;
+		if(!getCommandList().contains(get.substring(1))) writeErr("Invalid Command");
+	}
 	
 	// CONSOLE THREAD MANAGER
 	public synchronized void start() {
