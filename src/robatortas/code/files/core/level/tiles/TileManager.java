@@ -19,7 +19,7 @@ public class TileManager {
 	
 	public static TileManager[] tiles = new TileManager[256];
 	
-	public TileManager(SpriteManager sprite ,int id) {
+	public TileManager(SpriteManager sprite, int id) {
 		this.sprite = sprite;
 		this.id = id;
 		if(tiles[id] != null) System.err.println("Duplicate Tile ID's");
