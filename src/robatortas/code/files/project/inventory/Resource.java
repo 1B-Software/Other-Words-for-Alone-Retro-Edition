@@ -1,9 +1,7 @@
 package robatortas.code.files.project.inventory;
 
 import robatortas.code.files.core.render.SpriteManager;
-import robatortas.code.files.core.render.SpriteSheetManager;
 import robatortas.code.files.project.archive.SheetArchive;
-import robatortas.code.files.project.archive.SpriteArchive;
 
 public class Resource {
 
@@ -14,6 +12,11 @@ public class Resource {
 	
 	public Resource(String name, SpriteManager sprite) {
 		this.sprite = sprite;
+		this.name = name;
+	}
+	
+	public static String fromName(String name) {
+		return "";
 	}
 	
 	/*
@@ -21,6 +24,7 @@ public class Resource {
 	 */
 	public Resource(String name, int value, SpriteManager sprite) {
 		this.sprite = sprite;
+		this.name = name;
 		this.value = value;
 	}
 	

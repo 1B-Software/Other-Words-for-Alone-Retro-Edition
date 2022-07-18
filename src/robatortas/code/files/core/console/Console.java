@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import robatortas.code.files.project.GameManager;
+import robatortas.code.files.project.inventory.Resource;
+import robatortas.code.files.project.inventory.ResourceItem;
 
 // CONSOLE IS IN TESTDEV!
 
@@ -74,6 +76,7 @@ public class Console implements Runnable {
 	
 	// COMMAND FUNCTIONS
 	public void commands() {
+		errorHandler();
 		if(!msg.startsWith("!")) writePlayerMsg(msg);
 		
 		if(setCommand(0)) writeSysMsg("Here is the list of commands: \n" + getCommandList());
@@ -93,10 +96,9 @@ public class Console implements Runnable {
 		}
 		if(setCommand(3)) {
 			String item = msg.contains(" ") ? msg.substring("!".concat(getCommand(3)).length() + 1) : "nullItem";
-			System.out.println(item);
+//			game.level.player.inventory.add(new ResourceItem(Resource.fromName()));
+			System.out.println("Resouc".getClass());
 		}
-		
-		errorHandler();
 	}
 	
 	private void errorHandler() {
