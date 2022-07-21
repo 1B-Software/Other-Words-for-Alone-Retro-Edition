@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import robatortas.code.files.core.console.Console;
+
 public class SpriteSheetManager {
 	
 	public int[] pixels;
@@ -12,6 +14,7 @@ public class SpriteSheetManager {
 	public final int WIDTH, HEIGHT;
 	public final int SIZE;
 	public String path;
+	private String nullPath = "/textures/spritesheet/NULL_TEXTURE.png";
 	
 	public SpriteSheetManager(String path, int size) {
 		this.path = path;
@@ -78,15 +81,23 @@ public class SpriteSheetManager {
 	}
 	
 	public void load() {
+		BufferedImage image;
 		try {
 			System.out.print("Loading " + path + " ------->");
-			BufferedImage image = ImageIO.read(SpriteSheetManager.class.getResource(path));
+			image = ImageIO.read(SpriteSheetManager.class.getResource(path));
 			int w = image.getWidth();
 			int h = image.getHeight();
 			image.getRGB(0, 0, w, h, pixels, 0, w);
 			System.out.println(" Loaded");
 		} catch(IOException e) {
-			System.err.println("Unable to load SpriteSheet.");
+			Console.writeErr("Unable to locate SpriteSheet with the specified path of: " + path);
+			Console.writeSysMsg("Locating and using the SpriteSheet in the nullPath variable");
+			try {
+				image = ImageIO.read(SpriteSheetManager.class.getResource(nullPath));
+			} catch (IOException e1) {
+				Console.writeErr("Unable to locate the nullPath variable String location!\n"
+						+ "What did you do?");
+			}
 		}
 	}
 }

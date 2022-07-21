@@ -71,7 +71,7 @@ public class Console implements Runnable {
 	
 	// LIST OF COMMANDS
 	private static String[] cmd = new String[] {
-			"help", "exit", "devmode", "get"
+			"help", "quit", "devmode", "get"
 			};
 	
 	// COMMAND FUNCTIONS
@@ -96,6 +96,8 @@ public class Console implements Runnable {
 		}
 		if(setCommand(3)) {
 			String item = msg.contains(" ") ? msg.substring("!".concat(getCommand(3)).length() + 1) : "nullItem";
+//			for(int i = 0; i < )
+			Resource.fors(item);
 //			game.level.player.inventory.add(new ResourceItem(Resource.fromName()));
 			System.out.println("Resouc".getClass());
 		}
