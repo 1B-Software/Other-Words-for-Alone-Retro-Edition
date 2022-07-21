@@ -15,8 +15,12 @@ public class Resource {
 		this.name = name;
 	}
 	
-	public static String fromName(String name) {
-		return "";
+	private static Resource[] resources;
+	
+	public static void fors(String name) {
+		for(Resource resource : resources) {
+			System.out.println("resource");
+		}
 	}
 	
 	/*
