@@ -13,14 +13,13 @@ import robatortas.code.files.project.archive.Animations;
 import robatortas.code.files.project.archive.SheetArchive;
 import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.archive.tileArchive.TileArchive;
-import robatortas.code.files.project.entities.ItemEntity;
 import robatortas.code.files.project.entities.Particle;
 import robatortas.code.files.project.entities.mobs.MobAddons;
 import robatortas.code.files.project.inventory.Inventory;
-import robatortas.code.files.project.inventory.Resource;
-import robatortas.code.files.project.inventory.ResourceItem;
 
 public class Player extends MobAddons {
+	
+	public String name = "Robatortas";
 	
 	private InputManager input;
 	
