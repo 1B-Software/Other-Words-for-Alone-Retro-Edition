@@ -54,10 +54,11 @@ public class Console implements Runnable {
 		return cmd[index].toString();
 	}
 	
-	private int getCommandThroughString(String s) {
-		int result = 0;
-		result = getCommandList().indexOf(s);
-		return result;
+	// Get Item name from input commandIndex
+	private String getItemFromInput(int commandIndex) {
+		String item = msg.contains(" ") ? msg.substring("!".concat(getCommand(commandIndex)).length() + 1) : "nullItem";
+		System.out.println(item);
+		return item;
 	}
 	
 	private String getCommandList() {
@@ -98,13 +99,12 @@ public class Console implements Runnable {
 			 }
 		}
 		if(setCommand(3)) {
-			String item = msg.contains(" ") ? msg.substring("!".concat(getCommand(3)).length() + 1) : "nullItem";
-			System.out.println(item);
-			LevelManager.player.inventory.add(Items.getItem(item)); // HMMM, let me think a little...
+			System.out.println(getItemFromInput(3));
+			writeSysMsg("Item given to Player");
+			LevelManager.player.inventory.add(Items.getItem("m")); // HMMM, let me think a little...
 		}
 		if(setCommand(4)) {
-			String item = msg.contains(" ") ? msg.substring("!".concat(getCommand(3)).length() + 1) : "nullItem";
-			game.level.add((new ItemEntity(LevelManager.player.x, LevelManager.player.y, Items.getItem(item))));
+			game.level.add((new ItemEntity(LevelManager.player.x, LevelManager.player.y, Items.getItem(getItemFromInput(4)))));
 		}
 	}
 	

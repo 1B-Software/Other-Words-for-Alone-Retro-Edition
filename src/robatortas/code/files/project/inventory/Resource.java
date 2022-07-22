@@ -19,12 +19,15 @@ public class Resource {
 		this.name = name;
 	}
 	
-	// WE WILL CONVERT THE RETURNS OF THIS METHOD INTO RESOURCEITEMS SOON!
+	
 	public static ArrayList<Resource> getInstances() {
 		ArrayList<Resource> resources = new ArrayList<Resource>();
-		resources.add(wood = new Resource("wood", 1, woodSprite));
-		resources.add(meat = new Resource("meat", 1, meatSprite));
-		resources.add(chicken = new Resource("chicken", 1, chickenSprite));
+		
+		// List of resources in the game.
+		resources.add(new Resource("wood", 1, woodSprite));
+		resources.add(new Resource("meat", 1, meatSprite));
+		resources.add(new Resource("chicken", 1, chickenSprite));
+		
 		return resources;
 	}
 	
@@ -39,8 +42,4 @@ public class Resource {
 
 	private static SpriteManager meatSprite = new SpriteManager(8, 0, 0, SheetArchive.food);
 	private static SpriteManager chickenSprite = new SpriteManager(8, 0, 1, SheetArchive.food);
-	
-	public static Resource wood;
-	public static Resource meat;
-	public static Resource chicken;
 }

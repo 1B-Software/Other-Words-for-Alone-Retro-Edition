@@ -22,7 +22,6 @@ public class ResourceItem extends Item {
 		for(int i = 0; i < Resource.getInstances().size(); i++) {
 			Resource r = Resource.getInstances().get(i);
 			items.add(resourceToItem(r.name));
-			System.out.println(r);
 		}
 		return super.items;
 	}
