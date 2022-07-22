@@ -20,6 +20,8 @@ public class Console implements Runnable {
 	private Thread thread;
 	private boolean running = false;
 	
+	private Item item;
+	
 	private GameManager game;
 	
 	public Console(GameManager game) {
@@ -100,9 +102,11 @@ public class Console implements Runnable {
 			 }
 		}
 		if(setCommand(3)) {
-			Item item;
-			LevelManager.player.inventory.add(item = new Item().getItem(getItemFromInput(3)));
-			writeSysMsg("<Number> " + item.getName() + " given to " + LevelManager.player.name); // HMMM, let me think a little...
+			item = new Item().getItem(getItemFromInput(3));
+			if(item != null) {
+				LevelManager.player.inventory.add(item);
+				writeSysMsg("<Number> " + item.getName() + " given to " + LevelManager.player.name);
+			} else writeErr("Inputted Item doesn't exist.");
 		}
 		if(setCommand(4)) {
 			String item = getItemFromInput(4);

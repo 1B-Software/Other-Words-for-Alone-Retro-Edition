@@ -27,7 +27,7 @@ public class Item extends ItemHandler {
 		return items;
 	}
 
-	// To get any items from the game.
+	// To get any items from the game
 	public Item getItem(String itemName) {
 		ArrayList<Item> items = new ResourceItem(itemName).getInstances();
 		for(int i = 0; i < items.size(); i++) {

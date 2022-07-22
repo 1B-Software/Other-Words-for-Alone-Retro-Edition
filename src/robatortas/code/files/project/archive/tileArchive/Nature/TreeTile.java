@@ -30,7 +30,6 @@ public class TreeTile extends TileManager {
 	
 	public void hurt(LevelManager level, Mob mob, int x, int y, int damage, int dir) {
 		damage = random.nextInt(2)+1;
-		System.out.println(damage);
 		hurting(level, x, y, damage);
 	}
 	
