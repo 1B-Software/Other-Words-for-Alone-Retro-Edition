@@ -40,7 +40,6 @@ public class Player extends MobAddons {
 		this.sprite = new SpriteManager(16, 0, 0, SheetArchive.player);
 		super.dir = 2;
 		this.inventory = new Inventory();
-		inventory.add(new ResourceItem(Resource.sword));
 	}
 	
 	private static int velX = 1;
