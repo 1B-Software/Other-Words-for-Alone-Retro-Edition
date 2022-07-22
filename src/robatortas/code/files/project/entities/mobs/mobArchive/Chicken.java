@@ -7,8 +7,7 @@ import robatortas.code.files.project.archive.Animations;
 import robatortas.code.files.project.archive.SheetArchive;
 import robatortas.code.files.project.entities.ItemEntity;
 import robatortas.code.files.project.entities.mobs.MobAddons;
-import robatortas.code.files.project.inventory.Resource;
-import robatortas.code.files.project.inventory.ResourceItem;
+import robatortas.code.files.project.inventory.Item;
 
 public class Chicken extends MobAddons {
 	
@@ -62,7 +61,7 @@ public class Chicken extends MobAddons {
 	
 	public void die() {
 		super.die();
-		if(health <= 0);
+		if(health <= 0) level.add(new ItemEntity(x, y, new Item().getItem("chicken")));
 	}
 	
 	public void render(RenderManager screen) {
