@@ -11,6 +11,8 @@ import robatortas.code.files.project.archive.SheetArchive;
 import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.entities.ItemEntity;
 import robatortas.code.files.project.entities.Particle;
+import robatortas.code.files.project.inventory.Item;
+import robatortas.code.files.project.inventory.Items;
 import robatortas.code.files.project.inventory.Resource;
 import robatortas.code.files.project.inventory.ResourceItem;
 
@@ -54,8 +56,7 @@ public class TreeTile extends TileManager {
 		
 		if(health <= 0) {
 			level.insertTile(x, y, SpriteArchive.col_grass);
-			for(int i = 0; i < random.nextInt(1)+2; i++) level.add(wood = new ItemEntity((x << 4) + 8, (y << 4) + 10, new ResourceItem(Resource.wood)));
-			
+			for(int i = 0; i < random.nextInt(1)+2; i++) level.add(wood = new ItemEntity((x << 4) + 8, (y << 4) + 10, Items.getItem("wood")));
 			health = 10;
 		}
 	}

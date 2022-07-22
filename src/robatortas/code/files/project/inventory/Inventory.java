@@ -13,12 +13,12 @@ public class Inventory {
 		
 	}
 	
-	public void add(ResourceItem resource) {
-		items.add(resource);
+	public void add(Item item) {
+		items.add(item);
 	}
 	
-	public void remove(ResourceItem resource) {
-		items.remove(resource);
+	public void remove(Item item) {
+		items.remove(item);
 	}
 	
 	// Finds specified item from inventory

@@ -3,7 +3,10 @@ package robatortas.code.files.core.console;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.project.GameManager;
+import robatortas.code.files.project.entities.ItemEntity;
+import robatortas.code.files.project.inventory.Items;
 import robatortas.code.files.project.inventory.Resource;
 import robatortas.code.files.project.inventory.ResourceItem;
 
@@ -71,7 +74,7 @@ public class Console implements Runnable {
 	
 	// LIST OF COMMANDS
 	private static String[] cmd = new String[] {
-			"help", "quit", "devmode", "get"
+			"help", "quit", "devmode", "get", "drop"
 			};
 	
 	// COMMAND FUNCTIONS
@@ -96,10 +99,12 @@ public class Console implements Runnable {
 		}
 		if(setCommand(3)) {
 			String item = msg.contains(" ") ? msg.substring("!".concat(getCommand(3)).length() + 1) : "nullItem";
-//			for(int i = 0; i < )
-			Resource.fors(item);
-//			game.level.player.inventory.add(new ResourceItem(Resource.fromName()));
-			System.out.println("Resouc".getClass());
+			System.out.println(item);
+			LevelManager.player.inventory.add(Items.getItem(item)); // HMMM, let me think a little...
+		}
+		if(setCommand(4)) {
+			String item = msg.contains(" ") ? msg.substring("!".concat(getCommand(3)).length() + 1) : "nullItem";
+			game.level.add((new ItemEntity(LevelManager.player.x, LevelManager.player.y, Items.getItem(item))));
 		}
 	}
 	
