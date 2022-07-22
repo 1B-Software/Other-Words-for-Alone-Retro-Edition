@@ -39,7 +39,6 @@ public class Resource {
 	}
 	
 	private static SpriteManager woodSprite = new SpriteManager(16, 1, 0, SheetArchive.items);
-
-	private static SpriteManager meatSprite = new SpriteManager(8, 0, 0, SheetArchive.food);
+	public static SpriteManager meatSprite = new SpriteManager(8, 0, 0, SheetArchive.food);
 	private static SpriteManager chickenSprite = new SpriteManager(8, 0, 1, SheetArchive.food);
 }

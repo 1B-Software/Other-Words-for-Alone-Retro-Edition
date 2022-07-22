@@ -12,13 +12,13 @@ public class ResourceItem extends Item {
 	public ResourceItem(String resourceName) {
 		Resource resource = null;
 		for(int i = 0; i < Resource.getInstances().size(); i++) {
+//			System.out.println(resource.name);
 			resource = Resource.getInstances().get(i);
-			if(resource.name == resourceName) this.resource = resource;
+			if(resource.name.equals(resourceName)) this.resource = resource;
 		}
 	}
 	
 	public ArrayList<Item> getInstances() {
-		super.getInstances();
 		for(int i = 0; i < Resource.getInstances().size(); i++) {
 			Resource r = Resource.getInstances().get(i);
 			items.add(resourceToItem(r.name));

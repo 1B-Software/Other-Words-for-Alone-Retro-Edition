@@ -6,9 +6,7 @@ import java.util.Scanner;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.entities.ItemEntity;
-import robatortas.code.files.project.inventory.Items;
-import robatortas.code.files.project.inventory.Resource;
-import robatortas.code.files.project.inventory.ResourceItem;
+import robatortas.code.files.project.inventory.Item;
 
 // CONSOLE IS IN TESTDEV!
 
@@ -57,8 +55,11 @@ public class Console implements Runnable {
 	// Get Item name from input commandIndex
 	private String getItemFromInput(int commandIndex) {
 		String item = msg.contains(" ") ? msg.substring("!".concat(getCommand(commandIndex)).length() + 1) : "nullItem";
-		System.out.println(item);
 		return item;
+	}
+	private String getNumberFromInput(int commandIndex) {
+		String number = msg.contains(" ") ? msg.substring("!".concat(getCommand(commandIndex)).length() + 2) : "nullNumber";
+		return number;
 	}
 	
 	private String getCommandList() {
@@ -75,7 +76,7 @@ public class Console implements Runnable {
 	
 	// LIST OF COMMANDS
 	private static String[] cmd = new String[] {
-			"help", "quit", "devmode", "get", "drop"
+			"help", "quit", "devmode", "get", "drop", "inventory_size"
 			};
 	
 	// COMMAND FUNCTIONS
@@ -99,12 +100,16 @@ public class Console implements Runnable {
 			 }
 		}
 		if(setCommand(3)) {
-			System.out.println(getItemFromInput(3));
-			writeSysMsg("Item given to Player");
-			LevelManager.player.inventory.add(Items.getItem("m")); // HMMM, let me think a little...
+			Item item;
+			LevelManager.player.inventory.add(item = new Item().getItem(getItemFromInput(3)));
+			writeSysMsg("<Number> " + item.getName() + " given to " + LevelManager.player.name); // HMMM, let me think a little...
 		}
 		if(setCommand(4)) {
-			game.level.add((new ItemEntity(LevelManager.player.x, LevelManager.player.y, Items.getItem(getItemFromInput(4)))));
+			String item = getItemFromInput(4);
+			game.level.add(new ItemEntity(LevelManager.player.x, LevelManager.player.y, new Item().getItem(item)));
+		}
+		if(setCommand(5)) {
+			writeSysMsg(Integer.toString(LevelManager.player.inventory.items.size()));
 		}
 	}
 	
