@@ -30,7 +30,7 @@ public class Player extends MobAddons {
 	
 	public Inventory inventory;
 	
-	public int stamina = 0;
+	public int stamina = 10;
 	
 	public Player(int x, int y, InputManager input) {
 		this.x = x;
@@ -59,11 +59,9 @@ public class Player extends MobAddons {
 		// Controls
 		controls();
 		
-		particleEffects();
+		stamina();
 		
-		if(level.getLevel(x >> 4, y >> 4) == TileArchive.water) {
-			if(tickTime % 60 == 0) this.dealDamage(1, dir);
-		}
+		particleEffects();
 		
 		if(isSwimming) {
 			swimTime++;
@@ -88,9 +86,8 @@ public class Player extends MobAddons {
 		if(input.right) xa += velX;
 		
 		if(input.f || input.space) {
-			if(punch == false) {
+			if(punch == false && stamina > 0) {
 				punch = true;
-//				level.add(new ItemEntity(x, y, new ResourceItem(Resource.sword)));
 				attack();
 			}
 		} else punch = false;
@@ -103,6 +100,31 @@ public class Player extends MobAddons {
 			} else {
 				velX = 1;
 				velY = 1;
+			}
+		}
+	}
+	
+	private void stamina() {
+		if(stamina <= 0) {
+			if(isSwimming && swimTime % 60 == 0) hurt(this, 1, dir);
+			
+		}
+		
+		recoverStamina();
+		
+		payStamina();
+	}
+	private void recoverStamina() {
+		if(!isSwimming && stamina < 10) {
+			if(tickTime % 20 == 0) stamina++;
+		}
+	}
+	private void payStamina() {
+		if(attackTime == 1) stamina--;
+		
+		if(isSwimming) {
+			if(swimTime % 60 == 0) {
+				stamina--;
 			}
 		}
 	}

@@ -45,8 +45,6 @@ public class Cow extends MobAddons {
 			}
 		}
 		
-		xa=1;
-		
 		if(xa == 1) dir = 1;
 		if(xa == -1) dir = 3;
 		if(ya == 1) dir = 2;

@@ -35,17 +35,34 @@ public class RenderMethod {
 		game.level.render(xScroll, yScroll, game.screen);
 		renderGUI();
 	}
+
+	private boolean chat;
 	
-	int xa = 0;
-	int ya = 0;
 	public void renderGUI() {
 		RenderManager screen = game.screen;
 		int x = xScroll;
 		int y = yScroll;
 		
+		chat = game.level.input.toggle(game.level.input.c, chat);
+		
+		if(chat) {
+			screen.renderBox(x, y + (screen.width-76), 100, 40, 0xff3C1D13);
+			
+		}
+		
+		// Health and Stamina
+		int xa = 0;
+		int ya = 0;
+		int xs = 0;
+		int ys = 0;
+		
 		if(game.level.player.health <= 3) {
 			ya = screen.random.nextInt(2);
 			xa = screen.random.nextInt(2);
+		}
+		if(LevelManager.player.stamina <= 3) {
+			ys = screen.random.nextInt(2);
+			xs = screen.random.nextInt(2);
 		}
 		
 		int xVal = 0;
@@ -60,9 +77,9 @@ public class RenderMethod {
 		
 		// Stamina
 		screen.renderBox((x + (game.screen.width/3) - 2), y + 8 + 13, 84, 7, 0xff1F1F1F);
-		for(int i = 0; i < LevelManager.player.health; i++) {
+		for(int i = 0; i < LevelManager.player.stamina; i++) {
 			if(LevelManager.player.health <= 3) {if((game.tickTime / 15) % 2 == 0) continue;}
-			screen.renderBox((x + (game.screen.width/3) + xVal) + (i*8) + xa, (y + 10) + ya + 13, 8, 3, 0xffFFB200);
+			screen.renderBox((x + (game.screen.width/3) + xVal) + (i*8) + xs, (y + 10) + ys + 13, 8, 3, 0xffFFB200);
 		}
 	}
 	
