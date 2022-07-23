@@ -176,6 +176,29 @@ public class RenderManager {
 		}
 	}
 	
+	public void renderFont(int xp, int yp, SpriteManager sprite, int fontSize, int color, int flip) {
+		xp -= xOffset;
+		yp -= yOffset;
+		
+		for(int y = 0; y < fontSize; y++) {
+			int ya = y + yp;
+			int ys = y;
+			if(flip == 2 || flip == 3) ys = 15 - y;
+			for(int x = 0; x < fontSize; x++) {
+				int xa = x + xp;
+				int xs = x;
+				if(flip == 1 || flip == 3) xs = 15 - x;
+				if(xa < - fontSize || xa >= width || ya < - 0 || ya >= height) break;
+				if(xa < 0) xa = 0;
+				int colorPix = sprite.pixels[xs + ys * fontSize];
+				if (colorPix != 0xffff00ff) {
+					if(color == 0) pixels[xa + ya * width] = colorPix;
+					else pixels[xa + ya * width] = color;
+				}
+			}
+		}
+	}
+	
 	// Sets these offsets to the values in the level rendering method
 	public void setOffset(int xOffset, int yOffset) {
 		this.xOffset = xOffset;

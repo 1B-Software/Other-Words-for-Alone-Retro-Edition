@@ -7,12 +7,12 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.util.Scanner;
 
 import javax.swing.JFrame;
 
 import robatortas.code.files.core.console.Console;
 import robatortas.code.files.core.level.LevelManager;
+import robatortas.code.files.core.render.Fonts;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.RenderMethod;
 import robatortas.code.files.core.utils.LoopingUtils;
@@ -129,12 +129,12 @@ public class GameManager extends Canvas implements Runnable {
 		
 		renderMethod.render(this);
 		
-		g.setColor(Color.magenta);
-		g.setFont(new Font("Verdana", 1, 1).deriveFont(30f));
+		Fonts font = new Fonts();
 		
 		if(debug) {
-			g.drawString("E: " + level.entities.size(), 20, 60);
-			g.drawString("X: " + (LevelManager.player.x >> 4) + " Y: " + (LevelManager.player.y >> 4), 20, 30);
+			font.fontSize(4);
+			font.draw("E:" + level.entities.size(), 2, 5, false, screen);
+			font.draw("X:" + (LevelManager.player.x >> 4) + " Y:" + (LevelManager.player.y >> 4), 2, 5*3, false, screen);
 		}
 		
 		g.dispose();

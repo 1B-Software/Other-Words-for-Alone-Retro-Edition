@@ -8,7 +8,7 @@ public class RenderMethod {
 	
 	private GameManager game;
 	
-	private int xScroll, yScroll;
+	public static int xScroll, yScroll;
 	
 	// General settings for the rendering
 	public void generalSettings() {
@@ -20,8 +20,8 @@ public class RenderMethod {
 	public void render(GameManager game) {
 		this.game = game;
 		
-		this.xScroll = (int) (LevelManager.player.x - Constants.WIDTH / 2 + 3) ;
-		this.yScroll = (int) (LevelManager.player.y - Constants.HEIGHT / 2);
+		xScroll = (int) (LevelManager.player.x - Constants.WIDTH / 2 + 3) ;
+		yScroll = (int) (LevelManager.player.y - Constants.HEIGHT / 2);
 		
 		pixelIterations();
 		generalSettings();
@@ -56,7 +56,7 @@ public class RenderMethod {
 		int xs = 0;
 		int ys = 0;
 		
-		if(game.level.player.health <= 3) {
+		if(LevelManager.player.health <= 3 || LevelManager.player.hurtTime > 0) {
 			ya = screen.random.nextInt(2);
 			xa = screen.random.nextInt(2);
 		}
@@ -73,7 +73,7 @@ public class RenderMethod {
 			if(LevelManager.player.health <= 3) {if((game.tickTime / 15) % 2 == 0) continue;}
 			screen.renderBox((x + (game.screen.width/3) + xVal) + (i*8) + xa, (y + 10) + ya, 8, 8, 0xffFF282C);
 		}
-		if(LevelManager.player.hurtTime > 0 && LevelManager.player.health > 0) screen.renderBox((x + (game.screen.width/3) + xVal) + (8*Math.max(LevelManager.player.health, LevelManager.player.health)), y + 10, 8, 8, 0xffffffff);
+		if(LevelManager.player.hurtTime > 0 && LevelManager.player.health > 0) screen.renderBox((x + (game.screen.width/3) + xVal) + (8*Math.max(LevelManager.player.health, LevelManager.player.health)) + xa, y + 10 + ya, 8, 8, 0xffffffff);
 		
 		// Stamina
 		screen.renderBox((x + (game.screen.width/3) - 2), y + 8 + 13, 84, 7, 0xff1F1F1F);
