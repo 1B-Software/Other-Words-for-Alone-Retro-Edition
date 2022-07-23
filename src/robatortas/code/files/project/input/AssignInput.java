@@ -7,8 +7,11 @@ public class AssignInput {
 	public boolean[] keys = new boolean[120];
 	public boolean up, down, left, right;
 	public boolean space, f, shift;
+	public boolean c;
 	
 	public boolean f3;
+	
+	public int presses;
 	
 	public void assignKeys() {
 		gamePlayKeys();
@@ -16,14 +19,17 @@ public class AssignInput {
 	}
 	
 	private boolean toggle;
+	private int toggled;
 	public boolean toggle(boolean key, boolean b) {
-	    if (isKeyPressed(key) && !toggle) {
-	        b = !b;
-	        toggle = true;
-	    } else if (!isKeyPressed(key) && toggle) {
-	        toggle = false;
-	    }
-	    return b;
+		if(key && !toggle) {
+			b = !b;
+			toggle = true;
+			} else if (key && toggle) {
+				if(toggled > 50) toggle = false;
+			}
+		if(toggle) toggled++;
+		else toggled = 0;
+		return b;
 	}
 	
 	public boolean isKeyPressed(boolean key) {
@@ -39,12 +45,13 @@ public class AssignInput {
 		f = keys[KeyEvent.VK_F];
 		space = keys[KeyEvent.VK_SPACE];
 		shift = keys[KeyEvent.VK_SHIFT];
+		
+		c = keys[KeyEvent.VK_C];
 	}
 	
 	private void hotKeys() {
 		f3 = keys[KeyEvent.VK_F3];
 	}
-	
 	
 	// WILL USE THIS IN THE FUTURE!
 	public void assignMouse() {
