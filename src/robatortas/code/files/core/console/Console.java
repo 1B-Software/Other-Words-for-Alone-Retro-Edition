@@ -78,7 +78,7 @@ public class Console implements Runnable {
 	
 	// LIST OF COMMANDS
 	private static String[] cmd = new String[] {
-			"help", "quit", "devmode", "get", "drop", "inventory_size"
+			"help", "quit", "dev_mode", "get", "drop", "inventory_size"
 			};
 	
 	// COMMAND FUNCTIONS

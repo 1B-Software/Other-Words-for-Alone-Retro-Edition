@@ -17,6 +17,7 @@ import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.RenderMethod;
 import robatortas.code.files.core.utils.LoopingUtils;
 import robatortas.code.files.core.utils.ThreadUtils;
+import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.settings.Constants;
 
 // CLASS IS ALMOST DONE (Meaning I will almost never touch it again)
@@ -131,10 +132,13 @@ public class GameManager extends Canvas implements Runnable {
 		
 		Fonts font = new Fonts();
 		
+		screen.renderScaled(10, 10, SpriteArchive.cori, 17, 0);
+		
 		if(debug) {
 			font.fontSize(4);
 			font.draw("E:" + level.entities.size(), 2, 5, false, screen);
 			font.draw("X:" + (LevelManager.player.x >> 4) + " Y:" + (LevelManager.player.y >> 4), 2, 5*3, false, screen);
+			font.draw("Dev_Mode:" + DEV_MODE, 2, 5*5, false, screen);
 		}
 		
 		g.dispose();

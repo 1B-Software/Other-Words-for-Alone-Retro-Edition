@@ -1,5 +1,9 @@
 package robatortas.code.files.core.render;
 
+import java.io.InputStream;
+import java.util.Arrays;
+
+import robatortas.code.files.core.input.KeyBoard;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.settings.Constants;
@@ -43,11 +47,15 @@ public class RenderMethod {
 		int x = xScroll;
 		int y = yScroll;
 		
+		Fonts font = new Fonts();
+		
 		chat = game.level.input.toggle(game.level.input.c, chat);
 		
 		if(chat) {
+			String input = Arrays.toString(KeyBoard.input);
 			screen.renderBox(x, y + (screen.width-76), 100, 40, 0xff3C1D13);
-			
+			font.fontSize(2);
+			font.draw(input, x, y + (screen.width-76), true, screen);
 		}
 		
 		// Health and Stamina
@@ -65,21 +73,19 @@ public class RenderMethod {
 			xs = screen.random.nextInt(2);
 		}
 		
-		int xVal = 0;
-		
 		// Health
 		screen.renderBox((x + (game.screen.width/3) - 2), y + 8, 84, 12, 0xff1F1F1F);
 		for(int i = 0; i < LevelManager.player.health; i++) {
 			if(LevelManager.player.health <= 3) {if((game.tickTime / 15) % 2 == 0) continue;}
-			screen.renderBox((x + (game.screen.width/3) + xVal) + (i*8) + xa, (y + 10) + ya, 8, 8, 0xffFF282C);
+			screen.renderBox((x + game.screen.width/3) + (i*8) + xa, (y + 10) + ya, 8, 8, 0xffFF282C);
 		}
-		if(LevelManager.player.hurtTime > 0 && LevelManager.player.health > 0) screen.renderBox((x + (game.screen.width/3) + xVal) + (8*Math.max(LevelManager.player.health, LevelManager.player.health)) + xa, y + 10 + ya, 8, 8, 0xffffffff);
+		if(LevelManager.player.hurtTime > 0 && LevelManager.player.health > 0) screen.renderBox((x + game.screen.width/3) + (8*Math.max(LevelManager.player.health, LevelManager.player.health)) + xa, y + 10 + ya, 8, 8, 0xffffffff);
 		
 		// Stamina
 		screen.renderBox((x + (game.screen.width/3) - 2), y + 8 + 13, 84, 7, 0xff1F1F1F);
 		for(int i = 0; i < LevelManager.player.stamina; i++) {
 			if(LevelManager.player.health <= 3) {if((game.tickTime / 15) % 2 == 0) continue;}
-			screen.renderBox((x + (game.screen.width/3) + xVal) + (i*8) + xs, (y + 10) + ys + 13, 8, 3, 0xffFFB200);
+			screen.renderBox((x + game.screen.width/3) + (i*8) + xs, (y + 10) + ys + 13, 8, 3, 0xffFFB200);
 		}
 	}
 	

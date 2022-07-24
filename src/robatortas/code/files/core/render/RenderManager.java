@@ -199,6 +199,28 @@ public class RenderManager {
 		}
 	}
 	
+	public void renderScaled(int xp, int yp, SpriteManager sprite, int scale, int flip) {
+		xp -= xOffset;
+		yp -= yOffset;
+		
+		for(int y = 0; y < sprite.height; y++) {
+			int ya = y + yp;
+			int ys = y;
+			if(flip == 2 || flip == 3) ys = (sprite.height- 1) - y;
+			for(int x = 0; x < sprite.width; x++) {
+				int xa = x + xp;
+				int xs = x;
+				if(flip == 1 || flip == 3) xs = (sprite.width - 1) - x;
+				if(xa < -sprite.width || xa >= width || ya < 0 || ya >= height) break;
+				if(xa < 0) xa = 0;
+				int color = sprite.pixels[xs+ys*sprite.width];
+				if(color != 0xffff00ff) {
+					if(scale <= sprite.width) pixels[(((xa*scale)/sprite.width)+(sprite.width-scale))+(((ya*scale)/sprite.height)+(sprite.height-scale))*width] = color;
+				}
+			}
+		}
+	}
+	
 	// Sets these offsets to the values in the level rendering method
 	public void setOffset(int xOffset, int yOffset) {
 		this.xOffset = xOffset;
