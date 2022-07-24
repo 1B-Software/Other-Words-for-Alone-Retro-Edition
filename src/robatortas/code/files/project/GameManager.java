@@ -2,7 +2,6 @@ package robatortas.code.files.project;
 
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -15,9 +14,10 @@ import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.Fonts;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.RenderMethod;
+import robatortas.code.files.core.render.SpriteManager;
+import robatortas.code.files.core.render.SpriteSheetManager;
 import robatortas.code.files.core.utils.LoopingUtils;
 import robatortas.code.files.core.utils.ThreadUtils;
-import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.settings.Constants;
 
 // CLASS IS ALMOST DONE (Meaning I will almost never touch it again)
@@ -132,7 +132,7 @@ public class GameManager extends Canvas implements Runnable {
 		
 		Fonts font = new Fonts();
 		
-		screen.renderScaled(10, 10, SpriteArchive.cori, 17, 0);
+		screen.renderScaled(10, 10, new SpriteManager(16, 0, 6, Fonts.font), 16, 0);
 		
 		if(debug) {
 			font.fontSize(4);
