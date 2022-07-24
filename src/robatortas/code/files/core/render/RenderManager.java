@@ -190,7 +190,7 @@ public class RenderManager {
 				if(flip == 1 || flip == 3) xs = 15 - x;
 				if(xa < - scale || xa >= width || ya < - 0 || ya >= height) break;
 				if(xa < 0) xa = 0;
-				int colorPix = sprite.pixels[xs + ys * scale];
+				int colorPix = sprite.pixels[xs + ys * sprite.width];
 				if (colorPix != 0xffff00ff) {
 					if(color == 0) if(scale <= sprite.width) pixels[(((xa*scale)/sprite.width)+(sprite.width-scale))+(((ya*scale)/sprite.height)+(sprite.height-scale))*width] = colorPix;
 					else if(scale <= sprite.width) pixels[(((xa*scale)/sprite.width)+(sprite.width-scale))+(((ya*scale)/sprite.height)+(sprite.height-scale))*width] = color;
