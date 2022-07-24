@@ -7,12 +7,15 @@ import robatortas.code.files.project.input.AssignInput;
 
 public class InputManager extends AssignInput implements KeyListener {
 	
+	public static String input;
+	
 	// For updating input
 	public void update() {
 		assignKeys();
 	}
 	
 	public void keyPressed(KeyEvent e) {
+		input = e.toString();
 		keys[e.getKeyCode()] = true;
 	}
 	
