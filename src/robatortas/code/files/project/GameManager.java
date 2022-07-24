@@ -132,10 +132,10 @@ public class GameManager extends Canvas implements Runnable {
 		
 		Fonts font = new Fonts();
 		
-		screen.renderScaled(10, 10, new SpriteManager(16, 0, 6, Fonts.font), 16, 0);
+//		screen.renderScaled(10, 10, new SpriteManager(16, 0, 6, Fonts.font), 16, 0);
 		
 		if(debug) {
-			font.fontSize(4);
+			font.fontSize(16);
 			font.draw("E:" + level.entities.size(), 2, 5, false, screen);
 			font.draw("X:" + (LevelManager.player.x >> 4) + " Y:" + (LevelManager.player.y >> 4), 2, 5*3, false, screen);
 			font.draw("Dev_Mode:" + DEV_MODE, 2, 5*5, false, screen);
