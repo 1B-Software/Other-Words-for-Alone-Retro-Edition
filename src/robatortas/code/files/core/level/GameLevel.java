@@ -12,6 +12,7 @@ import robatortas.code.files.project.entities.mobs.mobArchive.Butterfly;
 import robatortas.code.files.project.entities.mobs.mobArchive.Chicken;
 import robatortas.code.files.project.entities.mobs.mobArchive.Cow;
 import robatortas.code.files.project.entities.mobs.mobArchive.Player;
+import robatortas.code.files.project.entities.mobs.mobArchive.Sheep;
 
 public class GameLevel extends LevelManager {
 	
@@ -29,6 +30,7 @@ public class GameLevel extends LevelManager {
 		
 		add(new Chicken(4 << 4, 4 << 4));
 		add(new Cow(4 << 4, 4 << 4));
+		add(new Sheep(4 << 4, 4 << 4));
 		
 		for(int i = 0; i < 10; i++) add(new Bee(7 << 4, 5 << 4));
 		for(int i = 0; i < 10; i++) add(new Butterfly(7 << 4, 5 << 4));

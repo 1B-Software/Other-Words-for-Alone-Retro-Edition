@@ -16,6 +16,7 @@ public class SheetArchive {
 	
 	public static SpriteSheetManager items = new SpriteSheetManager("/textures/spritesheet/item/item.png", 96);
 	public static SpriteSheetManager food = new SpriteSheetManager("/textures/spritesheet/item/food.png", 64, 56);
+	public static SpriteSheetManager resources = new SpriteSheetManager("/textures/spritesheet/item/resource.png", 64, 56);
 	
 	//////////
 	// Mobs //
@@ -28,7 +29,7 @@ public class SheetArchive {
 	// ANIMALS
 	public static SpriteSheetManager chicken = new SpriteSheetManager("/textures/spritesheet/mob/chicken.png", 16, 48);
 	public static SpriteSheetManager cow = new SpriteSheetManager("/textures/spritesheet/mob/cow.png", 64, 96);
-	
+	public static SpriteSheetManager sheep = new SpriteSheetManager("/textures/spritesheet/mob/sheep.png", 64, 96);
 	
 	public static SpriteSheetManager fx = new SpriteSheetManager("/textures/spritesheet/fx/fx.png", 128);
 	public static SpriteSheetManager smallFx = new SpriteSheetManager("/textures/spritesheet/fx/smallFx.png", 32);

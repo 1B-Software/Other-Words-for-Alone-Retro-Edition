@@ -22,7 +22,7 @@ public class LevelManager {
 	public int[] tiles;
 	// TODO: FILL THIS WITH ID DATA OF THE LEVEL!
 	public int[] tilesId;
-	
+	// :3
 	// Lists
 	public List<EntityManager> entities = new LinkedList<EntityManager>();
 	public List<EntityManager>[] entitiesInTiles;

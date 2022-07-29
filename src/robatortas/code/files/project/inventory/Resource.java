@@ -27,6 +27,8 @@ public class Resource {
 		resources.add(new Resource("wood", 1, woodSprite));
 		resources.add(new Resource("meat", 1, meatSprite));
 		resources.add(new Resource("chicken", 1, chickenSprite));
+		resources.add(new Resource("wool", woolSprite));
+		resources.add(new Resource("egg", new SpriteManager(8, 2, 1, SheetArchive.food)));
 		
 		return resources;
 	}
@@ -41,4 +43,6 @@ public class Resource {
 	private static SpriteManager woodSprite = new SpriteManager(16, 1, 0, SheetArchive.items);
 	public static SpriteManager meatSprite = new SpriteManager(8, 0, 0, SheetArchive.food);
 	private static SpriteManager chickenSprite = new SpriteManager(8, 0, 1, SheetArchive.food);
+
+	private static SpriteManager woolSprite = new SpriteManager(8, 0, 0, SheetArchive.resources);
 }

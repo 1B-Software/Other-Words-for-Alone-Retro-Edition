@@ -30,7 +30,7 @@ public class PoppyTile extends TileManager {
 	}
 
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
-		screen.renderSprite(x << 4, y << 4, SpriteArchive.poppy, 0);
+		screen.renderSprite(x << 4, y << 4, SpriteArchive.poppy, 16, 0);
 	}
 
 }

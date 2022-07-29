@@ -29,7 +29,7 @@ public class GUIRender extends TileManager {
 	}
 	
 	public void render(int x, int y, RenderManager screen) {		
-		screen.renderSprite(x, y, SpriteArchive.cori, 0);
-		screen.renderSprite(x, y + 12, SpriteArchive.stamina, 0);
+		screen.renderSprite(x, y, SpriteArchive.cori, 16, 0);
+		screen.renderSprite(x, y + 12, SpriteArchive.stamina, 16, 0);
 	}
 }

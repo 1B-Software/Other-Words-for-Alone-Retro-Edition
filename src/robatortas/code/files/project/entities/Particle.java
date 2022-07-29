@@ -47,7 +47,7 @@ public class Particle extends MobAddons {
 	
 	public void render(RenderManager screen) {
 		if(sprite == null) screen.renderBox(x, y - (int) physicsEngine.calculations.z0, 2, 2, color);
-		else screen.renderSprite(x, y - (int) physicsEngine.calculations.z0, sprite, 0);
+		else screen.renderSprite(x, y - (int) physicsEngine.calculations.z0, sprite, sprite.SIZE, 0);
 	}
 	
 	public void life() {

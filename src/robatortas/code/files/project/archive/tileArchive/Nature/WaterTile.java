@@ -50,7 +50,7 @@ public class WaterTile extends TileManager {
 		if(s == -1) sprite = water1;
 		if(s == 1) sprite = water2;
 		
-		screen.renderSprite(x << 4, y << 4, sprite, 0);
+		screen.renderSprite(x << 4, y << 4, sprite, 16, 0);
 		
 		
 	}

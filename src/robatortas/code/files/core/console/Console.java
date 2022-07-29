@@ -117,10 +117,10 @@ public class Console implements Runnable {
 		}
 	}
 	
+	// CHECKS FOR INVALID COMMAND INPUT
 	private void errorHandler() {
-		// CHECKS FOR INVALID COMMAND INPUT
 		String get = msg.contains(" ") ? msg.split(" ")[0] : msg;
-		if(!getCommandList().contains(get.substring(1))) writeErr("Invalid Command");
+		if(!getCommandList().contains(get.substring(1)) && !get.substring(1).contains("!")) writeErr("Invalid Command");
 	}
 	
 	// CONSOLE THREAD MANAGER

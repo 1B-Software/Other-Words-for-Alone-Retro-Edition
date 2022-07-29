@@ -14,8 +14,6 @@ import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.Fonts;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.RenderMethod;
-import robatortas.code.files.core.render.SpriteManager;
-import robatortas.code.files.core.render.SpriteSheetManager;
 import robatortas.code.files.core.utils.LoopingUtils;
 import robatortas.code.files.core.utils.ThreadUtils;
 import robatortas.code.files.project.settings.Constants;
@@ -51,9 +49,6 @@ public class GameManager extends Canvas implements Runnable {
 	
 	// DECLARATIONS END
 	
-	
-	//TODO: CLEAN CODE TOMORROW!!!!!!
-	
 	// Main
 	@SuppressWarnings("unused")
 	public GameManager() {
@@ -64,7 +59,7 @@ public class GameManager extends Canvas implements Runnable {
 		level = LevelManager.level;
 		display =  new DisplayManager(Constants.WIDTH, Constants.HEIGHT, Constants.TITLE, this);
 		
-		if(Constants.levelPath != "/textures/level/level/level.png") Console.writeErr("Level file location denied.");
+		if(Constants.levelPath != "/textures/level/level.png") Console.writeErr("Level file location denied.");
 		else Console.writeSysMsg("Level file location approved!" + "\n");
 		
 		addKeyListener(level.input);
@@ -120,6 +115,9 @@ public class GameManager extends Canvas implements Runnable {
 		g.setColor(new Color(0x1F1F1F));
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
+		int xScroll = 0;
+		int yScroll = 0;
+		
 		int w = getWindowSize().width;
 	    int h = getWindowSize().height;
 		
@@ -129,15 +127,22 @@ public class GameManager extends Canvas implements Runnable {
 		g.drawImage(image, xo, yo, w, h, null);
 		
 		renderMethod.render(this);
+		xScroll = RenderMethod.xScroll;
+		yScroll = RenderMethod.yScroll;
 		
 		Fonts font = new Fonts();
 		
 		if(debug) {
-			font.fontSize(13);
-			font.draw("E:" + level.entities.size(), 2, 5, false, screen);
+			font.fontSize(8*2);
+			font.draw("E:" + level.entities.size(),0, 5, false, screen);
 			font.draw("X:" + (LevelManager.player.x >> 4) + " Y:" + (LevelManager.player.y >> 4), 2, 5*3, false, screen);
 			font.draw("Dev_Mode:" + DEV_MODE, 2, 5*5, false, screen);
 		}
+		
+		// TODO: LATER!!!!
+//		screen.debug(40, 40, 16, 16, 0xffff00ff, 1);
+		
+//		screen.renderBox(font.getX() + xScroll, font.getY()-19 + yScroll, 16, 16, 0xffff0000);
 		
 		g.dispose();
 		bs.show();
