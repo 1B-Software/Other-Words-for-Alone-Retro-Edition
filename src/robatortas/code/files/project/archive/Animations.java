@@ -33,4 +33,8 @@ public class Animations {
 	public static SpriteSheetManager cowLeft = new SpriteSheetManager(SheetArchive.cow, 1, 0, 1, 3, 32);
 	public static SpriteSheetManager cowRight = new SpriteSheetManager(SheetArchive.cow, 0, 0, 1, 3, 32);
 	
+	// Sheep
+	public static SpriteSheetManager sheepLeft = new SpriteSheetManager(SheetArchive.sheep, 1, 0, 1, 3, 32);
+	public static SpriteSheetManager sheepRight = new SpriteSheetManager(SheetArchive.sheep, 0, 0, 1, 3, 32);
+	
 }

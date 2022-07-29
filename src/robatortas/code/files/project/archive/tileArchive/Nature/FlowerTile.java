@@ -31,6 +31,6 @@ public class FlowerTile extends TileManager {
 
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
 		//<< equals multiply because its a binary operation
-		screen.renderSprite(x << 4, y << 4, SpriteArchive.yellowDahlia, 0);
+		screen.renderSprite(x << 4, y << 4, SpriteArchive.yellowDahlia, 16, 0);
 	}
 }

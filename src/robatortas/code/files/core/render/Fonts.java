@@ -5,6 +5,7 @@ public class Fonts {
 	public static int color = 0x000000;
 	
 	@SuppressWarnings("unused")
+	public int x, y;
 	private int size = 0;
 	private int spacing = 11;
 	private int row = 0;
@@ -19,6 +20,9 @@ public class Fonts {
 	
 	// draws font to screen
 	public void draw(String msg, int x, int y, boolean scroll, RenderManager screen) {
+		this.x = x;
+		this.y = y;
+		
 		msg = msg.toUpperCase();
 		for (int i = 0; i < msg.length(); i++) {
 			int ix = chars.indexOf(msg.charAt(i));
@@ -28,6 +32,14 @@ public class Fonts {
 				else screen.renderFont(x + i * spacing, y, characters, size, color(color), 0);
 			}
 		}
+	}
+	
+	public int getX() {
+		return this.x;
+	}
+	
+	public int getY() {
+		return this.y;
 	}
 	
 	public int color(int color) {

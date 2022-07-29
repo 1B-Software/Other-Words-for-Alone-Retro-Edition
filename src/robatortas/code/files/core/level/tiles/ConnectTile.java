@@ -46,19 +46,19 @@ public class ConnectTile {
 		// ALMOST DONE!!
 		// just need to make it actually efficient
 
-		if(below() && connects()) screen.renderSprite(x << 4, y << 4, below, 0);
+		if(below() && connects()) screen.renderSprite(x << 4, y << 4, below, 16, 0);
 		
 		if(down && right || down && left || up && right || up && left) {
-			if(up && right) screen.renderSprite(xt, yt, urSprite, 0); 
-			else if(up && left) screen.renderSprite(xt, yt, ulSprite, 0);
+			if(up && right) screen.renderSprite(xt, yt, urSprite, 16, 0); 
+			else if(up && left) screen.renderSprite(xt, yt, ulSprite, 16, 0);
 		
-			if(down && right) screen.renderSprite(xt, yt, drSprite, 0);
-			else if(down && left) screen.renderSprite(xt, yt, dlSprite, 0);
+			if(down && right) screen.renderSprite(xt, yt, drSprite, 16, 0);
+			else if(down && left) screen.renderSprite(xt, yt, dlSprite, 16, 0);
 		} else if(up || down || left || right){
-			if(up) screen.renderSprite(xt, yt, upSprite, 0);
-			if(down) screen.renderSprite(xt, yt, downSprite, 0);
-			if(left) screen.renderSprite(xt, yt, leftSprite, 0);
-			if(right) screen.renderSprite(xt, yt, rightSprite, 0);
+			if(up) screen.renderSprite(xt, yt, upSprite, 16, 0);
+			if(down) screen.renderSprite(xt, yt, downSprite, 16, 0);
+			if(left) screen.renderSprite(xt, yt, leftSprite, 16, 0);
+			if(right) screen.renderSprite(xt, yt, rightSprite, 16, 0);
 		}
 	}
 	

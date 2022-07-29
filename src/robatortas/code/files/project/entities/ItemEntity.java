@@ -91,7 +91,7 @@ public class ItemEntity extends EntityManager {
 		int shade = 0;
 		shade += ((int)physicsEngine.calculations.z0 * 2) - 30;
 		if(shade <= 1) screen.renderColorRelativeToLocation(x - 10, (y + 1) - 10, item.getSprite(), -shade, 0, level);
-		screen.renderSprite(x - 10, ((y + yy) - (int) physicsEngine.calculations.z0) - 10, item.getSprite(), 0);
+		screen.renderSprite(x - 10, ((y + yy) - (int) physicsEngine.calculations.z0) - 10, item.getSprite(), item.getSprite().SIZE, 0);
 
 	}
 }

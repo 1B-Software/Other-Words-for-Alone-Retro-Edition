@@ -9,11 +9,11 @@ import robatortas.code.files.project.entities.ItemEntity;
 import robatortas.code.files.project.entities.mobs.MobAddons;
 import robatortas.code.files.project.inventory.Item;
 
-public class Chicken extends MobAddons {
-	
+public class Sheep extends MobAddons {
+	public boolean punch = true;
 	public int attackTime, attackDir;
 	
-	public Chicken(int x, int y) {
+	public Sheep(int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.sprite = new SpriteManager(16, 0, 0, SheetArchive.player);
@@ -26,17 +26,10 @@ public class Chicken extends MobAddons {
 	private int ya = 0;
 	
 	public int tickTime = 0;
-	private int layTime = 0;
 	
 	public void update() {
 		super.update();
 		tickTime++;
-		
-		// Egg laying
-		layTime++;
-		if(layTime > (60*60)*5) {
-			lay();
-		}
 		
 		animSprite.resetAnimation(animSprite, walking);
 		
@@ -65,33 +58,29 @@ public class Chicken extends MobAddons {
 		} else walking = false;
 	}
 	
-	public void lay() {
-		level.add(new ItemEntity(x+4, y, new Item().getItem("egg")));
-		layTime = 0;
-	}
-	
 	public void die() {
 		super.die();
-		if(health <= 0) level.add(new ItemEntity(x, y, new Item().getItem("chicken")));
+		if(health <= 0) level.add(new ItemEntity(x, y, new Item().getItem("cotton")));
 	}
 	
 	public void render(RenderManager screen) {
 		int spriteFlip = 0;
 		
-		if(dir == 0) spriteFlip = 1;
+		if(dir == 0) animSprite = left;
 		if(dir == 1) animSprite = right;
 		if(dir == 2) animSprite = right;
-		if(dir == 3) spriteFlip = 1;
+		if(dir == 3) animSprite = left;
 		
 		if(xa >= 1 && ya < 1) animSprite = right;
 		if(xa < 1 && ya >= 1) spriteFlip = 1;
 		
 		sprite = animSprite.getSprite();
 		
-		screen.renderMob(x - 10, y - 15, this, sprite, spriteFlip);
+		screen.renderMob(x - (10*2), y - (12*2), this, sprite, spriteFlip);
 	}
 	
-	private Animate right = new Animate(Animations.chickenRight, 1, 3, 3);
+	private Animate right = new Animate(Animations.sheepRight, 1, 3, 3);
+	private Animate left = new Animate(Animations.sheepLeft, 1, 3, 3);
 	
 	private Animate animSprite = right;
 }

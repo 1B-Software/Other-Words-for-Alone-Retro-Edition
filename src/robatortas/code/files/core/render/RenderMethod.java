@@ -1,11 +1,11 @@
 package robatortas.code.files.core.render;
 
-import java.io.InputStream;
 import java.util.Arrays;
 
 import robatortas.code.files.core.input.KeyBoard;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.project.GameManager;
+import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.settings.Constants;
 
 public class RenderMethod {
@@ -37,6 +37,7 @@ public class RenderMethod {
 		if(yScroll < game.level.height - game.screen.height/6) yScroll = game.level.height * 6 - game.screen.height + 22;
 		
 		game.level.render(xScroll, yScroll, game.screen);
+		
 		renderGUI();
 	}
 

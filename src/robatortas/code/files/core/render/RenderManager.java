@@ -5,12 +5,12 @@ import java.util.Random;
 import robatortas.code.files.core.entities.Mob;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.TileManager;
+import robatortas.code.files.project.archive.SheetArchive;
 
 // AKA: Screen
 public class RenderManager {
 	
 	public int width, height;
-	private int tileSize = 16;
 	public int[] pixels;
 	
 	public int xOffset, yOffset;
@@ -32,17 +32,21 @@ public class RenderManager {
 		}
 	}
 	
-	// Rendering single pixel (DEPRECATED)
-	private int[] tiles = new int[tileSize*tileSize];
-	public void renderPixel(int xOffset, int yOffset) {
-		for(int y = 0; y < 50; y++) {
-			int yy = y+yOffset;
-			if(yy < 0 || yy >= height) continue;
-			for(int x = 0; x < 50; x++) {
-				int xx = x+xOffset;
-				if(xx < 0 || xx >= width) continue;
-				int i = ((xx >> 4) & 15) + ((yy >> 4) & 15) * 16;
-				pixels[xx+yy*width] = 0x32ff00ff;
+	// TODO: LATER!
+	public void debug(int xp, int yp, int w, int h, int color, int perimeter) {
+		xp -= xOffset;
+		yp -= yOffset;
+		
+		for(int y = 0; y < h; y++) {
+			int ya = y+yp;
+			for(int x = 0; x < w; x++) {
+				int xa = x+xp;
+				if(xa < -w || xa >= width || ya < 0 || ya >= height) break;
+				if(xa < 0) xa = 0;
+				
+				// dejame pienso...
+				pixels[xa+ya*width] = color;
+//				if(color != 0xffff00ff) pixels[xa+ya*width] = color;
 			}
 		}
 	}
@@ -80,22 +84,28 @@ public class RenderManager {
 	}
 	
 	// Rendering Sprites
-	public void renderSprite(int xp, int yp, SpriteManager sprite, int flip) {
+	public void renderSprite(int xp, int yp, SpriteManager sprite, int scale, int flip) {
 		xp -= xOffset;
 		yp -= yOffset;
+		
+		int[] scaledPixels = scale(sprite.pixels, sprite.width, sprite.height, scale);
 		
 		for(int y = 0; y < sprite.height; y++) {
 			int ya = y + yp;
 			int ys = y;
-			if(flip == 2 || flip == 3) ys = (sprite.height- 1) - y;
+			if(flip == 2 || flip == 3) ys = 15 - y;
 			for(int x = 0; x < sprite.width; x++) {
 				int xa = x + xp;
 				int xs = x;
-				if(flip == 1 || flip == 3) xs = (sprite.width - 1) - x;
-				if(xa < -sprite.width || xa >= width || ya < 0 || ya >= height) break;
+				if(flip == 1 || flip == 3) xs = 15 - x;
+				if(xa < - sprite.width || xa >= width || ya < - 0 || ya >= height) break;
 				if(xa < 0) xa = 0;
-				int color = sprite.pixels[xs+ys*sprite.width];
-				if(color != 0xffff00ff) pixels[xa+ya*width] = color;
+				int color = 0;
+				
+				if(scale == 0) color = sprite.pixels[xs + ys * sprite.width];
+				else color = scaledPixels[x + y * sprite.width];
+				if(color == 0) color = 0xffff00ff;
+				if(color != 0xffff00ff && scale <= sprite.width) pixels[(xa + (sprite.width-scale))+(ya + (sprite.height-scale))*width] = color;
 			}
 		}
 	}
@@ -220,6 +230,21 @@ public class RenderManager {
 			}
 		}
 	}
+	
+	// PPS (Per Pixel Scaling) Algorithm
+		public int[] scale(int[] pixels, int width, int height, int scale) {
+			int[] scaledPixels = new int[width*height];
+			for(int y = 0; y < height; y++) {
+				for(int x = 0; x < width; x++) {
+					int color = 0;
+					
+					color = pixels[x + y * width];
+					int algorithm = ((x*scale)/width) + ((y*scale)/height) * width;
+					if(color != 0xffff00ff) scaledPixels[algorithm] = color;
+				}
+			}
+			return scaledPixels;
+		}
 	
 	// Sets these offsets to the values in the level rendering method
 	public void setOffset(int xOffset, int yOffset) {

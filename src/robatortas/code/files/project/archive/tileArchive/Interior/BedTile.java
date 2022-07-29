@@ -14,8 +14,8 @@ public class BedTile extends TileManager {
 	}
 
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
-		screen.renderSprite((this.x) << 4, (this.y) << 4, SpriteArchive.bed, 0);
-		screen.renderSprite((this.x) << 4, (this.y + 1) << 4, SpriteArchive.bed2, 0);
+		screen.renderSprite((this.x) << 4, (this.y) << 4, SpriteArchive.bed, 16, 0);
+		screen.renderSprite((this.x) << 4, (this.y + 1) << 4, SpriteArchive.bed2, 16, 0);
 	}
 	
 	public boolean inter() {

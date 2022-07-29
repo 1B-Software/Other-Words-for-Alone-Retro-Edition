@@ -107,7 +107,6 @@ public class Player extends MobAddons {
 	private void stamina() {
 		if(stamina <= 0) {
 			if(isSwimming && swimTime % 60 == 0) hurt(this, 1, dir);
-			
 		}
 		
 		recoverStamina();
@@ -212,15 +211,21 @@ public class Player extends MobAddons {
 			if(swimTime == 1) {
 				SoundEngine.splash.play();
 			}
+			// Si he comparado entidades CON entidades, pero no con tile
+			// Si pasas en frente de una entidad, te pondra en frente de ella mira.
+			
+			// Swimming sillhouete
+			if((tickTime / 32) % 2 == 0) screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 1, 10, SheetArchive.player), 16, 0);
+			else screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 2, 10, SheetArchive.player), 16, 0);
 			
 			if(dir == 0) animSprite = upSwim;
 			if(dir == 1) animSprite = rightSwim;
 			if(dir == 2) animSprite = downSwim;
 			if(dir == 3) animSprite = leftSwim;
 			
-			// Swimming sillhouete
-			if((tickTime / 32) % 2 == 0) screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 1, 10, SheetArchive.player), 0);
-			else screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 2, 10, SheetArchive.player), 0);
+//			// Swimming sillhouete
+//			if((tickTime / 32) % 2 == 0) screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 1, 10, SheetArchive.player), 16, 0);
+//			else screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 2, 10, SheetArchive.player), 16, 0);
 			
 			if(walking) {
 				if(tickTime % 17 == 0) {
@@ -231,7 +236,6 @@ public class Player extends MobAddons {
 			isSwimming = true;
 		}
 		if(isSwimming) renderAxysConstY = 15;
-		
 		
 		if(hurtTime == 1) {
 			for(int i = 0; i < 1; i++) level.add(particle = new Particle(x, y, new SpriteManager(8, 0, 0, SheetArchive.smallFx)));
@@ -251,13 +255,13 @@ public class Player extends MobAddons {
 		// Finally using switch case huh?
 			switch(attackDir) {
 			case 0: 
-				if(attackTime > 0) screen.renderSprite(x-10, y-26, SpriteArchive.swingFx, 0);
+				if(attackTime > 0) screen.renderSprite(x-10, y-26, SpriteArchive.swingFx, 16, 0);
 				break;
 			case 1:
-				if(attackTime > 0) screen.renderSprite(x+1, y-16, SpriteArchive.swingFx_Sides, 1);
+				if(attackTime > 0) screen.renderSprite(x+1, y-16, SpriteArchive.swingFx_Sides, 16, 1);
 				break;
 			case 3:
-				if(attackTime > 0) screen.renderSprite(x-20, y-16, SpriteArchive.swingFx_Sides, 0);
+				if(attackTime > 0) screen.renderSprite(x-20, y-16, SpriteArchive.swingFx_Sides, 16, 0);
 				break;
 			}
 	}
@@ -265,7 +269,7 @@ public class Player extends MobAddons {
 	private void afterLayer(RenderManager screen) {
 		switch(attackDir) {
 		case 2:
-			if(attackTime > 0) screen.renderSprite(x-10, y-8, SpriteArchive.swingFx, 2);
+			if(attackTime > 0) screen.renderSprite(x-10, y-8, SpriteArchive.swingFx, 16, 2);
 			break;
 		}
 	}

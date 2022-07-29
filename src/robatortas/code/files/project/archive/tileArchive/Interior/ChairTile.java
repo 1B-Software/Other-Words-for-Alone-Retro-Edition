@@ -31,7 +31,7 @@ public class ChairTile extends TileManager {
 	}
 	
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
-		screen.renderSprite((this.x) << 4, (this.y) << 4, SpriteArchive.chair, 0);
+		screen.renderSprite((this.x) << 4, (this.y) << 4, SpriteArchive.chair, 16, 0);
 	}
 	
 	public boolean inter() {
