@@ -50,16 +50,13 @@ public class GameManager extends Canvas implements Runnable {
 	// Main
 	@SuppressWarnings("unused")
 	public GameManager() {
-		this.requestFocus();
-		
 		screen = new RenderManager(Constants.WIDTH, Constants.HEIGHT);
 		level = LevelManager.level;
 		display =  new DisplayManager(Constants.WIDTH, Constants.HEIGHT, Constants.TITLE, this);
 		
-		if(Constants.levelPath != "/textures/level/level.png") Console.writeErr("Level file location denied.");
-		else Console.writeSysMsg("Level file location approved!" + "\n");
-		
 		addKeyListener(level.input);
+		
+		this.requestFocus();
 	}
 	
 	// Threading and game loop
@@ -130,7 +127,7 @@ public class GameManager extends Canvas implements Runnable {
 		Fonts font = new Fonts();
 		
 		if(debug) {
-			font.fontSize(8*2);
+			font.setSize(8*2);
 			font.draw("E:" + level.entities.size(),0, 5, false, screen);
 			font.draw("X:" + (LevelManager.player.x >> 4) + " Y:" + (LevelManager.player.y >> 4), 2, 5*3, false, screen);
 			font.draw("Dev_Mode:" + DEV_MODE, 2, 5*5, false, screen);

@@ -18,15 +18,15 @@ public class ResourceItem extends Item {
 		}
 	}
 	
-	public ArrayList<Item> getInstances() {
+	public static ArrayList<Item> getInstances() {
 		for(int i = 0; i < Resource.getInstances().size(); i++) {
 			Resource r = Resource.getInstances().get(i);
 			items.add(resourceToItem(r.name));
 		}
-		return super.items;
+		return items;
 	}
 	
-	public ResourceItem resourceToItem(String resourceName) {
+	public static ResourceItem resourceToItem(String resourceName) {
 		return new ResourceItem(resourceName);
 	}
 	

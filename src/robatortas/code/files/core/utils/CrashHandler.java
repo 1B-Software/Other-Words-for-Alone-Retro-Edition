@@ -22,7 +22,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import robatortas.code.files.core.console.Console;
 
-public class CrashHandler implements Runnable{
+public class CrashHandler implements Runnable {
 	
 	public Thread thread;
 	public boolean running = false;
@@ -31,15 +31,17 @@ public class CrashHandler implements Runnable{
 	
 	private JFrame frame;
 	
+	/*
+	 * Handles all exceptions.
+	 * Only the player can close the game.
+	 * And a gui has been applied for the client to choose between closing the game and to keep playing.
+	 * 
+	 * Unexpected game closings only happen if they are fatal to the system resources,
+	 * for example memory overload or too many entities loaded.
+	 */
 	public void handle(Throwable throwable, String info, ErrorType errorType) {
 		System.out.println("\n");
 		Console.writeErr(info);
-		
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e1) {
-			e1.printStackTrace();
-		}
 		
 		int width = 500;
 		int height = 400;
@@ -50,9 +52,16 @@ public class CrashHandler implements Runnable{
 		JLabel label = new JLabel("ERROR");
 		JLabel type = new JLabel(errorType.type);
 		JTextArea text = new JTextArea(2, 2);
-		JScrollPane scroll = new JScrollPane(text, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		JButton close = new JButton("Close");
+		JButton close = new JButton("Close Game");
 		JButton keep = new JButton("Keep Playing");
+		
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e1) {
+			e1.printStackTrace();
+		}
+		
+		JScrollPane scroll = new JScrollPane(text, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 		panel.setLayout(new GridBagLayout());
 		panel.setBackground(new Color(86, 86, 86));
@@ -65,11 +74,11 @@ public class CrashHandler implements Runnable{
 		
 		label.setForeground(new Color(150, 64, 64));
 		label.setFont(new Font("Arial", 1, 30));
-		panel.add(label, gbc);
-		type.setFont(new Font("Arial", 3, 13));
-		panel.add(type, gbc);
+		type.setFont(new Font("Arial", 3, 15));
 		
 		text.setEditable(false);
+		text.setForeground(new Color(30, 30, 30));
+		text.setFont(new Font("Arial", 1, 10));
 		text.setBackground(new Color(78, 78, 78));
 		text.setBorder(null);
 		
@@ -80,7 +89,6 @@ public class CrashHandler implements Runnable{
 				+ "Reason: " + info + "\n\n" + "Exit_Code: " + errorType.exitCode + "\n\n" + stackTrace);
 		scroll.setPreferredSize(new Dimension(400, 200));
 		scroll.setBorder(null);
-		panel.add(scroll, gbc);
 		
 		JPanel buttonPanel = new JPanel(new GridLayout(1, 1, 15, 0));
 		buttonPanel.setOpaque(false);
@@ -90,10 +98,8 @@ public class CrashHandler implements Runnable{
 		keep.setFocusable(false);
 		keep.setBackground(new Color(125, 64, 64));
 		keep.setPressedIcon(null);
-		buttonPanel.add(keep);
 		keep.addActionListener(e -> {
 			frame.dispose();
-//			running = false;
 			this.stop();
 		});
 		
@@ -101,14 +107,18 @@ public class CrashHandler implements Runnable{
 		close.setBorderPainted(false);
 		close.setFocusable(false);
 		close.setBackground(new Color(125, 64, 64));
-		buttonPanel.add(close);
 		close.addActionListener(e -> {
 			System.exit(0);
 		});
 		
 		buttonPanel.setVisible(true);
-		panel.add(buttonPanel, gbc);
 		
+		panel.add(label, gbc);
+		panel.add(type, gbc);
+		panel.add(scroll, gbc);
+		buttonPanel.add(keep);
+		buttonPanel.add(close);
+		panel.add(buttonPanel, gbc);
 		
 		frame.setIconImage(windowIcon.getImage());
 		
@@ -136,7 +146,7 @@ public class CrashHandler implements Runnable{
 		UNHANDLED("Unhandled Error: Not handled.", -1),
 		UNEXPECTED("Unexpected Error: This shouldn't happen.", -2),
 		IRREDEEMABLE("Irredeemable Error: Not able to be handled", -3),
-		SERIOUS("Serious Error: Potential for crash", 1),
+		SERIOUS("Serious Error: Possible unplayable content", 1),
 		HANDLED("Handled Error: Solved by system", 2);
 		
 		public int exitCode;
@@ -148,7 +158,7 @@ public class CrashHandler implements Runnable{
 		}
 	}
 	
-	// CONSOLE THREAD MANAGER
+	// Crash Handler THREAD MANAGER
 	public synchronized void start() {
 		running = true;
 		thread = new Thread(this, "CrashHandler");
@@ -164,9 +174,13 @@ public class CrashHandler implements Runnable{
 		}
 	}
 	
+	private int tickTime = 0;
 	public void run() {
 		while(running) {
+			tickTime++;
+			if(tickTime < 10) {
 			frame.requestFocus();
+			}
 		}
 	}
 }

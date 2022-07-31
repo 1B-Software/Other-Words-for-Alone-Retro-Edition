@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import robatortas.code.files.core.level.LevelManager;
+import robatortas.code.files.core.utils.CrashHandler;
+import robatortas.code.files.core.utils.CrashHandler.ErrorType;
 import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.entities.ItemEntity;
 import robatortas.code.files.project.inventory.Item;
@@ -19,8 +21,6 @@ public class Console implements Runnable {
 	
 	private Thread thread;
 	private boolean running = false;
-	
-	private Item item;
 	
 	private GameManager game;
 	
@@ -54,6 +54,12 @@ public class Console implements Runnable {
 		return cmd[index].toString();
 	}
 	
+	private String getPart(int startChar, int word) {
+		String get = msg.contains(" ") ? msg.split(" ")[word] : msg;
+		String substring = get.substring(startChar);
+		return substring;
+	}
+	
 	// Get Item name from input commandIndex
 	private String getItemFromInput(int commandIndex) {
 		String item = msg.contains(" ") ? msg.substring("!".concat(getCommand(commandIndex)).length() + 1) : "nullItem";
@@ -81,6 +87,8 @@ public class Console implements Runnable {
 			"help", "quit", "dev_mode", "get", "drop", "inventory_size"
 			};
 	
+	private String item;
+	
 	// COMMAND FUNCTIONS
 	public void commands() {
 		errorHandler();
@@ -102,15 +110,26 @@ public class Console implements Runnable {
 			 }
 		}
 		if(setCommand(3)) {
-			item = new Item().getItem(getItemFromInput(3));
-			if(item != null) {
-				LevelManager.player.inventory.add(item);
-				writeSysMsg("<Number> " + item.getName() + " given to " + LevelManager.player.name);
-			} else writeErr("Inputted Item doesn't exist.");
+			try {
+				item = getItemFromInput(3);
+				if(item.equals(new Item().getItem(item).getName())) {
+					LevelManager.player.inventory.add(new Item().getItem(item));
+					writeSysMsg("<Number> " + item + " given to " + LevelManager.player.name);
+				}
+			} catch(Exception e) {
+				writeErr("Inputted Item does not exist");
+			}
 		}
 		if(setCommand(4)) {
-			String item = getItemFromInput(4);
-			game.level.add(new ItemEntity(LevelManager.player.x, LevelManager.player.y, new Item().getItem(item)));
+			try {
+				item = getItemFromInput(4);
+				if(item.equals(new Item().getItem(item).getName())) {
+					game.level.add(new ItemEntity(LevelManager.player.x, LevelManager.player.y, new Item().getItem(item)));
+					writeSysMsg("1 " + item + " given to " + LevelManager.player.name);
+				}
+			} catch(Exception e) {
+				writeErr("Inputted Item does not exist");
+			}
 		}
 		if(setCommand(5)) {
 			writeSysMsg(Integer.toString(LevelManager.player.inventory.items.size()));
@@ -119,24 +138,27 @@ public class Console implements Runnable {
 	
 	// CHECKS FOR INVALID COMMAND INPUT
 	private void errorHandler() {
-		String get = msg.contains(" ") ? msg.split(" ")[0] : msg;
-		if(!getCommandList().contains(get.substring(1)) && !get.substring(0).equals("!")) writeErr("Invalid Command");
+		try {
+			if(!getCommandList().contains(getPart(1, 0)) && !getPart(0, 0).equals("!")) writeErr("Invalid Command");
+		} catch(Exception e) {
+			new CrashHandler().handle(e, "Console Error Handler failed", ErrorType.UNHANDLED);
+		}
 	}
 	
 	// CONSOLE THREAD MANAGER
 	public synchronized void start() {
+		running = true;
 		thread = new Thread(this, "Console");
 		thread.start();
-		running = true;
 	}
 	
 	public synchronized void stop() {
+		running = false;
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		running = false;
 	}
 	
 	public void run() {

@@ -51,7 +51,7 @@ public class Fonts {
 		this.spacing = spacing;
 	}
 	
-	public void fontSize(int size) {
+	public void setSize(int size) {
 		this.size = size;
 		if(size == 0) {
 			spacing = 5;

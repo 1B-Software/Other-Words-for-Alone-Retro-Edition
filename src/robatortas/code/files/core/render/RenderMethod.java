@@ -64,7 +64,7 @@ public class RenderMethod {
 		if(chat) {
 			String input = Arrays.toString(KeyBoard.input);
 			screen.renderBox(x, y + (screen.width-76), 100, 40, 0xff3C1D13);
-			font.fontSize(2);
+			font.setSize(2);
 			font.draw(input, x, y + (screen.width-76), true, screen);
 		}
 		
