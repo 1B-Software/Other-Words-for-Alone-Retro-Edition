@@ -6,6 +6,7 @@ import java.util.List;
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.input.InputManager;
 import robatortas.code.files.core.level.tiles.TileManager;
+import robatortas.code.files.core.render.Fonts;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.archive.tileArchive.TileArchive;
@@ -18,6 +19,8 @@ import robatortas.code.files.project.settings.Constants;
 public class LevelManager {
 
 	public int width, height;
+	
+	public RenderManager screen;
 	
 	public int[] tiles;
 	// TODO: FILL THIS WITH ID DATA OF THE LEVEL!
@@ -80,6 +83,7 @@ public class LevelManager {
 	
 	// MY MIND IS NOT THINKING CLEARLY! Because it's FUCKING 2 AM
 	public void render(int xScroll, int yScroll, RenderManager screen) {
+		this.screen = screen;
 		
 		LevelRenderManager levelRender = new LevelRenderManager(this ,screen);
 		

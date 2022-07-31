@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import robatortas.code.files.core.entities.EntityManager;
+import robatortas.code.files.core.render.Fonts;
+import robatortas.code.files.core.utils.CrashHandler;
+import robatortas.code.files.core.utils.CrashHandler.ErrorType;
 import robatortas.code.files.project.entities.mobs.mobArchive.Bee;
 import robatortas.code.files.project.entities.mobs.mobArchive.Butterfly;
 import robatortas.code.files.project.entities.mobs.mobArchive.Chicken;
@@ -37,14 +40,15 @@ public class GameLevel extends LevelManager {
 	}
 	
 	public void levelReader(String path) {
+		BufferedImage image = null;
 		try {
-			BufferedImage image = ImageIO.read(GameLevel.class.getResource(path));
+			image = ImageIO.read(GameLevel.class.getResource(path));
 			int w = width = image.getWidth();
 			int h = height = image.getHeight();
 			tiles = new int[w*h];
 			image.getRGB(0, 0, w, h, tiles, 0 , w);
-		} catch(IOException e) {
-			System.err.println("Exception: Unable to read level file," + "\n" + "JVM Log: " + e.getMessage());
+		} catch(Exception e) {
+			new CrashHandler().handle(e, "Level file is null at location: " + path, ErrorType.SERIOUS);
 		}
 	}
 	
