@@ -1,8 +1,5 @@
 package robatortas.code.files.project.entities.mobs;
 
-import java.util.List;
-
-import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.entities.Mob;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;

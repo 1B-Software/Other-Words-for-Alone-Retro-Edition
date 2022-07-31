@@ -121,7 +121,6 @@ public class Console implements Runnable {
 	private void errorHandler() {
 		String get = msg.contains(" ") ? msg.split(" ")[0] : msg;
 		if(!getCommandList().contains(get.substring(1)) && !get.substring(0).equals("!")) writeErr("Invalid Command");
-		System.out.println(get.substring(0));
 	}
 	
 	// CONSOLE THREAD MANAGER

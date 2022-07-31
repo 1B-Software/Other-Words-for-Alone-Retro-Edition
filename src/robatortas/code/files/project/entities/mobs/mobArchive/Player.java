@@ -237,12 +237,6 @@ public class Player extends MobAddons {
 		}
 		if(isSwimming) renderAxysConstY = 15;
 		
-		if(hurtTime == 1) {
-			for(int i = 0; i < 1; i++) level.add(particle = new Particle(x, y, new SpriteManager(8, 0, 0, SheetArchive.smallFx)));
-			particle.physicsEngine.calculations.gravityForce = 0.05;
-			particle.life = 10 + random.nextInt(20);
-		}
-		
 		// Render Mob
 		sprite = animSprite.getSprite();
 		
@@ -307,6 +301,8 @@ public class Player extends MobAddons {
 					particle.life = 20 + random.nextInt(20);
 				}
 			}
+			
+			// Swimming
 			if(isSwimming) {
 				if(swimTime == 1) {
 					for(int i = 0; i < 50; i++) {
@@ -328,6 +324,18 @@ public class Player extends MobAddons {
 						particle.physicsEngine.calculations.frictionY = 0.96;
 						particle.life = 10 + random.nextInt(10);
 					}
+				}
+			}
+		}
+		
+		// Hurting
+		if(hurtTime > 0) {
+			if(tickTime % 60 == 0) {
+				for(int i = 0; i < 5; i++) {
+					level.add(particle = new Particle(x-4, y - 1 , new SpriteManager(8, 0, 0, SheetArchive.smallFx)));
+					
+					particle.physicsEngine.calculations.gravityForce = 0.06;
+					particle.life = 10 + random.nextInt(20);
 				}
 			}
 		}
