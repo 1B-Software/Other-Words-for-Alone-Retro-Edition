@@ -60,7 +60,7 @@ public class Sheep extends MobAddons {
 	
 	public void die() {
 		super.die();
-		if(health <= 0) level.add(new ItemEntity(x, y, new Item().getItem("cotton")));
+		if(health <= 0) level.add(new ItemEntity(x, y, new Item().getItem("wool")));
 	}
 	
 	public void render(RenderManager screen) {

@@ -103,7 +103,7 @@ public class RenderManager {
 				int color = 0;
 				
 				if(scale == 0) color = sprite.pixels[xs + ys * sprite.width];
-				else color = scaledPixels[x + y * sprite.width];
+				else color = scaledPixels[xs + ys * sprite.width];
 				if(color == 0) color = 0xffff00ff;
 				if(color != 0xffff00ff && scale <= sprite.width) pixels[(xa + (sprite.width-scale))+(ya + (sprite.height-scale))*width] = color;
 			}

@@ -223,9 +223,9 @@ public class Player extends MobAddons {
 			if(dir == 2) animSprite = downSwim;
 			if(dir == 3) animSprite = leftSwim;
 			
-//			// Swimming sillhouete
-//			if((tickTime / 32) % 2 == 0) screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 1, 10, SheetArchive.player), 16, 0);
-//			else screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 2, 10, SheetArchive.player), 16, 0);
+			// Swimming sillhouete
+			if((tickTime / 32) % 2 == 0) screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 1, 10, SheetArchive.player), 16, 0);
+			else screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 2, 10, SheetArchive.player), 16, 0);
 			
 			if(walking) {
 				if(tickTime % 17 == 0) {
