@@ -5,6 +5,7 @@ import java.util.Random;
 import robatortas.code.files.core.entities.Mob;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.TileManager;
+import robatortas.code.files.core.utils.CrashHandler;
 import robatortas.code.files.project.archive.SheetArchive;
 
 // AKA: Screen
