@@ -7,6 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import javax.swing.ImageIcon;
@@ -21,9 +22,14 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import robatortas.code.files.core.console.Console;
 
-public class CrashHandler {
+public class CrashHandler implements Runnable{
+	
+	public Thread thread;
+	public boolean running = false;
 	
 	private ImageIcon windowIcon = new ImageIcon(getClass().getClassLoader().getResource("textures/icon/warning.png"));
+	
+	private JFrame frame;
 	
 	public void handle(Throwable throwable, String info, ErrorType errorType) {
 		System.out.println("\n");
@@ -35,10 +41,10 @@ public class CrashHandler {
 			e1.printStackTrace();
 		}
 		
-		int width = 400;
-		int height = 300;
+		int width = 500;
+		int height = 400;
 		
-		JFrame frame = new JFrame();
+		frame = new JFrame();
 		
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel("ERROR");
@@ -68,9 +74,11 @@ public class CrashHandler {
 		text.setBorder(null);
 		
 		StringWriter exception = new StringWriter();
-		
-		text.setText("LOG:\n");
-		scroll.setPreferredSize(new Dimension(350, 130));
+		throwable.printStackTrace(new PrintWriter(exception));
+		String stackTrace = exception.toString();
+		text.setText("LOG:\n\n"
+				+ "Reason: " + info + "\n\n" + "Exit_Code: " + errorType.exitCode + "\n\n" + stackTrace);
+		scroll.setPreferredSize(new Dimension(400, 200));
 		scroll.setBorder(null);
 		panel.add(scroll, gbc);
 		
@@ -85,6 +93,8 @@ public class CrashHandler {
 		buttonPanel.add(keep);
 		keep.addActionListener(e -> {
 			frame.dispose();
+//			running = false;
+			this.stop();
 		});
 		
 		close.setSize(10, 10);
@@ -101,12 +111,12 @@ public class CrashHandler {
 		
 		
 		frame.setIconImage(windowIcon.getImage());
-		frame.requestFocus();
 		
 		frame.setTitle("ERROR");
 		frame.setSize(new Dimension(width, height));
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
+		this.start();
 		frame.setVisible(true);
 		frame.add(panel);
 		
@@ -135,6 +145,28 @@ public class CrashHandler {
 		ErrorType(String type, int exitCode) {
 			this.type = type;
 			this.exitCode = exitCode;
+		}
+	}
+	
+	// CONSOLE THREAD MANAGER
+	public synchronized void start() {
+		running = true;
+		thread = new Thread(this, "CrashHandler");
+		thread.start();
+	}
+	
+	public synchronized void stop() {
+		running = false;
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void run() {
+		while(running) {
+			frame.requestFocus();
 		}
 	}
 }

@@ -98,8 +98,13 @@ public class SpriteSheetManager {
 			image.getRGB(0, 0, w, h, pixels, 0, w);
 			System.out.println(" Loaded");
 		} catch(Exception e) {
-			new CrashHandler().handle(e, "Unable to locate the path location!", ErrorType.UNEXPECTED);
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
 			if(image == null) {
+				new CrashHandler().handle(e, "Unable to locate SpriteSheet path location in: " + path, ErrorType.UNEXPECTED);
 				Console.writeSysMsg("Locating and using the SpriteSheet in the nullPath variable\n");
 				if(i > 0) {
 					i--;
@@ -108,7 +113,6 @@ public class SpriteSheetManager {
 					HEIGHT = 0;
 					load();
 				}
-				
 			}
 		}
 	}

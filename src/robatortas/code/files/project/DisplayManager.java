@@ -26,7 +26,11 @@ public class DisplayManager {
 		game.frame.add(game);
 		game.start();
 		game.frame.setSize(size);
-		game.frame.setResizable(true);
+		
+		if(GameManager.DEV_MODE == true) {
+			game.frame.setResizable(true);
+		} else game.frame.setResizable(false);
+		
 		game.frame.setLocationRelativeTo(null);
 		game.frame.setVisible(true);
 		
