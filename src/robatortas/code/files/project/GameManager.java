@@ -40,10 +40,6 @@ public class GameManager extends Canvas implements Runnable {
 	protected BufferedImage image = new BufferedImage(Constants.WIDTH, Constants.HEIGHT, BufferedImage.TYPE_INT_RGB);
 	public int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 	
-	
-	private Constants constants = new Constants();
-	
-	
 	// General Declarations
 	public LevelManager level;
 	
@@ -64,8 +60,6 @@ public class GameManager extends Canvas implements Runnable {
 		else Console.writeSysMsg("Level file location approved!" + "\n");
 		
 		addKeyListener(level.input);
-		
-		new CrashHandler().handle("Error");
 	}
 	
 	// Threading and game loop

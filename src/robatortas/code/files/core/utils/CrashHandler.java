@@ -2,24 +2,33 @@ package robatortas.code.files.core.utils;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.io.StringWriter;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import robatortas.code.files.core.console.Console;
+
 public class CrashHandler {
-	//Throwable throwable, 
-	public void handle(String info) {
+	
+	private ImageIcon windowIcon = new ImageIcon(getClass().getClassLoader().getResource("textures/icon/warning.png"));
+	
+	public void handle(Throwable throwable, String info, ErrorType errorType) {
+		System.out.println("\n");
+		Console.writeErr(info);
+		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e1) {
@@ -27,40 +36,71 @@ public class CrashHandler {
 		}
 		
 		int width = 400;
-		int height = 200;
+		int height = 300;
 		
 		JFrame frame = new JFrame();
 		
 		JPanel panel = new JPanel();
-		JLabel label = new JLabel(info);
-		JTextArea text = new JTextArea("dgrbvedgbvedrgvedgrfeg");
-		JScrollPane scroll = new JScrollPane(text, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JLabel label = new JLabel("ERROR");
+		JLabel type = new JLabel(errorType.type);
+		JTextArea text = new JTextArea(2, 2);
+		JScrollPane scroll = new JScrollPane(text, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		JButton close = new JButton("Close");
+		JButton keep = new JButton("Keep Playing");
 		
 		panel.setLayout(new GridBagLayout());
 		panel.setBackground(new Color(86, 86, 86));
 		
 		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.gridx = 0;
-		gbc.insets = new Insets(0, 0, 20, 0);
+		gbc.gridx = GridBagConstraints.CENTER;
+		gbc.insets = new Insets(0, 0, 10, 0);
 		
 		panel.setVisible(true);
 		
+		label.setForeground(new Color(150, 64, 64));
+		label.setFont(new Font("Arial", 1, 30));
 		panel.add(label, gbc);
+		type.setFont(new Font("Arial", 3, 13));
+		panel.add(type, gbc);
 		
 		text.setEditable(false);
-		text.setBackground(new Color(86, 86, 86));
+		text.setBackground(new Color(78, 78, 78));
 		text.setBorder(null);
+		
+		StringWriter exception = new StringWriter();
+		
+		text.setText("LOG:\n");
+		scroll.setPreferredSize(new Dimension(350, 130));
 		scroll.setBorder(null);
 		panel.add(scroll, gbc);
 		
-		panel.add(close, gbc);
+		JPanel buttonPanel = new JPanel(new GridLayout(1, 1, 15, 0));
+		buttonPanel.setOpaque(false);
+		
+		keep.setSize(10, 10);
+		keep.setBorderPainted(false);
+		keep.setFocusable(false);
+		keep.setBackground(new Color(125, 64, 64));
+		keep.setPressedIcon(null);
+		buttonPanel.add(keep);
+		keep.addActionListener(e -> {
+			frame.dispose();
+		});
 		
 		close.setSize(10, 10);
+		close.setBorderPainted(false);
+		close.setFocusable(false);
+		close.setBackground(new Color(125, 64, 64));
+		buttonPanel.add(close);
 		close.addActionListener(e -> {
 			System.exit(0);
 		});
 		
+		buttonPanel.setVisible(true);
+		panel.add(buttonPanel, gbc);
+		
+		
+		frame.setIconImage(windowIcon.getImage());
 		frame.requestFocus();
 		
 		frame.setTitle("ERROR");

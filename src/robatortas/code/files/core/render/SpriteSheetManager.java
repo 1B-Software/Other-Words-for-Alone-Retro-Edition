@@ -6,12 +6,15 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import robatortas.code.files.core.console.Console;
+import robatortas.code.files.core.utils.CrashHandler;
+import robatortas.code.files.core.utils.CrashHandler.ErrorType;
 
 public class SpriteSheetManager {
 	
 	public int[] pixels;
 	private SpriteManager[] sprites;
-	public final int WIDTH, HEIGHT;
+	public int WIDTH;
+	public int HEIGHT;
 	public final int SIZE;
 	public String path;
 	private String nullPath = "/textures/spritesheet/NULL_TEXTURE.png";
@@ -35,11 +38,14 @@ public class SpriteSheetManager {
 	}
 	
 	// NSS
+	public int x, y;
+	public int frameSize;
 	public SpriteSheetManager(SpriteSheetManager sheet, int x, int y, int width, int height, int frameSize) {
 		int xx = x * frameSize;
 		int yy = y * frameSize;
 		int w = width * frameSize;
 		int h = height * frameSize;
+		this.frameSize = frameSize;
 		SIZE = -1;
 		this.WIDTH = w;
 		this.HEIGHT = h;
@@ -80,8 +86,10 @@ public class SpriteSheetManager {
 		return sprites;
 	}
 	
+	int i = 1;
+	
 	public void load() {
-		BufferedImage image;
+		BufferedImage image = null;
 		try {
 			System.out.print("Loading " + path + " ------->");
 			image = ImageIO.read(SpriteSheetManager.class.getResource(path));
@@ -89,14 +97,18 @@ public class SpriteSheetManager {
 			int h = image.getHeight();
 			image.getRGB(0, 0, w, h, pixels, 0, w);
 			System.out.println(" Loaded");
-		} catch(IOException e) {
-			Console.writeErr("Unable to locate SpriteSheet with the specified path of: " + path);
-			Console.writeSysMsg("Locating and using the SpriteSheet in the nullPath variable");
-			try {
-				image = ImageIO.read(SpriteSheetManager.class.getResource(nullPath));
-			} catch (IOException e1) {
-				Console.writeErr("Unable to locate the nullPath variable String location!\n"
-						+ "What did you do?");
+		} catch(Exception e) {
+			new CrashHandler().handle(e, "Unable to locate the path location!", ErrorType.UNEXPECTED);
+			if(image == null) {
+				Console.writeSysMsg("Locating and using the SpriteSheet in the nullPath variable\n");
+				if(i > 0) {
+					i--;
+					path = nullPath;
+					WIDTH = 0;
+					HEIGHT = 0;
+					load();
+				}
+				
 			}
 		}
 	}

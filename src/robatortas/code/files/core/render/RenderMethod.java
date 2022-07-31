@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import robatortas.code.files.core.input.KeyBoard;
 import robatortas.code.files.core.level.LevelManager;
+import robatortas.code.files.core.utils.CrashHandler;
 import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.menu.InventoryMenu;
 import robatortas.code.files.project.settings.Constants;
@@ -99,7 +100,7 @@ public class RenderMethod {
 	}
 	
 	public void pixelIterations() {
-		for(int i = 0; i < game.pixels.length; i++) {
+		for(int i = 0; i < game.pixels.length; i++) {	
 			game.pixels[i] = game.screen.pixels[i];
 		}
 	}
