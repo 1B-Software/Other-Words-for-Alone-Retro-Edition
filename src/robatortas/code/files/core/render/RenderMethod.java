@@ -5,7 +5,7 @@ import java.util.Arrays;
 import robatortas.code.files.core.input.KeyBoard;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.project.GameManager;
-import robatortas.code.files.project.archive.SpriteArchive;
+import robatortas.code.files.project.menu.InventoryMenu;
 import robatortas.code.files.project.settings.Constants;
 
 public class RenderMethod {
@@ -16,7 +16,6 @@ public class RenderMethod {
 	
 	// General settings for the rendering
 	public void generalSettings() {
-		game.requestFocus();
 		game.screen.clear(true);
 	}
 	
@@ -41,7 +40,9 @@ public class RenderMethod {
 		renderGUI();
 	}
 
-	private boolean chat;
+	private boolean chat, inv;
+	
+	private InventoryMenu inventory = new InventoryMenu(game);
 	
 	public void renderGUI() {
 		RenderManager screen = game.screen;
@@ -50,6 +51,13 @@ public class RenderMethod {
 		
 		Fonts font = new Fonts();
 		
+		// Inventory
+		inv = game.level.input.toggle(game.level.input.e, inv);
+		if(inv) {
+			inventory.render(screen);
+		}
+		
+		// Chat
 		chat = game.level.input.toggle(game.level.input.c, chat);
 		
 		if(chat) {

@@ -8,12 +8,14 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import robatortas.code.files.core.console.Console;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.Fonts;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.RenderMethod;
+import robatortas.code.files.core.utils.CrashHandler;
 import robatortas.code.files.core.utils.LoopingUtils;
 import robatortas.code.files.core.utils.ThreadUtils;
 import robatortas.code.files.project.settings.Constants;
@@ -52,8 +54,7 @@ public class GameManager extends Canvas implements Runnable {
 	// Main
 	@SuppressWarnings("unused")
 	public GameManager() {
-		if(DEV_MODE) Console.writeSysMsg("Starting: Other Words for Alone RETRO EDITION in Developer Mode" + "\n");
-		else Console.writeSysMsg("Starting: Other Words for Alone RETRO EDITION in Client Mode" + "\n");
+		this.requestFocus();
 		
 		screen = new RenderManager(Constants.WIDTH, Constants.HEIGHT);
 		level = LevelManager.level;
@@ -63,6 +64,8 @@ public class GameManager extends Canvas implements Runnable {
 		else Console.writeSysMsg("Level file location approved!" + "\n");
 		
 		addKeyListener(level.input);
+		
+		new CrashHandler().handle("Error");
 	}
 	
 	// Threading and game loop

@@ -7,7 +7,7 @@ public class AssignInput {
 	public boolean[] keys = new boolean[120];
 	public boolean up, down, left, right;
 	public boolean space, f, shift;
-	public boolean c;
+	public boolean c, e;
 	
 	public boolean f3;
 	
@@ -25,7 +25,7 @@ public class AssignInput {
 			b = !b;
 			toggle = true;
 			} else if (key && toggle) {
-				if(toggled > 50) toggle = false;
+				if(toggled > 1000) toggle = false;
 			}
 		if(toggle) toggled++;
 		else toggled = 0;
@@ -47,6 +47,7 @@ public class AssignInput {
 		shift = keys[KeyEvent.VK_SHIFT];
 		
 		c = keys[KeyEvent.VK_C];
+		e = keys[KeyEvent.VK_E];
 	}
 	
 	private void hotKeys() {
