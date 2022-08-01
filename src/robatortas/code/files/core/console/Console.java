@@ -50,31 +50,16 @@ public class Console implements Runnable {
 		return false;
 	}
 	
+	// Gets specified command from the command list
 	private String getCommand(int index) {
 		return cmd[index].toString();
-	}
-	
-	private String getPart(int startChar, int word) {
-		String get = msg.contains(" ") ? msg.split(" ")[word] : msg;
-		String substring = get.substring(startChar);
-		return substring;
-	}
-	
-	// Get Item name from input commandIndex
-	private String getItemFromInput(int commandIndex) {
-		String item = msg.contains(" ") ? msg.substring("!".concat(getCommand(commandIndex)).length() + 1) : "nullItem";
-		return item;
-	}
-	private String getNumberFromInput(int commandIndex) {
-		String number = msg.contains(" ") ? msg.substring("!".concat(getCommand(commandIndex)).length() + 2) : "nullNumber";
-		return number;
 	}
 	
 	private String getCommandList() {
 		return Arrays.toString(cmd);
 	}
 	
-	// When in need of making a command do certain stuff depending if it's true or false
+	// When in need of making a command do certain stuff depending if it's true or false (Command boolean logic)
 	private boolean commandSet(int commandIndex) {
 		boolean bool = false;
 		if("!".concat(getCommand(commandIndex)).concat(" = true").equals(msg)) bool = true;
@@ -84,21 +69,53 @@ public class Console implements Runnable {
 	
 	// LIST OF COMMANDS
 	private static String[] cmd = new String[] {
-			"help", "quit", "dev_mode", "get", "drop", "inventory_size"
+			"help", "quit", "dev_mode", "get", "spawn", "inventory_size"
 			};
 	
-	private String item;
+	// Gets a part of the command
+	private String getPart(int startChar, int word) {
+		String get = msg.contains(" ") ? msg.split(" ")[word] : msg;
+		String substring = get.substring(startChar);
+		return substring;
+	}
 	
+	// Parses each part of the input into readable code data
+	private void parser() {
+		// Gets command
+		String command = getPart(1, 0);
+		// Gets first value (Entity most probably)
+		String first = getPart(0, 1);
+		// Gets second value (quantity)
+		String second = msg.contains(command + " " + first + " ") ? getPart(0, 2) : "";
+		System.out.println(second);
+		
+		String result = "";
+		
+		try {
+
+			// Checks if the inputted command is valid
+			if(!getCommandList().contains(command) && !getPart(0, 0).equals("!")) writeErr("Invalid Command");
+			
+			if(!first.equals(new Item().getItem(item).getName())) writeErr("Invalid Item");
+		} catch(Exception e) {
+//			new CrashHandler().handle(e, "Console Error Handler failed", ErrorType.UNHANDLED);
+		}
+	}
+
+	private String item;
 	// COMMAND FUNCTIONS
 	public void commands() {
 		errorHandler();
 		if(!msg.startsWith("!")) writePlayerMsg(msg);
 		
+		parser();
 		if(setCommand(0)) writeSysMsg("Here is the list of commands: \n" + getCommandList());
 		if(setCommand(1)) {
 			writeSysMsg("Quitting...");
 			System.exit(0);
 		}
+		
+		// Change DevMode variable
 		if(setCommand(2)) {
 			 if(commandSet(2)) {
 				 writeSysMsg("DEVMODE set to true");
@@ -109,9 +126,11 @@ public class Console implements Runnable {
 				 GameManager.DEV_MODE = false;
 			 }
 		}
+		
+		// Add item to player inventory
 		if(setCommand(3)) {
 			try {
-				item = getItemFromInput(3);
+				item = getPart(0, 1);
 				if(item.equals(new Item().getItem(item).getName())) {
 					LevelManager.player.inventory.add(new Item().getItem(item));
 					writeSysMsg("<Number> " + item + " given to " + LevelManager.player.name);
@@ -120,12 +139,16 @@ public class Console implements Runnable {
 				writeErr("Inputted Item does not exist");
 			}
 		}
+		
+		// Spawn Entity or ItemEntity
 		if(setCommand(4)) {
 			try {
-				item = getItemFromInput(4);
+				item = getPart(0, 1);
 				if(item.equals(new Item().getItem(item).getName())) {
-					game.level.add(new ItemEntity(LevelManager.player.x, LevelManager.player.y, new Item().getItem(item)));
-					writeSysMsg("1 " + item + " given to " + LevelManager.player.name);
+					for(int i = 0; i < Integer.parseInt(getPart(0, 2)); i++) {
+						game.level.add(new ItemEntity(LevelManager.player.x, LevelManager.player.y, new Item().getItem(item)));
+						writeSysMsg(i + " " + item + " spawned at your location");
+					}
 				}
 			} catch(Exception e) {
 				writeErr("Inputted Item does not exist");
@@ -138,11 +161,7 @@ public class Console implements Runnable {
 	
 	// CHECKS FOR INVALID COMMAND INPUT
 	private void errorHandler() {
-		try {
-			if(!getCommandList().contains(getPart(1, 0)) && !getPart(0, 0).equals("!")) writeErr("Invalid Command");
-		} catch(Exception e) {
-			new CrashHandler().handle(e, "Console Error Handler failed", ErrorType.UNHANDLED);
-		}
+		
 	}
 	
 	// CONSOLE THREAD MANAGER

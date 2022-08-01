@@ -143,9 +143,9 @@ public class CrashHandler implements Runnable {
 		 * HANDLED: The system handled the exception.
 		 */
 		
-		UNHANDLED("Unhandled Error: Not handled.", -1),
+		UNHANDLED("Unhandled Error: Not handled.", -3),
 		UNEXPECTED("Unexpected Error: This shouldn't happen.", -2),
-		IRREDEEMABLE("Irredeemable Error: Not able to be handled", -3),
+		IRREDEEMABLE("Irredeemable Error: Not able to be handled", -1),
 		SERIOUS("Serious Error: Possible unplayable content", 1),
 		HANDLED("Handled Error: Solved by system", 2);
 		
