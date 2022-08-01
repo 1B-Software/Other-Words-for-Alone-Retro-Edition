@@ -79,20 +79,22 @@ public class Console implements Runnable {
 		return substring;
 	}
 	
+	private String command;
+	private String first;
+	private String second;
 	// Parses each part of the input into readable code data
 	private void parser() {
 		// Gets command
-		String command = getPart(1, 0);
+		command = getPart(1, 0);
 		// Gets first value (Entity most probably)
-		String first = getPart(0, 1);
+		first = msg.contains(command + " ") ? getPart(0, 1) : "";
 		// Gets second value (quantity)
-		String second = msg.contains(command + " " + first + " ") ? getPart(0, 2) : "";
-		System.out.println(second);
+		second = msg.contains(command + " " + first + " ") ? getPart(0, 2) : "1";
 		
 		String result = "";
 		
 		try {
-
+			
 			// Checks if the inputted command is valid
 			if(!getCommandList().contains(command) && !getPart(0, 0).equals("!")) writeErr("Invalid Command");
 			
@@ -109,7 +111,11 @@ public class Console implements Runnable {
 		if(!msg.startsWith("!")) writePlayerMsg(msg);
 		
 		parser();
+		
+		// Help
 		if(setCommand(0)) writeSysMsg("Here is the list of commands: \n" + getCommandList());
+		
+		// Quit game completely
 		if(setCommand(1)) {
 			writeSysMsg("Quitting...");
 			System.exit(0);
@@ -131,9 +137,11 @@ public class Console implements Runnable {
 		if(setCommand(3)) {
 			try {
 				item = getPart(0, 1);
-				if(item.equals(new Item().getItem(item).getName())) {
-					LevelManager.player.inventory.add(new Item().getItem(item));
-					writeSysMsg("<Number> " + item + " given to " + LevelManager.player.name);
+				for(int i = 0; i < Integer.parseInt(second); i++) {
+					if(item.equals(new Item().getItem(item).getName())) {
+						LevelManager.player.inventory.add(new Item().getItem(item));
+					}
+					writeSysMsg(second + " " + item + " given to " + LevelManager.player.name);
 				}
 			} catch(Exception e) {
 				writeErr("Inputted Item does not exist");
@@ -145,15 +153,17 @@ public class Console implements Runnable {
 			try {
 				item = getPart(0, 1);
 				if(item.equals(new Item().getItem(item).getName())) {
-					for(int i = 0; i < Integer.parseInt(getPart(0, 2)); i++) {
+					for(int i = 0; i < Integer.parseInt(second); i++) {
 						game.level.add(new ItemEntity(LevelManager.player.x, LevelManager.player.y, new Item().getItem(item)));
-						writeSysMsg(i + " " + item + " spawned at your location");
 					}
+					writeSysMsg(Integer.parseInt(getPart(0, 2)) + " " + item + " spawned at your location");
 				}
 			} catch(Exception e) {
 				writeErr("Inputted Item does not exist");
 			}
 		}
+		
+		// See inventory size
 		if(setCommand(5)) {
 			writeSysMsg(Integer.toString(LevelManager.player.inventory.items.size()));
 		}
