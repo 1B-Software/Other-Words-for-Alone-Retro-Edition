@@ -82,6 +82,8 @@ public class Console implements Runnable {
 	private String command;
 	private String first;
 	private String second;
+	
+	private String item;
 	// Parses each part of the input into readable code data
 	private void parser() {
 		// Gets command
@@ -91,23 +93,12 @@ public class Console implements Runnable {
 		// Gets second value (quantity)
 		second = msg.contains(command + " " + first + " ") ? getPart(0, 2) : "1";
 		
-		String result = "";
-		
-		try {
-			
-			// Checks if the inputted command is valid
-			if(!getCommandList().contains(command) && !getPart(0, 0).equals("!")) writeErr("Invalid Command");
-			
-			if(!first.equals(new Item().getItem(item).getName())) writeErr("Invalid Item");
-		} catch(Exception e) {
-//			new CrashHandler().handle(e, "Console Error Handler failed", ErrorType.UNHANDLED);
-		}
+		// Handles all syntax errors in the console
+		errorHandler();
 	}
-
-	private String item;
+	
 	// COMMAND FUNCTIONS
 	public void commands() {
-		errorHandler();
 		if(!msg.startsWith("!")) writePlayerMsg(msg);
 		
 		parser();
@@ -143,9 +134,7 @@ public class Console implements Runnable {
 					}
 					writeSysMsg(second + " " + item + " given to " + LevelManager.player.name);
 				}
-			} catch(Exception e) {
-				writeErr("Inputted Item does not exist");
-			}
+			} catch(Exception e) {}
 		}
 		
 		// Spawn Entity or ItemEntity
@@ -158,9 +147,7 @@ public class Console implements Runnable {
 					}
 					writeSysMsg(Integer.parseInt(getPart(0, 2)) + " " + item + " spawned at your location");
 				}
-			} catch(Exception e) {
-				writeErr("Inputted Item does not exist");
-			}
+			} catch(Exception e) {}
 		}
 		
 		// See inventory size
@@ -171,7 +158,24 @@ public class Console implements Runnable {
 	
 	// CHECKS FOR INVALID COMMAND INPUT
 	private void errorHandler() {
-		
+		// Syntax Error Handler
+		try {
+			
+			// Checks if the inputted command is valid
+			if(!getCommandList().contains(command) && !getPart(0, 0).equals("!")) writeErr("Invalid Command");
+			
+			// Check for first command (Item)
+			if(!getCommandList().contains("get") || !getCommandList().contains("spawn")) {
+				if(!first.equals("")) {
+					writeErr("Invalid parameter, " + first + " is invalid");
+				}
+			}
+			
+			System.out.println(command);
+			
+		} catch(Exception e) {
+//			new CrashHandler().handle(e, "Console Error Handler failed", ErrorType.UNHANDLED);
+		}
 	}
 	
 	// CONSOLE THREAD MANAGER
