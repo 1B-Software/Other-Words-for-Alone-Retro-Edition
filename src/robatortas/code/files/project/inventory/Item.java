@@ -43,7 +43,7 @@ public class Item extends ItemHandler {
 			Item gottenItem = items.get(i);
 			if(gottenItem.getName().equals(itemName)) {
 				return gottenItem;
-			} else if(itemName.equals(gottenItem.getName())) Console.writeErr("Item not found exception on getItem method.");
+			}
 		}
 		return null;
 	}
