@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import robatortas.code.files.core.level.LevelManager;
-import robatortas.code.files.core.utils.CrashHandler;
-import robatortas.code.files.core.utils.CrashHandler.ErrorType;
 import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.entities.ItemEntity;
 import robatortas.code.files.project.inventory.Item;
@@ -74,7 +72,10 @@ public class Console implements Runnable {
 	
 	// Gets a part of the command
 	private String getPart(int startChar, int word) {
-		String get = msg.contains(" ") ? msg.split(" ")[word] : msg;
+		String get = "";
+		try {
+			get = msg.contains(" ") ? msg.split(" ")[word] : msg.replaceAll("\\s", "");
+		} catch(Exception e) {}
 		String substring = get.substring(startChar);
 		return substring;
 	}
@@ -82,8 +83,6 @@ public class Console implements Runnable {
 	private String command;
 	private String first;
 	private String second;
-	
-	private String item;
 	// Parses each part of the input into readable code data
 	private void parser() {
 		// Gets command
@@ -127,25 +126,23 @@ public class Console implements Runnable {
 		// Add item to player inventory
 		if(setCommand(3)) {
 			try {
-				item = getPart(0, 1);
 				for(int i = 0; i < Integer.parseInt(second); i++) {
-					if(item.equals(new Item().getItem(item).getName())) {
-						LevelManager.player.inventory.add(new Item().getItem(item));
+					if(first.equals(new Item().getItem(first).getName())) {
+						LevelManager.player.inventory.add(new Item().getItem(first));
 					}
-					writeSysMsg(second + " " + item + " given to " + LevelManager.player.name);
 				}
+				writeSysMsg(second + " " + first + " given to " + LevelManager.player.name);
 			} catch(Exception e) {}
 		}
 		
 		// Spawn Entity or ItemEntity
 		if(setCommand(4)) {
 			try {
-				item = getPart(0, 1);
-				if(item.equals(new Item().getItem(item).getName())) {
+				if(first.equals(new Item().getItem(first).getName())) {
 					for(int i = 0; i < Integer.parseInt(second); i++) {
-						game.level.add(new ItemEntity(LevelManager.player.x, LevelManager.player.y, new Item().getItem(item)));
+						game.level.add(new ItemEntity(LevelManager.player.x, LevelManager.player.y, new Item().getItem(first)));
 					}
-					writeSysMsg(Integer.parseInt(getPart(0, 2)) + " " + item + " spawned at your location");
+					writeSysMsg(Integer.parseInt(getPart(0, 2)) + " " + first + " spawned at your location");
 				}
 			} catch(Exception e) {}
 		}
@@ -164,17 +161,15 @@ public class Console implements Runnable {
 			// Checks if the inputted command is valid
 			if(!getCommandList().contains(command) && !getPart(0, 0).equals("!")) writeErr("Invalid Command");
 			
-			// Check for first command (Item)
-			if(!getCommandList().contains("get") || !getCommandList().contains("spawn")) {
-				if(!first.equals("")) {
-					writeErr("Invalid parameter, " + first + " is invalid");
-				}
+			// Check for first command (Entity, Item)
+			if(!command.equals(cmd[3]) && !command.equals(cmd[4])) {
+				if(!first.equals(""))writeErr("The argument " + first + " is invalid for this command");
 			}
 			
-			System.out.println(command);
+//			if(!first.equals("") && !first.equals(new Item().getItem(first).getName())) writeErr(first + " does not exist.");
 			
 		} catch(Exception e) {
-//			new CrashHandler().handle(e, "Console Error Handler failed", ErrorType.UNHANDLED);
+			
 		}
 	}
 	
