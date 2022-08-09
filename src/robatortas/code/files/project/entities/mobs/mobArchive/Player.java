@@ -43,7 +43,7 @@ public class Player extends MobAddons {
 	
 	private static int velX = 1;
 	private static int velY = 1;	
-	private int xa, ya;
+	public int xa, ya;
 	
 	public int tickTime;
 	

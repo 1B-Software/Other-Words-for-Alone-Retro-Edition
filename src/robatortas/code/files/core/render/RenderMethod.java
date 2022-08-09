@@ -42,9 +42,9 @@ public class RenderMethod {
 	}
 
 	private boolean chat, inv;
-	private int x = xScroll;
-	private int y = yScroll;
-	int yTime = 0;
+	private int x;
+	private int y;
+	int renderTime = 0;
 	
 	private InventoryMenu inventory = new InventoryMenu(game);
 	
@@ -69,16 +69,19 @@ public class RenderMethod {
 			font.setSize(2);
 			font.draw(input, x, y + (screen.width-76), true, screen);
 		}
-		
+
+		renderTime++;
 		if(inv) {
-			yTime++;
-			if(yTime % 3 == 0) {
-				y -= ((yTime/20)&1);
+			if(renderTime % 7 == 0 && y > yScroll-30) {
+				y -= (renderTime&1);
 			}
-		} else {
-			yTime = 0;
 			x = xScroll;
-			y = yScroll;
+		} else {
+			if(renderTime % 7 == 0 && y < yScroll) {
+				y += (renderTime&1);
+			} 
+			x = xScroll;
+			if(y > yScroll-6) y = yScroll;
 		}
 		
 		renderBasic(screen, x, y);
@@ -103,7 +106,7 @@ public class RenderMethod {
 		}
 		
 		// Health
-			screen.renderBox((x + (game.screen.width/3) - 2), y + 8, 84, 12, 0xff1F1F1F);
+		screen.renderBox((x + (game.screen.width/3) - 2), y + 8, 84, 12, 0xff1F1F1F);
 		for(int i = 0; i < LevelManager.player.health; i++) {
 			if(LevelManager.player.health <= 3) {if((game.tickTime / 15) % 2 == 0) continue;}
 			screen.renderBox((x + game.screen.width/3) + (i*8) + xa, (y + 10) + ya, 8, 8, 0xffFF282C);
