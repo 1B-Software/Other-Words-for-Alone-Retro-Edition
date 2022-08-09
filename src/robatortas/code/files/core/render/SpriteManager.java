@@ -30,7 +30,7 @@ public class SpriteManager {
 		}
 	}
 	
-	public SpriteManager(SpriteSheetManager sheet, int width, int height) {
+	public SpriteManager( int width, int height, SpriteSheetManager sheet) {
 		SIZE = (width == height) ? width: -1;
 		this.width = width;
 		this.height = height;

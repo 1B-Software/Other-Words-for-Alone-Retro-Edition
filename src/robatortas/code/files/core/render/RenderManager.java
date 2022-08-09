@@ -111,6 +111,28 @@ public class RenderManager {
 		}
 	}
 	
+	public void renderSpriteSheet(int xp, int yp, SpriteSheetManager sheet, int flip, boolean fixed) {
+		if(!fixed) {
+			xp -= xOffset;
+			yp -= yOffset;
+		}
+		
+		for(int y = 0; y < sheet.HEIGHT; y++) {
+			int ya = y + yp;
+			int ys = y;
+			for(int x = 0; x < sheet.WIDTH; x++) {
+				int xa = x + xp;
+				int xs = x;
+				if(flip == 1 || flip == 3) xs = 15 - x;
+				if(xa < - sheet.WIDTH || xa >= width || ya < - 0 || ya >= height) break;
+				if(xa < 0) xa = 0;
+				int color = sheet.pixels[xs + ys * sheet.WIDTH];
+				
+				if(color != 0xffff00ff) pixels[xa + ya * width] = color;
+			}
+		}
+	}
+	
 	// Rendering Mobs
 	public void renderMob(int xp, int yp, Mob mob, SpriteManager sprite, int flip) {
 		xp -= xOffset;

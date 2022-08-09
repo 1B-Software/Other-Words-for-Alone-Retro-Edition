@@ -42,13 +42,15 @@ public class RenderMethod {
 	}
 
 	private boolean chat, inv;
+	private int x = xScroll;
+	private int y = yScroll;
+	int yTime = 0;
 	
 	private InventoryMenu inventory = new InventoryMenu(game);
 	
 	public void renderGUI() {
 		RenderManager screen = game.screen;
-		int x = xScroll;
-		int y = yScroll;
+		
 		
 		Fonts font = new Fonts();
 		
@@ -68,6 +70,23 @@ public class RenderMethod {
 			font.draw(input, x, y + (screen.width-76), true, screen);
 		}
 		
+		if(inv) {
+			yTime++;
+			if(yTime % 3 == 0) {
+				y -= ((yTime/20)&1);
+			}
+		} else {
+			yTime = 0;
+			x = xScroll;
+			y = yScroll;
+		}
+		
+		renderBasic(screen, x, y);
+		
+	}
+	
+	// Renders the basic GUI
+	private void renderBasic(RenderManager screen, int x, int y) {
 		// Health and Stamina
 		int xa = 0;
 		int ya = 0;
@@ -84,7 +103,7 @@ public class RenderMethod {
 		}
 		
 		// Health
-		screen.renderBox((x + (game.screen.width/3) - 2), y + 8, 84, 12, 0xff1F1F1F);
+			screen.renderBox((x + (game.screen.width/3) - 2), y + 8, 84, 12, 0xff1F1F1F);
 		for(int i = 0; i < LevelManager.player.health; i++) {
 			if(LevelManager.player.health <= 3) {if((game.tickTime / 15) % 2 == 0) continue;}
 			screen.renderBox((x + game.screen.width/3) + (i*8) + xa, (y + 10) + ya, 8, 8, 0xffFF282C);

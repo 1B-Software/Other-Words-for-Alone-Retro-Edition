@@ -15,15 +15,27 @@ public class InputManager extends AssignInput implements KeyListener {
 	}
 	
 	public void keyPressed(KeyEvent e) {
-		input = e.toString();
-		keys[e.getKeyCode()] = true;
+		try {
+			input = e.toString();
+			keys[e.getKeyCode()] = true;
+		}catch(ArrayIndexOutOfBoundsException ee) {
+			// DO NOTHING!
+		}
 	}
 	
 	public void keyReleased(KeyEvent e) {
-		keys[e.getKeyCode()] = false;
+		try{
+			keys[e.getKeyCode()] = false;
+		}catch(ArrayIndexOutOfBoundsException ee) {
+			// DO NOTHING!
+		}
 	}
 	
 	public void keyTyped(KeyEvent e) {
-		keys[e.getKeyCode()] = false;
+		try {
+			keys[e.getKeyCode()] = false;	
+		}catch(ArrayIndexOutOfBoundsException ee) {
+			// DO NOTHING!
+		}
 	}
 }

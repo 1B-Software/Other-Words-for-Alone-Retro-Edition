@@ -162,11 +162,9 @@ public class Console implements Runnable {
 			if(!getCommandList().contains(command) && !getPart(0, 0).equals("!")) writeErr("Invalid Command");
 			
 			// Check for first command (Entity, Item)
-			if(!command.equals(cmd[3]) && !command.equals(cmd[4])) {
-				if(!first.equals(""))writeErr("The argument " + first + " is invalid for this command");
-			}
-			
-//			if(!first.equals("") && !first.equals(new Item().getItem(first).getName())) writeErr(first + " does not exist.");
+			if(command.equals(cmd[3]) || command.equals(cmd[4])) {
+				if(!first.equals("")) writeErr("The argument " + first + " is invalid.");
+			} else if(!first.equals("")) writeErr("The argument " + first + " is invalid for this command.");
 			
 		} catch(Exception e) {
 			

@@ -7,6 +7,7 @@ public class Calculations {
 	public double x0, y0, z0;
 	public double x1, y1, z1;
 	
+	// Elasticity refers to the bounce of the obect.
 	public double gravityForce, elasticity, frictionX, frictionY;
 	
 	private Random random = new Random();

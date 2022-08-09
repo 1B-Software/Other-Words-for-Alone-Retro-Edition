@@ -9,7 +9,7 @@ public class Animate extends SpriteManager {
 	public int frame;
 	
 	public Animate(SpriteSheetManager sheet, int width, int height, int animLenght) {
-		super(sheet, width, height);
+		super(width, height, sheet);
 		this.lenght = animLenght;
 		sprite = sheet.getSprites()[0];
 		//getSprites is where the sprites are stored
