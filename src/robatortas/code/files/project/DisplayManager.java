@@ -25,6 +25,7 @@ public class DisplayManager {
 		game.frame.pack();
 		game.frame.add(game);
 		game.start();
+		game.requestFocus();
 		game.frame.setSize(size);
 		
 		if(GameManager.DEV_MODE == true) {

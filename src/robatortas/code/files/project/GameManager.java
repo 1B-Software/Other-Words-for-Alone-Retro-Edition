@@ -48,7 +48,6 @@ public class GameManager extends Canvas implements Runnable {
 	// DECLARATIONS END
 	
 	// Main
-	@SuppressWarnings("unused")
 	public GameManager() {
 		screen = new RenderManager(Constants.WIDTH, Constants.HEIGHT);
 		level = LevelManager.level;

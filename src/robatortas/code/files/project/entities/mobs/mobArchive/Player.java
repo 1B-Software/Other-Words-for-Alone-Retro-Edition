@@ -106,7 +106,7 @@ public class Player extends MobAddons {
 	
 	private void stamina() {
 		if(stamina <= 0) {
-			if(isSwimming && swimTime % 60 == 0) hurt(this, 1, dir);
+//			if(isSwimming && swimTime % 60 == 0) hurt(this, 1, dir);
 		}
 		
 		recoverStamina();
@@ -245,11 +245,26 @@ public class Player extends MobAddons {
 		afterLayer(screen);
 	}
 	
+	private int punchY = 0;
+	
 	private void beforeLayer(RenderManager screen) {
 		// Finally using switch case huh?
+		switch(attackDir) {
+		case 0: 
+			if(attackTime > 0) screen.renderSprite(x-10, y-26 + punchY, SpriteArchive.swingFx, 16, 0);
+			break;
+		case 1:
+			if(attackTime > 0) screen.renderSprite(x+1, y-16 + punchY, SpriteArchive.swingFx_Sides, 16, 1);
+			break;
+		case 3:
+			if(attackTime > 0) screen.renderSprite(x-20, y-16 + punchY, SpriteArchive.swingFx_Sides, 16, 0);
+			break;
+		}
+		
+		if(isSwimming) {
 			switch(attackDir) {
 			case 0: 
-				if(attackTime > 0) screen.renderSprite(x-10, y-26, SpriteArchive.swingFx, 16, 0);
+				punchY += 10;
 				break;
 			case 1:
 				if(attackTime > 0) screen.renderSprite(x+1, y-16, SpriteArchive.swingFx_Sides, 16, 1);
@@ -258,12 +273,13 @@ public class Player extends MobAddons {
 				if(attackTime > 0) screen.renderSprite(x-20, y-16, SpriteArchive.swingFx_Sides, 16, 0);
 				break;
 			}
+		}
 	}
 	
 	private void afterLayer(RenderManager screen) {
 		switch(attackDir) {
 		case 2:
-			if(attackTime > 0) screen.renderSprite(x-10, y-8, SpriteArchive.swingFx, 16, 2);
+			if(attackTime > 0) screen.renderSprite(x-10, y-8 + punchY, SpriteArchive.swingFx, 16, 2);
 			break;
 		}
 	}
