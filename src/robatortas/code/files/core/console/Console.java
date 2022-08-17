@@ -37,7 +37,7 @@ public class Console implements Runnable {
 	}
 	
 	public static void writePlayerMsg(String msg) {
-		from = "Player";
+		from = LevelManager.player.name == "" ? LevelManager.player.name : "Player" ;
 		System.out.println("[" + from + "]" + ": " + msg);
 	}
 

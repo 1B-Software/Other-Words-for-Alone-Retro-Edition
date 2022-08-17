@@ -1,5 +1,6 @@
 package robatortas.code.files.project.menu;
 
+import robatortas.code.files.core.input.MouseManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteSheetManager;
 import robatortas.code.files.project.GameManager;
@@ -7,6 +8,8 @@ import robatortas.code.files.project.GameManager;
 public class InventoryMenu {
 
 	public GameManager game;
+	
+	private MouseManager mouse = new MouseManager();;
 	
 	public InventoryMenu(GameManager game) {
 		this.game = game;
@@ -19,7 +22,13 @@ public class InventoryMenu {
 	public void render(RenderManager screen) {
 //		screen.renderBox(LevelManager.player.x, LevelManager.player.y, 20, 20, 0xffff00ff);
 		
+		hitBoxes();
+		
 		screen.renderSpriteSheet(screen.width/5 + 6, screen.height/8, inventorySheet, 0, true);
+	}
+	
+	public void hitBoxes() {
+		System.out.println(MouseManager.mx);
 	}
 	
 	SpriteSheetManager inventorySheet = new SpriteSheetManager("/textures/spritesheet/gui/inventory/InventorywithBlueBook.png", 138, 163);

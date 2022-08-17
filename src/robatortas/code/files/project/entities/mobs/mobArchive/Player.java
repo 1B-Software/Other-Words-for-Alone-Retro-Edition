@@ -106,7 +106,7 @@ public class Player extends MobAddons {
 	
 	private void stamina() {
 		if(stamina <= 0) {
-//			if(isSwimming && swimTime % 60 == 0) hurt(this, 1, dir);
+			if(isSwimming && swimTime % 60 == 0) hurt(this, 1, dir);
 		}
 		
 		recoverStamina();
