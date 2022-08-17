@@ -1,13 +1,11 @@
 package robatortas.code.files.core.level;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
 import robatortas.code.files.core.entities.EntityManager;
-import robatortas.code.files.core.render.Fonts;
 import robatortas.code.files.core.utils.CrashHandler;
 import robatortas.code.files.core.utils.CrashHandler.ErrorType;
 import robatortas.code.files.project.entities.mobs.mobArchive.Bee;
