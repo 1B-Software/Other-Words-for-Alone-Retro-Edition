@@ -49,13 +49,9 @@ public class LevelManager {
 	// Input Declarations
 	public InputManager input = new InputManager();
 	
-	private int tickTime;
-	
 	public void update() {
 		WaterTile.tick();
 		input.update();
-		
-		tickTime++;
 		
 		for (int i = 0; i < entities.size(); i++) {
 			EntityManager e = entities.get(i);
