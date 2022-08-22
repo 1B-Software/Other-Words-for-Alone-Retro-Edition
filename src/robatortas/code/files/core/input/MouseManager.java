@@ -7,7 +7,7 @@ import java.awt.event.MouseMotionListener;
 public class MouseManager implements MouseListener, MouseMotionListener {
 	
 	// Mouse X & Y
-	public static int mx, my;
+	public static int mX, mY;
 	// Mouse Pressed
 	public static int mPX, mPY;
 	// Mouse Drag
@@ -17,11 +17,11 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	public static int mouseButton = 0;
 	
 	public int getX() {
-		return this.mx;
+		return MouseManager.mX;
 	}
 	
 	public int getY() {
-		return this.my;
+		return MouseManager.mY;
 	}
 	
 	public void mouseClicked(MouseEvent e) {
@@ -30,12 +30,13 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 
 	public void mousePressed(MouseEvent e) {
 		mouseButton = e.getButton();
-		mx = e.getX();
-		my = e.getY();
+		mX = e.getX();
+		mY = e.getY();
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		
+		mX = 0;
+		mY = 0;
 	}
 
 	public void mouseEntered(MouseEvent e) {
@@ -50,10 +51,9 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	public void mouseDragged(MouseEvent e) {
 		
 	}
-
 	
 	public void mouseMoved(MouseEvent e) {
-		mx = e.getX();
-		my = e.getY();
+		mX = e.getX();
+		mY = e.getY();
 	}
 }
