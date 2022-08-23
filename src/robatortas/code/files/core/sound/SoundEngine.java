@@ -18,7 +18,6 @@ public class SoundEngine {
 	public static final SoundEngine walkGrass = new SoundEngine("/sound/sound/walkGrass.wav");
 	public static final SoundEngine swim = new SoundEngine("/sound/sound/swim.wav");
 	public static final SoundEngine splash = new SoundEngine("/sound/sound/splash.wav");
-//	public static final SoundEngine music1 = new SoundEngine("/sound/music/185.wav");
 	public static final SoundEngine music1 = new SoundEngine("/sound/sound/break.wav");
 	public static final SoundEngine breakTile = new SoundEngine("/sound/sound/break.wav");
 	public static final SoundEngine select = new SoundEngine("/sound/sound/select3.wav");
@@ -27,12 +26,12 @@ public class SoundEngine {
 	
 	public static final SoundEngine whiteNoise = null;
 	
-	//private AudioClip clip;
-	//Clip clip = AudioSystem.getClip();
 	public Clip clip;
 	private FloatControl gainControl;
 	
 	/* ALERT!:
+	 * Issue most noticable on Linux! (STATUS: UNKOWN)
+	 * 
 	 * Sound engine limitation...
 	 * Need to play first sound at the start of the game,
 	 * since the first played sound freezes the game for a moment.
@@ -82,7 +81,6 @@ public class SoundEngine {
 			stop();
 			
 			clip.setFramePosition(0);
-			
 			
 			/*Fixes not playing bug.
 			 * Forces it to play if not running when called
