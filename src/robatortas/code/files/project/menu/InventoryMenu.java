@@ -20,8 +20,10 @@ public class InventoryMenu {
 		
 	}
 	
+	boolean grid;
 	public void render(RenderManager screen) {
-		screen.renderSpriteSheet(screen.width/5 + 6, screen.height/8, inventorySheet, 0, true);
+		grid = game.mouse.toggle(MouseManager.BUTTONS.RIGHT.button, grid);
+		if(grid)screen.renderSpriteSheet(screen.width/5 + 6, screen.height/8, inventorySheet, 0, true);
 		
 		hitBoxes(screen);
 	}

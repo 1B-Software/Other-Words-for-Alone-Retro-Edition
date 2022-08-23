@@ -24,12 +24,39 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 		return MouseManager.mY;
 	}
 	
+	// Toggling boolean
+	private boolean toggle;
+	private int toggled;
+	public boolean toggle(int mouseB, boolean b) {
+		if(mouseB!=0 && !toggle) {
+			b = !b;
+			toggle = true;
+			} else if (mouseB!=0 && toggle) {
+				if(toggled > 1000) toggle = false;
+			}
+		if(toggle) toggled++;
+		else toggled = 0;
+		return b;
+	}
+	
 	public void mouseClicked(MouseEvent e) {
 		
 	}
+	
+	// Assigning buttons with enums for ease
+	public static enum BUTTONS {
+		LEFT(3),
+		RIGHT(1);
+		
+		public int button = 0;
+		BUTTONS(int b) {
+			this.button = b;
+		}
+	};
 
 	public void mousePressed(MouseEvent e) {
 		mouseButton = e.getButton();
+		System.out.println(mouseButton);
 		mX = e.getX();
 		mY = e.getY();
 	}
