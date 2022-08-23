@@ -3,6 +3,7 @@ package robatortas.code.files.core.input;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import javax.swing.SwingUtilities;
 
 public class MouseManager implements MouseListener, MouseMotionListener {
 	
@@ -25,13 +26,13 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	}
 	
 	// Toggling boolean
-	private boolean toggle;
-	private int toggled;
-	public boolean toggle(int mouseB, boolean b) {
-		if(mouseB!=0 && !toggle) {
+	private static boolean toggle;
+	private static int toggled;
+	public static boolean toggle(boolean mouseB, boolean b) {
+		if(mouseB && !toggle) {
 			b = !b;
 			toggle = true;
-			} else if (mouseB!=0 && toggle) {
+			} else if (mouseB && toggle) {
 				if(toggled > 1000) toggle = false;
 			}
 		if(toggle) toggled++;
@@ -42,21 +43,18 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	public void mouseClicked(MouseEvent e) {
 		
 	}
-	
-	// Assigning buttons with enums for ease
-	public static enum BUTTONS {
-		LEFT(3),
-		RIGHT(1);
-		
-		public int button = 0;
-		BUTTONS(int b) {
-			this.button = b;
-		}
-	};
 
+	// Mouse Buttons
+	public static boolean LEFT, RIGHT, MIDDLE;
+	
 	public void mousePressed(MouseEvent e) {
 		mouseButton = e.getButton();
 		System.out.println(mouseButton);
+		
+		if(SwingUtilities.isLeftMouseButton(e)) LEFT = true;
+		if(SwingUtilities.isRightMouseButton(e)) RIGHT = true;
+		if(SwingUtilities.isMiddleMouseButton(e)) MIDDLE = true;
+		
 		mX = e.getX();
 		mY = e.getY();
 	}
