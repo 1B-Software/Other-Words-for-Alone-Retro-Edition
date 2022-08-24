@@ -24,11 +24,7 @@ public class AssignInput {
 		if(key && !toggle) {
 			b = !b;
 			toggle = true;
-			} else if (key && toggle) {
-				if(toggled > 1000) toggle = false;
 			}
-		if(toggle) toggled++;
-		else toggled = 0;
 		return b;
 	}
 	
