@@ -1,7 +1,5 @@
 package robatortas.code.files.project.menu;
 
-import javax.swing.SwingUtilities;
-
 import robatortas.code.files.core.input.MouseManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteSheetManager;
@@ -22,7 +20,8 @@ public class InventoryMenu {
 		
 	}
 	
-	boolean grid;
+	boolean grid = false;
+	
 	public void render(RenderManager screen) {
 		screen.renderSpriteSheet(screen.width/5 + 6, screen.height/8, inventorySheet, 0, true);
 		grid = MouseManager.toggle(MouseManager.LEFT, grid);

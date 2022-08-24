@@ -32,31 +32,28 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 		if(mouseB && !toggle) {
 			b = !b;
 			toggle = true;
-			} else if (mouseB && toggle) {
-				if(toggled > 1000) toggle = false;
 			}
-		if(toggle) toggled++;
-		else toggled = 0;
 		return b;
 	}
 	
 	public void mouseClicked(MouseEvent e) {
-		
-	}
-
-	// Mouse Buttons
-	public static boolean LEFT, RIGHT, MIDDLE;
-	
-	public void mousePressed(MouseEvent e) {
 		mouseButton = e.getButton();
 		System.out.println(mouseButton);
 		
-		if(SwingUtilities.isLeftMouseButton(e)) LEFT = true;
-		if(SwingUtilities.isRightMouseButton(e)) RIGHT = true;
-		if(SwingUtilities.isMiddleMouseButton(e)) MIDDLE = true;
+		if(SwingUtilities.isLeftMouseButton(e))
+		
+		if(e.getButton() == MouseEvent.BUTTON1) LEFT = true;
 		
 		mX = e.getX();
 		mY = e.getY();
+	}
+	
+	public static boolean LEFT;
+	public boolean MIDDLE;
+	public boolean RIGHT;
+	
+	public void mousePressed(MouseEvent e) {
+		
 	}
 
 	public void mouseReleased(MouseEvent e) {
