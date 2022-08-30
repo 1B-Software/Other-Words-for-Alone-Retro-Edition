@@ -26,17 +26,17 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	}
 	
 	// Toggling boolean
-	private static boolean toggle;
-	private static int toggled;
-	public static boolean toggle(boolean mouseB, boolean b) {
-		if(mouseB && !toggle) {
-			b = !b;
-			toggle = true;
-			}
-		return b;
-	}
+	public static boolean toggled;
 	
 	public void mouseClicked(MouseEvent e) {
+		
+	}
+	
+	public static boolean LEFT;
+	public boolean MIDDLE;
+	public boolean RIGHT;
+	
+	public void mousePressed(MouseEvent e) {
 		mouseButton = e.getButton();
 		System.out.println(mouseButton);
 		
@@ -47,18 +47,12 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 		mX = e.getX();
 		mY = e.getY();
 	}
-	
-	public static boolean LEFT;
-	public boolean MIDDLE;
-	public boolean RIGHT;
-	
-	public void mousePressed(MouseEvent e) {
-		
-	}
 
 	public void mouseReleased(MouseEvent e) {
 		mX = 0;
 		mY = 0;
+		toggled = !toggled;
+		System.out.println(toggled);
 	}
 
 	public void mouseEntered(MouseEvent e) {

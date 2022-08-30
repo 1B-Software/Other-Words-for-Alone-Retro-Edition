@@ -45,6 +45,8 @@ public class GameManager extends Canvas implements Runnable {
 	
 	private boolean debug = false;
 	
+	public int xScroll, yScroll;
+	
 	// DECLARATIONS END
 	
 	// Main
@@ -110,9 +112,6 @@ public class GameManager extends Canvas implements Runnable {
 		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 		g.setColor(new Color(0x1F1F1F));
 		g.fillRect(0, 0, getWidth(), getHeight());
-		
-		int xScroll = 0;
-		int yScroll = 0;
 		
 		int w = getWindowSize().width;
 	    int h = getWindowSize().height;
