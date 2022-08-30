@@ -46,7 +46,7 @@ public class RenderMethod {
 	private int y;
 	int renderTime = 0;
 	
-	private InventoryMenu inventory = new InventoryMenu(game);
+	private InventoryMenu inventoryMenu = new InventoryMenu();
 	
 	public void renderGUI() {
 		RenderManager screen = game.screen;
@@ -57,7 +57,7 @@ public class RenderMethod {
 		// Inventory
 		inv = game.level.input.toggle(game.level.input.e, inv);
 		if(inv) {
-			inventory.render(screen);
+			inventoryMenu.render(screen, game);
 		}
 		
 		// Chat
@@ -84,12 +84,12 @@ public class RenderMethod {
 			if(y > yScroll-6) y = yScroll;
 		}
 		
-		renderBasic(screen, x, y);
+		renderBasic(screen);
 		
 	}
 	
 	// Renders the basic GUI
-	private void renderBasic(RenderManager screen, int x, int y) {
+	private void renderBasic(RenderManager screen) {
 		// Health and Stamina
 		int xa = 0;
 		int ya = 0;
@@ -121,6 +121,7 @@ public class RenderMethod {
 		}
 	}
 	
+	// Iterates through the pixels in the screen class and passes them to the buffer pixels.
 	public void pixelIterations() {
 		for(int i = 0; i < game.pixels.length; i++) {	
 			game.pixels[i] = game.screen.pixels[i];
