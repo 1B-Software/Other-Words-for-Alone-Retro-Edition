@@ -24,9 +24,9 @@ public class InventoryMenu {
 	
 	public void hitBoxes(RenderManager screen, GameManager game) {
 		// Big pocket
-		new BigPocket().render(screen, game);
+//		new BigPocket().render(screen, game);
 		if(MouseManager.mX >= 329 && MouseManager.mX <= 406 && MouseManager.mY >= 222 && MouseManager.mY <= 344) {
-//			new BigPocket().render(screen, game);
+			new BigPocket().render(screen, game);
 		}
 	}
 	

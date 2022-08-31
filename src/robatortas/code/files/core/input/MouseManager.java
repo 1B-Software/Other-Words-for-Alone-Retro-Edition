@@ -49,8 +49,6 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		mX = 0;
-		mY = 0;
 		toggled = !toggled;
 		System.out.println(toggled);
 	}
