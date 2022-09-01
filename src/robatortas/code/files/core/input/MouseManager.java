@@ -17,16 +17,13 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	// Mouse Button
 	public static int mouseButton = 0;
 	
-	public int getX() {
-		return MouseManager.mX;
-	}
-	
-	public int getY() {
-		return MouseManager.mY;
-	}
-	
 	// Toggling boolean
 	public static boolean toggled;
+	private static boolean toggleable;
+	public static boolean toggleable(boolean toggleable) {
+		MouseManager.toggleable = toggleable;
+		return toggleable;
+	}
 	
 	public void mouseClicked(MouseEvent e) {
 		
@@ -43,13 +40,17 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 		if(SwingUtilities.isLeftMouseButton(e))
 		
 		if(e.getButton() == MouseEvent.BUTTON1) LEFT = true;
+		else LEFT = false;
+		
+		System.out.println(LEFT);
 		
 		mX = e.getX();
 		mY = e.getY();
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		toggled = !toggled;
+		if(toggleable) toggled = !toggled;
+		
 		System.out.println(toggled);
 	}
 
@@ -69,5 +70,13 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	public void mouseMoved(MouseEvent e) {
 		mX = e.getX();
 		mY = e.getY();
+	}
+	
+	public int getX() {
+		return MouseManager.mX;
+	}
+	
+	public int getY() {
+		return MouseManager.mY;
 	}
 }
