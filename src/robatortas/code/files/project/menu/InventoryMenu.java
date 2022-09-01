@@ -17,8 +17,8 @@ public class InventoryMenu {
 	
 	public void render(RenderManager screen, GameManager game) {
 		screen.renderSpriteSheet(screen.width/5 + 6, screen.height/8, inventorySheet, 0, true);
+		MouseManager.LEFT = MouseManager.toggleable(true);
 		grid = MouseManager.toggled;
-		System.out.println("GRID: " + grid);
 		if(grid) hitBoxes(screen, game);
 	}
 	
