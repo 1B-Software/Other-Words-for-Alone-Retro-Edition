@@ -9,29 +9,23 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	
 	// Mouse X & Y
 	public static int mX, mY;
-	// Mouse Pressed
+	// Mouse Pressed X & Y
 	public static int mPX, mPY;
-	// Mouse Drag
-	public static int mDX, nDY;
+	// Mouse Drag X & Y
+	public static int mDX, mDY;
 	
 	// Mouse Button
 	public static int mouseButton = 0;
 	
-	// Toggling boolean
-	public static boolean toggled;
-	private static boolean toggleable;
-	public static boolean toggleable(boolean toggleable) {
-		MouseManager.toggleable = toggleable;
-		return toggleable;
-	}
+	
+	// MOUSE BUTTON INPUTS
+	public static boolean LEFT;
+	public boolean MIDDLE;
+	public boolean RIGHT;
 	
 	public void mouseClicked(MouseEvent e) {
 		
 	}
-	
-	public static boolean LEFT;
-	public boolean MIDDLE;
-	public boolean RIGHT;
 	
 	public void mousePressed(MouseEvent e) {
 		mouseButton = e.getButton();
@@ -44,8 +38,8 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 		
 		System.out.println(LEFT);
 		
-		mX = e.getX();
-		mY = e.getY();
+		mPX = e.getX();
+		mPY = e.getY();
 	}
 
 	public void mouseReleased(MouseEvent e) {
@@ -53,7 +47,8 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 		
 		System.out.println(toggled);
 	}
-
+	
+	
 	public void mouseEntered(MouseEvent e) {
 		
 	}
@@ -63,8 +58,10 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	}
 
 	
+	// MOUSE MOVEMENT
 	public void mouseDragged(MouseEvent e) {
-		
+		mDX = e.getX();
+		mDY = e.getY();
 	}
 	
 	public void mouseMoved(MouseEvent e) {
@@ -72,6 +69,17 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 		mY = e.getY();
 	}
 	
+	
+	// Toggling boolean
+	public static boolean toggled;
+	private static boolean toggleable;
+	public static boolean toggleable(boolean toggleable) {
+		MouseManager.toggleable = toggleable;
+		return toggleable;
+	}
+	
+	
+	// GETTERS AND SETTERS
 	public int getX() {
 		return MouseManager.mX;
 	}
