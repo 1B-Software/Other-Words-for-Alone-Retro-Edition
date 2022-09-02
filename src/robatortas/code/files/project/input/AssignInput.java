@@ -11,15 +11,29 @@ public class AssignInput {
 	
 	public boolean f3;
 	
-	public int presses;
-	
+	/* 
+	 * Assigns all the keys to get them updated for each tick.
+	 * 
+	 * Called on InputManager's update method.
+	 */
 	public void assignKeys() { 
 		gamePlayKeys();
 		hotKeys();
 	}
 	
+	// checks if key is toggled
 	private boolean toggle;
+	// Tracks toggle time
 	private int toggled;
+	
+	/*
+	 * toggles keys.
+	 * 
+	 * The first boolean parameter (key) is the key that you want to toggle press.
+	 * 
+	 * The second boolean parameter (b) is the boolean variable you want to use as 
+	 * an indicator of the toggling of the action.
+	 */
 	public boolean toggle(boolean key, boolean b) {
 		if(key && !toggle) {
 			b = !b;
@@ -32,10 +46,17 @@ public class AssignInput {
 		return b;
 	}
 	
+	/* 
+	 * Checks if key is pressed with the inputted key
+	 * The boolean parameter is the key that you are wanting to check if it is pressed or not.
+	 * 
+	 * This will just return the boolean value making it in my perspective a bit cleaner.
+	 */
 	public boolean isKeyPressed(boolean key) {
 	    return key;
 	}
 	
+	// Assign core gameplay keys here!
 	private void gamePlayKeys() {
 		up = keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP];
 		down = keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN];
@@ -50,12 +71,8 @@ public class AssignInput {
 		e = keys[KeyEvent.VK_E];
 	}
 	
+	// Assign all hotkeys here!
 	private void hotKeys() {
 		f3 = keys[KeyEvent.VK_F3];
-	}
-	
-	// WILL USE THIS IN THE FUTURE!
-	public void assignMouse() {
-		
 	}
 }

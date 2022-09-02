@@ -52,9 +52,12 @@ public class RenderManager {
 		}
 	}
 	
-	public void renderBox(int xp, int yp, int w, int h, int color) {
-		xp -= xOffset;
-		yp -= yOffset;
+	public void renderBox(int xp, int yp, int w, int h, int color, boolean fixed) {
+		// fixed meaning that it is literally attached to the screen
+		if(!fixed) {
+			xp -= xOffset;
+			yp -= yOffset;
+		}
 		
 		for(int y = 0; y < h; y++) {
 			int ya = y+yp;

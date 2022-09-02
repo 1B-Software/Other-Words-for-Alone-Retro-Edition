@@ -17,18 +17,20 @@ public class InventoryMenu {
 	
 	public void render(RenderManager screen, GameManager game) {
 		screen.renderSpriteSheet(screen.width/5 + 6, screen.height/8, inventorySheet, 0, true);
-		MouseManager.LEFT = MouseManager.toggleable(true);
+		MouseManager.toggleable(true);
 		grid = MouseManager.toggled;
-		if(grid) hitBoxes(screen, game);
+		if(grid) clickBoxes(screen, game);
 	}
 	
-	public void hitBoxes(RenderManager screen, GameManager game) {
+	public void clickBoxes(RenderManager screen, GameManager game) {
 		// Big pocket
-//		new BigPocket().render(screen, game);
 		if(MouseManager.mX >= 329 && MouseManager.mX <= 406 && MouseManager.mY >= 222 && MouseManager.mY <= 344) {
 			new BigPocket().render(screen, game);
 		}
+		
+		// Medium Pocket
+		
 	}
 	
-	SpriteSheetManager inventorySheet = new SpriteSheetManager("/textures/spritesheet/gui/inventory/inventory_blue_book.png", 138, 163);
+	private static SpriteSheetManager inventorySheet = new SpriteSheetManager("/textures/spritesheet/gui/inventory/inventory_blue_book.png", 138, 163);
 }
