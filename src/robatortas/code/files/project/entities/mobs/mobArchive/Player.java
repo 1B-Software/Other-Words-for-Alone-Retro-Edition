@@ -21,7 +21,7 @@ public class Player extends MobAddons {
 	
 	public String name = "Robatortas";
 	
-	private InputManager input;
+	public InputManager input;
 	
 	public boolean punch = true;
 	public int attackTime, attackDir;

@@ -5,6 +5,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import javax.swing.SwingUtilities;
 
+// FINISH THIS CLASS TOMORROW
+
 public class MouseManager implements MouseListener, MouseMotionListener {
 	
 	// Mouse X & Y
@@ -27,6 +29,9 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 		
 	}
 	
+	/*
+	 * 
+	 */
 	public void mousePressed(MouseEvent e) {
 		mouseButton = e.getButton();
 		System.out.println(mouseButton);
@@ -59,11 +64,22 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 
 	
 	// MOUSE MOVEMENT
+	
+	/*
+	 * Checks if the mouse is being dragged.
+	 * 
+	 * Assigns mDX & mDY (Mouse Drag X & Y) to get their positions when it's dragged.
+	 */
 	public void mouseDragged(MouseEvent e) {
 		mDX = e.getX();
 		mDY = e.getY();
 	}
 	
+	/*
+	 * Checks if the mouse is being moved.
+	 * 
+	 * Assigns mX & mY (Mouse X & Y) to get their positions when it moves.
+	 */
 	public void mouseMoved(MouseEvent e) {
 		mX = e.getX();
 		mY = e.getY();
@@ -73,9 +89,14 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	// Toggling boolean
 	public static boolean toggled;
 	private static boolean toggleable;
-	public static boolean toggleable(boolean toggleable) {
+	/*
+	 * Makes the assigned mouse button toggleable.
+	 * 
+	 * Of course you don't want all buttons on all situations be toggleable.
+	 * So this is just to do that!
+	 */
+	public static void toggleable(boolean toggleable) {
 		MouseManager.toggleable = toggleable;
-		return toggleable;
 	}
 	
 	
