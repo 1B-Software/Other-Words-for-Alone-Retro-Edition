@@ -284,8 +284,12 @@ public class Player extends MobAddons {
 		}
 	}
 	
+	// Particle Effects for all type of states from the player
 	private void particleEffects() {
+		
+		// When moving
 		if(walking) {
+			
 			if(tickTime % 17 == 0 && !isSwimming) {
 				for(int i = 0; i < 3; i++) {
 					level.add(particle = new Particle(x, y));
@@ -342,6 +346,7 @@ public class Player extends MobAddons {
 					}
 				}
 			}
+			
 		}
 		
 		// Hurting

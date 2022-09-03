@@ -47,7 +47,7 @@ public class RenderMethod {
 	private int y;
 	int renderTime = 0;
 	
-	private GUI gui = new GUI(game);
+	private GUI gui = new GUI();
 	
 	public void renderGUI() {
 		// Chat

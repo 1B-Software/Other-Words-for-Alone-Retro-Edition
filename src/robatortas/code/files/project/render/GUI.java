@@ -17,8 +17,7 @@ public class GUI {
 	
 	private int x, y;
 	
-	public GUI(GameManager game) {
-		this.game = game;
+	public GUI() {
 	}
 	
 	public void update() {
@@ -45,11 +44,13 @@ public class GUI {
 			if(renderTime % 7 == 0 && y > game.yScroll-30) {
 				y -= (renderTime&1);
 			}
+			x = game.xScroll;
 		} else {
 			if(renderTime % 7 == 0 && y < game.yScroll) {
 				y += (renderTime&1);
-				if(y > game.yScroll-6) y = game.yScroll;
-			}
+			} 
+			x = game.xScroll;
+			if(y > game.yScroll-6) y = game.yScroll;
 		}
 		
 		renderBars(screen);
@@ -62,7 +63,7 @@ public class GUI {
 		int ya = 0;
 		int xs = 0;
 		int ys = 0;
-		
+			
 		if(LevelManager.player.health <= 3 || LevelManager.player.hurtTime > 0) {
 			ya = screen.random.nextInt(2);
 			xa = screen.random.nextInt(2);
@@ -73,18 +74,18 @@ public class GUI {
 		}
 		
 		// Health
-		screen.renderBox(((game.screen.width/3)- 2), y + 8, 84, 12, 0xff1F1F1F, true);
+		screen.renderBox((x + (game.screen.width/3) - 2), y + 8, 84, 12, 0xff1F1F1F, false);
 		for(int i = 0; i < LevelManager.player.health; i++) {
 			if(LevelManager.player.health <= 3) {if((game.tickTime / 15) % 2 == 0) continue;}
-			screen.renderBox((game.screen.width/3) + (i*8) + xa, y + 10 + ya, 8, 8, 0xffFF282C, true);
+			screen.renderBox((x + game.screen.width/3) + (i*8) + xa, (y + 10) + ya, 8, 8, 0xffFF282C, false);
 		}
-		if(LevelManager.player.hurtTime > 0 && LevelManager.player.health > 0) screen.renderBox((game.screen.width/3) + (8*Math.max(LevelManager.player.health, LevelManager.player.health)) + xa, y + 10 + ya, 8, 8, 0xffffffff, true);
+		if(LevelManager.player.hurtTime > 0 && LevelManager.player.health > 0) screen.renderBox((x + game.screen.width/3) + (8*Math.max(LevelManager.player.health, LevelManager.player.health)) + xa, y + 10 + ya, 8, 8, 0xffffffff, false);
 		
 		// Stamina
-		screen.renderBox((game.screen.width/3) - 2, y + 8 + 13, 84, 7, 0xff1F1F1F, true);
+		screen.renderBox((x + (game.screen.width/3) - 2), y + 8 + 13, 84, 7, 0xff1F1F1F, false);
 		for(int i = 0; i < LevelManager.player.stamina; i++) {
 			if(LevelManager.player.health <= 3) {if((game.tickTime / 15) % 2 == 0) continue;}
-			screen.renderBox((game.screen.width/3) + (i*8) + xs, y + 10 + ys + 13, 8, 3, 0xffFFB200, true);
+			screen.renderBox((x + game.screen.width/3) + (i*8) + xs, (y + 10) + ys + 13, 8, 3, 0xffFFB200, false);
 		}
 	}
 }
