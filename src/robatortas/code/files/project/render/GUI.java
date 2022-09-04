@@ -4,6 +4,7 @@ import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.menu.InventoryMenu;
+import robatortas.code.files.project.utils.Graphical;
 
 /*
  * This class takes care of all the Graphical User Interface stuff.
@@ -24,9 +25,13 @@ public class GUI {
 		
 	}
 	
+	Graphical graphical = new Graphical();
+	
 	public void render(RenderManager screen, GameManager game) {
 		this.game = game;
 		renderInv(screen);
+		
+		graphical.buildLine(5, 5, 10, 5, 5, 0, 10, 10, 0x0000ff, screen);
 	}
 	
 	// Render categories here!
