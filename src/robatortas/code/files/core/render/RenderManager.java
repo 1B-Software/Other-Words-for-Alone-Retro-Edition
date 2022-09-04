@@ -8,7 +8,21 @@ import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.utils.CrashHandler;
 import robatortas.code.files.project.archive.SheetArchive;
 
-// AKA: Screen
+/**<NEWLINE>
+ * RenderManager (AKA: Screen):
+ * <br>
+ * 
+ * Contains all methods that take care of rendering everything onto the screen.
+ * <br>
+ * After all pixels are stored on the RenderManager's PIXELS array
+ * <br>
+ * the GameManager class's 
+ * <br>
+ * ({@link robatortas.code.files.project.GameManager}) 
+ * <br>
+ * PIXELS array will get filled with RenderManager's PIXELS[]
+ */
+
 public class RenderManager {
 	
 	public int width, height;
@@ -87,7 +101,14 @@ public class RenderManager {
 		}
 	}
 	
-	// Rendering Sprites
+	/**<NEWLINE> 
+	 * Rendering Sprites
+	 * @param xp The x position
+	 * @param yp The y position
+	 * @param sprite The sprite that will be rendered
+	 * @param scale The size of the sprite
+	 * @param flip Flips the sprite; 1 flips it on x, 2 flips it on y, 3 flips it on x & y
+	 */
 	public void renderSprite(int xp, int yp, SpriteManager sprite, int scale, int flip) {
 		xp -= xOffset;
 		yp -= yOffset;
