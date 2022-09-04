@@ -25,7 +25,7 @@ public class GUI {
 		
 	}
 	
-	Graphical graphical = new Graphical();
+	private Graphical graphical = new Graphical();
 	
 	public void render(RenderManager screen, GameManager game) {
 		this.game = game;

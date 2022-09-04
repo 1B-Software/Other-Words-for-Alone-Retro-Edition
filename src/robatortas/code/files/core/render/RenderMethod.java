@@ -19,8 +19,21 @@ public class RenderMethod {
 		game.screen.clear(true);
 	}
 	
-	// Rendering
-
+	/**<NEWLINE>
+	 * RenderManager's render function
+	 * <br><br>
+	 * Contains all the code to render stuff.
+	 * 
+	 * This method gets called on the GameManager class 
+	 * <br>
+	 * ({@link robatortas.code.files.project.GameManager})
+	 * <br>
+	 * The GameManager's render method takes care of actually rendering everything
+	 * 
+	 * @param game The class that takes care of the general game handling
+	 * 
+	 * @see GameManager
+	 */
 	public void render(GameManager game) {
 		this.game = game;
 		this.screen = game.screen;
@@ -63,7 +76,11 @@ public class RenderMethod {
 		gui.render(screen, game);
 	}
 	
-	// Iterates through the pixels in the screen class and passes them to the buffer pixels.
+	/**<NEWLINE>
+	 * PixelIterations function
+	 * <br><br>
+	 *  Iterates through the pixels in the screen class and passes them to the buffer pixels.
+	 */
 	public void pixelIterations() {
 		for(int i = 0; i < game.pixels.length; i++) {	
 			game.pixels[i] = game.screen.pixels[i];
