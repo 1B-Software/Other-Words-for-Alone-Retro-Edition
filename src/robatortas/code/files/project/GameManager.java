@@ -18,13 +18,19 @@ import robatortas.code.files.core.utils.LoopingUtils;
 import robatortas.code.files.core.utils.ThreadUtils;
 import robatortas.code.files.project.settings.Constants;
 
-// CLASS IS ALMOST DONE (Meaning I will almost never touch it again)
-
+/**<NEWLINE>
+ * <b>GameManger class</b>
+ * <br><br>
+ * The core class, takes care of all the main OWFA handling.
+ * <br>
+ * All the code gets summed up here!
+ */
 public class GameManager extends Canvas implements Runnable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	public static boolean DEV_MODE = true;
+	private boolean DEBUG = false;
 	
 	// DECLARATIONS
 	
@@ -37,19 +43,26 @@ public class GameManager extends Canvas implements Runnable {
 	
 	protected BufferedImage image = new BufferedImage(Constants.WIDTH, Constants.HEIGHT, BufferedImage.TYPE_INT_RGB);
 	public int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
+	// Screen Declarations END
 	
 	// General Declarations
 	public LevelManager level;
 	
 	public MouseManager mouse;
 	
-	private boolean debug = false;
-	
 	public int xScroll, yScroll;
+	// General Declarations END
 	
 	// DECLARATIONS END
 	
-	// Main
+	/**<NEWLINE>
+	 * <b>GameManager function in GameManager class</b>
+	 * <br><br>
+	 * The main function of OWFA's game logic.
+	 * <br>
+	 * Initializes all the necessary code for the correct functioning of the game
+	 * 
+	 */
 	public GameManager() {
 		screen = new RenderManager(Constants.WIDTH, Constants.HEIGHT);
 		level = LevelManager.level;
@@ -66,17 +79,42 @@ public class GameManager extends Canvas implements Runnable {
 	// Threading and game loop
 	protected ThreadUtils threadUtils = new ThreadUtils();
 	
+	/**<NEWLINE>
+	 * <b>start function on the GameManager class</b>
+	 * <br><br>
+	 * Uses the ThreadUtils class {@link robatortas.code.files.core.utils.ThreadUtils}
+	 * <br>
+	 * to start and manage the thread startup.
+	 * 
+	 * @see ThreadUtils
+	 */
 	public synchronized void start() {
 		threadUtils.thread = new Thread(this, "Game");
 		threadUtils.start();
 	}
 	
+	/**<NEWLINE>
+	 * <b>stop function on the GameManager class</b>
+	 * <br><br>
+	 * Uses the ThreadUtils class {@link robatortas.code.files.core.utils.ThreadUtils}
+	 * <br>
+	 * to stop and join the thread killing.
+	 * 
+	 * @see ThreadUtils
+	 */
 	public synchronized void stop() {
 		threadUtils.stop();
 	}
 	
 	private LoopingUtils looping = new LoopingUtils();
 	
+	/**<NEWLINE>
+	 * <b>run function in GameManger class</b>
+	 * <br><br>
+	 * Uses the LoopingUtils class {@link robatortas.code.files.core.utils.LoopingUtils} to handle the main game loop
+	 * 
+	 * @see LoopingUtils
+	 */
 	public void run() {
 		while(threadUtils.running) {
 			String consolePrint = "ticks: " + looping.ticks + "  ||  " + "fps: " + looping.frames;
@@ -93,7 +131,6 @@ public class GameManager extends Canvas implements Runnable {
 	
 	
 	// Update
-	public int x, y;
 	public int tickTime = 0;
 	public void update() {
 		tickTime++;
@@ -101,7 +138,15 @@ public class GameManager extends Canvas implements Runnable {
 		generalPurposeKeys();
 	}
 	
-	// Render
+	/**<NEWLINE>
+	 * <b>render function in GameManager class</b>
+	 * <br><br>
+	 * The main render function that takes all the rendering done by the cpu
+	 * <br>
+	 * and passes it to the display buffer.
+	 * <br><br>
+	 * The core of the rendering, where all the rendering stuff should go to!
+	 */
 	public void render() {
 		BufferStrategy bs = getBufferStrategy();
 		if(bs == null) {
@@ -127,7 +172,7 @@ public class GameManager extends Canvas implements Runnable {
 		
 		Fonts font = new Fonts();
 		
-		if(debug) {
+		if(DEBUG) {
 			font.setSize(8*2);
 			font.draw("E:" + level.entities.size(),0, 5, false, screen);
 			font.draw("X:" + (LevelManager.player.x >> 4) + " Y:" + (LevelManager.player.y >> 4), 2, 5*3, false, screen);
@@ -144,9 +189,16 @@ public class GameManager extends Canvas implements Runnable {
 	}
 	
 	public void generalPurposeKeys() {
-		debug = level.input.toggle(level.input.f3, debug);
+		DEBUG = level.input.toggle(level.input.f3, DEBUG);
 	}
 	
+	/**<NEWLINE>
+	 * <b>getWindowSize function on the GameManager class</b>
+	 * <br><br>
+	 * Gets the game window size
+	 * 
+	 * @see java.awt.Dimension
+	 */
 	static java.awt.Dimension getWindowSize() {
 		return new java.awt.Dimension((int) (Constants.WIDTH * Constants.SCALE), (int) (Constants.HEIGHT * Constants.SCALE));
 	}
