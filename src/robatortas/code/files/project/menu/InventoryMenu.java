@@ -22,10 +22,11 @@ public class InventoryMenu {
 		if(grid) clickBoxes(screen, game);
 	}
 	
-	public void clickBoxes(RenderManager screen, GameManager game) {
+	public void clickBoxes(RenderManager screen, GameManager game) {screen.renderBox(10, 10, 10, 10, 0xff0000ff, true);
 		// Big pocket
 		if(MouseManager.mX >= 329 && MouseManager.mX <= 406 && MouseManager.mY >= 222 && MouseManager.mY <= 344) {
 			new BigPocket().render(screen, game);
+			screen.renderBox(10, 10, 10, 10, 0xff0000ff, true);
 		}
 		
 		// Medium Pocket

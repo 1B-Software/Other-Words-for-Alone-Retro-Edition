@@ -102,6 +102,8 @@ public class RenderManager {
 	}
 	
 	/**<NEWLINE> 
+	 * <b>renderSprite function on RenderManager class</b>
+	 * <br><br>
 	 * Rendering Sprites
 	 * @param xp The x position
 	 * @param yp The y position
@@ -278,20 +280,21 @@ public class RenderManager {
 		}
 	}
 	
+	@Deprecated
 	// PPS (Per Pixel Scaling) Algorithm
-		public int[] scale(int[] pixels, int width, int height, int scale) {
-			int[] scaledPixels = new int[width*height];
-			for(int y = 0; y < height; y++) {
-				for(int x = 0; x < width; x++) {
-					int color = 0;
-					
-					color = pixels[x + y * width];
-					int algorithm = ((x*scale)/width) + ((y*scale)/height) * width;
-					if(color != 0xffff00ff) scaledPixels[algorithm] = color;
-				}
+	public int[] scale(int[] pixels, int width, int height, int scale) {
+		int[] scaledPixels = new int[width*height];
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				int color = 0;
+				
+				color = pixels[x + y * width];
+				int algorithm = ((x*scale)/width) + ((y*scale)/height) * width;
+				if(color != 0xffff00ff) scaledPixels[algorithm] = color;
 			}
-			return scaledPixels;
 		}
+		return scaledPixels;
+	}
 	
 	// Sets these offsets to the values in the level rendering method
 	public void setOffset(int xOffset, int yOffset) {

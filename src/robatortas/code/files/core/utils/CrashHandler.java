@@ -31,13 +31,21 @@ public class CrashHandler implements Runnable {
 	
 	private JFrame frame;
 	
-	/*
+	/**<NEWLINE>
+	 * <b>handle on the CrashHandler class</b>
+	 * <br><br>
 	 * Handles all exceptions.
 	 * Only the player can close the game.
 	 * And a gui has been applied for the client to choose between closing the game and to keep playing.
 	 * 
 	 * Unexpected game closings only happen if they are fatal to the system resources,
 	 * for example memory overload or too many entities loaded.
+	 * 
+	 * @param throwable Checks for thowings that the JVM might do when encountering an issue.
+	 * @param info Specify the information about the possible crash report.
+	 * @param errorType The type of error.
+	 * 
+	 * @see ErrorType
 	 */
 	public void handle(Throwable throwable, String info, ErrorType errorType) {
 		System.out.println("\n");
@@ -135,15 +143,24 @@ public class CrashHandler implements Runnable {
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 	}
 	
-	// Exit Code Meanings: https://www.techiedelight.com/exit-codes-java-system-exit-method/
+	/**<NEWLINE>
+	 * <b>ErrorType enum on the CrashHandler class</b>
+	 * <br><br>
+	 * Used to give a small description about the error that occurred
+	 * <br><br>
+	 * UNHANDLED: Not handled by system.
+	 * <br>
+	 * UNEXPECTED: The error wasn't expected.
+	 * <br>
+	 * IRREDEEMABLE: Not able to be handled by system.
+	 * <br>
+	 * SERIOUS: Potential for crash, probably should exit the program.
+	 * <br>
+	 * HANDLED: The system handled the exception.
+	 * <br><br>
+	 * Exit Code Meanings: https://www.techiedelight.com/exit-codes-java-system-exit-method/ 
+	 */
 	public static enum ErrorType {
-		/*
-		 * UNHANDLED: Not handled by system.
-		 * UNEXPECTED: The error wasn't expected.
-		 * IRREDEEMABLE: Not able to be handled by system.
-		 * SERIOUS: Potential for crash, probably should exit the program.
-		 * HANDLED: The system handled the exception.
-		 */
 		
 		UNHANDLED("Unhandled Error: Not handled.", -3),
 		UNEXPECTED("Unexpected Error: This shouldn't happen.", -2),

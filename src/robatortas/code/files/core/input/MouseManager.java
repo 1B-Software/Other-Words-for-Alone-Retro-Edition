@@ -25,23 +25,19 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	public boolean MIDDLE;
 	public boolean RIGHT;
 	
+	@SuppressWarnings("unused")
 	public void mouseClicked(MouseEvent e) {
 		
 	}
 	
-	/*
-	 * 
+	/**<NEWLINE>
+	 * <b>mousePressed on the MouseManager class</b>
+	 * <br><br>
+	 * Gets the clicked mouse button and coordinates of where it clicked at.
 	 */
 	public void mousePressed(MouseEvent e) {
 		mouseButton = e.getButton();
 		System.out.println(mouseButton);
-		
-		if(SwingUtilities.isLeftMouseButton(e))
-		
-		if(e.getButton() == MouseEvent.BUTTON1) LEFT = true;
-		else LEFT = false;
-		
-		System.out.println(LEFT);
 		
 		mPX = e.getX();
 		mPY = e.getY();
@@ -57,11 +53,23 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	public void mouseEntered(MouseEvent e) {
 		
 	}
-
+	
 	public void mouseExited(MouseEvent e) {
 		
 	}
 
+	public static enum Buttons {
+		
+		LEFT("left"),
+		RIGHT("right"),
+		CENTER("center");
+		
+		public String type;
+		
+		Buttons(String type) {
+			this.type = type;
+		}
+	}
 	
 	// MOUSE MOVEMENT
 	
@@ -79,6 +87,7 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	
 	/**<NEWLINE>
 	 * <b>mouseMoved function on the MouseManager class</b>
+	 * <br><br>
 	 * Checks if the mouse is being moved.
 	 * 
 	 * Assigns mX & mY (Mouse X & Y) to get their positions when it moves.
