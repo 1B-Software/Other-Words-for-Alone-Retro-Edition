@@ -25,8 +25,7 @@ public class RenderMethod {
 	 * Contains all the code to render stuff.
 	 * 
 	 * This method gets called on the GameManager class 
-	 * <br>
-	 * ({@link robatortas.code.files.project.GameManager})
+	 * ({@link GameManager})
 	 * <br>
 	 * The GameManager's render method takes care of actually rendering everything
 	 * 
@@ -79,7 +78,9 @@ public class RenderMethod {
 	/**<NEWLINE>
 	 * PixelIterations function
 	 * <br><br>
-	 *  Iterates through the pixels in the screen class and passes them to the buffer pixels.
+	 * Iterates through the pixels in the screen class and passes them to the buffer pixels.
+	 * 
+	 * @see RenderManager
 	 */
 	public void pixelIterations() {
 		for(int i = 0; i < game.pixels.length; i++) {	

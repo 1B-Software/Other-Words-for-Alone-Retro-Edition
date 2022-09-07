@@ -6,7 +6,9 @@ import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.menu.InventoryMenu;
 import robatortas.code.files.project.utils.Graphical;
 
-/*
+/**<NEWLINE>
+ * <b>GUI class</b>
+ * <br><br>
  * This class takes care of all the Graphical User Interface stuff.
  * 
  * The rendering, handling and updates!
@@ -31,7 +33,7 @@ public class GUI {
 		this.game = game;
 		renderInv(screen);
 		
-		graphical.buildLine(5, 5, 10, 5, 5, 0, 10, 10, 0x0000ff, screen);
+//		graphical.buildLine(5, 5, 10, 5, 5, 0, 10, 10, 0x0000ff, screen);
 	}
 	
 	// Render categories here!
