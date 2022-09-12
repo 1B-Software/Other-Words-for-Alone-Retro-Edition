@@ -5,8 +5,8 @@ import java.util.List;
 
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.input.InputManager;
+import robatortas.code.files.core.input.MouseManager;
 import robatortas.code.files.core.level.tiles.TileManager;
-import robatortas.code.files.core.render.Fonts;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.archive.tileArchive.TileArchive;
@@ -23,9 +23,7 @@ public class LevelManager {
 	public RenderManager screen;
 	
 	public int[] tiles;
-	// TODO: FILL THIS WITH ID DATA OF THE LEVEL!
-	public int[] tilesId;
-	// :3
+	
 	// Lists
 	public List<EntityManager> entities = new LinkedList<EntityManager>();
 	public List<EntityManager>[] entitiesInTiles;
@@ -48,10 +46,13 @@ public class LevelManager {
 		
 	// Input Declarations
 	public InputManager input = new InputManager();
+	public MouseManager mouse = new MouseManager();
 	
 	public void update() {
 		WaterTile.tick();
 		input.update();
+		
+		mouse.update();
 		
 		for (int i = 0; i < entities.size(); i++) {
 			EntityManager e = entities.get(i);
@@ -110,7 +111,17 @@ public class LevelManager {
 		removeEntity(xp, yp, e);
 	}
 	
-	//Inserts Entities in entitiesInTile list (To know where entities are in tiles)
+	/**<NEWLINE>
+	 * <b>insertEntity function on LevelManager class</b>
+	 * <br><br>
+	 * Inserts Entities in the entitiesInTile list (To know where entities are in tiles).
+	 * <br>
+	 * Inserts a tile exactly on the inputed x & y coordinates
+	 * 
+	 * @param x Coordinate on the x axis
+	 * @param y Coordinate on the y axis
+	 * @param e EntityManager class
+	 */
 	public void insertEntity(int x, int y, EntityManager e) {
 		if(x < 0 || y < 0 || x >= width || y >= height) return;
 		entitiesInTiles[x+y*width].add(e);
@@ -131,6 +142,17 @@ public class LevelManager {
 		tiles[x+y*width] = color;
 	}
 	
+	/**<NEWLINE>
+	 * <b>getLevel function on LevelManager class</b>
+	 * <br><br>
+	 * Gets the tile located on the x & y value coordinates on the general level tiles!
+	 * <br><br>
+	 * This method is used A LOT for everything.
+	 * 
+	 * @param x Tile coordinate on the x axis
+	 * 
+	 * @param y Tile coordinate on the y axis
+	 */
 	public TileManager getLevel(int x, int y) {
 		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
 		if(tiles[x + y * width] == SpriteArchive.col_grass) return TileArchive.grass;
@@ -159,6 +181,17 @@ public class LevelManager {
 		return TileArchive.voidTile;
 	}
 	
+	/**<NEWLINE>
+	 * <b>getLevel function on LevelManager class</b>
+	 * <br><br>
+	 * Gets the tile located on the x & y value coordinates in the BACKGROUND layer!
+	 * <br><br>
+	 * This method is used A LOT for everything.
+	 * 
+	 * @param x Tile coordinate on the x axis
+	 * 
+	 * @param y Tile coordinate on the y axis
+	 */
 	public TileManager getPost(int x, int y) {
 		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
 		if(tiles[x + y * width] == SpriteArchive.col_flowerRed) return TileArchive.flowerRed;
@@ -168,6 +201,17 @@ public class LevelManager {
 		return TileArchive.voidTile;
 	}
 	
+	/**<NEWLINE>
+	 * <b>getLevel function on LevelManager class</b>
+	 * <br><br>
+	 * Gets the tile located on the x & y value coordinates in the FRONT layer!
+	 * <br><br>
+	 * This method is used A LOT for everything.
+	 * 
+	 * @param x Tile coordinate on the x axis
+	 * 
+	 * @param y Tile coordinate on the y axis
+	 */
 	public TileManager getFront(int x, int y) {
 		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
 		

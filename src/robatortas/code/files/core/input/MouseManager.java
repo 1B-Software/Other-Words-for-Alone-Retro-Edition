@@ -3,7 +3,6 @@ package robatortas.code.files.core.input;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import javax.swing.SwingUtilities;
 
 // FINISH THIS CLASS TOMORROW
 
@@ -19,11 +18,14 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	// Mouse Button
 	public static int mouseButton = 0;
 	
-	
 	// MOUSE BUTTON INPUTS
-	public static boolean LEFT;
-	public boolean MIDDLE;
-	public boolean RIGHT;
+	public static boolean LEFT = false;
+	public boolean MIDDLE = false;
+	public boolean RIGHT = false;
+	
+	public void update() {
+		
+	}
 	
 	@SuppressWarnings("unused")
 	public void mouseClicked(MouseEvent e) {
@@ -37,7 +39,6 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	 */
 	public void mousePressed(MouseEvent e) {
 		mouseButton = e.getButton();
-		System.out.println(mouseButton);
 		
 		mPX = e.getX();
 		mPY = e.getY();
@@ -46,7 +47,9 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	public void mouseReleased(MouseEvent e) {
 		if(toggleable) toggled = !toggled;
 		
-		System.out.println(toggled);
+		if(e.getButton() == MouseEvent.BUTTON1) LEFT = true;
+		if(e.getButton() == MouseEvent.BUTTON3) RIGHT = true;
+		if(e.getButton() == MouseEvent.BUTTON2) MIDDLE = true;
 	}
 	
 	
@@ -56,19 +59,6 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	
 	public void mouseExited(MouseEvent e) {
 		
-	}
-
-	public static enum Buttons {
-		
-		LEFT("left"),
-		RIGHT("right"),
-		CENTER("center");
-		
-		public String type;
-		
-		Buttons(String type) {
-			this.type = type;
-		}
 	}
 	
 	// MOUSE MOVEMENT
