@@ -19,7 +19,7 @@ public class InventoryMenu {
 		screen.renderSpriteSheet(screen.width/5 + 6, screen.height/8, inventorySheet, 0, true);
 		MouseManager.toggleable(true);
 		grid = MouseManager.toggled;
-		if(grid) clickBoxes(screen, game);
+		if(grid && MouseManager.LEFT) clickBoxes(screen, game);
 	}
 	
 	public void clickBoxes(RenderManager screen, GameManager game) {screen.renderBox(10, 10, 10, 10, 0xff0000ff, true);
@@ -28,6 +28,8 @@ public class InventoryMenu {
 			new BigPocket().render(screen, game);
 			screen.renderBox(10, 10, 10, 10, 0xff0000ff, true);
 		}
+		
+		
 		
 		// Medium Pocket
 		
