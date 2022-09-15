@@ -47,9 +47,21 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	public void mouseReleased(MouseEvent e) {
 		if(toggleable) toggled = !toggled;
 		
-		if(e.getButton() == MouseEvent.BUTTON1) LEFT = true;
-		if(e.getButton() == MouseEvent.BUTTON3) RIGHT = true;
-		if(e.getButton() == MouseEvent.BUTTON2) MIDDLE = true;
+		if(e.getButton() == MouseEvent.BUTTON1) {
+			LEFT = true;
+			RIGHT = false;
+			MIDDLE = false;
+		}
+		if(e.getButton() == MouseEvent.BUTTON3) {
+			LEFT = false;
+			RIGHT = true;
+			MIDDLE = false;
+		}
+		if(e.getButton() == MouseEvent.BUTTON2) {
+			LEFT = false;
+			RIGHT = false;
+			MIDDLE = true;
+		}
 	}
 	
 	

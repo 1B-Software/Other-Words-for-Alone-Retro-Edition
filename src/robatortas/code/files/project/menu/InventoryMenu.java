@@ -29,8 +29,6 @@ public class InventoryMenu {
 			screen.renderBox(10, 10, 10, 10, 0xff0000ff, true);
 		}
 		
-		
-		
 		// Medium Pocket
 		
 	}
