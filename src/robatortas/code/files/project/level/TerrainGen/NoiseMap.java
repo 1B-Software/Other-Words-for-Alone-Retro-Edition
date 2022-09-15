@@ -185,7 +185,7 @@ public class NoiseMap {
 			System.err.println("Noise Map unsuccessful :(");
 		}
 		
-		String path = "res/textures/level/level/level.png";
+		String path = "res/textures/level/level.png";
 		String dir = "res/textures/level/level";
 		
 		try {

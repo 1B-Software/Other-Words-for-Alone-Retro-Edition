@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import robatortas.code.files.project.level.TerrainGen.NoiseMap;
 import robatortas.code.files.project.settings.Constants;
 
 public class DisplayManager {
