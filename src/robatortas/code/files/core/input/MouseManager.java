@@ -24,7 +24,7 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	public boolean RIGHT = false;
 	
 	public void update() {
-		
+		System.out.println(LEFT);
 	}
 	
 	@SuppressWarnings("unused")
@@ -40,28 +40,21 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	public void mousePressed(MouseEvent e) {
 		mouseButton = e.getButton();
 		
+		if(mouseButton == 1) LEFT = !LEFT;
+		if(mouseButton == 3) RIGHT = !RIGHT;
+		if(mouseButton == 2) MIDDLE = !MIDDLE;
+		
+		
 		mPX = e.getX();
 		mPY = e.getY();
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		if(toggleable) toggled = !toggled;
+//		if(toggleable) toggled = !toggled;
 		
-		if(e.getButton() == MouseEvent.BUTTON1) {
-			LEFT = true;
-			RIGHT = false;
-			MIDDLE = false;
-		}
-		if(e.getButton() == MouseEvent.BUTTON3) {
-			LEFT = false;
-			RIGHT = true;
-			MIDDLE = false;
-		}
-		if(e.getButton() == MouseEvent.BUTTON2) {
-			LEFT = false;
-			RIGHT = false;
-			MIDDLE = true;
-		}
+		LEFT = false;
+		RIGHT = false;
+		MIDDLE = false;
 	}
 	
 	
@@ -113,9 +106,9 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	 * 
 	 * @param toggleable If the button is toggleable
 	 */
-	public static void toggleable(boolean toggleable) {
-		MouseManager.toggleable = toggleable;
-	}
+//	public static boolean toggleable(boolean toggleable) {
+//		return MouseManager.toggleable = toggleable;
+//	}
 	
 	
 	// GETTERS AND SETTERS
