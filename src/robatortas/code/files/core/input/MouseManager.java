@@ -11,12 +11,14 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	// Mouse X & Y
 	public static int mX, mY;
 	// Mouse Pressed X & Y
-	public static int mPX, mPY;
+	public int mPX, mPY;
 	// Mouse Drag X & Y
-	public static int mDX, mDY;
+	public int mDX, mDY;
 	
 	// Mouse Button
 	public static int mouseButton = 0;
+	
+	public boolean released = false;
 	
 	// MOUSE BUTTON INPUTS
 	public static boolean LEFT = false;
@@ -24,7 +26,7 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	public boolean RIGHT = false;
 	
 	public void update() {
-		System.out.println(LEFT);
+		System.out.println(released);
 	}
 	
 	@SuppressWarnings("unused")
@@ -44,6 +46,7 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 		if(mouseButton == 3) RIGHT = !RIGHT;
 		if(mouseButton == 2) MIDDLE = !MIDDLE;
 		
+		released = false;
 		
 		mPX = e.getX();
 		mPY = e.getY();
@@ -52,16 +55,19 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	public void mouseReleased(MouseEvent e) {
 //		if(toggleable) toggled = !toggled;
 		
+		released = true;
+		
 		LEFT = false;
 		RIGHT = false;
 		MIDDLE = false;
 	}
 	
-	
+	@SuppressWarnings("unused")
 	public void mouseEntered(MouseEvent e) {
 		
 	}
 	
+	@SuppressWarnings("unused")
 	public void mouseExited(MouseEvent e) {
 		
 	}
@@ -94,8 +100,8 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	
 	
 	// Toggling boolean
-	public static boolean toggled;
-	private static boolean toggleable;
+	public int toggleTime = 0;
+	public boolean toggle;
 	/**<NEWLINE>
 	 * <b>toggleable function on the MouseManager class</b>
 	 * <br><br>
@@ -106,9 +112,17 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	 * 
 	 * @param toggleable If the button is toggleable
 	 */
-//	public static boolean toggleable(boolean toggleable) {
-//		return MouseManager.toggleable = toggleable;
-//	}
+	public boolean toggle(boolean button, boolean bool) {
+		if(button && !toggle && !released) {
+			bool = !bool;
+			toggle = true;
+			toggleTime++;
+		} else if (button && toggle) {
+			toggle = false;
+		}
+//		if(toggleTime > ) System.out.println("TOGGLE!");
+		return bool;
+	}
 	
 	
 	// GETTERS AND SETTERS
