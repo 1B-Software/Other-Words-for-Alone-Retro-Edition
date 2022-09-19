@@ -60,7 +60,7 @@ public class Butterfly extends MobAddons {
 		
 		for(int yy = sprite.y; yy < sprite.height; yy++) {
 			for(int xx = sprite.y; xx < sprite.width; xx++) {
-				if(sprite.pixels[xx+yy*sprite.width] == 0xff7F7F7F) sprite.pixels[xx+yy*sprite.width] = randColor;
+				if(sprite.pixels[xx+yy*sprite.width] == 0xff7F7F7F) sprite.pixels[xx+yy*sprite.width] = 0xff << 24 | randColor;
 			}
 		}
 		

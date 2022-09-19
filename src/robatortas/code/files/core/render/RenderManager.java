@@ -251,8 +251,10 @@ public class RenderManager {
 				if(xa < 0) xa = 0;
 				int colorPix = sprite.pixels[xs + ys * sprite.width];
 				if (colorPix != 0xffff00ff) {
-					if(color == 0) if(scale <= sprite.width) pixels[(((xa*scale)/sprite.width)+(sprite.width-scale))+(((ya*scale)/sprite.height)+(sprite.height-scale))*width] = colorPix;
-					else if(scale <= sprite.width) pixels[(((xa*scale)/sprite.width)+(sprite.width-scale))+(((ya*scale)/sprite.height)+(sprite.height-scale))*width] = color;
+//					if(color == 0) if(scale <= sprite.width) pixels[(((xa*scale)/sprite.width)+(sprite.width-scale))+(((ya*scale)/sprite.height)+(sprite.height-scale))*width] = colorPix;
+//					else if(scale <= sprite.width) pixels[(((xa*scale)/sprite.width)+(sprite.width-scale))+(((ya*scale)/sprite.height)+(sprite.height-scale))*width] = color;
+					if(color != 0) pixels[xa+ya*width] = color;
+					else pixels[xa+ya*width] = 0xff000000;
 				}
 			}
 		}

@@ -1,12 +1,15 @@
 package robatortas.code.files.project;
 
+import java.awt.AlphaComposite;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
+import javax.naming.InsufficientResourcesException;
 import javax.swing.JFrame;
 
 import robatortas.code.files.core.input.MouseManager;
@@ -15,6 +18,7 @@ import robatortas.code.files.core.render.Fonts;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.RenderMethod;
 import robatortas.code.files.core.utils.LoopingUtils;
+import robatortas.code.files.core.utils.ResourceUtils;
 import robatortas.code.files.core.utils.ThreadUtils;
 import robatortas.code.files.project.settings.Constants;
 
@@ -31,29 +35,29 @@ public class GameManager extends Canvas implements Runnable {
 	
 	public static boolean DEV_MODE = true;
 	private boolean DEBUG = false;
+
 	
-	// DECLARATIONS
-	
-	// Screen declarations
 	public DisplayManager display;
 	public JFrame frame = new JFrame();
 
+	
 	public RenderManager screen;
 	private RenderMethod renderMethod = new RenderMethod();
 	
-	protected BufferedImage image = new BufferedImage(Constants.WIDTH, Constants.HEIGHT, BufferedImage.TYPE_INT_RGB);
+	protected BufferedImage image = new BufferedImage(Constants.WIDTH, Constants.HEIGHT, BufferedImage.TYPE_INT_ARGB);
 	public int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
-	// Screen Declarations END
 	
-	// General Declarations
+	
 	public LevelManager level;
 	
 	public MouseManager mouse;
 	
 	public int xScroll, yScroll;
-	// General Declarations END
 	
-	// DECLARATIONS END
+	
+	public ResourceUtils resources = new ResourceUtils();
+	public int memory = 0;
+	
 	
 	/**<NEWLINE>
 	 * <b>GameManager function in GameManager class</b>
@@ -163,7 +167,8 @@ public class GameManager extends Canvas implements Runnable {
 		
 		int xo = (getWidth() - w) / 2;
 		int yo = (getHeight() - h) / 2;
-		
+
+//		g.setComposite(opacity(0.01f));
 		g.drawImage(image, xo, yo, w, h, null);
 		
 		renderMethod.render(this);
@@ -171,13 +176,16 @@ public class GameManager extends Canvas implements Runnable {
 		yScroll = RenderMethod.yScroll;
 		
 		Fonts font = new Fonts();
-		
+
+		font.setSize(8*2);
 		if(DEBUG) {
-			font.setSize(8*2);
 			font.draw("E:" + level.entities.size(),0, 5, false, screen);
 			font.draw("X:" + (LevelManager.player.x >> 4) + " Y:" + (LevelManager.player.y >> 4), 2, 5*3, false, screen);
 			font.draw("Dev_Mode:" + DEV_MODE, 2, 5*5, false, screen);
 		}
+		
+		font.setColor(0x6f0000ff);
+		font.draw("MEMORY: " + this.memory, 2, 5*5, false, screen);
 		
 		// TODO: LATER!!!!
 //		screen.debug(40, 40, 16, 16, 0xffff00ff, 1);
@@ -186,6 +194,11 @@ public class GameManager extends Canvas implements Runnable {
 		
 		g.dispose();
 		bs.show();
+	}
+	
+	private Composite opacity(float alpha) {
+		int type = AlphaComposite.SRC_OVER;
+		return (AlphaComposite.getInstance(type, alpha));
 	}
 	
 	public void generalPurposeKeys() {
