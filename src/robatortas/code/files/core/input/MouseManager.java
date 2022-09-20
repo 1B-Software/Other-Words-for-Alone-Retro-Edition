@@ -26,7 +26,7 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	public boolean RIGHT = false;
 	
 	public void update() {
-		System.out.println(released);
+//		System.out.println(released);
 	}
 	
 	@SuppressWarnings("unused")

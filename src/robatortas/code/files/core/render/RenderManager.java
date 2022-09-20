@@ -1,12 +1,12 @@
 package robatortas.code.files.core.render;
 
+import java.awt.image.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 import robatortas.code.files.core.entities.Mob;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.TileManager;
-import robatortas.code.files.core.utils.CrashHandler;
-import robatortas.code.files.project.archive.SheetArchive;
 
 /**<NEWLINE>
  * RenderManager (AKA: Screen):
@@ -31,6 +31,8 @@ public class RenderManager {
 	public int xOffset, yOffset;
 	
 	public Random random = new Random();
+	
+	public ArrayList<BufferedImage> buffers = new ArrayList<BufferedImage>();
 	
 	public RenderManager(int width, int height) {
 		this.width = width;
@@ -135,6 +137,8 @@ public class RenderManager {
 				if(color != 0xffff00ff && scale <= sprite.width) pixels[(xa + (sprite.width-scale))+(ya + (sprite.height-scale))*width] = color;
 			}
 		}
+		
+		buffers.add(new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB));
 	}
 	
 	public void renderSpriteSheet(int xp, int yp, SpriteSheetManager sheet, int flip, boolean fixed) {
@@ -255,6 +259,8 @@ public class RenderManager {
 //					else if(scale <= sprite.width) pixels[(((xa*scale)/sprite.width)+(sprite.width-scale))+(((ya*scale)/sprite.height)+(sprite.height-scale))*width] = color;
 					if(color != 0) pixels[xa+ya*width] = color;
 					else pixels[xa+ya*width] = 0xff000000;
+					
+					
 				}
 			}
 		}
