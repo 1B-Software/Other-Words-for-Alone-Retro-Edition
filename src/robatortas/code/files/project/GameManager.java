@@ -9,7 +9,6 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
-import javax.naming.InsufficientResourcesException;
 import javax.swing.JFrame;
 
 import robatortas.code.files.core.input.MouseManager;
@@ -17,6 +16,7 @@ import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.Fonts;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.RenderMethod;
+import robatortas.code.files.core.utils.Function;
 import robatortas.code.files.core.utils.LoopingUtils;
 import robatortas.code.files.core.utils.ResourceUtils;
 import robatortas.code.files.core.utils.ThreadUtils;
@@ -56,7 +56,6 @@ public class GameManager extends Canvas implements Runnable {
 	
 	
 	public ResourceUtils resources = new ResourceUtils();
-	public int memory = 0;
 	
 	
 	/**<NEWLINE>
@@ -124,7 +123,11 @@ public class GameManager extends Canvas implements Runnable {
 			String consolePrint = "ticks: " + looping.ticks + "  ||  " + "fps: " + looping.frames;
 			looping.whileRunning();
 			looping.deltaLoop(this);
-			looping.timerLoop(consolePrint, this);
+			looping.timerLoop(consolePrint, this, () -> new Function() {
+				public void supplier() {
+					resources.memory = resources.getMemory();
+				}
+			});
 			
 			// Rendering
 			looping.frames++;
@@ -185,7 +188,8 @@ public class GameManager extends Canvas implements Runnable {
 		}
 		
 		font.setColor(0x6f0000ff);
-		font.draw("MEMORY: " + this.memory, 2, 5*5, false, screen);
+		
+		font.draw("MEMORY: " + resources.memory, 2, 5*5, false, screen);
 		
 		// TODO: LATER!!!!
 //		screen.debug(40, 40, 16, 16, 0xffff00ff, 1);
