@@ -81,7 +81,7 @@ public class ItemEntity extends EntityManager {
 						int g = (color & 0xff00) >> 8;
 						int b = (color & 0xff);
 						int shade = (random.nextInt(5 + 30));
-						int shadedColor = (r - shade) << 16 | (g - shade) << 8 | (b - shade);					
+						int shadedColor = 0xff << 24 | (r - shade) << 16 | (g - shade) << 8 | (b - shade);					
 						particle.setColor(shadedColor);
 					}
 				}
