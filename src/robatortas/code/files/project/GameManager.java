@@ -35,7 +35,7 @@ public class GameManager extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 	
 	public static boolean DEV_MODE = true;
-	private boolean DEBUG = false;
+	public boolean DEBUG = false;
 
 	
 	public DisplayManager display;
@@ -127,6 +127,8 @@ public class GameManager extends Canvas implements Runnable {
 			
 			looping.timerLoop(consolePrint, this, () -> {
 				resources.memory = resources.getMemory();
+				resources.processors = resources.getProcessors();
+				resources.maxMemory = resources.getMaxMemory();
 			});
 			
 			// Rendering
@@ -177,19 +179,6 @@ public class GameManager extends Canvas implements Runnable {
 		renderMethod.render(this);
 		xScroll = RenderMethod.xScroll;
 		yScroll = RenderMethod.yScroll;
-		
-		Fonts font = new Fonts();
-
-		font.setSize(8*2);
-		if(DEBUG) {
-			font.draw("E:" + level.entities.size(),0, 5, false, screen);
-			font.draw("X:" + (LevelManager.player.x >> 4) + " Y:" + (LevelManager.player.y >> 4), 2, 5*3, false, screen);
-			font.draw("Dev_Mode:" + DEV_MODE, 2, 5*5, false, screen);
-		}
-		
-		font.setColor(0x6f0000ff);
-		
-		font.draw("MEMORY: " + resources.memory, 2, 5*5, false, screen);
 		
 		// TODO: LATER!!!!
 //		screen.debug(40, 40, 16, 16, 0xffff00ff, 1);
