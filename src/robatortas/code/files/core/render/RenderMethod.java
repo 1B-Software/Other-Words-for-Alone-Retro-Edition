@@ -9,8 +9,11 @@ import robatortas.code.files.project.settings.Constants;
 public class RenderMethod {
 	
 	private GameManager game;
+	private LevelManager level;
 	
 	private RenderManager screen;
+	
+	private Fonts font = new Fonts();
 	
 	public static int xScroll, yScroll;
 	
@@ -35,6 +38,7 @@ public class RenderMethod {
 	 */
 	public void render(GameManager game) {
 		this.game = game;
+		this.level = game.level;
 		this.screen = game.screen;
 		
 		xScroll = (int) (LevelManager.player.x - Constants.WIDTH / 2 + 3) ;
@@ -43,15 +47,16 @@ public class RenderMethod {
 		pixelIterations();
 		generalSettings();
 		
-		if(xScroll > game.level.width * 16 - game.screen.width) xScroll = game.level.width * 16 - game.screen.width + 2;
-		if(xScroll < game.level.width - game.screen.width / 7) xScroll = game.level.height * 8 - game.screen.width - 9;
+		if(xScroll > level.width * 16 - screen.width) xScroll = level.width * 16 - screen.width + 2;
+		if(xScroll < level.width - screen.width / 7) xScroll = level.height * 8 - screen.width - 9;
 		
-		if(yScroll > game.level.height * 16 - game.screen.height + 6) yScroll = game.level.width * 16 - game.screen.height + 6;
-		if(yScroll < game.level.height - game.screen.height/6) yScroll = game.level.height * 6 - game.screen.height + 22;
+		if(yScroll > level.height * 16 - screen.height + 6) yScroll = level.width * 16 - screen.height + 6;
+		if(yScroll < level.height - screen.height/6) yScroll = level.height * 6 - screen.height + 22;
 		
-		game.level.render(xScroll, yScroll, game.screen);
+		level.render(xScroll, yScroll, screen);
 		
 		renderGUI();
+		renderDebug();
 	}
 
 	private boolean chat, inv;
@@ -73,6 +78,24 @@ public class RenderMethod {
 //		}
 		
 		gui.render(screen, game);
+	}
+	int debugColor = 0x6f0000ff;
+	public void renderDebug() {
+
+		font.setSize(8*2);
+		if(game.DEBUG) {
+			font.draw("E:" + level.entities.size(),0, 5, false, screen);
+			font.draw("X:" + (LevelManager.player.x >> 4) + " Y:" + (LevelManager.player.y >> 4), 2, 5*3, false, screen);
+			font.draw("Dev_Mode:" + GameManager.DEV_MODE, 2, 5*5, false, screen);
+			
+			font.setColor(0xffdfef00);
+			font.draw("\"DEV_TOOLS\"", 0, 5*13, false, screen);
+			font.setColor(0x6f << 24 | ((debugColor & 0x00ff0000) >> 16) + game.resources.memory/2 << 16 | 0x00 << 8 | 0xff);
+			font.draw("MEMORY: " + game.resources.memory + " mb", 0, 5*15, false, screen);
+			font.draw("MAX_MEMORY: " + game.resources.maxMemory + " mb", 0, 5*17, false, screen);
+			font.setColor(debugColor);
+			font.draw("PROCESSORS: " + game.resources.processors, 1, 5*19, false, screen);
+		}
 	}
 	
 	/**<NEWLINE>

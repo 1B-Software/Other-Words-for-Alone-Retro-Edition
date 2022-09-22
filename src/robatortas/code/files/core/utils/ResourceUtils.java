@@ -9,7 +9,9 @@ public class ResourceUtils {
 	/**<NEWLINE>
 	 * <b>getMaxMemory function in ResourceUtils class</b>
 	 * <br><br>
+	 * Gets the maximum amount of memory the JVM will attempt to use.
 	 * 
+	 * @see Runtime
 	 */
 	public int getMaxMemory() {
 		this.maxMemory = (int) Runtime.getRuntime().maxMemory()/1024;
@@ -17,7 +19,7 @@ public class ResourceUtils {
 	}
 	
 	public int getMemory() {
-		this.memory = (int) ((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024);
+		this.memory = (int) (((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024) / 1024);
 		return this.memory;
 	}
 	
