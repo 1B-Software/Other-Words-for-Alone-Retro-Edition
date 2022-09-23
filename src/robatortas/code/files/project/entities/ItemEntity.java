@@ -81,7 +81,7 @@ public class ItemEntity extends EntityManager {
 						int g = (color & 0xff00) >> 8;
 						int b = (color & 0xff);
 						int shade = (random.nextInt(5 + 30));
-						int shadedColor = 0xff << 24 | (r - shade) << 16 | (g - shade) << 8 | (b - shade);					
+						int shadedColor = (r - shade) << 16 | (g - shade) << 8 | (b - shade);					
 						particle.setColor(shadedColor);
 					}
 				}
@@ -90,7 +90,7 @@ public class ItemEntity extends EntityManager {
 		
 		int shade = 0;
 		shade += ((int)physicsEngine.calculations.z0 * 2) - 30;
-		if(shade <= 1) screen.renderColorRelativeToLocation(x - 10, (y + 1) - 10, item.getSprite(), -shade, 0, level);
+		if(shade <= 1) screen.renderColorRelativeToLocation(x - 10, (y + 1) - 10, item.getSprite(), 0xff << 16| -shade, 0, level);
 		screen.renderSprite(x - 10, ((y + yy) - (int) physicsEngine.calculations.z0) - 10, item.getSprite(), item.getSprite().SIZE, 0);
 
 	}

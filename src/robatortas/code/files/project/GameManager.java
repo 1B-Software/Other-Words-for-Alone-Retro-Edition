@@ -68,7 +68,7 @@ public class GameManager extends Canvas implements Runnable {
 	public GameManager() {
 		screen = new RenderManager(Constants.WIDTH, Constants.HEIGHT);
 		level = LevelManager.level;
-		display =  new DisplayManager(Constants.WIDTH, Constants.HEIGHT, Constants.TITLE, this);
+		display = new DisplayManager(Constants.WIDTH, Constants.HEIGHT, Constants.TITLE, this);
 		
 		mouse = new MouseManager();
 		
@@ -177,11 +177,6 @@ public class GameManager extends Canvas implements Runnable {
 		renderMethod.render(this);
 		xScroll = RenderMethod.xScroll;
 		yScroll = RenderMethod.yScroll;
-		
-		// TODO: LATER!!!!
-//		screen.debug(40, 40, 16, 16, 0xffff00ff, 1);
-		
-//		screen.renderBox(font.getX() + xScroll, font.getY()-19 + yScroll, 16, 16, 0xffff0000);
 		
 		g.dispose();
 		bs.show();
