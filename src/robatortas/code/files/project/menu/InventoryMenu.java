@@ -11,6 +11,7 @@ public class InventoryMenu {
 	public static SpriteSheetManager gui = new SpriteSheetManager("/textures/spritesheet/gui/inventory/medium_pocket_anim.png", 105, 99);
 	
 	public void update() {
+		
 	}
 	
 	boolean grid = false;

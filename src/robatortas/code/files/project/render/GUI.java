@@ -20,7 +20,8 @@ public class GUI {
 	
 	private int x, y;
 	
-	public GUI() {
+	public GUI(GameManager game) {
+		this.game = game;
 	}
 	
 	public void update() {

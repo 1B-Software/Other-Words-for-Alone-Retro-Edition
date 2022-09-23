@@ -16,8 +16,6 @@ import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.Fonts;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.RenderMethod;
-import robatortas.code.files.core.utils.CustFunc;
-import robatortas.code.files.core.utils.Function;
 import robatortas.code.files.core.utils.LoopingUtils;
 import robatortas.code.files.core.utils.ResourceUtils;
 import robatortas.code.files.core.utils.ThreadUtils;

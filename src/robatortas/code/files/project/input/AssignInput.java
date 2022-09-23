@@ -21,12 +21,13 @@ public class AssignInput {
 	public void assignKeys() { 
 		gamePlayKeys();
 		hotKeys();
+		
+//		System.out.println(e);
 	}
 	
 	// checks if key is toggled
-	private boolean toggle;
+	protected boolean toggle = false;
 	// Tracks toggle time
-	private int toggled;
 	
 	/*
 	 * toggles keys.
@@ -37,14 +38,12 @@ public class AssignInput {
 	 * an indicator of the toggling of the action.
 	 */
 	public boolean toggle(boolean key, boolean b) {
-		if(key && !toggle) {
+		if(key && !toggle && !InputManager.released) {
 			b = !b;
 			toggle = true;
-		} else if (key && toggle && InputManager.released) {
+		} else if(!key && toggle && InputManager.released) {
 			toggle = false;
 		}
-		if(toggle) toggled++;
-		else toggled = 0;
 		return b;
 	}
 	
