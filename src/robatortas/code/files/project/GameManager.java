@@ -115,7 +115,7 @@ public class GameManager extends Canvas implements Runnable {
 	/**<NEWLINE>
 	 * <b>run function in GameManger class</b>
 	 * <br><br>
-	 * Uses the LoopingUtils class {@link robatortas.code.files.core.utils.LoopingUtils} to handle the main game loop
+	 * Uses the LoopingUtils class {@link LoopingUtils} to handle the main game loop
 	 * 
 	 * @see LoopingUtils
 	 */

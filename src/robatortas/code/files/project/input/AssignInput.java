@@ -2,6 +2,8 @@ package robatortas.code.files.project.input;
 
 import java.awt.event.KeyEvent;
 
+import robatortas.code.files.core.input.InputManager;
+
 // To assign inputs like movement and interaction keys, also for mouse input.
 public class AssignInput {
 	public boolean[] keys = new boolean[120];
@@ -38,8 +40,8 @@ public class AssignInput {
 		if(key && !toggle) {
 			b = !b;
 			toggle = true;
-		} else if (key && toggle) {
-				if(toggled > 1000) toggle = false;
+		} else if (key && toggle && InputManager.released) {
+			toggle = false;
 		}
 		if(toggle) toggled++;
 		else toggled = 0;
