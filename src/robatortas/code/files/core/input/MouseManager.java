@@ -53,8 +53,6 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	}
 
 	public void mouseReleased(MouseEvent e) {
-//		if(toggleable) toggled = !toggled;
-		
 		released = true;
 		
 		LEFT = false;
@@ -100,7 +98,6 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	
 	
 	// Toggling boolean
-	public int toggleTime = 0;
 	public boolean toggle;
 	/**<NEWLINE>
 	 * <b>toggleable function on the MouseManager class</b>
@@ -116,11 +113,9 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 		if(button && !toggle && !released) {
 			bool = !bool;
 			toggle = true;
-			toggleTime++;
-		} else if (button && toggle) {
+		} else if (!button && toggle && released) {
 			toggle = false;
 		}
-//		if(toggleTime > ) System.out.println("TOGGLE!");
 		return bool;
 	}
 	
