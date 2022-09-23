@@ -14,6 +14,7 @@ public class RenderMethod {
 	private RenderManager screen;
 	
 	private Fonts font = new Fonts();
+	private GUI gui = new GUI(game);
 	
 	public static int xScroll, yScroll;
 	
@@ -59,29 +60,17 @@ public class RenderMethod {
 		renderDebug();
 	}
 
-	private boolean chat, inv;
-	private int x;
-	private int y;
-	int renderTime = 0;
-	
-	private GUI gui = new GUI();
+	private boolean chat;
 	
 	public void renderGUI() {
 		// Chat
 		chat = game.level.input.toggle(game.level.input.c, chat);
 		
-//		if(chat) {
-//			String input = Arrays.toString(KeyBoard.input);
-//			screen.renderBox(x, y + (screen.width-76), 100, 40, 0xff3C1D13, false);
-//			font.setSize(2);
-//			font.draw(input, x, y + (screen.width-76), true, screen);
-//		}
-		
 		gui.render(screen, game);
 	}
+	
 	int debugColor = 0x6f0000ff;
 	public void renderDebug() {
-
 		font.setSize(8*2);
 		if(game.DEBUG) {
 			font.draw("E:" + level.entities.size(),0, 5, false, screen);
