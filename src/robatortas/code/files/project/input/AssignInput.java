@@ -21,14 +21,10 @@ public class AssignInput {
 	public void assignKeys() { 
 		gamePlayKeys();
 		hotKeys();
-		
-//		System.out.println(e);
 	}
 	
 	// checks if key is toggled
 	protected boolean toggle = false;
-	// Tracks toggle time
-	
 	/*
 	 * toggles keys.
 	 * 
