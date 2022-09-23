@@ -9,13 +9,17 @@ public class InputManager extends AssignInput implements KeyListener {
 	
 	public static String input;
 	
+	public static boolean released = false;
+	
 	// For updating input
 	public void update() {
 		assignKeys();
+//		System.out.println(released);
 	}
 	
 	public void keyPressed(KeyEvent e) {
 		try {
+			released = false;
 			input = e.toString();
 			keys[e.getKeyCode()] = true;
 		}catch(ArrayIndexOutOfBoundsException ee) {
@@ -24,7 +28,8 @@ public class InputManager extends AssignInput implements KeyListener {
 	}
 	
 	public void keyReleased(KeyEvent e) {
-		try{
+		try {
+			released = true;
 			keys[e.getKeyCode()] = false;
 		}catch(ArrayIndexOutOfBoundsException ee) {
 			// DO NOTHING!
