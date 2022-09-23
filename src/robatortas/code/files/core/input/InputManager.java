@@ -12,7 +12,6 @@ public class InputManager extends AssignInput implements KeyListener {
 	// For updating input
 	public void update() {
 		assignKeys();
-		System.out.println(released);
 	}
 	
 	public void keyPressed(KeyEvent e) {

@@ -177,7 +177,7 @@ public class RenderManager {
 				int color = mob.getSprite().pixels[xs + ys * sprite.width];
 				if(color != 0xffff00ff) {
 					pixels[xa+ya*width] = color;
-					if(mob.hurtTime > 0) pixels[xa+ya*width] = random.nextInt(0xffffff);
+					if(mob.hurtTime > 0) pixels[xa+ya*width] = 0xff << 24 | random.nextInt(0xffffff);
 				}
 			}
 		}
