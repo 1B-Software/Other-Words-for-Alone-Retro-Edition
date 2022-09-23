@@ -13,12 +13,11 @@ public class InputManager extends AssignInput implements KeyListener {
 	public void update() {
 		assignKeys();
 		System.out.println(released);
-		released = false;
 	}
 	
 	public void keyPressed(KeyEvent e) {
 		try {
-//			released = false;
+			released = false;
 			keys[e.getKeyCode()] = true;
 		}catch(ArrayIndexOutOfBoundsException ee) {
 			// DO NOTHING!
