@@ -1,5 +1,6 @@
 package robatortas.code.files.core.render;
 
+import java.awt.Toolkit;
 import java.awt.image.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -32,7 +33,7 @@ public class RenderManager {
 	
 	public Random random = new Random();
 	
-	public ArrayList<BufferedImage> buffers = new ArrayList<BufferedImage>();
+	private BufferedImage buffer;
 	
 	public RenderManager(int width, int height) {
 		this.width = width;
@@ -138,7 +139,6 @@ public class RenderManager {
 			}
 		}
 		
-		buffers.add(new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB));
 	}
 	
 	public void renderSpriteSheet(int xp, int yp, SpriteSheetManager sheet, int flip, boolean fixed) {

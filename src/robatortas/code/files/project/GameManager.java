@@ -46,9 +46,7 @@ public class GameManager extends Canvas implements Runnable {
 	private RenderMethod renderMethod = new RenderMethod();
 	
 	protected BufferedImage image = new BufferedImage(Constants.WIDTH, Constants.HEIGHT, BufferedImage.TYPE_INT_ARGB);
-	public int[] pixels = new int[0];
-	
-	public ArrayList<BufferedImage> buffers = new ArrayList<BufferedImage>();
+	public int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 	
 	
 	public LevelManager level;
@@ -72,10 +70,6 @@ public class GameManager extends Canvas implements Runnable {
 	 */
 	public GameManager() {
 		screen = new RenderManager(Constants.WIDTH, Constants.HEIGHT);
-		for(int i = 0; i < buffers.size(); i++) {
-			pixels = ((DataBufferInt)screen.buffers.get(i).getRaster().getDataBuffer()).getData();
-			System.out.println("HELP");
-		}
 		level = LevelManager.level;
 		display =  new DisplayManager(Constants.WIDTH, Constants.HEIGHT, Constants.TITLE, this);
 		

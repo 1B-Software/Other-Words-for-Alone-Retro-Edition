@@ -264,7 +264,8 @@ public class Player extends MobAddons {
 		if(isSwimming) {
 			switch(attackDir) {
 			case 0: 
-				punchY += 10;
+//				punchY += 10;
+				if(attackTime > 0) screen.renderSprite(x+1, y-16, SpriteArchive.swingFx, 16, 1);
 				break;
 			case 1:
 				if(attackTime > 0) screen.renderSprite(x+1, y-16, SpriteArchive.swingFx_Sides, 16, 1);
