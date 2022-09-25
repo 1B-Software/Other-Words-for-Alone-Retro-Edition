@@ -1,10 +1,18 @@
 package robatortas.code.files.core.utils;
 
+import java.lang.management.ManagementFactory;
+import com.sun.management.*;
+import java.lang.management.RuntimeMXBean;
+
 public class ResourceUtils {
 	
 	public int memory = 0;
 	public int maxMemory = 0;
-	public int processors = 0;
+	public double cpUsage = 0;
+	public int threads = 0;
+	public String osName = "N/A";
+	
+	OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 	
 	/**<NEWLINE>
 	 * <b>getMaxMemory function in ResourceUtils class</b>
@@ -23,8 +31,18 @@ public class ResourceUtils {
 		return this.memory;
 	}
 	
-	public int getProcessors() {
-		this.processors = Runtime.getRuntime().availableProcessors();
-		return processors;
+	public double getCPUsage() {
+		this.cpUsage = osBean.getSystemCpuLoad();
+		return cpUsage;
+	}
+	
+	public int getThreads() {
+		threads = ManagementFactory.getThreadMXBean().getThreadCount();
+		return threads;
+	}
+	
+	public String getOSName() {
+		this.osName = System.getProperty("os.name");
+		return osName;
 	}
 }

@@ -1,8 +1,11 @@
 package robatortas.code.files.core.render;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import robatortas.code.files.core.level.LevelManager;
+import robatortas.code.files.core.utils.LoopingUtils;
 import robatortas.code.files.project.GameManager;
-import robatortas.code.files.project.menu.InventoryMenu;
 import robatortas.code.files.project.render.GUI;
 import robatortas.code.files.project.settings.Constants;
 
@@ -73,17 +76,23 @@ public class RenderMethod {
 	public void renderDebug() {
 		font.setSize(8*2);
 		if(game.DEBUG) {
+			font.setColor(0xff222222);
 			font.draw("E:" + level.entities.size(),0, 5, false, screen);
 			font.draw("X:" + (LevelManager.player.x >> 4) + " Y:" + (LevelManager.player.y >> 4), 2, 5*3, false, screen);
-			font.draw("Dev_Mode:" + GameManager.DEV_MODE, 2, 5*5, false, screen);
+			font.draw("FPS:" + LoopingUtils.fps, 2, 5*5, false, screen);
+			font.draw("TPS:" + LoopingUtils.tps, 2, 5*7, false, screen);
 			
-			font.setColor(0xffdfef00);
-			font.draw("\"DEV_TOOLS\"", 0, 5*13, false, screen);
-			font.setColor(0x6f << 24 | ((debugColor & 0x00ff0000) >> 16) + game.resources.memory/2 << 16 | 0x00 << 8 | 0xff);
-			font.draw("MEMORY: " + game.resources.memory + " mb", 0, 5*15, false, screen);
-			font.draw("MAX_MEMORY: " + game.resources.maxMemory + " mb", 0, 5*17, false, screen);
-			font.setColor(debugColor);
-			font.draw("PROCESSORS: " + game.resources.processors, 1, 5*19, false, screen);
+			if(GameManager.DEV_MODE) {
+				font.setColor(0xffdfef00);
+				font.draw("\"DEV_TOOLS\"", 0, 5*13, false, screen);
+				font.setColor(0x6f << 24 | ((debugColor & 0x00ff0000) >> 16) + game.resources.memory/2 << 16 | 0x00 << 8 | 0xff);
+				font.draw("MEMORY: " + game.resources.memory + " mb", 0, 5*15, false, screen);
+				font.setColor(debugColor);
+				font.draw("MAX_MEMORY: " + game.resources.maxMemory + " mb", 0, 5*17, false, screen);
+				font.draw("SYS CPU USAGE: " + BigDecimal.valueOf(game.resources.cpUsage).setScale(3, RoundingMode.HALF_UP), 1, 5*19, false, screen);
+				font.draw("OS: " + game.resources.getOSName(), 1, 5*21, false, screen);
+				font.draw("Dev_Mode:" + GameManager.DEV_MODE, 1, 5*23, false, screen);
+			}
 		}
 	}
 	
