@@ -108,7 +108,7 @@ public class GameManager extends Canvas implements Runnable {
 		threadUtils.stop();
 	}
 	
-	private LoopingUtils looping = new LoopingUtils();
+	public LoopingUtils looping = new LoopingUtils();
 	
 	/**<NEWLINE>
 	 * <b>run function in GameManger class</b>
@@ -125,7 +125,7 @@ public class GameManager extends Canvas implements Runnable {
 			
 			looping.timerLoop(consolePrint, this, () -> {
 				resources.memory = resources.getMemory();
-				resources.processors = resources.getProcessors();
+				resources.cpUsage = resources.getCPUsage();
 				resources.maxMemory = resources.getMaxMemory();
 			});
 			
