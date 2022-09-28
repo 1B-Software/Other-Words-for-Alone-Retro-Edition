@@ -126,6 +126,7 @@ public class GameManager extends Canvas implements Runnable {
 			looping.timerLoop(consolePrint, this, () -> {
 				resources.memory = resources.getMemory();
 				resources.cpUsage = resources.getCPUsage();
+				resources.threadCount = resources.getThreadCount();
 				resources.maxMemory = resources.getMaxMemory();
 			});
 			
