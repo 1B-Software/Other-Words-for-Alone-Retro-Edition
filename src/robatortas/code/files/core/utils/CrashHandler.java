@@ -135,7 +135,7 @@ public class CrashHandler implements Runnable {
 		frame.setTitle("ERROR");
 		frame.setSize(new Dimension(width, height));
 		frame.setLocationRelativeTo(null);
-		frame.setResizable(false);
+		frame.setResizable(true);
 		this.start();
 		frame.setVisible(true);
 		frame.add(panel);

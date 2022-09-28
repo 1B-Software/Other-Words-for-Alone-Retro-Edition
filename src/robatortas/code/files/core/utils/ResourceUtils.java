@@ -9,6 +9,7 @@ public class ResourceUtils {
 	public int memory = 0;
 	public int maxMemory = 0;
 	public double cpUsage = 0;
+	public double threadCount = 0;
 	public int threads = 0;
 	public String osName = "N/A";
 	
@@ -32,8 +33,13 @@ public class ResourceUtils {
 	}
 	
 	public double getCPUsage() {
-		this.cpUsage = osBean.getSystemCpuLoad();
+		this.cpUsage = osBean.getSystemCpuLoad()*125;
 		return cpUsage;
+	}
+	
+	public double getThreadCount() {
+		this.threadCount = ManagementFactory.getThreadMXBean().getThreadCount();
+		return threadCount;
 	}
 	
 	public int getThreads() {

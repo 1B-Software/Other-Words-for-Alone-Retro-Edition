@@ -89,9 +89,12 @@ public class RenderMethod {
 				font.draw("MEMORY: " + game.resources.memory + " mb", 0, 5*15, false, screen);
 				font.setColor(debugColor);
 				font.draw("MAX_MEMORY: " + game.resources.maxMemory + " mb", 0, 5*17, false, screen);
-				font.draw("SYS CPU USAGE: " + BigDecimal.valueOf(game.resources.cpUsage).setScale(3, RoundingMode.HALF_UP), 1, 5*19, false, screen);
-				font.draw("OS: " + game.resources.getOSName(), 1, 5*21, false, screen);
-				font.draw("Dev_Mode:" + GameManager.DEV_MODE, 1, 5*23, false, screen);
+				font.setColor(0x6f << 24 | ((debugColor & 0x00ff0000) >> 16) + (int) game.resources.cpUsage*2 << 16 | 0x00 << 8 | 0xff);
+				font.draw("CPU_USAGE: " + BigDecimal.valueOf(game.resources.cpUsage).setScale(3, RoundingMode.HALF_UP), 1, 5*19, false, screen);
+				font.setColor(debugColor);
+				font.draw("THREADS: " + Math.round(game.resources.threadCount), 0, 5*21, false, screen);
+				font.draw("OS: " + game.resources.getOSName(), 1, 5*23, false, screen);
+				font.draw("Dev_Mode:" + GameManager.DEV_MODE, 1, 5*25, false, screen);
 			}
 		}
 	}
