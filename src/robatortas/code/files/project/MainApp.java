@@ -9,8 +9,8 @@ public class MainApp {
 	
 	// Main Method
 	public static void main(String[] args) {
-		if(GameManager.DEV_MODE) Console.writeSysMsg("Starting: Other Words for Alone RETRO EDITION in Developer Mode" + "\n");
-		else Console.writeSysMsg("Starting: Other Words for Alone RETRO EDITION in Client Mode" + "\n");
+		if(GameManager.DEV_MODE) Console.log("Starting: Other Words for Alone RETRO EDITION in Developer Mode" + "\n");
+		else Console.log("Starting: Other Words for Alone RETRO EDITION in Client Mode" + "\n");
 		
 		SoundEngine.enter.play();
 		game = new GameManager();

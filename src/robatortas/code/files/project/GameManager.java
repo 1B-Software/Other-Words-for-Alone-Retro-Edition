@@ -11,12 +11,14 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
+import robatortas.code.files.core.console.Console;
 import robatortas.code.files.core.input.MouseManager;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.Fonts;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.RenderMethod;
 import robatortas.code.files.core.utils.LoopingUtils;
+import robatortas.code.files.core.utils.MathUtils;
 import robatortas.code.files.core.utils.ResourceUtils;
 import robatortas.code.files.core.utils.ThreadUtils;
 import robatortas.code.files.project.settings.Constants;
@@ -144,6 +146,8 @@ public class GameManager extends Canvas implements Runnable {
 		tickTime++;
 		level.update();
 		generalPurposeKeys();
+		
+		System.out.println(MathUtils.squareRoot(13));
 	}
 	
 	/**<NEWLINE>

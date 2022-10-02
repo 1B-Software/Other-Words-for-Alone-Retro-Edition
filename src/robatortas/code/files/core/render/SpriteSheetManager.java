@@ -100,7 +100,7 @@ public class SpriteSheetManager {
 		} catch(Exception e) {
 			if(image == null) {
 				new CrashHandler().handle(e, "Unable to locate SpriteSheet path location in: " + path, ErrorType.UNEXPECTED);
-				Console.writeSysMsg("\nLocating and using the SpriteSheet in the nullPath variable\n");
+				Console.log("\nLocating and using the SpriteSheet in the nullPath variable\n");
 				if(i > 0) {
 					i--;
 					path = nullPath;

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import robatortas.code.files.core.level.LevelManager;
+import robatortas.code.files.core.utils.CustFunc;
 import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.entities.ItemEntity;
 import robatortas.code.files.project.inventory.Item;
@@ -26,17 +27,18 @@ public class Console implements Runnable {
 		this.game = game;
 	}
 	
-	public static void writeSysMsg(String msg) {
+	public static void log(String msg) {
 		from = "Console";
+		
 		System.out.println("[" + from + "]" + ": " + msg);
 	}
 	
-	public static void writeErr(String err) {
+	public static void logError(String err) {
 		from = "Console";
 		System.err.println("[" + from + "]" + ": " + err);
 	}
 	
-	public static void writePlayerMsg(String msg) {
+	public static void logPlayer(String msg) {
 		from = LevelManager.player.name == "" ? LevelManager.player.name : "Player" ;
 		System.out.println("[" + from + "]" + ": " + msg);
 	}
@@ -98,27 +100,27 @@ public class Console implements Runnable {
 	
 	// COMMAND FUNCTIONS
 	public void commands() {
-		if(!msg.startsWith("!")) writePlayerMsg(msg);
+		if(!msg.startsWith("!")) logPlayer(msg);
 		
 		parser();
 		
 		// Help
-		if(setCommand(0)) writeSysMsg("Here is the list of commands: \n" + getCommandList());
+		if(setCommand(0)) log("Here is the list of commands: \n" + getCommandList());
 		
 		// Quit game completely
 		if(setCommand(1)) {
-			writeSysMsg("Quitting...");
+			log("Quitting...");
 			System.exit(0);
 		}
 		
 		// Change DevMode variable
 		if(setCommand(2)) {
 			 if(commandSet(2)) {
-				 writeSysMsg("DEVMODE set to true");
+				 log("DEVMODE set to true");
 				 GameManager.DEV_MODE = true;
 			 }
 			 if(!commandSet(2)) {
-				 writeSysMsg("DEVMODE set to false");
+				 log("DEVMODE set to false");
 				 GameManager.DEV_MODE = false;
 			 }
 		}
@@ -131,7 +133,7 @@ public class Console implements Runnable {
 						LevelManager.player.inventory.add(new Item().getItem(first));
 					}
 				}
-				writeSysMsg(second + " " + first + " given to " + LevelManager.player.name);
+				log(second + " " + first + " given to " + LevelManager.player.name);
 			} catch(Exception e) {}
 		}
 		
@@ -142,14 +144,14 @@ public class Console implements Runnable {
 					for(int i = 0; i < Integer.parseInt(second); i++) {
 						game.level.add(new ItemEntity(LevelManager.player.x, LevelManager.player.y, new Item().getItem(first)));
 					}
-					writeSysMsg(Integer.parseInt(getPart(0, 2)) + " " + first + " spawned at your location");
+					log(Integer.parseInt(getPart(0, 2)) + " " + first + " spawned at your location");
 				}
 			} catch(Exception e) {}
 		}
 		
 		// See inventory size
 		if(setCommand(5)) {
-			writeSysMsg(Integer.toString(LevelManager.player.inventory.items.size()));
+			log(Integer.toString(LevelManager.player.inventory.items.size()));
 		}
 	}
 	
@@ -159,12 +161,12 @@ public class Console implements Runnable {
 		try {
 			
 			// Checks if the inputted command is valid
-			if(!getCommandList().contains(command) && !getPart(0, 0).equals("!")) writeErr("Invalid Command");
+			if(!getCommandList().contains(command) && !getPart(0, 0).equals("!")) logError("Invalid Command");
 			
 			// Check for first command (Entity, Item)
 			if(command.equals(cmd[3]) || command.equals(cmd[4])) {
-				if(!first.equals("")) writeErr("The argument " + first + " is invalid.");
-			} else if(!first.equals("")) writeErr("The argument " + first + " is invalid for this command.");
+				if(!first.equals("")) logError("The argument " + first + " is invalid.");
+			} else if(!first.equals("")) logError("The argument " + first + " is invalid for this command.");
 			
 		} catch(Exception e) {
 			

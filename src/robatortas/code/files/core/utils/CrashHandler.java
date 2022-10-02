@@ -49,7 +49,7 @@ public class CrashHandler implements Runnable {
 	 */
 	public void handle(Throwable throwable, String info, ErrorType errorType) {
 		System.out.println("\n");
-		Console.writeErr(info + "\n\nLOGS:\n");
+		Console.logError(info + "\n\nLOGS:\n");
 		
 		throwable.printStackTrace();
 		
