@@ -22,11 +22,12 @@ public class MobAddons extends Mob {
 		if(ya > 0) dir = 2;
 		if(ya < 0) dir = 0;
 		
-		
+		// World Limits
 		if(x >= level.width*16) xa = -1;
 		if(y >= level.height*16) ya = -1;
 		if(x <= 0) xa = 1;
 		if(y <= 0) ya = 1;
+		
 		move2(xa, ya);
 	}
 	

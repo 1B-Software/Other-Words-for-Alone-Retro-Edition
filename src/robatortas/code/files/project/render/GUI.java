@@ -78,20 +78,19 @@ public class GUI {
 		}
 		
 		// Health
-//		screen.renderBox((x + (game.screen.width/3) - 2), y + 8, 84, 12, 0xff1F1F1F, false);
-//		for(int i = 0; i < LevelManager.player.health; i++) {
-//			if(LevelManager.player.health <= 3) {if((game.tickTime / 15) % 2 == 0) continue;}
-//			screen.renderBox((x + game.screen.width/3) + (i*8) + xa, (y + 10) + ya, 8, 8, 0xffFF282C, false);
-//		}
-//		if(LevelManager.player.hurtTime > 0 && LevelManager.player.health > 0) screen.renderBox((x + game.screen.width/3) + (8*Math.max(LevelManager.player.health, LevelManager.player.health)) + xa, y + 10 + ya, 8, 8, 0xffffffff, false);
-		
-		graphical.buildBox(10, 10, LevelManager.player.health, 1, 0, 0, 100, 100, 0xffff282c, true, screen);
+		graphical.buildBox(7, 12, 12, 1, 0, 0, ((game.screen.width/3) - 2), 8 , 0xff1F1F1F, true, screen);
+		for(int i = 0; i < LevelManager.player.health; i++) {
+			if(LevelManager.player.health <= 3) {if((game.tickTime / 15) % 2 == 0) continue;}
+			graphical.buildBox(8, 8, 1, 1, 0, 0, (game.screen.width/3) + (i*8) + xa, 10 + ya , 0xffff282c, true, screen);
+		}
+
+		if(LevelManager.player.hurtTime > 0 && LevelManager.player.health > 0) graphical.buildBox(8, 8, 1, 1, 0, 0, (game.screen.width/3) + (8*Math.max(LevelManager.player.health, LevelManager.player.health)) + xa, 10 + ya, 0xffffffff, true, screen);
 		
 		// Stamina
-		screen.renderBox((x + (game.screen.width/3) - 2), y + 8 + 13, 84, 7, 0xff1F1F1F, false);
+		graphical.buildBox(7, 7, 12, 1, 0, 0, ((game.screen.width/3) - 2), 21, 0xff1F1F1F, true, screen);
 		for(int i = 0; i < LevelManager.player.stamina; i++) {
-			if(LevelManager.player.health <= 3) {if((game.tickTime / 15) % 2 == 0) continue;}
-			screen.renderBox((x + game.screen.width/3) + (i*8) + xs, (y + 10) + ys + 13, 8, 3, 0xffFFB200, false);
+			if(LevelManager.player.stamina <= 3) {if((game.tickTime / 15) % 2 == 0) continue;}
+			graphical.buildBox(8, 3, 1, 1, 0, 0, (game.screen.width/3) + (i*8) + xa, 10 + 13 + ya , 0xffFFB200, true, screen);
 		}
 	}
 }
