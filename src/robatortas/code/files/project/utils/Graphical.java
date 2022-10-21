@@ -17,27 +17,37 @@ import robatortas.code.files.core.render.SpriteManager;
 public class Graphical {
 	
 	/**<NEWLINE>
-	 * <b>buildLine function in Graphical class</b>
+	 * <b>buildBox function in Graphical class</b>
 	 * <br><br>
-	 * Build a line (Ex: health bar, progress bar).
+	 * Build a box (Ex: health bar, progress bar).
 	 * @param portionWidth Means how long each individual square will be in the w.
 	 * @param portionHeight Means how long each individual square will be in the h.
-	 * @param width Means how long the bar will be in the width.
-	 * @param height Means how long the bar will be in the height.
+	 * @param width Means how long the box will be in the width.
+	 * @param height Means how long the box will be in the height.
 	 * @param xOffset How much each piece of the bar is offsetted and adding it for each time the i variable iterates.
 	 * @param yOffset How much each piece of the bar is offsetted and adding it for each time the i variable iterates.
 	 * @param x Location of the bar in the x axis.
 	 * @param y Location of the bar in the x axis.
 	 * @param color The color of the bar.
+	 * @param fixed If false it scrolls with the map, if true it doesn't scroll (Stays with the player).
 	 * @param screen Used to render
 	 * 
 	 * @see RenderManager
 	 * 
 	 */
-	public void buildLine(int portionWidth, int portionHeight, int width, int height, int xOffset, int yOffset, int x, int y, int color, RenderManager screen) {
+	public void buildBox(int portionWidth, int portionHeight, int width, int height, int xOffset, int yOffset, int x, int y, int color, boolean fixed, RenderManager screen) {
+		if(fixed) {
+			x += screen.xOffset;
+			y += screen.yOffset;
+		}
+		
 		if(xOffset == 0) xOffset = portionWidth;
 		if(yOffset == 0) yOffset = portionHeight;
-		for(int i = 0; i < width; i++) screen.renderBox(x+(i*xOffset), y+(i*yOffset), portionWidth, portionHeight, color, false);
+		for(int i = 0; i < width; i++) {
+			for(int j = 0; j < height; j++) {
+				screen.renderBox(x+(i*xOffset), y+(j*yOffset), portionWidth, portionHeight, color, false);
+			}
+		}
 	}
 	
 	/**<NEWLINE>
