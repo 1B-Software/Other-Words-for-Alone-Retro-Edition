@@ -45,7 +45,7 @@ public class RenderMethod {
 		this.level = game.level;
 		this.screen = game.screen;
 		
-		xScroll = (int) (LevelManager.player.x - Constants.WIDTH / 2 + 3) ;
+		xScroll = (int) (LevelManager.player.x - Constants.WIDTH / 2 + 3);
 		yScroll = (int) (LevelManager.player.y - Constants.HEIGHT / 2);
 		
 		pixelIterations();

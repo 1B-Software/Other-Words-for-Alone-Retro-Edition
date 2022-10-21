@@ -17,6 +17,7 @@ import robatortas.code.files.project.utils.Graphical;
 public class GUI {
 	
 	private GameManager game;
+	private Graphical graphical = new Graphical();
 	
 	private int x, y;
 	
@@ -27,8 +28,6 @@ public class GUI {
 	public void update() {
 		
 	}
-	
-	private Graphical graphical = new Graphical();
 	
 	public void render(RenderManager screen, GameManager game) {
 		this.game = game;
@@ -54,11 +53,8 @@ public class GUI {
 			}
 			x = game.xScroll;
 		} else {
-			if(renderTime % 7 == 0 && y < game.yScroll) {
-				y += (renderTime&1);
-			} 
+			y = game.yScroll;
 			x = game.xScroll;
-			if(y > game.yScroll-6) y = game.yScroll;
 		}
 		
 		renderBars(screen);
@@ -82,12 +78,14 @@ public class GUI {
 		}
 		
 		// Health
-		screen.renderBox((x + (game.screen.width/3) - 2), y + 8, 84, 12, 0xff1F1F1F, false);
-		for(int i = 0; i < LevelManager.player.health; i++) {
-			if(LevelManager.player.health <= 3) {if((game.tickTime / 15) % 2 == 0) continue;}
-			screen.renderBox((x + game.screen.width/3) + (i*8) + xa, (y + 10) + ya, 8, 8, 0xffFF282C, false);
-		}
-		if(LevelManager.player.hurtTime > 0 && LevelManager.player.health > 0) screen.renderBox((x + game.screen.width/3) + (8*Math.max(LevelManager.player.health, LevelManager.player.health)) + xa, y + 10 + ya, 8, 8, 0xffffffff, false);
+//		screen.renderBox((x + (game.screen.width/3) - 2), y + 8, 84, 12, 0xff1F1F1F, false);
+//		for(int i = 0; i < LevelManager.player.health; i++) {
+//			if(LevelManager.player.health <= 3) {if((game.tickTime / 15) % 2 == 0) continue;}
+//			screen.renderBox((x + game.screen.width/3) + (i*8) + xa, (y + 10) + ya, 8, 8, 0xffFF282C, false);
+//		}
+//		if(LevelManager.player.hurtTime > 0 && LevelManager.player.health > 0) screen.renderBox((x + game.screen.width/3) + (8*Math.max(LevelManager.player.health, LevelManager.player.health)) + xa, y + 10 + ya, 8, 8, 0xffffffff, false);
+		
+		graphical.buildBox(10, 10, LevelManager.player.health, 1, 0, 0, 100, 100, 0xffff282c, true, screen);
 		
 		// Stamina
 		screen.renderBox((x + (game.screen.width/3) - 2), y + 8 + 13, 84, 7, 0xff1F1F1F, false);
