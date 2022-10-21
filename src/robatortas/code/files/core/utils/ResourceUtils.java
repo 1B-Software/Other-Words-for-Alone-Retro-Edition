@@ -10,6 +10,7 @@ public class ResourceUtils {
 	public int maxMemory = 0;
 	public double cpUsage = 0;
 	public double threadCount = 0;
+	public int upTime = 0;
 	public int threads = 0;
 	public String osName = "N/A";
 	
