@@ -147,7 +147,10 @@ public class GameManager extends Canvas implements Runnable {
 		level.update();
 		generalPurposeKeys();
 		
-//		System.out.println(MathUtils.squareRoot(13));
+		System.out.println(MathUtils.power(10.1, 3));
+		
+//		System.out.println(MathUtils.squareRoot(124));
+//		MathUtils.squareRoot(124);
 	}
 	
 	/**<NEWLINE>

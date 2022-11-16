@@ -4,6 +4,10 @@ package robatortas.code.files.core.utils;
  * <b>MathUtils class</b>
  * <br><br>
  * To get any mathematical functions you need!
+ * <br><br>
+ * This library is built without any external classes.
+ * <br><br>
+ * Brings a bit of functions the standard Java Math Library doesn't support!
  */
 public class MathUtils {
 	
@@ -33,15 +37,16 @@ public class MathUtils {
 	 * <b>power function in the MathUtils class</b>
 	 * <br><br>
 	 * Get the power of a number.
+	 * <br><br>
 	 * 
 	 * @param val The value that is wanted to be powered.
 	 * @param powerOf The power of the val parameter.
 	 */
 	public static double power(double val, double powerOf) {
 		double result = val;
-
+		// If it is a floating point value (decimal)
 		if(Double.isFinite(powerOf)) {
-			for(int i = 0; i <= powerOf*2; i++) {
+			for(int i = 0; i <= powerOf-2; i++) {
 				result *= val;
 			}
 		} else {
@@ -79,7 +84,16 @@ public class MathUtils {
 	 * 
 	 * @param val The value that will be rooted.
 	 */
+	static int subsTime = 0;
 	public static double squareRoot(double val) {
-		return power(val, 0.5);
+		for(int i = 0; i < val; i++) {
+			if(i % 2 != 0) {
+				val--;
+				subsTime++;
+//				System.out.println(val);
+				return subsTime;
+			}
+		}
+		return subsTime;
 	}
 }
