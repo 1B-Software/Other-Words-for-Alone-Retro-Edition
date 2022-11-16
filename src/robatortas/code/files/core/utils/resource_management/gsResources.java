@@ -16,8 +16,6 @@ import robatortas.code.files.core.utils.ResourceUtils;
  */
 public class gsResources extends ResourceUtils {
 	
-	
-	
 	OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 	
 	RuntimeMXBean runtimeBean = ManagementFactory.getRuntimeMXBean();
