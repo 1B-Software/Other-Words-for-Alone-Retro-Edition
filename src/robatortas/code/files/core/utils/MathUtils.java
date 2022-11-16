@@ -88,7 +88,7 @@ public class MathUtils {
 	public static double squareRoot(double val) {
 		for(int i = 0; i < val; i++) {
 			if(i % 2 != 0) {
-				val--;
+//				val--;
 				subsTime++;
 //				System.out.println(val);
 				return subsTime;
