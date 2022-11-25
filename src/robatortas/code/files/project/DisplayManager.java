@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import robatortas.code.files.project.level.TerrainGen.NoiseMap;
-import robatortas.code.files.project.settings.Constants;
+import robatortas.code.files.project.settings.Globals;
 
 public class DisplayManager {
 	
@@ -19,7 +19,7 @@ public class DisplayManager {
 		
 //		NoiseMap.main(null);
 		
-		Dimension size = new Dimension(width*Constants.SCALE, height*Constants.SCALE);
+		Dimension size = new Dimension(width*Globals.SCALE, height*Globals.SCALE);
 		
 		game.frame.setIconImage(windowIcon.getImage());
 		game.frame.setTitle(title);

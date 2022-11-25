@@ -7,7 +7,7 @@ import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.utils.LoopingUtils;
 import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.render.GUI;
-import robatortas.code.files.project.settings.Constants;
+import robatortas.code.files.project.settings.Globals;
 
 public class RenderMethod {
 	
@@ -45,8 +45,8 @@ public class RenderMethod {
 		this.level = game.level;
 		this.screen = game.screen;
 		
-		xScroll = (int) (LevelManager.player.x - Constants.WIDTH / 2 + 3);
-		yScroll = (int) (LevelManager.player.y - Constants.HEIGHT / 2);
+		xScroll = (int) (LevelManager.player.x - Globals.WIDTH / 2 + 3);
+		yScroll = (int) (LevelManager.player.y - Globals.HEIGHT / 2);
 		
 		pixelIterations();
 		generalSettings();

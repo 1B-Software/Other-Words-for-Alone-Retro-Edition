@@ -21,7 +21,7 @@ import robatortas.code.files.core.utils.LoopingUtils;
 import robatortas.code.files.core.utils.MathUtils;
 import robatortas.code.files.core.utils.ResourceUtils;
 import robatortas.code.files.core.utils.ThreadUtils;
-import robatortas.code.files.project.settings.Constants;
+import robatortas.code.files.project.settings.Globals;
 
 /**<NEWLINE>
  * <b>GameManger class</b>
@@ -36,7 +36,6 @@ public class GameManager extends Canvas implements Runnable {
 	
 	public static boolean DEV_MODE = true;
 	public boolean DEBUG = false;
-
 	
 	public DisplayManager display;
 	public JFrame frame = new JFrame();
@@ -45,7 +44,7 @@ public class GameManager extends Canvas implements Runnable {
 	public RenderManager screen;
 	private RenderMethod renderMethod = new RenderMethod();
 	
-	protected BufferedImage image = new BufferedImage(Constants.WIDTH, Constants.HEIGHT, BufferedImage.TYPE_INT_ARGB);
+	protected BufferedImage image = new BufferedImage(Globals.WIDTH, Globals.HEIGHT, BufferedImage.TYPE_INT_ARGB);
 	public int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 	
 	
@@ -68,9 +67,9 @@ public class GameManager extends Canvas implements Runnable {
 	 * 
 	 */
 	public GameManager() {
-		screen = new RenderManager(Constants.WIDTH, Constants.HEIGHT);
+		screen = new RenderManager(Globals.WIDTH, Globals.HEIGHT);
 		level = LevelManager.level;
-		display = new DisplayManager(Constants.WIDTH, Constants.HEIGHT, Constants.TITLE, this);
+		display = new DisplayManager(Globals.WIDTH, Globals.HEIGHT, Globals.TITLE, this);
 		
 		mouse = new MouseManager();
 		
@@ -147,7 +146,7 @@ public class GameManager extends Canvas implements Runnable {
 		level.update();
 		generalPurposeKeys();
 		
-		System.out.println(MathUtils.power(10.1, 3));
+//		System.out.println(MathUtils.power(10.1, 3));
 		
 //		System.out.println(MathUtils.squareRoot(124));
 //		MathUtils.squareRoot(124);
@@ -207,6 +206,6 @@ public class GameManager extends Canvas implements Runnable {
 	 * @see java.awt.Dimension
 	 */
 	static java.awt.Dimension getWindowSize() {
-		return new java.awt.Dimension((int) (Constants.WIDTH * Constants.SCALE), (int) (Constants.HEIGHT * Constants.SCALE));
+		return new java.awt.Dimension((int) (Globals.WIDTH * Globals.SCALE), (int) (Globals.HEIGHT * Globals.SCALE));
 	}
 }

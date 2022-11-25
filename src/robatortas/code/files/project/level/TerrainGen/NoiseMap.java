@@ -108,12 +108,14 @@ public class NoiseMap {
 				
 				double xd = x / (w - 1.0) * 2 - 1;
 				double yd = y / (h - 1.0) * 2 - 1;
+				// MAKE POSITIVES
 				if (xd < 0) xd = -xd;
 				if (yd < 0) yd = -yd;
 				// if xd >= yd is true, it'll return xd. else yd
 				double dist = xd >= yd ? xd : yd;
 				dist = dist * dist * dist * dist;
 				dist = dist * dist * dist * dist;
+//				dist = dist * dist * dist * dist;
 				val = val + 1 - dist * 10;
 
 				if (val < -0.2) {
