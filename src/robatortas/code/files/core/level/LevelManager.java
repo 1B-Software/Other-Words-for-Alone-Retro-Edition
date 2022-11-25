@@ -14,7 +14,7 @@ import robatortas.code.files.project.archive.tileArchive.Nature.WaterTile;
 import robatortas.code.files.project.entities.mobs.mobArchive.Player;
 import robatortas.code.files.project.level.LevelAddons;
 import robatortas.code.files.project.level.LevelRenderManager;
-import robatortas.code.files.project.settings.Constants;
+import robatortas.code.files.project.settings.Globals;
 
 public class LevelManager {
 
@@ -28,7 +28,7 @@ public class LevelManager {
 	public List<EntityManager> entities = new LinkedList<EntityManager>();
 	public List<EntityManager>[] entitiesInTiles;
 	
-	public static LevelManager level = new GameLevel(Constants.levelPath);
+	public static LevelManager level = new GameLevel(Globals.levelPath);
 	
 	// Classes
 	public LevelAddons addons;

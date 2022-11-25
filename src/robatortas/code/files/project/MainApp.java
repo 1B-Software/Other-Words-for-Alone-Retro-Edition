@@ -1,5 +1,6 @@
 package robatortas.code.files.project;
 
+import discord_sdk.UserActivity;
 import robatortas.code.files.core.console.Console;
 import robatortas.code.files.core.sound.SoundEngine;
 
@@ -14,6 +15,11 @@ public class MainApp {
 		
 		SoundEngine.enter.play();
 		game = new GameManager();
+		discordInit();
 		new Console(game).start();
+	}
+	
+	public static void discordInit() {
+		new UserActivity();
 	}
 }

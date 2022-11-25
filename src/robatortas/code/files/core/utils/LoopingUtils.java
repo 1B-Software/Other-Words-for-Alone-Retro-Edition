@@ -1,7 +1,7 @@
 package robatortas.code.files.core.utils;
 
 import robatortas.code.files.project.GameManager;
-import robatortas.code.files.project.settings.Constants;
+import robatortas.code.files.project.settings.Globals;
 
 public class LoopingUtils {
 	
@@ -36,7 +36,7 @@ public class LoopingUtils {
 		if(System.currentTimeMillis() - timer > 1000) {
 			timer+=1000;
 			
-			game.frame.setTitle(Constants.TITLE + "  ||  " + tps + " TPS " + fps + " FPS");
+			game.frame.setTitle(Globals.TITLE + "  ||  " + tps + " TPS " + fps + " FPS");
 			function.func();
 			
 
