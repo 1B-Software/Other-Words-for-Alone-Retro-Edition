@@ -44,14 +44,15 @@ public class UserActivity {
 				// Create the Activity
 				try(Activity activity = new Activity())
 				{
-					activity.setDetails("Other Words for Alone Retro Edition " + Globals.VERSION);
-					activity.setState("Concentrated");
+					activity.setDetails(Globals.VERSION);
+//					activity.setState("Concentrated");
 
 					// Setting a start time causes an "elapsed" field to appear
 					activity.timestamps().setStart(Instant.now());
 
 					// Make a "cool" image show up
-					activity.assets().setLargeImage("/textures/font/icon/icon-big.png");
+					activity.assets().setLargeImage("big");
+//					activity.assets().setSmallImage("small");
 
 					// Setting a join secret and a party ID causes an "Ask to Join" button to appear
 //					activity.party().setID("Party!");
