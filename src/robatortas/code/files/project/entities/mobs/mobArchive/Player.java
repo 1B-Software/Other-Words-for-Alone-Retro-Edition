@@ -12,7 +12,6 @@ import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.archive.Animations;
 import robatortas.code.files.project.archive.SheetArchive;
 import robatortas.code.files.project.archive.SpriteArchive;
-import robatortas.code.files.project.archive.tileArchive.TileArchive;
 import robatortas.code.files.project.entities.Particle;
 import robatortas.code.files.project.entities.mobs.MobAddons;
 import robatortas.code.files.project.inventory.Inventory;
@@ -27,6 +26,8 @@ public class Player extends MobAddons {
 	public int attackTime, attackDir;
 	
 	private Particle particle;
+	
+	private Sprite spunchSprite;
 	
 	public Inventory inventory;
 	
@@ -193,7 +194,6 @@ public class Player extends MobAddons {
 				if(dir == 0) animSprite = punchUp;
 				if(dir == 1) animSprite = punchRight;
 				if(dir == 2) animSprite = punchDown;
-				
 				if(dir == 3) animSprite = punchLeft;
 				
 				if((tickTime / 8) % 2 == 0) {
@@ -207,12 +207,10 @@ public class Player extends MobAddons {
 		// SWIMMING //
 		//////////////
 		isSwimming = false;
-		if(level.getLevel(x >> 4, y >> 4) == TileArchive.water) {
+		if(isSwimming()) {
 			if(swimTime == 1) {
 				SoundEngine.splash.play();
 			}
-			// Si he comparado entidades CON entidades, pero no con tile
-			// Si pasas en frente de una entidad, te pondra en frente de ella mira.
 			
 			// Swimming sillhouete
 			if((tickTime / 32) % 2 == 0) screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 1, 10, SheetArchive.player), 16, 0);
@@ -222,10 +220,6 @@ public class Player extends MobAddons {
 			if(dir == 1) animSprite = rightSwim;
 			if(dir == 2) animSprite = downSwim;
 			if(dir == 3) animSprite = leftSwim;
-			
-			// Swimming sillhouete
-			if((tickTime / 32) % 2 == 0) screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 1, 10, SheetArchive.player), 16, 0);
-			else screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 2, 10, SheetArchive.player), 16, 0);
 			
 			if(walking) {
 				if(tickTime % 17 == 0) {
@@ -248,7 +242,6 @@ public class Player extends MobAddons {
 	private int punchY = 0;
 	
 	private void beforeLayer(RenderManager screen) {
-		// Finally using switch case huh?
 		switch(attackDir) {
 		case 0: 
 			if(attackTime > 0) screen.renderSprite(x-10, y-26 + punchY, SpriteArchive.swingFx, 16, 0);
@@ -261,19 +254,6 @@ public class Player extends MobAddons {
 			break;
 		}
 		
-		if(isSwimming) {
-			switch(attackDir) {
-			case 0: 
-				punchY += 10;
-				break;
-			case 1:
-				if(attackTime > 0) screen.renderSprite(x+1, y-16, SpriteArchive.swingFx_Sides, 16, 1);
-				break;
-			case 3:
-				if(attackTime > 0) screen.renderSprite(x-20, y-16, SpriteArchive.swingFx_Sides, 16, 0);
-				break;
-			}
-		}
 	}
 	
 	private void afterLayer(RenderManager screen) {
