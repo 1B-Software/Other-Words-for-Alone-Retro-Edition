@@ -17,7 +17,7 @@ public class DisplayManager {
 	public DisplayManager(int width, int height, String title, GameManager game) {
 		this.game = game;
 		
-		Noise.main(null);
+//		Noise.main(null);
 		
 		Dimension size = new Dimension(width*Globals.SCALE, height*Globals.SCALE);
 		
