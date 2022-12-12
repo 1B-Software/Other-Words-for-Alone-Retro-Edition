@@ -15,7 +15,7 @@ public class MainApp {
 		
 		SoundEngine.enter.play();
 		game = new GameManager();
-		discordInit();
+//		discordInit();
 		new Console(game).start();
 	}
 	
