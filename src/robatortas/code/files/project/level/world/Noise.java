@@ -2,10 +2,15 @@ package robatortas.code.files.project.level.world;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+
+import robatortas.code.files.core.utils.CrashHandler;
 
 public class Noise {
 
@@ -89,7 +94,7 @@ public class Noise {
 				double mval = Math.abs(mnoise1.values[i] - mnoise2.values[i]);
 				mval = Math.abs(mval - mnoise3.values[i]) * 3 - 2;
 				
-				mapValues = new Values(val, mval, map);
+				mapValues = new Values(val, mval, map, x, y);
 				
 				// DISTANCES
 				double xd = x / (w - 1.0) * 2 - 1;
@@ -127,6 +132,32 @@ public class Noise {
 		}
 		
 		image.setRGB(0, 0, width, height, pixels, 0, width);
-		JOptionPane.showMessageDialog(null,null,"Hot Chocolate",JOptionPane.YES_NO_OPTION,new ImageIcon(image.getScaledInstance(width*1,height*1,Image.SCALE_AREA_AVERAGING)));
+		JOptionPane.showMessageDialog(null,null,"Hot Chocolate",JOptionPane.YES_NO_OPTION,new ImageIcon(image.getScaledInstance(width, height,Image.SCALE_AREA_AVERAGING)));
+		
+		String dirPath = "res/textures/level";
+		String path = dirPath + "/level1.png";
+		
+		File dirFile = new File(dirPath);
+		File outFile = new File(path);
+		boolean exist = outFile.exists();
+		if(!exist) {
+			dirFile.mkdir();
+			try {
+				outFile.createNewFile();
+				ImageIO.write(image, "png", outFile);
+			} catch (IOException e) {
+				new CrashHandler().handle(e, "Unable to create Hot Chocolate File", CrashHandler.ErrorType.SERIOUS);
+			}
+		}
+		
+		if(dirFile.exists()) {
+			try {
+				outFile.createNewFile();
+				ImageIO.write(image, "png", outFile);
+			} catch (IOException e) {
+				new CrashHandler().handle(e, "Unable to create Hot Chocolate File", CrashHandler.ErrorType.SERIOUS);
+			}
+		}
+		
 	}
 }

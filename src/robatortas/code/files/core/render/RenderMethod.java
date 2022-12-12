@@ -51,11 +51,11 @@ public class RenderMethod {
 		pixelIterations();
 		generalSettings();
 		
-		if(xScroll > level.width * 16 - screen.width) xScroll = level.width * 16 - screen.width + 2;
-		if(xScroll < level.width - screen.width / 7) xScroll = level.height * 8 - screen.width - 9;
-		
-		if(yScroll > level.height * 16 - screen.height + 6) yScroll = level.width * 16 - screen.height + 6;
-		if(yScroll < level.height - screen.height/6) yScroll = level.height * 6 - screen.height + 22;
+//		if(xScroll > level.width * 16 - screen.width) xScroll = level.width * 16 - screen.width + 2;
+//		if(xScroll < level.width - screen.width / 7) xScroll = level.height * 8 - screen.width - 9;
+//		
+//		if(yScroll > level.height * 16 - screen.height + 6) yScroll = level.width * 16 - screen.height + 6;
+//		if(yScroll < level.height - screen.height/6) yScroll = level.height * 6 - screen.height + 22;
 		
 		level.render(xScroll, yScroll, screen);
 		

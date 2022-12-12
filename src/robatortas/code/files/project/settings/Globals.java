@@ -8,7 +8,7 @@ public class Globals {
 	
 	public static final String VERSION = "Alpha 1.7";
 	
-	public static final String levelPath = "/textures/level/level.png";
+	public static final String levelPath = "/textures/level/level1.png";
 
 	public int ticks = 0;
 }

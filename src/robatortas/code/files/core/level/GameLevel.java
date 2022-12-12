@@ -26,7 +26,7 @@ public class GameLevel extends LevelManager {
 		levelReader(path);
 		entitiesIteration();
 		
-		player = new Player(10, 10, input);
+		player = new Player(100<<4, 100<<4, input);
 		add(player);
 		
 		add(new Chicken(4 << 4, 4 << 4));
