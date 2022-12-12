@@ -158,6 +158,5 @@ public class Noise {
 				new CrashHandler().handle(e, "Unable to create Hot Chocolate File", CrashHandler.ErrorType.SERIOUS);
 			}
 		}
-		
 	}
 }
