@@ -1,4 +1,4 @@
-package robatortas.code.files.project.level;
+package robatortas.code.files.project.level.world;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -14,6 +14,8 @@ public class Noise {
 	public static int w,h;
 	
 	public static Random random = new Random();
+	
+	private static Values mapValues;
 	
 	public Noise(int w, int h, int sampleSize) {
 		Noise.w=w;
@@ -76,16 +78,18 @@ public class Noise {
 
 		Noise noise1 = new Noise(w, h, 16);
 		Noise noise2 = new Noise(w, h, 16);
-
+		
 		byte[] map = new byte[w * h];
 		byte[] data = new byte[w * h];
 		for(int y = 0; y < h; y++) {
 			for(int x = 0; x < w; x++) {
 				int i = x + y * w;
-
+				
 				double val = Math.abs(noise1.values[i] - noise2.values[i]) * 3 - 2;
 				double mval = Math.abs(mnoise1.values[i] - mnoise2.values[i]);
 				mval = Math.abs(mval - mnoise3.values[i]) * 3 - 2;
+				
+				mapValues = new Values(val, mval, map);
 				
 				// DISTANCES
 				double xd = x / (w - 1.0) * 2 - 1;
@@ -97,19 +101,8 @@ public class Noise {
 				dist = dist * dist * dist * dist;
 				dist = dist * dist * dist * dist;
 				val = val + 1 - dist * 10;
-
-				if(val < -0.1) {
-					// WATER
-					map[i] = (byte) 0;
-//				} else if(val > 1.9 && mval < -1.0) {
-//					// ROCK
-//					map[i] = (byte) 2;
-				} else if(val < 0.3) {
-					map[i] = (byte) 3;
-				} else {
-					// GRASS
-					map[i] = (byte) 1;
-				}
+				
+				mapValues.defineID(val, i);
 			}
 		}
 		return new byte[][] {map,data};
@@ -130,13 +123,10 @@ public class Noise {
 			int g = result << 8;
 			int b = result;
 //			pixels[i] = r | g | b;
-			if(noiseMap[i] == 0) pixels[i] = 0x0000ff;
-			if(noiseMap[i] == 1) pixels[i] = 0x00ff00;
-			if(noiseMap[i] == 2) pixels[i] = 0xff0000;
-			if(noiseMap[i] == 3) pixels[i] = 0xffff00;
+			mapValues.defineColor(noiseMap, pixels ,i);
 		}
 		
-		image.setRGB(0, 0, width, height, pixels, 0,width);
+		image.setRGB(0, 0, width, height, pixels, 0, width);
 		JOptionPane.showMessageDialog(null,null,"Hot Chocolate",JOptionPane.YES_NO_OPTION,new ImageIcon(image.getScaledInstance(width*1,height*1,Image.SCALE_AREA_AVERAGING)));
 	}
 }
