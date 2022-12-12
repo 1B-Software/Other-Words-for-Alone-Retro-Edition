@@ -27,7 +27,7 @@ public class Player extends MobAddons {
 	
 	private Particle particle;
 	
-	private Sprite spunchSprite;
+	private SpriteManager punchSprite;
 	
 	public Inventory inventory;
 	

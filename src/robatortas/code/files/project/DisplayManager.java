@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import robatortas.code.files.project.level.Noise;
+import robatortas.code.files.project.level.world.Noise;
 import robatortas.code.files.project.settings.Globals;
 
 public class DisplayManager {
