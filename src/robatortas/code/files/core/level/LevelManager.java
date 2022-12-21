@@ -156,6 +156,7 @@ public class LevelManager {
 	public TileManager getLevel(int x, int y) {
 		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
 		if(tiles[x + y * width] == SpriteArchive.col_grass) return TileArchive.grass;
+		if(tiles[x + y * width] == SpriteArchive.col_sand) return TileArchive.sand;
 		if(tiles[x + y * width] == SpriteArchive.col_water) return TileArchive.water;
 		if(tiles[x + y * width] == SpriteArchive.col_yellowDahlia) return TileArchive.grass;
 		if(tiles[x + y * width] == SpriteArchive.col_flowerRed) return TileArchive.grass;

@@ -1,5 +1,7 @@
 package robatortas.code.files.core.level.tiles;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import robatortas.code.files.core.entities.EntityManager;
@@ -30,9 +32,11 @@ public class TileManager {
 	}
 	
 	// What I mean with SEAMS is that they react to each other when touching.
+	// The exact same terminology as sewing two parts of cloth together, that is seaming.
 	public boolean seamsToWater = false;
 	public boolean seamsToGrass = false;
 	public boolean seamsToRock = false;
+	public boolean seamsToSand = false;
 	
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
 		this.level = level;

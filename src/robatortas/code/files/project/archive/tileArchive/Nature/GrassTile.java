@@ -17,6 +17,9 @@
 
 package robatortas.code.files.project.archive.tileArchive.Nature;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.ConnectTile;
 import robatortas.code.files.core.level.tiles.TileManager;
@@ -27,10 +30,20 @@ import robatortas.code.files.project.archive.tileArchive.TileArchive;
 
 public class GrassTile extends TileManager {
 	
+	private List<TileManager> seamedTiles;
+	
 	public GrassTile(SpriteManager sprite, int id) {
 		super(sprite, id);
+
+		this.seamedTiles = new LinkedList<TileManager>();
+		
+		seamedTiles.add(TileArchive.sand);
+		seamedTiles.add(TileArchive.water);
+		
+//		System.out.println(seamedTiles.get(1));
 		
 		super.seamsToRock = true;
+		super.seamsToSand = true;
 	}
 	
 	ConnectTile connect;
@@ -40,7 +53,7 @@ public class GrassTile extends TileManager {
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
 		// << equals multiply because its a binary operation
 		
-		connect = new ConnectTile(screen, level, x, y);
+		connect = new ConnectTile(screen, level, x, y, seamedTiles);
 		connect.full(upSprite, downSprite, leftSprite, rightSprite);
 		connect.sides(ulSprite, urSprite, dlSprite, drSprite);
 		connect.below = TileArchive.water.sprite;

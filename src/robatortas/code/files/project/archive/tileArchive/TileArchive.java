@@ -1,8 +1,9 @@
 package robatortas.code.files.project.archive.tileArchive;
 
+import java.util.LinkedList;
+
 import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.project.archive.SpriteArchive;
-import robatortas.code.files.project.archive.tileArchive.GUI.GUIRender;
 import robatortas.code.files.project.archive.tileArchive.Interior.BedTile;
 import robatortas.code.files.project.archive.tileArchive.Interior.ChairTile;
 import robatortas.code.files.project.archive.tileArchive.Interior.TableTile;
@@ -13,6 +14,7 @@ import robatortas.code.files.project.archive.tileArchive.Nature.FlowerTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.GrassTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.PebbleTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.PoppyTile;
+import robatortas.code.files.project.archive.tileArchive.Nature.SandTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.TreeTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.WaterTile;
 import robatortas.code.files.project.archive.tileArchive.Solids.BricksTile;
@@ -27,6 +29,7 @@ public class TileArchive {
 	// Nature
 	public static TileManager voidTile = new VoidTile(SpriteArchive.voidSprite, 0);
 	public static TileManager grass = new GrassTile(SpriteArchive.grass, 1);
+	public static TileManager sand = new SandTile(SpriteArchive.sand, 25);
 	public static TileManager tree = new TreeTile(SpriteArchive.tree, 2);
 	public static TileManager water = new WaterTile(SpriteArchive.voidSprite, 3);
 	public static TileManager rock = new PebbleTile(SpriteArchive.pebble, 4);

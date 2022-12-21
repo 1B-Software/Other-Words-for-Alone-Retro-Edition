@@ -128,11 +128,11 @@ public class Noise {
 			int g = result << 8;
 			int b = result;
 //			pixels[i] = r | g | b;
-			mapValues.defineColor(noiseMap, pixels ,i);
+			mapValues.defineColor(noiseMap, pixels, i);
 		}
 		
 		image.setRGB(0, 0, width, height, pixels, 0, width);
-		JOptionPane.showMessageDialog(null,null,"Hot Chocolate",JOptionPane.YES_NO_OPTION,new ImageIcon(image.getScaledInstance(width, height,Image.SCALE_AREA_AVERAGING)));
+		JOptionPane.showMessageDialog(null,null,"Hot Chocolate",JOptionPane.YES_NO_OPTION,new ImageIcon(image.getScaledInstance(width/2, height/2,Image.SCALE_AREA_AVERAGING)));
 		
 		String dirPath = "res/textures/level";
 		String path = dirPath + "/level1.png";

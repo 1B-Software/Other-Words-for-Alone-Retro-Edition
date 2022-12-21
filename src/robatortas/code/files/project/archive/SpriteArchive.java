@@ -18,6 +18,7 @@ public class SpriteArchive {
 	//////////////
 	
 	public static SpriteManager grass = new SpriteManager(16, 1, 1, groundNature);
+	public static SpriteManager sand = new SpriteManager(16, 4, 1, groundNature);
 	public static SpriteManager tree = new SpriteManager(32, 0, 0, foliage);
 	public static SpriteManager tree2 = new SpriteManager(16, 2, 3, nature);
 	public static SpriteManager pebble = new SpriteManager(16, 2, 0, nature);
@@ -81,6 +82,7 @@ public class SpriteArchive {
 	
 	//Tile Values in hex
 	public static final int col_grass = 0xff089F00;
+	public static final int col_sand = 0xffBDB756;
 	public static final int col_yellowDahlia = 0xffE2B500;
 	public static final int col_flowerRed = 0xffff000f;
 	public static final int col_flowersRed = 0xff71000f;

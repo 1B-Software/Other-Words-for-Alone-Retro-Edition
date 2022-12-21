@@ -30,7 +30,7 @@ public class Values {
 			// ROCK
 			map[i] = (byte) TileArchive.cobblestone.id;
 		} else if(val < 0.3) {
-			map[i] = (byte) TileArchive.dirtTile.id;
+			map[i] = (byte) TileArchive.sand.id;
 		} else {
 			// GRASS
 			map[i] = (byte) TileArchive.grass.id;
@@ -45,14 +45,11 @@ public class Values {
 				}
 			}
 		}
-		for(int j = 0; j < random.nextInt(Noise.width/10); j++) {
-			for(int k = 0; k < random.nextInt(Noise.height/10); k++) {
-				int xx = x + random.nextInt(24);
-				int yy = y + random.nextInt(24);
-				if(val > 0.6 && map[xx+yy*Noise.width] == TileArchive.grass.id) {
-					map[xx+yy*Noise.width] = (byte) TileArchive.flowerRed.id;
-				}
-			}
+		
+		int xx = (x) + random.nextInt(2);
+		int yy = (y) + random.nextInt(2);
+		if(val > 0.6 && map[xx+yy*Noise.width] == TileArchive.grass.id) {
+			map[xx+yy*Noise.width] = (byte) TileArchive.flowerRed.id;
 		}
 	}
 	
@@ -61,7 +58,7 @@ public class Values {
 		if(noiseMap[i] == TileArchive.water.id) pixels[i] = 0xff000080;
 		if(noiseMap[i] == TileArchive.grass.id) pixels[i] = 0xff089F00;
 		if(noiseMap[i] == TileArchive.cobblestone.id) pixels[i] = 0xff808080;
-		if(noiseMap[i] == TileArchive.dirtTile.id) pixels[i] = 0xffBDB756;
+		if(noiseMap[i] == TileArchive.sand.id) pixels[i] = 0xffBDB756;
 		if(noiseMap[i] == TileArchive.tree.id) pixels[i] = 0xff003D00;
 		if(noiseMap[i] == TileArchive.flowerRed.id) pixels[i] = SpriteArchive.col_flowerRed;
 	}

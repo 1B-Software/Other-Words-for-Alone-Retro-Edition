@@ -9,7 +9,7 @@ public class LoopingUtils {
 	public static long timer = System.currentTimeMillis();
 	public static double ns = 1000000000.0/60.0;
 	public double delta = 0;
-	public static int frames = 0;
+	public int frames = 0;
 	public static int ticks = 0;
 	
 	public static int fps;
