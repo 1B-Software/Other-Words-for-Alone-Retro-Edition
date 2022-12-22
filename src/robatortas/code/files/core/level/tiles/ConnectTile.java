@@ -6,7 +6,6 @@ import java.util.List;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
-import robatortas.code.files.project.archive.tileArchive.TileArchive;
 
 public class ConnectTile {
 
@@ -15,7 +14,7 @@ public class ConnectTile {
 	
 	public SpriteManager below;
 	
-	public List<TileManager> seamedTiles = new LinkedList<TileManager>();
+	public List<Integer> seamedTiles = new LinkedList<Integer>();
 	
 	public boolean up, down, left, right;
 	public boolean ur, ul, dr, dl;
@@ -27,15 +26,12 @@ public class ConnectTile {
 	
 	private int x, y;
 	
-	public ConnectTile(RenderManager screen, LevelManager level, int x, int y, List<TileManager> seamedTiles) {
+	public ConnectTile(RenderManager screen, LevelManager level, int x, int y, List<Integer> seamedTiles) {
 		this.screen = screen;
 		this.level = level;
 		this.x = x;
 		this.y = y;
 		this.seamedTiles = seamedTiles;
-		for(int i = 0; i < seamedTiles.size(); i++) {
-			System.out.println(seamedTiles.get(i));
-		}
 	}
 	
 	public void init() {
@@ -43,7 +39,7 @@ public class ConnectTile {
 		int yt = y << 4;
 
 		for(int i = 0; i < seamedTiles.size(); i++) {
-			if(level.getLevel(x, y-1) == seamedTiles.get(i)) up = true;
+			if(level.getLevel(x, y-1).id == seamedTiles.get(i)) up = true;
 //			System.out.println(seamedTiles.get(i));
 //			System.out.println(i);
 		}

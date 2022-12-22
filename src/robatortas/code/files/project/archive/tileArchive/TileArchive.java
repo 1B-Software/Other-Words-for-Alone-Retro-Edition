@@ -1,7 +1,5 @@
 package robatortas.code.files.project.archive.tileArchive;
 
-import java.util.LinkedList;
-
 import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.archive.tileArchive.Interior.BedTile;

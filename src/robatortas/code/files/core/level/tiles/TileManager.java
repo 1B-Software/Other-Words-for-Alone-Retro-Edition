@@ -17,6 +17,8 @@ public class TileManager {
 	public int id;
 	public LevelManager level;
 	
+	protected ConnectTile connect;
+	
 	protected Random random = new Random();
 	
 	public static TileManager[] tiles = new TileManager[256];

@@ -194,7 +194,7 @@ public class LevelManager {
 	 * @param y Tile coordinate on the y axis
 	 */
 	public TileManager getPost(int x, int y) {
-		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
+		if(x < 0 || y < 0 || x >= width || y >= height) return TileArchive.voidTile;
 		if(tiles[x + y * width] == SpriteArchive.col_flowerRed) return TileArchive.flowerRed;
 		if(tiles[x + y * width] == SpriteArchive.col_yellowDahlia) return TileArchive.yellowDahlia;
 		if(tiles[x + y * width] == SpriteArchive.col_bush) return TileArchive.bushTile;

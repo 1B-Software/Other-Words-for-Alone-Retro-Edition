@@ -30,23 +30,24 @@ import robatortas.code.files.project.archive.tileArchive.TileArchive;
 
 public class GrassTile extends TileManager {
 	
-	private List<TileManager> seamedTiles;
+	private List<Integer> seamedTiles = new LinkedList<Integer>();
+	
+	int sandId=25, waterId=3;
 	
 	public GrassTile(SpriteManager sprite, int id) {
 		super(sprite, id);
-
-		this.seamedTiles = new LinkedList<TileManager>();
 		
-		seamedTiles.add(TileArchive.sand);
-		seamedTiles.add(TileArchive.water);
+		seamedTiles.add(sandId);
+		seamedTiles.add(waterId);
 		
-//		System.out.println(seamedTiles.get(1));
+		System.out.println(seamedTiles.get(0));
 		
 		super.seamsToRock = true;
 		super.seamsToSand = true;
+//		for(int i = 0; i < seamedTiles.size(); i++) {
+//			System.out.println(seamedTiles.get(i));
+//		}
 	}
-	
-	ConnectTile connect;
 	
 	// Efficient connected textures rendering!
 	// Connects when for example down = there is water one tile down the grass tile!!!
