@@ -48,7 +48,9 @@ public class RenderMethod {
 		xScroll = (int) (LevelManager.player.x - Globals.WIDTH / 2 + 3);
 		yScroll = (int) (LevelManager.player.y - Globals.HEIGHT / 2);
 		
-		pixelIterations();
+		// Copy rendered pixels to canvas buffer pixels
+		game.screen.pixels = game.pixels;
+		
 		generalSettings();
 		
 //		if(xScroll > level.width * 16 - screen.width) xScroll = level.width * 16 - screen.width + 2;
@@ -96,19 +98,6 @@ public class RenderMethod {
 				font.draw("OS: " + game.resources.getOSName(), 1, 5*23, false, screen);
 				font.draw("Dev_Mode:" + GameManager.DEV_MODE, 1, 5*25, false, screen);
 			}
-		}
-	}
-	
-	/**<NEWLINE>
-	 * PixelIterations function
-	 * <br><br>
-	 * Iterates through the pixels in the screen class and passes them to the buffer pixels.
-	 * 
-	 * @see RenderManager
-	 */
-	public void pixelIterations() {
-		for(int i = 0; i < game.pixels.length; i++) {	
-			game.pixels[i] = game.screen.pixels[i];
 		}
 	}
 }
