@@ -170,6 +170,10 @@ public class RenderManager {
 		
 		image.setRGB(0, 0, sprite.width, sprite.height, sprite.pixels, 0, sprite.width);
 		
+		int[] pix = null;
+		
+		int[] imagePixels = image.getRGB(0, 0, mob.getSprite().width, mob.getSprite().height, pix, 0, mob.getSprite().width);
+		
 //		System.out.println(image);
 		
 		for(int y = 0; y < sprite.height; y++) {
@@ -182,7 +186,8 @@ public class RenderManager {
 				if(flip == 1 || flip == 3) xs = (sprite.width-1) - x;
 				if(xa < -sprite.width || xa >= width || ya < 0 || ya >= height) break;
 				if(xa < 0) xa = 0;
-				int color = mob.getSprite().pixels[xs + ys * sprite.width];
+				
+				int color = mob.getSprite().pixels[xs + ys * sprite.width] = imagePixels[xs + ys * sprite.width];
 				if(color != 0xffff00ff) {
 					pixels[xa+ya*width] = color;
 					if(mob.hurtTime > 0) pixels[xa+ya*width] = 0xff << 24 | random.nextInt(0xffffff);
