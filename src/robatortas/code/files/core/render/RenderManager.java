@@ -1,12 +1,11 @@
 package robatortas.code.files.core.render;
 
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import robatortas.code.files.core.entities.Mob;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.TileManager;
-import robatortas.code.files.core.utils.CrashHandler;
-import robatortas.code.files.project.archive.SheetArchive;
 
 /**<NEWLINE>
  * RenderManager (AKA: Screen):
@@ -159,10 +158,19 @@ public class RenderManager {
 		}
 	}
 	
+	
+	// TESTING GROUNDS!!!!
+	
 	// Rendering Mobs
 	public void renderMob(int xp, int yp, Mob mob, SpriteManager sprite, int flip) {
 		xp -= xOffset;
 		yp -= yOffset;
+		
+		BufferedImage image = new BufferedImage(sprite.width, sprite.height, BufferedImage.TYPE_INT_ARGB);
+		
+		image.setRGB(0, 0, sprite.width, sprite.height, sprite.pixels, 0, sprite.width);
+		
+//		System.out.println(image);
 		
 		for(int y = 0; y < sprite.height; y++) {
 			int ya = y+yp;
