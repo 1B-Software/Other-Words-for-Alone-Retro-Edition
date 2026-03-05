@@ -45,7 +45,7 @@ public class Graphical {
 		if(yOffset == 0) yOffset = portionHeight;
 		for(int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++) {
-				screen.renderBox(x+(i*xOffset), y+(j*yOffset), portionWidth, portionHeight, color, false);
+				screen.renderBox(x+(i*xOffset), y+(j*yOffset), portionWidth, portionHeight, color, 255, false);
 			}
 		}
 	}

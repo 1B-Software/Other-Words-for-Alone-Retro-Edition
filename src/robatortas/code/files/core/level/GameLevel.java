@@ -29,7 +29,7 @@ public class GameLevel extends LevelManager {
 		player = new Player(100<<4, 100<<4, input);
 		add(player);
 		
-		add(new Chicken(4 << 4, 4 << 4));
+		add(new Chicken(100<<4, 100<<4));
 		add(new Cow(4 << 4, 4 << 4));
 		add(new Sheep(4 << 4, 4 << 4));
 		

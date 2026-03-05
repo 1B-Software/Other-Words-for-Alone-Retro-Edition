@@ -58,7 +58,14 @@ public class ItemEntity extends EntityManager {
 	public void render(RenderManager screen) {
 		// Blinking when death is close
 		if(tickTime >= (lifeTime - 120)) {
-			if((tickTime / 10) % 2 == 0) return;
+			int deathTime = 0x00;
+			deathTime+=0x01;
+//			if((tickTime / 10) % 2 == 0) return;
+			if((tickTime / 10) % 2 == 0) {
+				if(item.getSprite().alpha != 0x00)item.getSprite().alpha -= deathTime;
+			} else {
+			    item.getSprite().alpha = 0xFF;
+			}
 		}
 		int yy = 0;
 		if(physicsEngine.calculations.z0 == 0 && tickTime > 60) {

@@ -82,7 +82,7 @@ public class LevelManager {
 	public void render(int xScroll, int yScroll, RenderManager screen) {
 		this.screen = screen;
 		
-		LevelRenderManager levelRender = new LevelRenderManager(this ,screen);
+		LevelRenderManager levelRender = new LevelRenderManager(this, screen);
 		
 		levelRender.pinPoints(xScroll, yScroll);
 				
@@ -169,6 +169,7 @@ public class LevelManager {
 		if(tiles[x + y * width] == SpriteArchive.col_woodWall) return TileArchive.woodWall;
 		if(tiles[x + y * width] == SpriteArchive.col_chair) return TileArchive.woodFloor;
 		if(tiles[x + y * width] == SpriteArchive.col_table) return TileArchive.woodFloor;
+		if(tiles[x + y * width] == SpriteArchive.col_sand) return TileArchive.sand;
 		
 		// Nature
 		if(tiles[x + y * width] == SpriteArchive.col_bush) return TileArchive.grass;
@@ -194,10 +195,6 @@ public class LevelManager {
 	 */
 	public TileManager getPost(int x, int y) {
 		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
-		if(tiles[x + y * width] == SpriteArchive.col_flowerRed) return TileArchive.flowerRed;
-		if(tiles[x + y * width] == SpriteArchive.col_yellowDahlia) return TileArchive.yellowDahlia;
-		if(tiles[x + y * width] == SpriteArchive.col_bush) return TileArchive.bushTile;
-		if(tiles[x + y * width] == SpriteArchive.col_oakTree) return TileArchive.tree;
 		return TileArchive.voidTile;
 	}
 	
@@ -214,7 +211,11 @@ public class LevelManager {
 	 */
 	public TileManager getFront(int x, int y) {
 		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
+		if(tiles[x + y * width] == SpriteArchive.col_oakTree) return TileArchive.tree;
 		
+		if(tiles[x + y * width] == SpriteArchive.col_flowerRed) return TileArchive.flowerRed;
+		if(tiles[x + y * width] == SpriteArchive.col_yellowDahlia) return TileArchive.yellowDahlia;
+		if(tiles[x + y * width] == SpriteArchive.col_bush) return TileArchive.bushTile;
 		return TileArchive.voidTile;
 	}
 }

@@ -15,6 +15,7 @@ public class EntityManager {
 	public LevelManager level;
 	
 	protected Random random = new Random();
+	public int alpha = 0xff;
 	
 	public boolean removed;
 	

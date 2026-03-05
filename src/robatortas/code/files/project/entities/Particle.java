@@ -31,6 +31,8 @@ public class Particle extends MobAddons {
 	public void update() {
 		time++;
 		
+		alpha -= (time/3);
+		
 		physicsEngine.calculations.physics();
 		move2((int)physicsEngine.calculations.x0 - x, (int)physicsEngine.calculations.y0 - y);
 		
@@ -46,7 +48,7 @@ public class Particle extends MobAddons {
 	}
 	
 	public void render(RenderManager screen) {
-		if(sprite == null) screen.renderBox(x, y - (int) physicsEngine.calculations.z0, 2, 2, color, false);
+		if(sprite == null) screen.renderBox(x, y - (int) physicsEngine.calculations.z0, 2, 2, color, alpha, false);
 		else screen.renderSprite(x, y - (int) physicsEngine.calculations.z0, sprite, sprite.SIZE, 0);
 	}
 	

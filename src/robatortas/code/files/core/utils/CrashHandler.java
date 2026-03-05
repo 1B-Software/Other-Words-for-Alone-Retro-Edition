@@ -95,6 +95,7 @@ public class CrashHandler implements Runnable {
 		StringWriter exception = new StringWriter();
 		throwable.printStackTrace(new PrintWriter(exception));
 		String stackTrace = exception.toString();
+		
 		text.setText("LOG:\n\n"
 				+ "Reason: " + info + "\n\n" + "Exit_Code: " + errorType.exitCode + "\n\n" + stackTrace);
 		scroll.setPreferredSize(new Dimension(400, 200));
@@ -137,8 +138,8 @@ public class CrashHandler implements Runnable {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(true);
 		this.start();
-		frame.setVisible(true);
 		frame.add(panel);
+		frame.setVisible(true);
 		
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 	}
@@ -198,7 +199,13 @@ public class CrashHandler implements Runnable {
 		while(running) {
 			tickTime++;
 			if(tickTime < 10) {
-			frame.requestFocus();
+				frame.requestFocus();
+			}
+			try {
+				Thread.sleep(tickTime);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
