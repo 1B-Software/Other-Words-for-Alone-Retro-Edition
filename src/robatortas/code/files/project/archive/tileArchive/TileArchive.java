@@ -2,7 +2,6 @@ package robatortas.code.files.project.archive.tileArchive;
 
 import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.project.archive.SpriteArchive;
-import robatortas.code.files.project.archive.tileArchive.GUI.GUIRender;
 import robatortas.code.files.project.archive.tileArchive.Interior.BedTile;
 import robatortas.code.files.project.archive.tileArchive.Interior.ChairTile;
 import robatortas.code.files.project.archive.tileArchive.Interior.TableTile;
@@ -10,6 +9,7 @@ import robatortas.code.files.project.archive.tileArchive.Nature.BushTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.CobblePathTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.DirtTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.FlowerTile;
+import robatortas.code.files.project.archive.tileArchive.Nature.GrassBladeTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.GrassTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.PebbleTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.PoppyTile;
@@ -48,4 +48,6 @@ public class TileArchive {
 	public static TileManager table = new TableTile(SpriteArchive.table, 22);
 	public static TileManager chair = new ChairTile(SpriteArchive.chair, 23);
 	public static TileManager bed = new BedTile(SpriteArchive.bed, 24);
+	public static TileManager sand = new GrassTile(SpriteArchive.sand, 25);
+	public static TileManager grassBlades = new GrassBladeTile(SpriteArchive.grass, 26);
 }

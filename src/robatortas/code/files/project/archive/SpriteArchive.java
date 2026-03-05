@@ -18,6 +18,8 @@ public class SpriteArchive {
 	//////////////
 	
 	public static SpriteManager grass = new SpriteManager(16, 1, 1, groundNature);
+	public static SpriteManager grassBlades = new SpriteManager(16, 7, 1, foliage);
+	public static SpriteManager sand = new SpriteManager(16, 4, 1, groundNature);
 	public static SpriteManager tree = new SpriteManager(32, 0, 0, foliage);
 	public static SpriteManager tree2 = new SpriteManager(16, 2, 3, nature);
 	public static SpriteManager pebble = new SpriteManager(16, 2, 0, nature);
@@ -100,6 +102,7 @@ public class SpriteArchive {
 	
 	// Nature
 	public static final int col_bush = 0xff286d1f;
+	public static final int col_sand = 0xffBDB756;
 	
 	// TREE
 	public static final int col_oakTree = 0xff003D00;

@@ -5,6 +5,7 @@ public class SpriteManager {
 	public int x, y;
 	public int SIZE;
 	public int width, height;
+	public int alpha = 0xff;
 	public SpriteSheetManager sheet;
 	public int[] pixels;
 	
@@ -19,10 +20,11 @@ public class SpriteManager {
 		load();
 	}
 	
-	public SpriteManager(int size, int color) {
+	public SpriteManager(int size, int color, int alpha) {
 		this.SIZE = size;
 		this.width = size;
 		this.height = size;
+		this.alpha = alpha;
 		pixels = new int[size*size];
 		
 		for(int i = 0; i < size*size; i++) {

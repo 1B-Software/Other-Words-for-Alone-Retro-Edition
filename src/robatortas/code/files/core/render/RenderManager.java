@@ -47,6 +47,27 @@ public class RenderManager {
 		}
 	}
 	
+	
+	private int blendPixel(int dst, int src) {
+	    int srcA = (src >> 24) & 0xFF;
+	    if(srcA == 255) return src;   // fully opaque, skip math
+	    if(srcA == 0)   return dst;   // fully transparent, skip
+
+	    float a = srcA / 255.0f;
+	    int srcR = (src >> 16) & 0xFF;
+	    int srcG = (src >>  8) & 0xFF;
+	    int srcB =  src        & 0xFF;
+	    int dstR = (dst >> 16) & 0xFF;
+	    int dstG = (dst >>  8) & 0xFF;
+	    int dstB =  dst        & 0xFF;
+
+	    int r = (int)(srcR * a + dstR * (1 - a));
+	    int g = (int)(srcG * a + dstG * (1 - a));
+	    int b = (int)(srcB * a + dstB * (1 - a));
+
+	    return 0xFF000000 | (r << 16) | (g << 8) | b;
+	}
+	
 	// TODO: LATER!
 	public void debug(int xp, int yp, int w, int h, int color, int perimeter) {
 		xp -= xOffset;
@@ -66,7 +87,7 @@ public class RenderManager {
 		}
 	}
 	
-	public void renderBox(int xp, int yp, int w, int h, int color, boolean fixed) {
+	public void renderBox(int xp, int yp, int w, int h, int color, int alpha, boolean fixed) {
 		// fixed meaning that it is literally attached to the screen
 		if(!fixed) {
 			xp -= xOffset;
@@ -79,7 +100,8 @@ public class RenderManager {
 				int xa = x+xp;
 				if(xa < -w || xa >= width || ya < 0 || ya >= height) break;
 				if(xa < 0) xa = 0;
-				pixels[xa+ya*width] = color;
+				color = (alpha << 24) | (color & 0x00FFFFFF);
+				pixels[xa+ya*width] = blendPixel(pixels[xa+ya*width], color);
 			}
 		}
 	}
@@ -96,7 +118,7 @@ public class RenderManager {
 				if(xa < -tile.sprite.width || xa >= width || ya < 0 || ya >= height) break;
 				if(xa < 0) xa = 0;
 				int color = tile.sprite.pixels[x+y*tile.sprite.width];
-				if(color != 0xffff00ff) pixels[xa+ya*width] = color;
+				if(color != 0xffff00ff) pixels[xa+ya*width] = blendPixel(pixels[xa+ya*width], color);
 			}
 		}
 	}
@@ -131,8 +153,10 @@ public class RenderManager {
 				
 				if(scale == 0) color = sprite.pixels[xs + ys * sprite.width];
 				else color = scaledPixels[xs + ys * sprite.width];
-				if(color == 0) color = 0xffff00ff;
-				if(color != 0xffff00ff && scale <= sprite.width) pixels[(xa + (sprite.width-scale))+(ya + (sprite.height-scale))*width] = color;
+				if(color != 0xffff00ff && scale <= sprite.width) {
+				    if(color != 0) color = (sprite.alpha << 24) | (color & 0x00FFFFFF);
+				    pixels[(xa + (sprite.width-scale))+(ya + (sprite.height-scale))*width] = blendPixel(pixels[xa+ya*width], color);
+				}
 			}
 		}
 	}
@@ -154,7 +178,7 @@ public class RenderManager {
 				if(xa < 0) xa = 0;
 				int color = sheet.pixels[xs + ys * sheet.WIDTH];
 				
-				if(color != 0xffff00ff) pixels[xa + ya * width] = color;
+				if(color != 0xffff00ff) pixels[xa + ya * width] = blendPixel(pixels[xa+ya*width], color);
 			}
 		}
 	}
@@ -176,8 +200,10 @@ public class RenderManager {
 				if(xa < 0) xa = 0;
 				int color = mob.getSprite().pixels[xs + ys * sprite.width];
 				if(color != 0xffff00ff) {
-					pixels[xa+ya*width] = color;
-					if(mob.hurtTime > 0) pixels[xa+ya*width] = 0xff << 24 | random.nextInt(0xffffff);
+					color = (mob.alpha << 24) | (color & 0x00FFFFFF);
+					pixels[xa+ya*width] = blendPixel(pixels[xa+ya*width], color);
+//					if(mob.hurtTime > 0) pixels[xa+ya*width] = 0xff << 24 | random.nextInt(0xffffff);
+					if(mob.hurtTime > 0) pixels[xa+ya*width] = blendPixel(pixels[xa+ya*width], color >> 2 | 0x00);
 				}
 			}
 		}

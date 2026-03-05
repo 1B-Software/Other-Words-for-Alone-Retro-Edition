@@ -48,19 +48,19 @@ public class Bee extends MobAddons {
 		
 		int num = 10;
 		
-		screen.renderBox(x, y - num, 2, 2, 0xffffc300, false);
-		screen.renderBox(x+2, y - num, 2, 2, 0xff000000, false);
+		screen.renderBox(x, y - num, 2, 2, 0xffffc300, alpha, false);
+		screen.renderBox(x+2, y - num, 2, 2, 0xff000000, alpha, false);
 		
-		if((tickTime / 3) % 2 == 0) screen.renderBox(x + 1, y - num, 2, 2, 0xffd8fbff, false);
-		else screen.renderBox(x + 1, (y - 2) - num, 2, 2, 0xffd8fbff, false);
+		if((tickTime / 3) % 2 == 0) screen.renderBox(x + 1, y - num, 2, 2, 0xffd8fbff, alpha,false);
+		else screen.renderBox(x + 1, (y - 2) - num, 2, 2, 0xffd8fbff, alpha, false);
 		
 		if(dir == 1) {
-			screen.renderBox(x, y - num, 2, 2, 0xffffc300, false);
-			screen.renderBox(x+2, y - num, 2, 2, 0xff000000, false);
+			screen.renderBox(x, y - num, 2, 2, 0xffffc300, alpha, false);
+			screen.renderBox(x+2, y - num, 2, 2, 0xff000000, alpha, false);
 		}
 		if(dir == 3) {
-			screen.renderBox(x+2, y - num, 2, 2, 0xffffc300, false);
-			screen.renderBox(x, y - num, 2, 2, 0xff000000, false);
+			screen.renderBox(x+2, y - num, 2, 2, 0xffffc300, alpha, false);
+			screen.renderBox(x, y - num, 2, 2, 0xff000000, alpha, false);
 		}
 	}
 	

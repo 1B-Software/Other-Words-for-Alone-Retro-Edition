@@ -120,7 +120,7 @@ public class GameManager extends Canvas implements Runnable {
 	 */
 	public void run() {
 		while(threadUtils.running) {
-			String consolePrint = "ticks: " + looping.ticks + "  ||  " + "fps: " + looping.frames;
+			String consolePrint = "ticks: " + LoopingUtils.ticks + "  ||  " + "fps: " + LoopingUtils.frames;
 			looping.whileRunning();
 			looping.deltaLoop(this);
 			
@@ -132,7 +132,7 @@ public class GameManager extends Canvas implements Runnable {
 			});
 			
 			// Rendering
-			looping.frames++;
+			LoopingUtils.frames++;
 			render();
 		}
 		stop();

@@ -4,6 +4,7 @@ import robatortas.code.files.core.entities.Mob;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
 import robatortas.code.files.core.sound.SoundEngine;
+import robatortas.code.files.project.entities.Particle;
 
 public class MobAddons extends Mob {
 	
@@ -66,6 +67,17 @@ public class MobAddons extends Mob {
 	public void hurt(Mob mob, int damage, int attackDir) {
 		dealDamage(damage, attackDir);
 
+		Particle blood;
+		
+		int bloodAmount = health > 0 ? 10 : 50;
+		
+		for(int i = 0; i < bloodAmount; i++) {
+			level.add(blood = new Particle(x, y));
+			blood.setColor(0xffff0000);
+			blood.life = 50;
+		}
+		
+		
 		SoundEngine.entityHurt.play();
 		SoundEngine.drop.play();
 	}
