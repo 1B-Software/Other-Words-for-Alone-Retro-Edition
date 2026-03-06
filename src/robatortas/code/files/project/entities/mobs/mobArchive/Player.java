@@ -213,8 +213,8 @@ public class Player extends MobAddons {
 			}
 			
 			// Swimming sillhouete
-			if((tickTime / 32) % 2 == 0) screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 1, 10, SheetArchive.player), 16, 0);
-			else screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 2, 10, SheetArchive.player), 16, 0);
+			if((tickTime / 32) % 2 == 0) screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 1, 10, SheetArchive.player), 1, 0);
+			else screen.renderSprite(x - renderAxysConstX + 8, y - renderAxysConstY/3, new SpriteManager(16, 2, 10, SheetArchive.player), 1, 0);
 			
 			if(dir == 0) animSprite = upSwim;
 			if(dir == 1) animSprite = rightSwim;
@@ -244,13 +244,13 @@ public class Player extends MobAddons {
 	private void beforeLayer(RenderManager screen) {
 		switch(attackDir) {
 		case 0: 
-			if(attackTime > 0) screen.renderSprite(x-10, y-26 + punchY, SpriteArchive.swingFx, 16, 0);
+			if(attackTime > 0) screen.renderSprite(x-10, y-26 + punchY, SpriteArchive.swingFx, 1, 0);
 			break;
 		case 1:
-			if(attackTime > 0) screen.renderSprite(x+1, y-16 + punchY, SpriteArchive.swingFx_Sides, 16, 1);
+			if(attackTime > 0) screen.renderSprite(x+1, y-16 + punchY, SpriteArchive.swingFx_Sides, 1, 1);
 			break;
 		case 3:
-			if(attackTime > 0) screen.renderSprite(x-20, y-16 + punchY, SpriteArchive.swingFx_Sides, 16, 0);
+			if(attackTime > 0) screen.renderSprite(x-20, y-16 + punchY, SpriteArchive.swingFx_Sides, 1, 0);
 			break;
 		}
 		
@@ -259,7 +259,7 @@ public class Player extends MobAddons {
 	private void afterLayer(RenderManager screen) {
 		switch(attackDir) {
 		case 2:
-			if(attackTime > 0) screen.renderSprite(x-10, y-8 + punchY, SpriteArchive.swingFx, 16, 2);
+			if(attackTime > 0) screen.renderSprite(x-10, y-8 + punchY, SpriteArchive.swingFx, 1, 2);
 			break;
 		}
 	}

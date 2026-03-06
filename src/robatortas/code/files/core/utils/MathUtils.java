@@ -96,4 +96,9 @@ public class MathUtils {
 		}
 		return subsTime;
 	}
+	
+	public static float normalize(int value, int min, int max) {
+		if(max-min == 0) return 0.0f;
+		return (value-min)/(max-min);
+	}
 }

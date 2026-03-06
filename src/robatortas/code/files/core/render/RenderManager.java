@@ -6,6 +6,7 @@ import robatortas.code.files.core.entities.Mob;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.utils.CrashHandler;
+import robatortas.code.files.core.utils.MathUtils;
 import robatortas.code.files.project.archive.SheetArchive;
 
 /**<NEWLINE>
@@ -107,18 +108,26 @@ public class RenderManager {
 	}
 	
 	// Rendering tiles
-	public void renderTile(int xp, int yp, TileManager tile) {
+	public void renderTile(int xp, int yp, float scale, TileManager tile) {
 		xp -= xOffset;
 		yp -= yOffset;
 		
-		for(int y = 0; y < tile.sprite.height; y++) {
-			int ya = y+yp;
-			for(int x = 0; x < tile.sprite.width; x++) {
-				int xa = x+xp;
-				if(xa < -tile.sprite.width || xa >= width || ya < 0 || ya >= height) break;
-				if(xa < 0) xa = 0;
-				int color = tile.sprite.pixels[x+y*tile.sprite.width];
-				if(color != 0xffff00ff) pixels[xa+ya*width] = blendPixel(pixels[xa+ya*width], color);
+		int outW = (int)(tile.sprite.width  * scale);
+		int outH = (int)(tile.sprite.height * scale);
+		
+		for(int dy = 0; dy < outH; dy++) {
+			int ya = dy + yp;
+			if(ya < 0 || ya >= height) continue;
+			int ys = (int)(dy / scale);
+			for(int dx = 0; dx < outW; dx++) {
+				int xa = dx + xp;
+				if(xa < 0 || xa >= width) continue;
+				int xs = (int)(dx / scale);
+
+				int color = tile.sprite.pixels[xs + ys * tile.sprite.width];
+				if(color == 0xffff00ff) continue;
+				if(color != 0) color = (tile.sprite.alpha << 24) | (color & 0x00FFFFFF);
+				pixels[xa + ya * width] = blendPixel(pixels[xa + ya * width], color);
 			}
 		}
 	}
@@ -133,30 +142,29 @@ public class RenderManager {
 	 * @param scale The size of the sprite
 	 * @param flip Flips the sprite; 1 flips it on x, 2 flips it on y, 3 flips it on x & y
 	 */
-	public void renderSprite(int xp, int yp, SpriteManager sprite, int scale, int flip) {
+	public void renderSprite(int xp, int yp, SpriteManager sprite, float scale, int flip) {
 		xp -= xOffset;
 		yp -= yOffset;
-		
-		int[] scaledPixels = scale(sprite.pixels, sprite.width, sprite.height, scale);
-		
-		for(int y = 0; y < sprite.height; y++) {
-			int ya = y + yp;
-			int ys = y;
-			if(flip == 2 || flip == 3) ys = 15 - y;
-			for(int x = 0; x < sprite.width; x++) {
-				int xa = x + xp;
-				int xs = x;
-				if(flip == 1 || flip == 3) xs = 15 - x;
-				if(xa < - sprite.width || xa >= width || ya < - 0 || ya >= height) break;
-				if(xa < 0) xa = 0;
-				int color = 0;
-				
-				if(scale == 0) color = sprite.pixels[xs + ys * sprite.width];
-				else color = scaledPixels[xs + ys * sprite.width];
-				if(color != 0xffff00ff && scale <= sprite.width) {
-				    if(color != 0) color = (sprite.alpha << 24) | (color & 0x00FFFFFF);
-				    pixels[(xa + (sprite.width-scale))+(ya + (sprite.height-scale))*width] = blendPixel(pixels[xa+ya*width], color);
-				}
+
+		int outW = (int)(sprite.width  * scale);
+		int outH = (int)(sprite.height * scale);
+
+		// Nearest-neighbor -> iterate output pixels, map back to source
+		for(int dy = 0; dy < outH; dy++) {
+			int ya = dy + yp;
+			if(ya < 0 || ya >= height) continue;
+			int ys = (int)(dy / scale);
+			if(flip == 2 || flip == 3) ys = (sprite.height - 1) - ys;
+			for(int dx = 0; dx < outW; dx++) {
+				int xa = dx + xp;
+				if(xa < 0 || xa >= width) continue;
+				int xs = (int)(dx / scale);
+				if(flip == 1 || flip == 3) xs = (sprite.width - 1) - xs;
+
+				int color = sprite.pixels[xs + ys * sprite.width];
+				if(color == 0xffff00ff) continue;
+				if(color != 0) color = (sprite.alpha << 24) | (color & 0x00FFFFFF);
+				pixels[xa + ya * width] = blendPixel(pixels[xa + ya * width], color);
 			}
 		}
 	}

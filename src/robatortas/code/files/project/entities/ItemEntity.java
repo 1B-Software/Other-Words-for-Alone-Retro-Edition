@@ -10,7 +10,7 @@ import robatortas.code.files.project.inventory.ResourceItem;
 
 public class ItemEntity extends EntityManager {
 	
-	private int lifeTime = 60*8;
+	private int lifeTime = 60*10;
 	private int tickTime = 0;
 	
 	public Item item;
@@ -22,6 +22,7 @@ public class ItemEntity extends EntityManager {
 		this.item = item;
 		SoundEngine.drop.play();
 		physicsEngine = new PhysicsEngine(this.x, this.y);
+		item.getSprite().alpha = 0xFF;
 	}
 	
 	public void update() {
@@ -57,7 +58,7 @@ public class ItemEntity extends EntityManager {
 	int zTime = 0;
 	public void render(RenderManager screen) {
 		// Blinking when death is close
-		if(tickTime >= (lifeTime - 120)) {
+		if(tickTime >= (lifeTime - 240)) {
 			int deathTime = 0x00;
 			deathTime+=0x01;
 //			if((tickTime / 10) % 2 == 0) return;
@@ -98,7 +99,7 @@ public class ItemEntity extends EntityManager {
 		int shade = 0;
 		shade += ((int)physicsEngine.calculations.z0 * 2) - 30;
 		if(shade <= 1) screen.renderColorRelativeToLocation(x - 10, (y + 1) - 10, item.getSprite(), 0xff << 16| -shade, 0, level);
-		screen.renderSprite(x - 10, ((y + yy) - (int) physicsEngine.calculations.z0) - 10, item.getSprite(), item.getSprite().SIZE, 0);
+		screen.renderSprite(x - 10, ((y + yy) - (int) physicsEngine.calculations.z0) - 10, item.getSprite(), 1, 0);
 
 	}
 }

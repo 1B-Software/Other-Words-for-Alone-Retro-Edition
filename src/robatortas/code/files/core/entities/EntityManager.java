@@ -11,6 +11,7 @@ import robatortas.code.files.project.entities.ItemEntity;
 public class EntityManager {
 	
 	public int x, y;
+	float velX, velY;
 	public SpriteManager sprite;
 	public LevelManager level;
 	

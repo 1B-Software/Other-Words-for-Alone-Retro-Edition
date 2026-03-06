@@ -29,6 +29,6 @@ public class DirtTile extends TileManager {
 	}
 
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
-		screen.renderTile(x << 4, y << 4, this);
+		screen.renderTile(x << 4, y << 4, 1, this);
 	}
 }

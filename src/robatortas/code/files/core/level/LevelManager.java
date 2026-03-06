@@ -23,6 +23,7 @@ public class LevelManager {
 	public RenderManager screen;
 	
 	public int[] tiles;
+	public int[] tileData; // per-cell state (example: damage taken)
 	
 	// Lists
 	public List<EntityManager> entities = new LinkedList<EntityManager>();
@@ -40,6 +41,12 @@ public class LevelManager {
 		loadLevel(path);
 		addons = new LevelAddons(this);
 	}
+	
+	public class TileState {
+	    public int health;
+	}
+	public TileState[] tileStates;
+	
 	
 	public void loadLevel(String path) {
 	}
