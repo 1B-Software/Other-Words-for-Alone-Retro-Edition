@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.level.LevelManager;
@@ -15,6 +16,7 @@ public class LevelRenderManager {
 
 	private RenderManager screen;
 	private LevelManager level;
+	private Random random = new Random();
 
 	public LevelRenderManager(LevelManager level, RenderManager screen) {
 		this.level = level;
@@ -28,7 +30,28 @@ public class LevelRenderManager {
 		x0 = (xScroll - 6) >> 4;
 		x1 = (xScroll + screen.width + 16) >> 4;
 		y0 = (yScroll - 6) >> 4;
-		y1 = (yScroll + screen.height + 16) >> 4;
+		y1 = (yScroll + screen.height + 32) >> 4;
+	}
+	
+	public List<TileManager> getTile(int id) {
+		List<TileManager> lT = new ArrayList<>();
+		for(int y = y0; y < y1; y++) {
+			for(int x = x0; x < x1; x++) {
+				TileManager lt = level.getLevel(x, y);
+				TileManager pt = level.getPost(x, y);
+				TileManager ft = level.getFront(x, y);
+				if(ft != TileArchive.voidTile || pt != TileArchive.voidTile || lt != TileArchive.voidTile ) {
+					lT.add(lt);
+					lT.add(pt);
+					lT.add(ft);
+				}
+			}
+		}
+		List<TileManager> resultList = new ArrayList<>();
+		for(int i = 0; i < lT.size(); i++) {
+			if(lT.get(i).id == id) resultList.add(lT.get(i));
+		}
+		return resultList;
 	}
 
 	// Holds a front tile's grid position and tile reference for Y-sorted rendering
@@ -46,7 +69,7 @@ public class LevelRenderManager {
 		 * and the top layer is the one rendering on the bottom of the game.
 		 * It's just following basic programming logic.
 		 */
-
+		
 		for(int y = y0; y < y1; y++) {
 			for(int x = x0; x < x1; x++) {
 				if(x < 0 || y < 0 || x >= level.width|| y >= level.height) continue;

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import robatortas.code.files.core.entities.EntityManager;
+import robatortas.code.files.core.level.LevelManager.TileState;
 import robatortas.code.files.core.utils.CrashHandler;
 import robatortas.code.files.core.utils.CrashHandler.ErrorType;
 import robatortas.code.files.project.entities.mobs.mobArchive.Bee;
@@ -44,6 +45,11 @@ public class GameLevel extends LevelManager {
 			int w = width = image.getWidth();
 			int h = height = image.getHeight();
 			tiles = new int[w*h];
+			tileData = new int[w*h];
+			tileStates = new TileState[w*h];
+			for (int i = 0; i < tileStates.length; i++) {
+			    tileStates[i] = new TileState();
+			}
 			image.getRGB(0, 0, w, h, tiles, 0 , w);
 		} catch(Exception e) {
 			new CrashHandler().handle(e, "Level file is null at location: " + path, ErrorType.SERIOUS);

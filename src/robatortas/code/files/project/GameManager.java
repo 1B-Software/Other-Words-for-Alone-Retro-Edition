@@ -1,9 +1,7 @@
 package robatortas.code.files.project;
 
-import java.awt.AlphaComposite;
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -11,14 +9,11 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
-import robatortas.code.files.core.console.Console;
 import robatortas.code.files.core.input.MouseManager;
 import robatortas.code.files.core.level.LevelManager;
-import robatortas.code.files.core.render.Fonts;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.RenderMethod;
 import robatortas.code.files.core.utils.LoopingUtils;
-import robatortas.code.files.core.utils.MathUtils;
 import robatortas.code.files.core.utils.ResourceUtils;
 import robatortas.code.files.core.utils.ThreadUtils;
 import robatortas.code.files.project.settings.Globals;
@@ -172,9 +167,22 @@ public class GameManager extends Canvas implements Runnable {
 		g.setColor(new Color(0x1F1F1F));
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
+		float targetAspect = (float) Globals.WIDTH / Globals.HEIGHT; // 250/220
+		float windowAspect = (float) getWidth() / getHeight();
+		
 		int w = getWindowSize().width;
 	    int h = getWindowSize().height;
 		
+	    if (windowAspect > targetAspect) {
+	        // window is wider than the game → pillarbox (black bars on sides)
+	        h = getHeight();
+	        w = (int) (h * targetAspect);
+	    } else {
+	        // window is taller than the game → letterbox (black bars top/bottom)
+	        w = getWidth();
+	        h = (int) (w / targetAspect);
+	    }
+	    
 		int xo = (getWidth() - w) / 2;
 		int yo = (getHeight() - h) / 2;
 
@@ -187,11 +195,6 @@ public class GameManager extends Canvas implements Runnable {
 		
 		g.dispose();
 		bs.show();
-	}
-	
-	private Composite opacity(float alpha) {
-		int type = AlphaComposite.SRC_OVER;
-		return (AlphaComposite.getInstance(type, alpha));
 	}
 	
 	public void generalPurposeKeys() {

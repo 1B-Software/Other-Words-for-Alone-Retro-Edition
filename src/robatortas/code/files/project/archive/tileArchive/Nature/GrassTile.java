@@ -46,7 +46,7 @@ public class GrassTile extends TileManager {
 		connect.below = TileArchive.water.sprite;
 		connect.init();
 		
-		if(!connect.connects()) screen.renderTile(x << 4, y << 4, this);
+		if(!connect.connects()) screen.renderTile(x << 4, y << 4, 1, this);
 	}
 	
 	SpriteSheetManager ground = new SpriteSheetManager("/textures/spritesheet/nature/ground.png", 208, 96);
