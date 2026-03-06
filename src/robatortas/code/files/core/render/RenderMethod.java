@@ -19,7 +19,8 @@ public class RenderMethod {
 	private Fonts font = new Fonts();
 	private GUI gui = new GUI(game);
 	
-	public static int xScroll, yScroll;
+	public static float xScroll;
+	public static float yScroll;
 	
 	// General settings for the rendering
 	public void generalSettings() {
@@ -45,8 +46,15 @@ public class RenderMethod {
 		this.level = game.level;
 		this.screen = game.screen;
 		
-		xScroll = (int) (LevelManager.player.x - Globals.WIDTH / 2 + 3);
-		yScroll = (int) (LevelManager.player.y - Globals.HEIGHT / 2);
+		float targetX = LevelManager.player.x - Globals.WIDTH / 2 + 3;
+		float targetY = LevelManager.player.y - Globals.HEIGHT / 2;
+		float smooth = 0.15f;
+
+		xScroll += (targetX - xScroll) * smooth;
+		yScroll += (targetY - yScroll) * smooth;
+		
+//		xScroll = (int)(LevelManager.player.x - Globals.WIDTH / 2 + 3);
+//		yScroll = (int)(LevelManager.player.y - Globals.HEIGHT / 2);
 		
 		pixelIterations();
 		generalSettings();
@@ -78,7 +86,7 @@ public class RenderMethod {
 		if(game.DEBUG) {
 			font.setColor(0xff222222);
 			font.draw("E:" + level.entities.size(),0, 5, false, screen);
-			font.draw("X:" + (LevelManager.player.x >> 4) + " Y:" + (LevelManager.player.y >> 4), 2, 5*3, false, screen);
+			font.draw("X:" + ((int)LevelManager.player.x >> 4) + " Y:" + ((int)LevelManager.player.y >> 4), 2, 5*3, false, screen);
 			font.draw("FPS:" + LoopingUtils.fps, 2, 5*5, false, screen);
 			font.draw("TPS:" + LoopingUtils.tps, 2, 5*7, false, screen);
 			

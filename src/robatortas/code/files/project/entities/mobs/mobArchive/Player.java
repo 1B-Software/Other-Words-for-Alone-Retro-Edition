@@ -33,7 +33,7 @@ public class Player extends MobAddons {
 	
 	public int stamina = 10;
 	
-	public Player(int x, int y, InputManager input) {
+	public Player(float x, float y, InputManager input) {
 		this.x = x;
 		this.y = y;
 		this.input = input;
@@ -44,7 +44,7 @@ public class Player extends MobAddons {
 	
 	private static int velX = 1;
 	private static int velY = 1;	
-	public int xa, ya;
+	public float xa, ya;
 	
 	public int tickTime;
 	
@@ -53,7 +53,7 @@ public class Player extends MobAddons {
 		this.xa = 0;
 		this.ya = 0;
 		
-		int speed = 1;
+		float speed = 0.5f;
 		
 		tickTime++;
 		
@@ -63,7 +63,6 @@ public class Player extends MobAddons {
 		stamina();
 		
 		particleEffects();
-		
 		if(isSwimming) {
 			swimTime++;
 			speed = tickTime & 1;
@@ -133,6 +132,9 @@ public class Player extends MobAddons {
 		attackDir = dir;
 		attackTime = 5;
 		
+		int iX = (int)x;
+		int iY = (int)y;
+		
 		int xRange = 10;
 		int yRange = 20;
 		// coordinate parameters: -- ++
@@ -141,20 +143,20 @@ public class Player extends MobAddons {
 		if (dir == 3) hurt(x, y, x - xRange - 5, y - 10);
 		if (dir == 2) hurt(x, y + yRange - 2, x - 5, y);
 		
-		int xt = x >> 4;
-		int yt = y >> 4;
-		if (attackDir == 0) yt = (y - 16) >> 4;
-		if (attackDir == 1) xt = (x + 16) >> 4;
-		if (attackDir == 3) xt = (x - 16) >> 4;
-		if (attackDir == 2) yt = (y + 16) >> 4;
+		int xt = iX >> 4;
+		int yt = iY >> 4;
+		if (attackDir == 0) yt = (iY - 16) >> 4;
+		if (attackDir == 1) xt = (iX + 16) >> 4;
+		if (attackDir == 3) xt = (iX - 16) >> 4;
+		if (attackDir == 2) yt = (iY + 16) >> 4;
 		
 		if (xt >= 0 && yt >= 0 && xt < level.width && yt < level.height) {
 			level.getFront(xt, yt).hurt(level, this, xt, yt, 2, attackDir); //Tile tile, int x, int y, int damage
 		}
 	}
 	
-	private void hurt(int x0, int y0, int x1, int y1) {
-		List<EntityManager> entities = level.getEntities(x0, y0, x1, y1);
+	private void hurt(float f, float y, float g, float h) {
+		List<EntityManager> entities = level.getEntities(f, y, g, h);
 		for(int i = 0; i < entities.size(); i++) {
 			EntityManager e = entities.get(i);
 			if(e != this && !e.isInvincible()) {
@@ -164,6 +166,7 @@ public class Player extends MobAddons {
 	}
 	
 	public void touched(EntityManager entity) {
+		if(iE == null) return;
 		entity.getItem(iE).takeItem(this);
 	}
 	
@@ -266,18 +269,20 @@ public class Player extends MobAddons {
 	
 	// Particle Effects for all type of states from the player
 	private void particleEffects() {
+		int iX = (int)x;
+		int iY = (int)y;
 		
 		// When moving
 		if(walking) {
 			
 			if(tickTime % 17 == 0 && !isSwimming) {
 				for(int i = 0; i < 3; i++) {
-					level.add(particle = new Particle(x, y));
+					level.add(particle = new Particle(iX, iY));
 					
 					// particle colors depend on what the player is standing on.
-					for(int yy = 0; yy < level.getLevel(x >> 4, y >> 4).sprite.height; yy++) {
-						for(int xx = 0; xx < level.getLevel(x >> 4, y >> 4).sprite.width; xx++) {
-							int color = level.getLevel(x >> 4, y >> 4).sprite.pixels[xx+yy*level.getLevel(x >> 4, y >> 4).sprite.width];
+					for(int yy = 0; yy < level.getLevel(iX >> 4, iY >> 4).sprite.height; yy++) {
+						for(int xx = 0; xx < level.getLevel(iX >> 4, iY >> 4).sprite.width; xx++) {
+							int color = level.getLevel(iX >> 4, iY >> 4).sprite.pixels[xx+yy*level.getLevel(iX >> 4, iY >> 4).sprite.width];
 							
 							/* 
 							 * Each hex number = 4 bits.
@@ -306,7 +311,7 @@ public class Player extends MobAddons {
 			if(isSwimming) {
 				if(swimTime == 1) {
 					for(int i = 0; i < 50; i++) {
-						level.add(particle = new Particle(x, y));
+						level.add(particle = new Particle(iX, iY));
 						particle.setColor(0xff40AEE5);
 						particle.physicsEngine.calculations.frictionX = 0.96;
 						particle.physicsEngine.calculations.frictionY = 0.96;
@@ -316,7 +321,7 @@ public class Player extends MobAddons {
 				
 				if(tickTime % 17 == 0) {
 					for(int i = 0; i < 3; i++) {
-						level.add(particle = new Particle(x, y));
+						level.add(particle = new Particle(iX, iY));
 						particle.setColor(0xff40AEE5);
 						particle.physicsEngine.calculations.elasticity = 0;
 						particle.physicsEngine.calculations.gravityForce = 0.2;
@@ -333,7 +338,7 @@ public class Player extends MobAddons {
 		if(hurtTime > 0) {
 			if(tickTime % 60 == 0) {
 				for(int i = 0; i < 5; i++) {
-					level.add(particle = new Particle(x-4, y - 1 , new SpriteManager(8, 0, 0, SheetArchive.smallFx)));
+					level.add(particle = new Particle(iX-4, iY - 1 , new SpriteManager(8, 0, 0, SheetArchive.smallFx)));
 					
 					particle.physicsEngine.calculations.gravityForce = 0.06;
 					particle.life = 10 + random.nextInt(20);

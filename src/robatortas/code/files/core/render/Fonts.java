@@ -28,7 +28,7 @@ public class Fonts {
 			int ix = chars.indexOf(msg.charAt(i));
 			if (ix >= 0) {
 				characters = new SpriteManager(16, ix, row, font);
-				if(!scroll) screen.renderFont((RenderMethod.xScroll + x) + i * spacing, (RenderMethod.yScroll + y), characters, size, color, 0);
+				if(!scroll) screen.renderFont(((int)RenderMethod.xScroll + x) + i * spacing, (int) (RenderMethod.yScroll + y), characters, size, color, 0);
 				else screen.renderFont(x + i * spacing, y, characters, size, color, 0);
 			}
 		}

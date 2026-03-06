@@ -13,7 +13,7 @@ public class Sheep extends MobAddons {
 	public boolean punch = true;
 	public int attackTime, attackDir;
 	
-	public Sheep(int x, int y) {
+	public Sheep(float x, float y) {
 		this.x = x;
 		this.y = y;
 		this.sprite = new SpriteManager(16, 0, 0, SheetArchive.player);
@@ -76,7 +76,7 @@ public class Sheep extends MobAddons {
 		
 		sprite = animSprite.getSprite();
 		
-		screen.renderMob(x - (10*2), y - (12*2), this, sprite, spriteFlip);
+		screen.renderMob((int)x - (10*2), (int)y - (12*2), this, sprite, spriteFlip);
 	}
 	
 	private Animate right = new Animate(Animations.sheepRight, 1, 3, 3);

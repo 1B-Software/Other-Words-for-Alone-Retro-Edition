@@ -4,11 +4,11 @@ import robatortas.code.files.core.physics.maths.Calculations;
 
 public class PhysicsEngine {
 
-	private int x, y;
+	private float x, y;
 	
 	public Calculations calculations;
 	
-	public PhysicsEngine(int x, int y) {
+	public PhysicsEngine(float x, float y) {
 		this.x = x;
 		this.y = y;
 		
