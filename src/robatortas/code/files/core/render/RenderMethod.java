@@ -48,7 +48,7 @@ public class RenderMethod {
 		
 		float targetX = LevelManager.player.x - Globals.WIDTH / 2 + 3;
 		float targetY = LevelManager.player.y - Globals.HEIGHT / 2;
-		float smooth = 0.15f;
+		float smooth = 0.10f;
 
 		xScroll += (targetX - xScroll) * smooth;
 		yScroll += (targetY - yScroll) * smooth;

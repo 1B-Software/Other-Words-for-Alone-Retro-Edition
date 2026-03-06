@@ -42,8 +42,8 @@ public class Player extends MobAddons {
 		this.inventory = new Inventory();
 	}
 	
-	private static int velX = 1;
-	private static int velY = 1;	
+	private static float velX = 1;
+	private static float velY = 1;	
 	public float xa, ya;
 	
 	public int tickTime;
@@ -53,7 +53,7 @@ public class Player extends MobAddons {
 		this.xa = 0;
 		this.ya = 0;
 		
-		float speed = 0.5f;
+		float speed = 0.7f;
 		
 		tickTime++;
 		
@@ -65,7 +65,7 @@ public class Player extends MobAddons {
 		particleEffects();
 		if(isSwimming) {
 			swimTime++;
-			speed = tickTime & 1;
+			speed = 0.4f;
 		}
 		else swimTime = 0;
 		
@@ -95,8 +95,8 @@ public class Player extends MobAddons {
 		
 		if(GameManager.DEV_MODE) {
 			if(input.shift) {
-				velX = 2;
-				velY = 2;
+				velX = 1.5f;
+				velY = 1.5f;
 			} else {
 				velX = 1;
 				velY = 1;
@@ -166,7 +166,7 @@ public class Player extends MobAddons {
 	}
 	
 	public void touched(EntityManager entity) {
-		if(iE == null) return;
+//		if(iE == null) return;
 		entity.getItem(iE).takeItem(this);
 	}
 	
