@@ -16,7 +16,7 @@ public class ItemEntity extends EntityManager {
 	public Item item;
 	public PhysicsEngine physicsEngine;
 	
-	public ItemEntity(int x, int y, Item item) {
+	public ItemEntity(float x, float y, Item item) {
 		this.x = x;
 		this.y = y;
 		this.item = item;
@@ -77,14 +77,17 @@ public class ItemEntity extends EntityManager {
 		if(physicsEngine.calculations.z0 == 0) zTime++;
 		else zTime = 0;
 		
+		int iX = (int)x;
+		int iY = (int)y;
+		
 		if(zTime == 1) {
 			for(int i = 0; i < 3; i++) {
-				level.add(particle = new Particle(x, y));
+				level.add(particle = new Particle(iX, iY));
 				particle.physicsEngine.calculations.gravityForce = 0.23;
 				particle.life = 20 + random.nextInt(20);
-				for(int yyy = 0; yyy < level.getLevel(x >> 4, y >> 4).sprite.height; yyy++) {
-					for(int xxx = 0; xxx < level.getLevel(x >> 4, y >> 4).sprite.width; xxx++) {
-						int color = level.getLevel(x >> 4, y >> 4).sprite.pixels[xxx+yyy*level.getLevel(x >> 4, y >> 4).sprite.width];
+				for(int yyy = 0; yyy < level.getLevel(iX >> 4, iY >> 4).sprite.height; yyy++) {
+					for(int xxx = 0; xxx < level.getLevel(iX >> 4, iY >> 4).sprite.width; xxx++) {
+						int color = level.getLevel(iX >> 4, iY >> 4).sprite.pixels[xxx+yyy*level.getLevel(iX >> 4, iY >> 4).sprite.width];
 						int r = (color & 0xff0000) >> 16;
 						int g = (color & 0xff00) >> 8;
 						int b = (color & 0xff);
@@ -98,7 +101,7 @@ public class ItemEntity extends EntityManager {
 		
 		int shade = 0;
 		shade += ((int)physicsEngine.calculations.z0 * 2) - 30;
-		if(shade <= 1) screen.renderColorRelativeToLocation(x - 10, (y + 1) - 10, item.getSprite(), 0xff << 16| -shade, 0, level);
+		if(shade <= 1) screen.renderColorRelativeToLocation(iX - 10, (iY + 1) - 10, item.getSprite(), 0xff << 16| -shade, 0, level);
 		screen.renderSprite(x - 10, ((y + yy) - (int) physicsEngine.calculations.z0) - 10, item.getSprite(), 1, 0);
 
 	}

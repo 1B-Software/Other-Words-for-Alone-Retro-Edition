@@ -16,7 +16,7 @@ public class Cow extends MobAddons {
 	public boolean punch = true;
 	public int attackTime, attackDir;
 	
-	public Cow(int x, int y) {
+	public Cow(float x, float y) {
 		this.x = x;
 		this.y = y;
 		this.sprite = new SpriteManager(16, 0, 0, SheetArchive.cow);

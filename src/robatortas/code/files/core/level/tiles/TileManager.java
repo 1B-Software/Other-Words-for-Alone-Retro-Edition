@@ -41,7 +41,7 @@ public class TileManager {
 	public void hurt(LevelManager level, Mob mob, int x, int y, int damage, int dir) {
 	}
 
-	public boolean solid(LevelManager level, int x, int y, EntityManager e) {
+	public boolean solid(LevelManager level, int xt, int yt, EntityManager e) {
 		return false;
 	}
 }

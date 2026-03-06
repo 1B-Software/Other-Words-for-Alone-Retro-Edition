@@ -24,14 +24,6 @@ public class LoopingUtils {
 		lastTime = now;
 	}
 	
-	public void deltaLoop(GameManager game) {
-		if(delta >= 1) {
-			game.update();
-			ticks++;
-			delta--;
-		}
-	}
-	
 	public void timerLoop(String consolePrint, GameManager game, @SuppressWarnings("rawtypes") CustFunc function) {
 		if(System.currentTimeMillis() - timer > 1000) {
 			timer+=1000;

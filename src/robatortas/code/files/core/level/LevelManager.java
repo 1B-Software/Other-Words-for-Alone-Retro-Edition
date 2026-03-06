@@ -63,8 +63,8 @@ public class LevelManager {
 		
 		for (int i = 0; i < entities.size(); i++) {
 			EntityManager e = entities.get(i);
-			int xto = e.x >> 4;
-			int yto = e.y >> 4;
+			int xto = (int)e.x >> 4;
+			int yto = (int)e.y >> 4;
 			
 			e.update();
 			
@@ -73,8 +73,8 @@ public class LevelManager {
 				entities.remove(i--);
 				this.removeEntity(xto, yto, e);
 			} else {
-				int xt = e.x >> 4;
-				int yt = e.y >> 4;
+				int xt = (int)e.x >> 4;
+				int yt = (int)e.y >> 4;
 				
 				//if the x != x or y != or x = x or y = y
 				if (xto != xt || yto != yt || xto == xt || yto == yt) {
@@ -86,7 +86,7 @@ public class LevelManager {
 	}
 	
 	// MY MIND IS NOT THINKING CLEARLY! Because it's FUCKING 2 AM
-	public void render(int xScroll, int yScroll, RenderManager screen) {
+	public void render(float xScroll, float yScroll, RenderManager screen) {
 		this.screen = screen;
 		
 		LevelRenderManager levelRender = new LevelRenderManager(this, screen);
@@ -101,8 +101,8 @@ public class LevelManager {
 		e.removed = false;
 		entities.add(e);
 		
-		int xp = e.x >> 4;
-		int yp = e.y >> 4;
+		int xp = (int)e.x >> 4;
+		int yp = (int)e.y >> 4;
 		
 		insertEntity(xp, yp, e);
 	}
@@ -112,8 +112,8 @@ public class LevelManager {
 		e.remove();
 		entities.remove(e);
 		
-		int xp = e.x >> 4;
-		int yp = e.y >> 4;
+		int xp = (int)e.x >> 4;
+		int yp = (int)e.y >> 4;
 		
 		removeEntity(xp, yp, e);
 	}
@@ -140,8 +140,8 @@ public class LevelManager {
 		entitiesInTiles[x+y*width].remove(e);
 	}
 	
-	public List<EntityManager> getEntities(int x0, int y0, int x1, int y1) {
-		return addons.getEntities(x0, y0, x1, y1);
+	public List<EntityManager> getEntities(float f, float g, float h, float i) {
+		return addons.getEntities(f, g, h, i);
 	}
 	
 	public void insertTile(int x, int y, int color) {

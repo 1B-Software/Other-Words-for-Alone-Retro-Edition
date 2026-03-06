@@ -35,7 +35,7 @@ public class Graphical {
 	 * @see RenderManager
 	 * 
 	 */
-	public void buildBox(int portionWidth, int portionHeight, int width, int height, int xOffset, int yOffset, int x, int y, int color, boolean fixed, RenderManager screen) {
+	public void buildBox(int portionWidth, int portionHeight, int width, int height, int xOffset, int yOffset, float x, float y, int color, boolean fixed, RenderManager screen) {
 		if(fixed) {
 			x += screen.xOffset;
 			y += screen.yOffset;

@@ -29,7 +29,7 @@ public class RenderManager {
 	public int width, height;
 	public int[] pixels;
 	
-	public int xOffset, yOffset;
+	public float xOffset, yOffset;
 	
 	public Random random = new Random();
 	
@@ -88,7 +88,7 @@ public class RenderManager {
 		}
 	}
 	
-	public void renderBox(int xp, int yp, int w, int h, int color, int alpha, boolean fixed) {
+	public void renderBox(float xp, float yp, int w, int h, int color, int alpha, boolean fixed) {
 		// fixed meaning that it is literally attached to the screen
 		if(!fixed) {
 			xp -= xOffset;
@@ -96,19 +96,19 @@ public class RenderManager {
 		}
 		
 		for(int y = 0; y < h; y++) {
-			int ya = y+yp;
+			float ya = y+yp;
 			for(int x = 0; x < w; x++) {
-				int xa = x+xp;
+				float xa = x+xp;
 				if(xa < -w || xa >= width || ya < 0 || ya >= height) break;
 				if(xa < 0) xa = 0;
 				color = (alpha << 24) | (color & 0x00FFFFFF);
-				pixels[xa+ya*width] = blendPixel(pixels[xa+ya*width], color);
+				pixels[(int)xa+(int)ya*width] = blendPixel(pixels[(int)xa+(int)ya*width], color);
 			}
 		}
 	}
-	
+
 	// Rendering tiles
-	public void renderTile(int xp, int yp, float scale, TileManager tile) {
+	public void renderTile(float xp, float yp, float scale, TileManager tile) {
 		xp -= xOffset;
 		yp -= yOffset;
 		
@@ -116,18 +116,18 @@ public class RenderManager {
 		int outH = (int)(tile.sprite.height * scale);
 		
 		for(int dy = 0; dy < outH; dy++) {
-			int ya = dy + yp;
+			float ya = dy + yp;
 			if(ya < 0 || ya >= height) continue;
 			int ys = (int)(dy / scale);
 			for(int dx = 0; dx < outW; dx++) {
-				int xa = dx + xp;
+				float xa = dx + xp;
 				if(xa < 0 || xa >= width) continue;
 				int xs = (int)(dx / scale);
 
 				int color = tile.sprite.pixels[xs + ys * tile.sprite.width];
 				if(color == 0xffff00ff) continue;
 				if(color != 0) color = (tile.sprite.alpha << 24) | (color & 0x00FFFFFF);
-				pixels[xa + ya * width] = blendPixel(pixels[xa + ya * width], color);
+				pixels[(int)xa + (int)ya * width] = blendPixel(pixels[(int)xa + (int)ya * width], color);
 			}
 		}
 	}
@@ -142,7 +142,7 @@ public class RenderManager {
 	 * @param scale The size of the sprite
 	 * @param flip Flips the sprite; 1 flips it on x, 2 flips it on y, 3 flips it on x & y
 	 */
-	public void renderSprite(int xp, int yp, SpriteManager sprite, float scale, int flip) {
+	public void renderSprite(float xp, float yp, SpriteManager sprite, float scale, int flip) {
 		xp -= xOffset;
 		yp -= yOffset;
 
@@ -151,20 +151,20 @@ public class RenderManager {
 
 		// Nearest-neighbor -> iterate output pixels, map back to source
 		for(int dy = 0; dy < outH; dy++) {
-			int ya = dy + yp;
+			float ya = dy + yp;
 			if(ya < 0 || ya >= height) continue;
-			int ys = (int)(dy / scale);
+			float ys = (int)(dy / scale);
 			if(flip == 2 || flip == 3) ys = (sprite.height - 1) - ys;
 			for(int dx = 0; dx < outW; dx++) {
-				int xa = dx + xp;
+				float xa = dx + xp;
 				if(xa < 0 || xa >= width) continue;
 				int xs = (int)(dx / scale);
 				if(flip == 1 || flip == 3) xs = (sprite.width - 1) - xs;
 
-				int color = sprite.pixels[xs + ys * sprite.width];
+				int color = sprite.pixels[xs + (int)ys * sprite.width];
 				if(color == 0xffff00ff) continue;
 				if(color != 0) color = (sprite.alpha << 24) | (color & 0x00FFFFFF);
-				pixels[xa + ya * width] = blendPixel(pixels[xa + ya * width], color);
+				pixels[(int)xa + (int)ya * width] = blendPixel(pixels[(int)xa + (int)ya * width], color);
 			}
 		}
 	}
@@ -192,26 +192,26 @@ public class RenderManager {
 	}
 	
 	// Rendering Mobs
-	public void renderMob(int xp, int yp, Mob mob, SpriteManager sprite, int flip) {
+	public void renderMob(float xp, float yp, Mob mob, SpriteManager sprite, int flip) {
 		xp -= xOffset;
 		yp -= yOffset;
 		
 		for(int y = 0; y < sprite.height; y++) {
-			int ya = y+yp;
-			int ys = y;
+			float ya = y+yp;
+			float ys = y;
 			if(flip == 2 || flip == 3) ys = (sprite.height-1) - y;
 			for(int x = 0; x < sprite.width; x++) {
-				int xa = x+xp;
-				int xs = x;
+				float xa = x+xp;
+				float xs = x;
 				if(flip == 1 || flip == 3) xs = (sprite.width-1) - x;
 				if(xa < -sprite.width || xa >= width || ya < 0 || ya >= height) break;
 				if(xa < 0) xa = 0;
-				int color = mob.getSprite().pixels[xs + ys * sprite.width];
+				int color = mob.getSprite().pixels[(int)xs + (int)ys * sprite.width];
 				if(color != 0xffff00ff) {
 					color = (mob.alpha << 24) | (color & 0x00FFFFFF);
-					pixels[xa+ya*width] = blendPixel(pixels[xa+ya*width], color);
+					pixels[(int)xa+(int)ya*width] = blendPixel(pixels[(int)xa+(int)ya*width], color);
 //					if(mob.hurtTime > 0) pixels[xa+ya*width] = 0xff << 24 | random.nextInt(0xffffff);
-					if(mob.hurtTime > 0) pixels[xa+ya*width] = blendPixel(pixels[xa+ya*width], color >> 2 | 0x00);
+					if(mob.hurtTime > 0) pixels[(int)xa+(int)ya*width] = blendPixel(pixels[(int)xa+(int)ya*width], color >> 2 | 0x00);
 				}
 			}
 		}
@@ -333,7 +333,7 @@ public class RenderManager {
 	}
 	
 	// Sets these offsets to the values in the level rendering method
-	public void setOffset(int xOffset, int yOffset) {
+	public void setOffset(float xOffset, float yOffset) {
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 	}
