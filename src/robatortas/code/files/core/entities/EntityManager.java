@@ -7,6 +7,7 @@ import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
 import robatortas.code.files.project.entities.ItemEntity;
+import robatortas.code.files.project.settings.Globals;
 
 public class EntityManager {
 	

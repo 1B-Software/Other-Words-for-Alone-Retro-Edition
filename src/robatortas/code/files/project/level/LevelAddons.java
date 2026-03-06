@@ -27,10 +27,10 @@ public class LevelAddons {
 	
 	public List<EntityManager> getEntities(float f, float g, float h, float i2) {
 		List<EntityManager> result = new ArrayList<EntityManager>();
-		int xt0 = (Math.round(f) >> 4) - 1;
-		int yt0 = (Math.round(g) >> 4) - 1;
-		int xt1 = (Math.round(h) >> 4) + 1;
-		int yt1 = (Math.round(i2) >> 4) + 1;
+		int xt0 = ((int)f >> 4) - 1;
+		int yt0 = ((int)g >> 4) - 1;
+		int xt1 = ((int)h >> 4) + 1;
+		int yt1 = ((int)i2 >> 4) + 1;
 		
 		for(int y = yt0; y <= yt1; y++) {
 			for(int x = xt0; x <= xt1; x++) {

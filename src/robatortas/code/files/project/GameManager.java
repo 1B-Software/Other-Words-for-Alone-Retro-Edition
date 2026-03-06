@@ -39,7 +39,7 @@ public class GameManager extends Canvas implements Runnable {
 	public RenderManager screen;
 	private RenderMethod renderMethod = new RenderMethod();
 	
-	protected BufferedImage image = new BufferedImage(Globals.WIDTH, Globals.HEIGHT, BufferedImage.TYPE_INT_ARGB);
+	protected BufferedImage image = new BufferedImage(Globals.WIDTH * Globals.RENDER_SCALE, Globals.HEIGHT * Globals.RENDER_SCALE, BufferedImage.TYPE_INT_ARGB);
 	public int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 	
 	
