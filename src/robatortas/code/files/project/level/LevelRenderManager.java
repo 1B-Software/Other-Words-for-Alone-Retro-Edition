@@ -9,6 +9,7 @@ import java.util.Random;
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.TileManager;
+import robatortas.code.files.core.lighting.LightSource;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.project.archive.tileArchive.TileArchive;
 
@@ -54,6 +55,10 @@ public class LevelRenderManager {
 		return resultList;
 	}
 
+//	public List<LightSource> getAllLights() {
+//		for(int i = 0; i < )
+//	}
+	
 	// Holds a front tile's grid position and tile reference for Y-sorted rendering
 	private static class FrontTileEntry {
 		final int x, y;

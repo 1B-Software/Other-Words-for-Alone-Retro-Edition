@@ -42,7 +42,8 @@ public class SpriteArchive {
 	////////////
 	
 	// Wood
-	public static SpriteManager woodFloor = new SpriteManager(16, 0, 0, solids);
+	public static SpriteManager woodFloor = new SpriteManager(16, 4, 0, interior);
+	public static SpriteManager woodWall_Front = new SpriteManager(16, 5, 0, interior);
 	public static SpriteManager woodWall = new SpriteManager(16, 0, 1, solids);
 	
 	// Stone
@@ -62,8 +63,10 @@ public class SpriteArchive {
 	
 	public static SpriteManager table = new SpriteManager(16, 1, 0, interior);
 	public static SpriteManager chair = new SpriteManager(16, 2, 0, interior);
-	public static SpriteManager bed = new SpriteManager(16, 0, 1, interior);
-	public static SpriteManager bed2 = new SpriteManager(16, 0, 2, interior);
+	public static SpriteManager bed = new SpriteManager(16, 0, 0, interior);
+	public static SpriteManager bed2 = new SpriteManager(16, 0, 1, interior);
+	public static SpriteManager tv = new SpriteManager(16, 2, 3, interior);
+	public static SpriteManager nightStand = new SpriteManager(16, 1, 3, interior);
 	
 	///////////////////
 	// Furniture End //
@@ -100,6 +103,9 @@ public class SpriteArchive {
 	public static final int col_void = 0xff000000;
 	public static final int col_chair = 0xffa05920;
 	
+	public static final int col_wood_floor = 0xff7F3300;
+	public static final int col_wood_wall_front = 0xff542100;
+	
 	// Nature
 	public static final int col_bush = 0xff286d1f;
 	public static final int col_sand = 0xffBDB756;
@@ -108,6 +114,8 @@ public class SpriteArchive {
 	public static final int col_oakTree = 0xff003D00;
 	public static final int col_birchTree = 0xffA4CC82;
 	
-	public static final int col_bed = 0xff00e5ff;
+	public static final int col_bed = 0xffBE3300;
+	public static final int col_tv = 0xff333333;
+	public static final int col_nightStand = 0xffFFC03A;
 	public static final int col_water = 0xff000080;
 }

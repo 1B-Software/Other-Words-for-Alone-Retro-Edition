@@ -33,6 +33,8 @@ public class RenderManager {
 	public int pixelWidth, pixelHeight;
 	public int[] pixels;
 
+	public float[] lightmapR, lightmapG, lightmapB;
+	
 	public float xOffset, yOffset;
 
 	public Random random = new Random();
@@ -44,6 +46,9 @@ public class RenderManager {
 		this.pixelHeight = height * Globals.RENDER_SCALE;
 
 		pixels = new int[pixelWidth * pixelHeight];
+		lightmapR = new float[pixelWidth * pixelHeight];
+		lightmapG = new float[pixelWidth * pixelHeight];
+		lightmapB = new float[pixelWidth * pixelHeight];
 	}
 
 	public void clear(boolean clears) {
@@ -51,10 +56,24 @@ public class RenderManager {
 			for(int i = 0; i < pixels.length; i++) {
 				pixels[i] = 0;
 			}
+			for(int i = 0; i < lightmapR.length; i++) {
+				lightmapR[i] = lightmapG[i] = lightmapB[i] = 0.3f;
+			}
 		}
 	}
 
-
+	public void applyLighting() {
+	    for (int i = 0; i < pixels.length; i++) {
+	        float b = lightmapR[i];
+	        int c = pixels[i];
+	        int r = Math.min(255, (int)(((c >> 16) & 0xFF) * lightmapR[i]));
+	        int g = Math.min(255, (int)(((c >> 8)  & 0xFF) * lightmapG[i]));
+	        int bl = Math.min(255, (int)(( c       & 0xFF) * lightmapB[i]));
+	        pixels[i] = 0xFF000000 | (r << 16) | (g << 8) | bl;
+	    }
+	}
+	
+	
 	private int blendPixel(int dst, int src) {
 	    int srcA = (src >> 24) & 0xFF;
 	    if(srcA == 255) return src;   // fully opaque, skip math
@@ -67,6 +86,8 @@ public class RenderManager {
 	    int dstR = (dst >> 16) & 0xFF;
 	    int dstG = (dst >>  8) & 0xFF;
 	    int dstB =  dst        & 0xFF;
+	    
+	    
 
 	    int r = (int)(srcR * a + dstR * (1 - a));
 	    int g = (int)(srcG * a + dstG * (1 - a));
