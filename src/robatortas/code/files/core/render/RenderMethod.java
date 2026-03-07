@@ -48,7 +48,7 @@ public class RenderMethod {
 		
 		float targetX = LevelManager.player.x - Globals.WIDTH / 2 + 3;
 		float targetY = LevelManager.player.y - Globals.HEIGHT / 2;
-		float smooth = 0.10f;
+		float smooth = 0.05f;
 
 		xScroll += (targetX - xScroll) * smooth;
 		yScroll += (targetY - yScroll) * smooth;
@@ -66,7 +66,7 @@ public class RenderMethod {
 //		if(yScroll < level.height - screen.height/6) yScroll = level.height * 6 - screen.height + 22;
 		
 		level.render(xScroll, yScroll, screen);
-		
+		screen.applyLighting();
 		renderGUI();
 		renderDebug();
 	}

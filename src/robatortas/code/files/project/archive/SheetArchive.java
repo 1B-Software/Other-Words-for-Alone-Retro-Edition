@@ -8,7 +8,7 @@ public class SheetArchive {
 	public static SpriteSheetManager groundNature = new SpriteSheetManager("/textures/spritesheet/nature/ground.png", 208, 96);
 	public static SpriteSheetManager foliage = new SpriteSheetManager("/textures/spritesheet/nature/foliage.png", 144, 32);
 	
-	public static SpriteSheetManager interior = new SpriteSheetManager("/textures/spritesheet/interior/interior.png", 144);
+	public static SpriteSheetManager interior = new SpriteSheetManager("/textures/spritesheet/interior/furniture/Furniturev1.png", 144);
 
 	public static SpriteSheetManager solids = new SpriteSheetManager("/textures/spritesheet/solid/solid.png", 144);
 	

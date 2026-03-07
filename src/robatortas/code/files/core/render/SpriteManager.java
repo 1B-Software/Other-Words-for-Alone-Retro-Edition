@@ -32,6 +32,17 @@ public class SpriteManager {
 		}
 	}
 	
+	public SpriteManager(int size, int x, int y, SpriteManager sprite) {
+		this.SIZE = size;
+		this.x = x * size;
+		this.y = y * size;
+		this.width = size;
+		this.height = size;
+		this.sheet = sheet;
+		pixels = new int[size*size];
+	}
+	
+	
 	public SpriteManager( int width, int height, SpriteSheetManager sheet) {
 		SIZE = (width == height) ? width: -1;
 		this.width = width;

@@ -4,8 +4,10 @@ import java.util.List;
 
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.input.InputManager;
+import robatortas.code.files.core.lighting.LightSource;
 import robatortas.code.files.core.render.Animate;
 import robatortas.code.files.core.render.RenderManager;
+import robatortas.code.files.core.render.RenderMethod;
 import robatortas.code.files.core.render.SpriteManager;
 import robatortas.code.files.core.sound.SoundEngine;
 import robatortas.code.files.project.GameManager;
@@ -15,6 +17,7 @@ import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.entities.Particle;
 import robatortas.code.files.project.entities.mobs.MobAddons;
 import robatortas.code.files.project.inventory.Inventory;
+import robatortas.code.files.project.settings.Globals;
 
 public class Player extends MobAddons {
 	
@@ -30,6 +33,8 @@ public class Player extends MobAddons {
 	private SpriteManager punchSprite;
 	
 	public Inventory inventory;
+	
+	private LightSource light;
 	
 	public int stamina = 10;
 	
@@ -183,7 +188,11 @@ public class Player extends MobAddons {
 	public void render(RenderManager screen) {
 		int renderAxysConstX = 18;
 		int renderAxysConstY = 23;
-		
+		// Pixel coordinates instead of world coordinates.
+//		float px = (x - RenderMethod.xScroll) * Globals.RENDER_SCALE;
+//		float py = (y - RenderMethod.yScroll) * Globals.RENDER_SCALE;
+		light = new LightSource(screen);
+		light.add(x, y-5, 100, 0.6f, 0xFFFFFFFF, 2f);
 		////////////
 		// GROUND //
 		////////////
