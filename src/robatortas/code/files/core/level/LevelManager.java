@@ -23,6 +23,7 @@ public class LevelManager {
 	public RenderManager screen;
 	
 	public int[] tiles;
+	int[] postTiles;
 	public int[] tileData; // per-cell state (example: damage taken)
 	
 	// Lists
@@ -63,8 +64,8 @@ public class LevelManager {
 		
 		for (int i = 0; i < entities.size(); i++) {
 			EntityManager e = entities.get(i);
-			int xto = e.x >> 4;
-			int yto = e.y >> 4;
+			int xto = (int)e.x >> 4;
+			int yto = (int)e.y >> 4;
 			
 			e.update();
 			
@@ -73,8 +74,8 @@ public class LevelManager {
 				entities.remove(i--);
 				this.removeEntity(xto, yto, e);
 			} else {
-				int xt = e.x >> 4;
-				int yt = e.y >> 4;
+				int xt = (int)e.x >> 4;
+				int yt = (int)e.y >> 4;
 				
 				//if the x != x or y != or x = x or y = y
 				if (xto != xt || yto != yt || xto == xt || yto == yt) {
@@ -86,7 +87,7 @@ public class LevelManager {
 	}
 	
 	// MY MIND IS NOT THINKING CLEARLY! Because it's FUCKING 2 AM
-	public void render(int xScroll, int yScroll, RenderManager screen) {
+	public void render(float xScroll, float yScroll, RenderManager screen) {
 		this.screen = screen;
 		
 		LevelRenderManager levelRender = new LevelRenderManager(this, screen);
@@ -101,8 +102,8 @@ public class LevelManager {
 		e.removed = false;
 		entities.add(e);
 		
-		int xp = e.x >> 4;
-		int yp = e.y >> 4;
+		int xp = (int)e.x >> 4;
+		int yp = (int)e.y >> 4;
 		
 		insertEntity(xp, yp, e);
 	}
@@ -112,8 +113,8 @@ public class LevelManager {
 		e.remove();
 		entities.remove(e);
 		
-		int xp = e.x >> 4;
-		int yp = e.y >> 4;
+		int xp = (int)e.x >> 4;
+		int yp = (int)e.y >> 4;
 		
 		removeEntity(xp, yp, e);
 	}
@@ -140,8 +141,8 @@ public class LevelManager {
 		entitiesInTiles[x+y*width].remove(e);
 	}
 	
-	public List<EntityManager> getEntities(int x0, int y0, int x1, int y1) {
-		return addons.getEntities(x0, y0, x1, y1);
+	public List<EntityManager> getEntities(float f, float g, float h, float i) {
+		return addons.getEntities(f, g, h, i);
 	}
 	
 	public void insertTile(int x, int y, int color) {
@@ -178,6 +179,10 @@ public class LevelManager {
 		if(tiles[x + y * width] == SpriteArchive.col_table) return TileArchive.woodFloor;
 		if(tiles[x + y * width] == SpriteArchive.col_sand) return TileArchive.sand;
 		
+		if(tiles[x + y * width] == SpriteArchive.col_wood_floor) return TileArchive.woodFloor;
+		if(tiles[x + y * width] == SpriteArchive.col_wood_wall_front) return TileArchive.woodWallFront;
+		
+		
 		// Nature
 		if(tiles[x + y * width] == SpriteArchive.col_bush) return TileArchive.grass;
 		
@@ -185,7 +190,8 @@ public class LevelManager {
 		if(tiles[x + y * width] == SpriteArchive.col_oakTree) return TileArchive.grass;
 		if(tiles[x + y * width] == SpriteArchive.col_birchTree) return TileArchive.grass;
 		
-		if(tiles[x + y * width] == SpriteArchive.col_bed) return TileArchive.woodFloor;
+//		if(tiles[x + y * width] == SpriteArchive.col_bed) return TileArchive.woodFloor;
+//		if(tiles[x + y * width] == SpriteArchive.col_tv) return TileArchive.woodFloor;
 		return TileArchive.voidTile;
 	}
 	
@@ -202,6 +208,7 @@ public class LevelManager {
 	 */
 	public TileManager getPost(int x, int y) {
 		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
+		if(tiles[x + y * width] == SpriteArchive.col_woodFloor) return TileArchive.woodFloor;
 		return TileArchive.voidTile;
 	}
 	
@@ -218,11 +225,13 @@ public class LevelManager {
 	 */
 	public TileManager getFront(int x, int y) {
 		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
-		if(tiles[x + y * width] == SpriteArchive.col_oakTree) return TileArchive.tree;
-		
-		if(tiles[x + y * width] == SpriteArchive.col_flowerRed) return TileArchive.flowerRed;
-		if(tiles[x + y * width] == SpriteArchive.col_yellowDahlia) return TileArchive.yellowDahlia;
-		if(tiles[x + y * width] == SpriteArchive.col_bush) return TileArchive.bushTile;
+		if(postTiles[x + y * width] == SpriteArchive.col_oakTree) return TileArchive.tree;
+		if(postTiles[x + y * width] == SpriteArchive.col_bed) return TileArchive.bed;
+		if(postTiles[x + y * width] == SpriteArchive.col_tv) return TileArchive.TvTile;
+		if(postTiles[x + y * width] == SpriteArchive.col_nightStand) return TileArchive.nightStand;
+		if(postTiles[x + y * width] == SpriteArchive.col_flowerRed) return TileArchive.flowerRed;
+		if(postTiles[x + y * width] == SpriteArchive.col_yellowDahlia) return TileArchive.yellowDahlia;
+		if(postTiles[x + y * width] == SpriteArchive.col_bush) return TileArchive.bushTile;
 		return TileArchive.voidTile;
 	}
 }

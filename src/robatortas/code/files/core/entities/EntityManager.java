@@ -7,10 +7,11 @@ import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
 import robatortas.code.files.project.entities.ItemEntity;
+import robatortas.code.files.project.settings.Globals;
 
 public class EntityManager {
 	
-	public int x, y;
+	public float x, y;
 	float velX, velY;
 	public SpriteManager sprite;
 	public LevelManager level;
@@ -26,7 +27,7 @@ public class EntityManager {
 		
 	}
 	
-	public EntityManager(int x, int y, SpriteManager sprite) {
+	public EntityManager(float x, float y, SpriteManager sprite) {
 		this.x = x;
 		this.y = y;
 		this.sprite = sprite;
@@ -40,12 +41,12 @@ public class EntityManager {
 		
 	}
 	
-	public void move(int xa, int ya) {
+	public void move(float xa, float ya) {
 		x+=xa;
 		y+=ya;
 	}
 	
-	public void move2(int xa, int ya) {
+	public void move2(float xa, float ya) {
 		List<EntityManager> in = level.getEntities(x + xp, y + yp, x - xp, y - yp);
 		for(int i = 0; i < in.size(); i++) {
 			EntityManager e = in.get(i);
@@ -82,8 +83,8 @@ public class EntityManager {
 	
 	protected int xp = 8;
 	protected int yp = 8;
-	public boolean intersects(int x0, int y0, int x1, int y1) {
-		return (x + xp < x0 || y + yp < y0 || x - xp > x1 || y - yp > y1);
+	public boolean intersects(float f, float g, float h, float i2) {
+		return (x + xp < f || y + yp < g || x - xp > h || y - yp > i2);
 	}
 	
 	public SpriteManager getSprite() {

@@ -4,6 +4,7 @@ import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.archive.tileArchive.Interior.BedTile;
 import robatortas.code.files.project.archive.tileArchive.Interior.ChairTile;
+import robatortas.code.files.project.archive.tileArchive.Interior.NightStand;
 import robatortas.code.files.project.archive.tileArchive.Interior.TableTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.BushTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.CobblePathTile;
@@ -19,7 +20,9 @@ import robatortas.code.files.project.archive.tileArchive.Solids.BricksTile;
 import robatortas.code.files.project.archive.tileArchive.Solids.CobblestoneTile;
 import robatortas.code.files.project.archive.tileArchive.Solids.SolidRockTile;
 import robatortas.code.files.project.archive.tileArchive.Solids.StoneBricksTile;
+import robatortas.code.files.project.archive.tileArchive.Solids.TVTile;
 import robatortas.code.files.project.archive.tileArchive.Solids.WoodFloorTile;
+import robatortas.code.files.project.archive.tileArchive.Solids.WoodWallFrontTile;
 import robatortas.code.files.project.archive.tileArchive.Solids.WoodWallTile;
 
 public class TileArchive {
@@ -50,4 +53,7 @@ public class TileArchive {
 	public static TileManager bed = new BedTile(SpriteArchive.bed, 24);
 	public static TileManager sand = new GrassTile(SpriteArchive.sand, 25);
 	public static TileManager grassBlades = new GrassBladeTile(SpriteArchive.grass, 26);
+	public static TileManager woodWallFront = new WoodWallFrontTile(SpriteArchive.woodWall_Front, 27);
+	public static TileManager TvTile = new TVTile(SpriteArchive.tv, 28);
+	public static TileManager nightStand = new NightStand(SpriteArchive.nightStand, 29);
 }

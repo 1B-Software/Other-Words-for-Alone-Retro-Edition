@@ -25,12 +25,12 @@ public class LevelAddons {
 		this.entities = level.entities;
 	}
 	
-	public List<EntityManager> getEntities(int x0, int y0, int x1, int y1) {
+	public List<EntityManager> getEntities(float f, float g, float h, float i2) {
 		List<EntityManager> result = new ArrayList<EntityManager>();
-		int xt0 = (x0 >> 4) - 1;
-		int yt0 = (y0 >> 4) - 1;
-		int xt1 = (x1 >> 4) + 1;
-		int yt1 = (y1 >> 4) + 1;
+		int xt0 = ((int)f >> 4) - 1;
+		int yt0 = ((int)g >> 4) - 1;
+		int xt1 = ((int)h >> 4) + 1;
+		int yt1 = ((int)i2 >> 4) + 1;
 		
 		for(int y = yt0; y <= yt1; y++) {
 			for(int x = xt0; x <= xt1; x++) {
@@ -38,7 +38,7 @@ public class LevelAddons {
 				List<EntityManager> entities = entitiesInTiles[x + y * this.width];
 				for(int i = 0; i < entities.size(); i++) {
 					EntityManager e = entities.get(i);
-					if(e.intersects(x0, y0, x1, y1)) result.add(e);
+					if(e.intersects(f, g, h, i2)) result.add(e);
 				}
 			}
 		}

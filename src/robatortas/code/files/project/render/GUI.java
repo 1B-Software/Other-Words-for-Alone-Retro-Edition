@@ -19,7 +19,7 @@ public class GUI {
 	private GameManager game;
 	private Graphical graphical = new Graphical();
 	
-	private int x, y;
+	private float x, y;
 	
 	public GUI(GameManager game) {
 		this.game = game;
@@ -63,8 +63,8 @@ public class GUI {
 	// Renders health and stamina bars
 	public void renderBars(RenderManager screen) {
 		// Health and Stamina
-		int xa = 0;
-		int ya = 0;
+		float xa = 0;
+		float ya = 0;
 		int xs = 0;
 		int ys = 0;
 			

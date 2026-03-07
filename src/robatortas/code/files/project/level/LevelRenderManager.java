@@ -9,6 +9,7 @@ import java.util.Random;
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.TileManager;
+import robatortas.code.files.core.lighting.LightSource;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.project.archive.tileArchive.TileArchive;
 
@@ -25,12 +26,12 @@ public class LevelRenderManager {
 
 	// pinPoint settings
 	public int x0,y0,x1,y1;
-	public void pinPoints(int xScroll, int yScroll) {
+	public void pinPoints(float xScroll, float yScroll) {
 		screen.setOffset(xScroll, yScroll);
-		x0 = (xScroll - 6) >> 4;
-		x1 = (xScroll + screen.width + 16) >> 4;
-		y0 = (yScroll - 6) >> 4;
-		y1 = (yScroll + screen.height + 32) >> 4;
+		x0 = (Math.round(xScroll) - 6) >> 4;
+		x1 = (Math.round(xScroll)+ screen.width + 16) >> 4;
+		y0 = (Math.round(yScroll)- 6) >> 4;
+		y1 = (Math.round(yScroll) + screen.height + 32) >> 4;
 	}
 	
 	public List<TileManager> getTile(int id) {
@@ -54,6 +55,10 @@ public class LevelRenderManager {
 		return resultList;
 	}
 
+//	public List<LightSource> getAllLights() {
+//		for(int i = 0; i < )
+//	}
+	
 	// Holds a front tile's grid position and tile reference for Y-sorted rendering
 	private static class FrontTileEntry {
 		final int x, y;
@@ -111,7 +116,7 @@ public class LevelRenderManager {
 		// Render entities and front tiles by Y so they depth-sort correctly
 		int ei = 0, fi = 0;
 		while(ei < allEntities.size() || fi < frontTiles.size()) {
-			int entityY = (ei < allEntities.size()) ? allEntities.get(ei).y           : Integer.MAX_VALUE;
+			int entityY = (int) ((ei < allEntities.size()) ? allEntities.get(ei).y           : Integer.MAX_VALUE);
 			int tileY   = (fi < frontTiles.size())  ? (frontTiles.get(fi).y + 1) * 16 : Integer.MAX_VALUE;
 			
 			if(entityY <= tileY) {

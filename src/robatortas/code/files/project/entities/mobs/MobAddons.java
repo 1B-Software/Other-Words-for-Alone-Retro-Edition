@@ -8,7 +8,7 @@ import robatortas.code.files.project.entities.Particle;
 
 public class MobAddons extends Mob {
 	
-	public void move(int xa, int ya) {
+	public void move(float xa, float ya) {
 		super.xa = xa;
 		super.ya = ya;
 		
@@ -32,7 +32,7 @@ public class MobAddons extends Mob {
 		move2(xa, ya);
 	}
 	
-	public void move2(int xa, int ya) {
+	public void move2(float xa, float ya) {
 		collision(xa, ya);
 		if(!collision(xa, ya)) {
 			x += xa;
@@ -72,7 +72,7 @@ public class MobAddons extends Mob {
 		int bloodAmount = health > 0 ? 10 : 50;
 		
 		for(int i = 0; i < bloodAmount; i++) {
-			level.add(blood = new Particle(x, y));
+			level.add(blood = new Particle((int)x, (int)y));
 			blood.setColor(0xffff0000);
 			blood.life = 50;
 		}
@@ -128,11 +128,11 @@ public class MobAddons extends Mob {
 	// Collision //
 	///////////////
 	
-	public boolean collision(int xs, int ys) {
+	public boolean collision(float xs, float ys) {
 		boolean solid = false;
 		for(int c = 0; c < 4; c++) {
-			int xt = ((x + xs) + c % 2 * 8 - 6) >> 4;
-			int yt = ((y + ys) + c / 2 * 4 - 4) >> 4;
+			int xt = (int)((x + xs) + c % 2 * 8 - 6) >> 4;
+			int yt = (int)((y + ys) + c / 2 * 4 - 4) >> 4;
 			// if (SolidMethod() == true) solid = true 
 			if(level.getLevel(xt, yt).solid(level, xt, yt, this)) {
 				solid = true;

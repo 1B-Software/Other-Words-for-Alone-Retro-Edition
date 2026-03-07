@@ -4,11 +4,15 @@ public class Globals {
 	public static final String TITLE = "Other Words for Alone Retro Edition";
 	public static int WIDTH = 250;
 	public static int HEIGHT = 220; // 150
-	public static final int SCALE = 3;
+	public static final int SCALE = 5;
+
+	/** Internal render buffer runs at RENDER_SCALE * WIDTH/HEIGHT for sub-pixel smoothness */
+	public static final int RENDER_SCALE = 4;
 	
 	public static final String VERSION = "Alpha 1.7";
 	
-	public static final String levelPath = "/textures/level/level1.png";
-
+	public static final String levelPath = "/textures/level/player_room.png";
+	public static String levelPathPost = "/textures/level/player_room_post.png";
+	
 	public int ticks = 0;
 }

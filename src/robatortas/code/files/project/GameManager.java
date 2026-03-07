@@ -39,7 +39,7 @@ public class GameManager extends Canvas implements Runnable {
 	public RenderManager screen;
 	private RenderMethod renderMethod = new RenderMethod();
 	
-	protected BufferedImage image = new BufferedImage(Globals.WIDTH, Globals.HEIGHT, BufferedImage.TYPE_INT_ARGB);
+	protected BufferedImage image = new BufferedImage(Globals.WIDTH * Globals.RENDER_SCALE, Globals.HEIGHT * Globals.RENDER_SCALE, BufferedImage.TYPE_INT_ARGB);
 	public int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 	
 	
@@ -47,7 +47,7 @@ public class GameManager extends Canvas implements Runnable {
 	
 	public MouseManager mouse;
 	
-	public int xScroll, yScroll;
+	public float xScroll, yScroll;
 	
 	
 	public ResourceUtils resources = new ResourceUtils();
@@ -117,7 +117,15 @@ public class GameManager extends Canvas implements Runnable {
 		while(threadUtils.running) {
 			String consolePrint = "ticks: " + LoopingUtils.ticks + "  ||  " + "fps: " + LoopingUtils.frames;
 			looping.whileRunning();
-			looping.deltaLoop(this);
+			
+			if(looping.delta >= 1) {
+				this.update();
+				LoopingUtils.ticks++;
+				looping.delta--;
+				// Rendering
+				LoopingUtils.frames++;
+				render();
+			}
 			
 			looping.timerLoop(consolePrint, this, () -> {
 				resources.memory = resources.getMemory();
@@ -125,10 +133,6 @@ public class GameManager extends Canvas implements Runnable {
 				resources.threadCount = resources.getThreadCount();
 				resources.maxMemory = resources.getMaxMemory();
 			});
-			
-			// Rendering
-			LoopingUtils.frames++;
-			render();
 		}
 		stop();
 	}

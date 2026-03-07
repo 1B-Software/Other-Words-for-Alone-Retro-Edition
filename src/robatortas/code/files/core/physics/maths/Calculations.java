@@ -12,7 +12,7 @@ public class Calculations {
 	
 	private Random random = new Random();
 	
-	public Calculations(int x, int y) {
+	public Calculations(float x, float y) {
 		x0 = x;
 		y0 = y;
 		settings();

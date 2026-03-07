@@ -8,44 +8,69 @@ import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.utils.CrashHandler;
 import robatortas.code.files.core.utils.MathUtils;
 import robatortas.code.files.project.archive.SheetArchive;
+import robatortas.code.files.project.settings.Globals;
 
 /**<NEWLINE>
  * RenderManager (AKA: Screen):
  * <br>
- * 
+ *
  * Contains all methods that take care of rendering everything onto the screen.
  * <br>
  * After all pixels are stored on the RenderManager's PIXELS array
  * <br>
- * the GameManager class's 
+ * the GameManager class's
  * <br>
- * ({@link robatortas.code.files.project.GameManager}) 
+ * ({@link robatortas.code.files.project.GameManager})
  * <br>
  * PIXELS array will get filled with RenderManager's PIXELS[]
  */
 
 public class RenderManager {
-	
+
+	/** World viewport dimensions (used for camera/viewport logic) */
 	public int width, height;
+	/** Internal pixel buffer dimensions (width * RENDER_SCALE) */
+	public int pixelWidth, pixelHeight;
 	public int[] pixels;
+
+	public float[] lightmapR, lightmapG, lightmapB;
 	
-	public int xOffset, yOffset;
-	
+	public float xOffset, yOffset;
+
 	public Random random = new Random();
-	
+
 	public RenderManager(int width, int height) {
 		this.width = width;
 		this.height = height;
-		
-		pixels = new int[width*height];
+		this.pixelWidth = width * Globals.RENDER_SCALE;
+		this.pixelHeight = height * Globals.RENDER_SCALE;
+
+		pixels = new int[pixelWidth * pixelHeight];
+		lightmapR = new float[pixelWidth * pixelHeight];
+		lightmapG = new float[pixelWidth * pixelHeight];
+		lightmapB = new float[pixelWidth * pixelHeight];
 	}
-	
+
 	public void clear(boolean clears) {
 		if(clears) {
 			for(int i = 0; i < pixels.length; i++) {
 				pixels[i] = 0;
 			}
+			for(int i = 0; i < lightmapR.length; i++) {
+				lightmapR[i] = lightmapG[i] = lightmapB[i] = 0.3f;
+			}
 		}
+	}
+
+	public void applyLighting() {
+	    for (int i = 0; i < pixels.length; i++) {
+	        float b = lightmapR[i];
+	        int c = pixels[i];
+	        int r = Math.min(255, (int)(((c >> 16) & 0xFF) * lightmapR[i]));
+	        int g = Math.min(255, (int)(((c >> 8)  & 0xFF) * lightmapG[i]));
+	        int bl = Math.min(255, (int)(( c       & 0xFF) * lightmapB[i]));
+	        pixels[i] = 0xFF000000 | (r << 16) | (g << 8) | bl;
+	    }
 	}
 	
 	
@@ -61,6 +86,8 @@ public class RenderManager {
 	    int dstR = (dst >> 16) & 0xFF;
 	    int dstG = (dst >>  8) & 0xFF;
 	    int dstB =  dst        & 0xFF;
+	    
+	    
 
 	    int r = (int)(srcR * a + dstR * (1 - a));
 	    int g = (int)(srcG * a + dstG * (1 - a));
@@ -68,71 +95,82 @@ public class RenderManager {
 
 	    return 0xFF000000 | (r << 16) | (g << 8) | b;
 	}
-	
+
 	// TODO: LATER!
 	public void debug(int xp, int yp, int w, int h, int color, int perimeter) {
-		xp -= xOffset;
-		yp -= yOffset;
-		
+		int rs = Globals.RENDER_SCALE;
+		int sxp = (int)((xp - xOffset) * rs);
+		int syp = (int)((yp - yOffset) * rs);
+		w *= rs;
+		h *= rs;
+
 		for(int y = 0; y < h; y++) {
-			int ya = y+yp;
+			int ya = y+syp;
 			for(int x = 0; x < w; x++) {
-				int xa = x+xp;
-				if(xa < -w || xa >= width || ya < 0 || ya >= height) break;
+				int xa = x+sxp;
+				if(xa < -w || xa >= pixelWidth || ya < 0 || ya >= pixelHeight) break;
 				if(xa < 0) xa = 0;
-				
+
 				// dejame pienso...
-				pixels[xa+ya*width] = color;
-//				if(color != 0xffff00ff) pixels[xa+ya*width] = color;
+				pixels[xa+ya*pixelWidth] = color;
+//				if(color != 0xffff00ff) pixels[xa+ya*pixelWidth] = color;
 			}
 		}
 	}
-	
-	public void renderBox(int xp, int yp, int w, int h, int color, int alpha, boolean fixed) {
+
+	public void renderBox(float xp, float yp, int w, int h, int color, int alpha, boolean fixed) {
+		int rs = Globals.RENDER_SCALE;
 		// fixed meaning that it is literally attached to the screen
 		if(!fixed) {
-			xp -= xOffset;
-			yp -= yOffset;
+			xp = (xp - xOffset) * rs;
+			yp = (yp - yOffset) * rs;
+		} else {
+			xp *= rs;
+			yp *= rs;
 		}
-		
+		w *= rs;
+		h *= rs;
+
 		for(int y = 0; y < h; y++) {
-			int ya = y+yp;
+			float ya = y+yp;
 			for(int x = 0; x < w; x++) {
-				int xa = x+xp;
-				if(xa < -w || xa >= width || ya < 0 || ya >= height) break;
+				float xa = x+xp;
+				if(xa < -w || xa >= pixelWidth || ya < 0 || ya >= pixelHeight) break;
 				if(xa < 0) xa = 0;
 				color = (alpha << 24) | (color & 0x00FFFFFF);
-				pixels[xa+ya*width] = blendPixel(pixels[xa+ya*width], color);
+				pixels[(int)xa+(int)ya*pixelWidth] = blendPixel(pixels[(int)xa+(int)ya*pixelWidth], color);
 			}
 		}
 	}
-	
+
 	// Rendering tiles
-	public void renderTile(int xp, int yp, float scale, TileManager tile) {
-		xp -= xOffset;
-		yp -= yOffset;
-		
+	public void renderTile(float xp, float yp, float scale, TileManager tile) {
+		int rs = Globals.RENDER_SCALE;
+		xp = (xp - xOffset) * rs;
+		yp = (yp - yOffset) * rs;
+		scale *= rs;
+
 		int outW = (int)(tile.sprite.width  * scale);
 		int outH = (int)(tile.sprite.height * scale);
-		
+
 		for(int dy = 0; dy < outH; dy++) {
-			int ya = dy + yp;
-			if(ya < 0 || ya >= height) continue;
+			float ya = dy + yp;
+			if(ya < 0 || ya >= pixelHeight) continue;
 			int ys = (int)(dy / scale);
 			for(int dx = 0; dx < outW; dx++) {
-				int xa = dx + xp;
-				if(xa < 0 || xa >= width) continue;
+				float xa = dx + xp;
+				if(xa < 0 || xa >= pixelWidth) continue;
 				int xs = (int)(dx / scale);
 
 				int color = tile.sprite.pixels[xs + ys * tile.sprite.width];
 				if(color == 0xffff00ff) continue;
 				if(color != 0) color = (tile.sprite.alpha << 24) | (color & 0x00FFFFFF);
-				pixels[xa + ya * width] = blendPixel(pixels[xa + ya * width], color);
+				pixels[(int)xa + (int)ya * pixelWidth] = blendPixel(pixels[(int)xa + (int)ya * pixelWidth], color);
 			}
 		}
 	}
-	
-	/**<NEWLINE> 
+
+	/**<NEWLINE>
 	 * <b>renderSprite function on RenderManager class</b>
 	 * <br><br>
 	 * Rendering Sprites
@@ -142,102 +180,121 @@ public class RenderManager {
 	 * @param scale The size of the sprite
 	 * @param flip Flips the sprite; 1 flips it on x, 2 flips it on y, 3 flips it on x & y
 	 */
-	public void renderSprite(int xp, int yp, SpriteManager sprite, float scale, int flip) {
-		xp -= xOffset;
-		yp -= yOffset;
+	public void renderSprite(float xp, float yp, SpriteManager sprite, float scale, int flip) {
+		int rs = Globals.RENDER_SCALE;
+		xp = (xp - xOffset) * rs;
+		yp = (yp - yOffset) * rs;
+		scale *= rs;
 
 		int outW = (int)(sprite.width  * scale);
 		int outH = (int)(sprite.height * scale);
 
 		// Nearest-neighbor -> iterate output pixels, map back to source
 		for(int dy = 0; dy < outH; dy++) {
-			int ya = dy + yp;
-			if(ya < 0 || ya >= height) continue;
-			int ys = (int)(dy / scale);
+			float ya = dy + yp;
+			if(ya < 0 || ya >= pixelHeight) continue;
+			float ys = (int)(dy / scale);
 			if(flip == 2 || flip == 3) ys = (sprite.height - 1) - ys;
 			for(int dx = 0; dx < outW; dx++) {
-				int xa = dx + xp;
-				if(xa < 0 || xa >= width) continue;
+				float xa = dx + xp;
+				if(xa < 0 || xa >= pixelWidth) continue;
 				int xs = (int)(dx / scale);
 				if(flip == 1 || flip == 3) xs = (sprite.width - 1) - xs;
 
-				int color = sprite.pixels[xs + ys * sprite.width];
+				int color = sprite.pixels[xs + (int)ys * sprite.width];
 				if(color == 0xffff00ff) continue;
 				if(color != 0) color = (sprite.alpha << 24) | (color & 0x00FFFFFF);
-				pixels[xa + ya * width] = blendPixel(pixels[xa + ya * width], color);
+				pixels[(int)xa + (int)ya * pixelWidth] = blendPixel(pixels[(int)xa + (int)ya * pixelWidth], color);
 			}
 		}
 	}
-	
+
 	public void renderSpriteSheet(int xp, int yp, SpriteSheetManager sheet, int flip, boolean fixed) {
+		int rs = Globals.RENDER_SCALE;
+		float sxp, syp;
 		if(!fixed) {
-			xp -= xOffset;
-			yp -= yOffset;
+			sxp = (xp - xOffset) * rs;
+			syp = (yp - yOffset) * rs;
+		} else {
+			sxp = xp * rs;
+			syp = yp * rs;
 		}
-		
-		for(int y = 0; y < sheet.HEIGHT; y++) {
-			int ya = y + yp;
-			int ys = y;
-			for(int x = 0; x < sheet.WIDTH; x++) {
-				int xa = x + xp;
-				int xs = x;
-				if(flip == 1 || flip == 3) xs = 15 - x;
-				if(xa < - sheet.WIDTH || xa >= width || ya < - 0 || ya >= height) break;
+
+		int outW = sheet.WIDTH * rs;
+		int outH = sheet.HEIGHT * rs;
+
+		for(int dy = 0; dy < outH; dy++) {
+			int ya = (int)(dy + syp);
+			int ys = dy / rs;
+			for(int dx = 0; dx < outW; dx++) {
+				int xa = (int)(dx + sxp);
+				int xs = dx / rs;
+				if(flip == 1 || flip == 3) xs = (sheet.WIDTH - 1) - (dx / rs);
+				if(xa < -outW || xa >= pixelWidth || ya < 0 || ya >= pixelHeight) break;
 				if(xa < 0) xa = 0;
 				int color = sheet.pixels[xs + ys * sheet.WIDTH];
-				
-				if(color != 0xffff00ff) pixels[xa + ya * width] = blendPixel(pixels[xa+ya*width], color);
+
+				if(color != 0xffff00ff) pixels[xa + ya * pixelWidth] = blendPixel(pixels[xa+ya*pixelWidth], color);
 			}
 		}
 	}
-	
+
 	// Rendering Mobs
-	public void renderMob(int xp, int yp, Mob mob, SpriteManager sprite, int flip) {
-		xp -= xOffset;
-		yp -= yOffset;
-		
-		for(int y = 0; y < sprite.height; y++) {
-			int ya = y+yp;
-			int ys = y;
-			if(flip == 2 || flip == 3) ys = (sprite.height-1) - y;
-			for(int x = 0; x < sprite.width; x++) {
-				int xa = x+xp;
-				int xs = x;
-				if(flip == 1 || flip == 3) xs = (sprite.width-1) - x;
-				if(xa < -sprite.width || xa >= width || ya < 0 || ya >= height) break;
+	public void renderMob(float xp, float yp, Mob mob, SpriteManager sprite, int flip) {
+		int rs = Globals.RENDER_SCALE;
+		xp = (xp - xOffset) * rs;
+		yp = (yp - yOffset) * rs;
+
+		int outW = sprite.width * rs;
+		int outH = sprite.height * rs;
+
+		for(int dy = 0; dy < outH; dy++) {
+			float ya = dy+yp;
+			int ys = dy / rs;
+			if(flip == 2 || flip == 3) ys = (sprite.height-1) - (dy / rs);
+			for(int dx = 0; dx < outW; dx++) {
+				float xa = dx+xp;
+				int xs = dx / rs;
+				if(flip == 1 || flip == 3) xs = (sprite.width-1) - (dx / rs);
+				if(xa < -outW || xa >= pixelWidth || ya < 0 || ya >= pixelHeight) break;
 				if(xa < 0) xa = 0;
 				int color = mob.getSprite().pixels[xs + ys * sprite.width];
 				if(color != 0xffff00ff) {
 					color = (mob.alpha << 24) | (color & 0x00FFFFFF);
-					pixels[xa+ya*width] = blendPixel(pixels[xa+ya*width], color);
-//					if(mob.hurtTime > 0) pixels[xa+ya*width] = 0xff << 24 | random.nextInt(0xffffff);
-					if(mob.hurtTime > 0) pixels[xa+ya*width] = blendPixel(pixels[xa+ya*width], color >> 2 | 0x00);
+					pixels[(int)xa+(int)ya*pixelWidth] = blendPixel(pixels[(int)xa+(int)ya*pixelWidth], color);
+//					if(mob.hurtTime > 0) pixels[xa+ya*pixelWidth] = 0xff << 24 | random.nextInt(0xffffff);
+					if(mob.hurtTime > 0) pixels[(int)xa+(int)ya*pixelWidth] = blendPixel(pixels[(int)xa+(int)ya*pixelWidth], color >> 2 | 0x00);
 				}
 			}
 		}
 	}
-	
+
 	public void renderColor(int xp, int yp, SpriteManager sprite, int flip, int inputColor) {
-		xp -= xOffset;
-		yp -= yOffset;
-		
-		for(int y = 0; y < sprite.height; y++) {
-			int ya = y + yp;
-			int ys = y;
-			if(flip == 2 || flip == 3) ys = (sprite.height- 1) - y;
-			for(int x = 0; x < sprite.width; x++) {
-				int xa = x + xp;
-				int xs = x;
-				if(flip == 1 || flip == 3) xs = (sprite.width - 1) - x;
-				if(xa < -sprite.width || xa >= width || ya < 0 || ya >= height) break;
+		int rs = Globals.RENDER_SCALE;
+		float sxp = (xp - xOffset) * rs;
+		float syp = (yp - yOffset) * rs;
+
+		int outW = sprite.width * rs;
+		int outH = sprite.height * rs;
+
+		for(int dy = 0; dy < outH; dy++) {
+			int ya = (int)(dy + syp);
+			int ys = dy / rs;
+			if(flip == 2 || flip == 3) ys = (sprite.height- 1) - (dy / rs);
+			for(int dx = 0; dx < outW; dx++) {
+				int xa = (int)(dx + sxp);
+				int xs = dx / rs;
+				if(flip == 1 || flip == 3) xs = (sprite.width - 1) - (dx / rs);
+				if(xa < -outW || xa >= pixelWidth || ya < 0 || ya >= pixelHeight) break;
 				if(xa < 0) xa = 0;
 				int color = sprite.pixels[xs + ys * sprite.width];
-				if(color != 0xffff00ff) pixels[xa+ya*width] = inputColor;
+				if(color != 0xffff00ff) pixels[xa+ya*pixelWidth] = inputColor;
 			}
 		}
 	}
-	
+
 	public void renderColorRelativeToLocation(int xp, int yp, SpriteManager sprite, int shade, int flip, LevelManager level) {
+		int rs = Globals.RENDER_SCALE;
 		int shadedColor = 0;
 		for(int yyy = 0; yyy < level.getLevel(xp >> 4, yp >> 4).sprite.height; yyy++) {
 			for(int xxx = 0; xxx < level.getLevel(xp >> 4, yp >> 4).sprite.width; xxx++) {
@@ -249,73 +306,84 @@ public class RenderManager {
 				shadedColor = (r - shade) << 16 | (g - shade) << 8 | (b - shade);
 			}
 		}
-		
-		xp -= xOffset;
-		yp -= yOffset;
-		
-		for(int y = 0; y < sprite.height; y++) {
-			int ya = y + yp;
-			int ys = y;
-			if(flip == 2 || flip == 3) ys = (sprite.height- 1) - y;
-			for(int x = 0; x < sprite.width; x++) {
-				int xa = x + xp;
-				int xs = x;
-				if(flip == 1 || flip == 3) xs = (sprite.width - 1) - x;
-				if(xa < -sprite.width || xa >= width || ya < 0 || ya >= height) break;
+
+		float sxp = (xp - xOffset) * rs;
+		float syp = (yp - yOffset) * rs;
+
+		int outW = sprite.width * rs;
+		int outH = sprite.height * rs;
+
+		for(int dy = 0; dy < outH; dy++) {
+			int ya = (int)(dy + syp);
+			int ys = dy / rs;
+			if(flip == 2 || flip == 3) ys = (sprite.height- 1) - (dy / rs);
+			for(int dx = 0; dx < outW; dx++) {
+				int xa = (int)(dx + sxp);
+				int xs = dx / rs;
+				if(flip == 1 || flip == 3) xs = (sprite.width - 1) - (dx / rs);
+				if(xa < -outW || xa >= pixelWidth || ya < 0 || ya >= pixelHeight) break;
 				if(xa < 0) xa = 0;
 				int color = sprite.pixels[xs + ys * sprite.width];
-				if(color != 0xffff00ff) pixels[xa+ya*width] = shadedColor;
+				if(color != 0xffff00ff) pixels[xa+ya*pixelWidth] = shadedColor;
 			}
 		}
 	}
-	
+
 	public void renderFont(int xp, int yp, SpriteManager sprite, int scale, int color, int flip) {
-		xp -= xOffset;
-		yp -= yOffset;
-		
-		for(int y = 0; y < scale; y++) {
-			int ya = y + yp;
-			int ys = y;
-			if(flip == 2 || flip == 3) ys = 15 - y;
-			for(int x = 0; x < scale; x++) {
-				int xa = x + xp;
-				int xs = x;
-				if(flip == 1 || flip == 3) xs = 15 - x;
-				if(xa < - scale || xa >= width || ya < - 0 || ya >= height) break;
+		int rs = Globals.RENDER_SCALE;
+		float sxp = (xp - xOffset) * rs;
+		float syp = (yp - yOffset) * rs;
+
+		int outW = scale * rs;
+		int outH = scale * rs;
+
+		for(int dy = 0; dy < outH; dy++) {
+			int ya = (int)(dy + syp);
+			int ys = dy / rs;
+			if(flip == 2 || flip == 3) ys = (scale - 1) - (dy / rs);
+			for(int dx = 0; dx < outW; dx++) {
+				int xa = (int)(dx + sxp);
+				int xs = dx / rs;
+				if(flip == 1 || flip == 3) xs = (scale - 1) - (dx / rs);
+				if(xa < -outW || xa >= pixelWidth || ya < 0 || ya >= pixelHeight) break;
 				if(xa < 0) xa = 0;
 				int colorPix = sprite.pixels[xs + ys * sprite.width];
 				if (colorPix != 0xffff00ff) {
-//					if(color == 0) if(scale <= sprite.width) pixels[(((xa*scale)/sprite.width)+(sprite.width-scale))+(((ya*scale)/sprite.height)+(sprite.height-scale))*width] = colorPix;
-//					else if(scale <= sprite.width) pixels[(((xa*scale)/sprite.width)+(sprite.width-scale))+(((ya*scale)/sprite.height)+(sprite.height-scale))*width] = color;
-					if(color != 0) pixels[xa+ya*width] = color;
-					else pixels[xa+ya*width] = 0xff000000;
+//					if(color == 0) if(scale <= sprite.width) pixels[(((xa*scale)/sprite.width)+(sprite.width-scale))+(((ya*scale)/sprite.height)+(sprite.height-scale))*pixelWidth] = colorPix;
+//					else if(scale <= sprite.width) pixels[(((xa*scale)/sprite.width)+(sprite.width-scale))+(((ya*scale)/sprite.height)+(sprite.height-scale))*pixelWidth] = color;
+					if(color != 0) pixels[xa+ya*pixelWidth] = color;
+					else pixels[xa+ya*pixelWidth] = 0xff000000;
 				}
 			}
 		}
 	}
-	
+
 	public void renderScaled(int xp, int yp, SpriteManager sprite, int scale, int flip) {
-		xp -= xOffset;
-		yp -= yOffset;
-		
-		for(int y = 0; y < sprite.height; y++) {
-			int ya = y + yp;
-			int ys = y;
-			if(flip == 2 || flip == 3) ys = (sprite.height- 1) - y;
-			for(int x = 0; x < sprite.width; x++) {
-				int xa = x + xp;
-				int xs = x;
-				if(flip == 1 || flip == 3) xs = (sprite.width - 1) - x;
-				if(xa < -sprite.width || xa >= width || ya < 0 || ya >= height) break;
+		int rs = Globals.RENDER_SCALE;
+		int sxp = (int)((xp - xOffset) * rs);
+		int syp = (int)((yp - yOffset) * rs);
+
+		int outW = sprite.width * rs;
+		int outH = sprite.height * rs;
+
+		for(int dy = 0; dy < outH; dy++) {
+			int ya = dy + syp;
+			int ys = dy / rs;
+			if(flip == 2 || flip == 3) ys = (sprite.height- 1) - (dy / rs);
+			for(int dx = 0; dx < outW; dx++) {
+				int xa = dx + sxp;
+				int xs = dx / rs;
+				if(flip == 1 || flip == 3) xs = (sprite.width - 1) - (dx / rs);
+				if(xa < -outW || xa >= pixelWidth || ya < 0 || ya >= pixelHeight) break;
 				if(xa < 0) xa = 0;
 				int color = sprite.pixels[xs+ys*sprite.width];
 				if(color != 0xffff00ff) {
-					if(scale <= sprite.width) pixels[(((xa*scale)/sprite.width)+(sprite.width-scale))+(((ya*scale)/sprite.height)+(sprite.height-scale))*width] = color;
+					if(scale <= sprite.width) pixels[(((xa*scale)/sprite.width)+(sprite.width-scale))+(((ya*scale)/sprite.height)+(sprite.height-scale))*pixelWidth] = color;
 				}
 			}
 		}
 	}
-	
+
 	@Deprecated
 	// PPS (Per Pixel Scaling) Algorithm
 	public int[] scale(int[] pixels, int width, int height, int scale) {
@@ -323,7 +391,7 @@ public class RenderManager {
 		for(int y = 0; y < height; y++) {
 			for(int x = 0; x < width; x++) {
 				int color = 0;
-				
+
 				color = pixels[x + y * width];
 				int algorithm = ((x*scale)/width) + ((y*scale)/height) * width;
 				if(color != 0xffff00ff) scaledPixels[algorithm] = color;
@@ -331,9 +399,9 @@ public class RenderManager {
 		}
 		return scaledPixels;
 	}
-	
+
 	// Sets these offsets to the values in the level rendering method
-	public void setOffset(int xOffset, int yOffset) {
+	public void setOffset(float xOffset, float yOffset) {
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 	}

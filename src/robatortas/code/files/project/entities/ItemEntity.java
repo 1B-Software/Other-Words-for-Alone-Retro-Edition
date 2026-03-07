@@ -3,6 +3,7 @@ package robatortas.code.files.project.entities;
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.physics.PhysicsEngine;
 import robatortas.code.files.core.render.RenderManager;
+import robatortas.code.files.core.render.SpriteManager;
 import robatortas.code.files.core.sound.SoundEngine;
 import robatortas.code.files.project.entities.mobs.mobArchive.Player;
 import robatortas.code.files.project.inventory.Item;
@@ -10,13 +11,13 @@ import robatortas.code.files.project.inventory.ResourceItem;
 
 public class ItemEntity extends EntityManager {
 	
-	private int lifeTime = 60*10;
+	private int lifeTime = 60*20;
 	private int tickTime = 0;
 	
 	public Item item;
 	public PhysicsEngine physicsEngine;
 	
-	public ItemEntity(int x, int y, Item item) {
+	public ItemEntity(float x, float y, Item item) {
 		this.x = x;
 		this.y = y;
 		this.item = item;
@@ -60,7 +61,8 @@ public class ItemEntity extends EntityManager {
 		// Blinking when death is close
 		if(tickTime >= (lifeTime - 240)) {
 			int deathTime = 0x00;
-			deathTime+=0x01;
+			System.out.println("Death Time Start !");
+			deathTime+=0x0F;
 //			if((tickTime / 10) % 2 == 0) return;
 			if((tickTime / 10) % 2 == 0) {
 				if(item.getSprite().alpha != 0x00)item.getSprite().alpha -= deathTime;
@@ -77,28 +79,66 @@ public class ItemEntity extends EntityManager {
 		if(physicsEngine.calculations.z0 == 0) zTime++;
 		else zTime = 0;
 		
-		if(zTime == 1) {
-			for(int i = 0; i < 3; i++) {
-				level.add(particle = new Particle(x, y));
-				particle.physicsEngine.calculations.gravityForce = 0.23;
-				particle.life = 20 + random.nextInt(20);
-				for(int yyy = 0; yyy < level.getLevel(x >> 4, y >> 4).sprite.height; yyy++) {
-					for(int xxx = 0; xxx < level.getLevel(x >> 4, y >> 4).sprite.width; xxx++) {
-						int color = level.getLevel(x >> 4, y >> 4).sprite.pixels[xxx+yyy*level.getLevel(x >> 4, y >> 4).sprite.width];
-						int r = (color & 0xff0000) >> 16;
-						int g = (color & 0xff00) >> 8;
-						int b = (color & 0xff);
-						int shade = (random.nextInt(5 + 30));
-						int shadedColor = (r - shade) << 16 | (g - shade) << 8 | (b - shade);					
-						particle.setColor(shadedColor);
-					}
-				}
-			}
+		int iX = (int)x;
+		int iY = (int)y;
+		
+		// 1B - Removed
+//		if(zTime == 1) {
+//			for(int i = 0; i < 3; i++) {
+//				level.add(particle = new Particle(iX, iY));
+//				particle.physicsEngine.calculations.gravityForce = 0.23;
+//				particle.life = 20 + random.nextInt(20);
+//				for(int yyy = 0; yyy < level.getLevel(iX >> 4, iY >> 4).sprite.height; yyy++) {
+//					for(int xxx = 0; xxx < level.getLevel(iX >> 4, iY >> 4).sprite.width; xxx++) {
+//						int color = level.getLevel(iX >> 4, iY >> 4).sprite.pixels[xxx+yyy*level.getLevel(iX >> 4, iY >> 4).sprite.width];
+//						int r = (color & 0xff0000) >> 16;
+//						int g = (color & 0xff00) >> 8;
+//						int b = (color & 0xff);
+//						int shade = (random.nextInt(5 + 30));
+//						int shadedColor = (r - shade) << 16 | (g - shade) << 8 | (b - shade);					
+//						particle.setColor(shadedColor);
+//					}
+//				}
+//			}
+//		}
+		
+		
+		SpriteManager shadow = new SpriteManager(item.getSprite().pixels.clone(), item.getSprite().width, item.getSprite().height);
+		int alpha = Math.max(0, Math.min(255, 120 - (int)physicsEngine.calculations.z0 * 2));
+		shadow.alpha = alpha;
+		for(int y = 0; y < shadow.SIZE; y++) {
+		    for(int x = 0; x < shadow.SIZE; x++) {
+		        if(shadow.pixels[x+y*shadow.width] != 0xffff00ff) shadow.pixels[x + y * shadow.width] = 0xFF000000;
+		    }
 		}
+		
+//		for(int y = 0; y < item.getSprite().height; y++) {
+//			for(int x = 0; x < item.getSprite().width; x++) {
+////				int color = level.getLevel(iX >> 4, iY >> 4).sprite.pixels[x+y*level.getLevel(iX >> 4, iY >> 4).sprite.width];
+//				int a = (0xff000000) >> 24;
+//				int r = (0xff0000) >> 16;
+//				int g = (0xff00) >> 8;
+//				int b = (0xff);
+//				shadedColor = (a << 24) | (r << 16) | (g  << 8) | b;
+//				shadow.pixels[x+y*shadow.width] = shadedColor;
+//				a = 0x55;
+//				r = 0x00;
+//				g = 0x00;
+//				b = 0x00;
+////				int shade = (random.nextInt(5 + 30));
+//				if(shadow.pixels[x+y*shadow.width] != 0xffff00ff) {
+////					shadedColor = (a << 24) | (r << 16) | (g  << 8) | b;
+//					shadow.pixels[x+y*shadow.width] = shadedColor;
+//				}
+////				if(shadow.pixels[x+y*shadow.width] != 0xffff00ff) shadow.pixels[x+y*shadow.width] = shadedColor;					
+////				particle.setColor(shadedColor);
+//			}
+//		}
 		
 		int shade = 0;
 		shade += ((int)physicsEngine.calculations.z0 * 2) - 30;
-		if(shade <= 1) screen.renderColorRelativeToLocation(x - 10, (y + 1) - 10, item.getSprite(), 0xff << 16| -shade, 0, level);
+//		if(shade <= 1) screen.renderColorRelativeToLocation(iX - 10, (iY + 1) - 10, item.getSprite(), 0xff << 16| -shade, 0, level);
+		screen.renderSprite(iX - 10, (iY + 1) - 10, shadow, 1, 0);
 		screen.renderSprite(x - 10, ((y + yy) - (int) physicsEngine.calculations.z0) - 10, item.getSprite(), 1, 0);
 
 	}

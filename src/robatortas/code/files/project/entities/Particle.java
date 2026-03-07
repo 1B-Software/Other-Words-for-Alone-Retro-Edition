@@ -15,7 +15,7 @@ public class Particle extends MobAddons {
 	private int color;
 	private SpriteManager sprite;
 	
-	public Particle(int x, int y) {
+	public Particle(float x, float y) {
 		this.x = x;
 		this.y = y;
 		this.physicsEngine = new PhysicsEngine(x, y);

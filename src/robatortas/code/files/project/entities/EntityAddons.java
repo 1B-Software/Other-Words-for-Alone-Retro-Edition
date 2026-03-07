@@ -9,7 +9,7 @@ public class EntityAddons {
 	@SuppressWarnings("unused")
 	private EntityManager entity;
 	
-	private int x, y;
+	private float x, y;
 	
 	public EntityAddons(EntityManager entity) {
 		this.entity = entity;
