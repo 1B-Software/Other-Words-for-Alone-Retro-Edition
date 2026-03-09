@@ -5,6 +5,7 @@ import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.archive.tileArchive.Interior.BedTile;
 import robatortas.code.files.project.archive.tileArchive.Interior.ChairTile;
 import robatortas.code.files.project.archive.tileArchive.Interior.NightStand;
+import robatortas.code.files.project.archive.tileArchive.Interior.RoomWall;
 import robatortas.code.files.project.archive.tileArchive.Interior.TableTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.BushTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.CobblePathTile;
@@ -56,4 +57,6 @@ public class TileArchive {
 	public static TileManager woodWallFront = new WoodWallFrontTile(SpriteArchive.woodWall_Front, 27);
 	public static TileManager TvTile = new TVTile(SpriteArchive.tv, 28);
 	public static TileManager nightStand = new NightStand(SpriteArchive.nightStand, 29);
+	public static TileManager roomWall = new RoomWall(SpriteArchive.roomWall, 30);
+	public static TileManager placeHolderTile = new PlaceHolderTile(SpriteArchive.voidSprite, 31);
 }

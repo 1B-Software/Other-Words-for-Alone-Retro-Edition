@@ -45,6 +45,7 @@ public class Player extends MobAddons {
 		this.sprite = new SpriteManager(16, 0, 0, SheetArchive.player);
 		super.dir = 2;
 		this.inventory = new Inventory();
+		alpha = 0xFF;
 	}
 	
 	private static float velX = 1;
@@ -192,7 +193,7 @@ public class Player extends MobAddons {
 //		float px = (x - RenderMethod.xScroll) * Globals.RENDER_SCALE;
 //		float py = (y - RenderMethod.yScroll) * Globals.RENDER_SCALE;
 		light = new LightSource(screen);
-		light.add(x, y-5, 100, 0.6f, 0xFFFFFFFF, 2f);
+//		light.add(x, y-5, 100, 0.6f, 0xFFFFFFFF, 2f);
 		////////////
 		// GROUND //
 		////////////

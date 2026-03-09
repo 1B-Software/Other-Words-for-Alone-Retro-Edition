@@ -3,6 +3,7 @@ package robatortas.code.files.core.level;
 import java.util.LinkedList;
 import java.util.List;
 
+import robatortas.code.files.core.console.Console;
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.input.InputManager;
 import robatortas.code.files.core.input.MouseManager;
@@ -10,6 +11,7 @@ import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.archive.tileArchive.TileArchive;
+import robatortas.code.files.project.archive.tileArchive.Interior.RoomWall;
 import robatortas.code.files.project.archive.tileArchive.Nature.WaterTile;
 import robatortas.code.files.project.entities.mobs.mobArchive.Player;
 import robatortas.code.files.project.level.LevelAddons;
@@ -30,6 +32,8 @@ public class LevelManager {
 	public List<EntityManager> entities = new LinkedList<EntityManager>();
 	public List<EntityManager>[] entitiesInTiles;
 	
+	public List<TileManager> allTiles = new LinkedList<TileManager>();
+	
 	public static LevelManager level = new GameLevel(Globals.levelPath);
 	
 	// Classes
@@ -41,6 +45,13 @@ public class LevelManager {
 	public LevelManager(String path) {
 		loadLevel(path);
 		addons = new LevelAddons(this);
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				allTiles.add(getLevel(x,y));
+				allTiles.add(getPost(x,y));
+				allTiles.add(getFront(x,y));
+			}
+		}
 	}
 	
 	public class TileState {
@@ -119,6 +130,17 @@ public class LevelManager {
 		removeEntity(xp, yp, e);
 	}
 	
+	public TileManager getTile(TileManager query) {
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				if(getLevel(x, y) == query || getFront(x, y) == query) {
+					return query;
+				}
+			}
+		}
+		return TileArchive.voidTile;
+	}
+	
 	/**<NEWLINE>
 	 * <b>insertEntity function on LevelManager class</b>
 	 * <br><br>
@@ -163,6 +185,7 @@ public class LevelManager {
 	 */
 	public TileManager getLevel(int x, int y) {
 		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
+		if(tiles[x + y * width] == SpriteArchive.col_grass) return TileArchive.grass;
 		if(tiles[x + y * width] == SpriteArchive.col_grass) return TileArchive.grass;
 		if(tiles[x + y * width] == SpriteArchive.col_water) return TileArchive.water;
 		if(tiles[x + y * width] == SpriteArchive.col_yellowDahlia) return TileArchive.grass;
@@ -225,9 +248,11 @@ public class LevelManager {
 	 */
 	public TileManager getFront(int x, int y) {
 		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
+		if(postTiles[x + y * width] == SpriteArchive.col_placeHolder) return TileArchive.placeHolderTile;
 		if(postTiles[x + y * width] == SpriteArchive.col_oakTree) return TileArchive.tree;
 		if(postTiles[x + y * width] == SpriteArchive.col_bed) return TileArchive.bed;
 		if(postTiles[x + y * width] == SpriteArchive.col_tv) return TileArchive.TvTile;
+		if(postTiles[x + y * width] == SpriteArchive.col_room_walls) return TileArchive.roomWall;
 		if(postTiles[x + y * width] == SpriteArchive.col_nightStand) return TileArchive.nightStand;
 		if(postTiles[x + y * width] == SpriteArchive.col_flowerRed) return TileArchive.flowerRed;
 		if(postTiles[x + y * width] == SpriteArchive.col_yellowDahlia) return TileArchive.yellowDahlia;
