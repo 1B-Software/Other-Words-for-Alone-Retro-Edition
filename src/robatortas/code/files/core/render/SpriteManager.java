@@ -70,7 +70,9 @@ public class SpriteManager {
 		for(int y = 0; y < SIZE; y++) {
 			for(int x = 0; x < SIZE; x++) {
 				pixels[x+y*width] = sheet.pixels[(x+this.x) + (y+this.y) * sheet.WIDTH];
-			}
+//				pixels[x+y*width] = (a << 24) | (r << 16) | (g << 8) | b;			
+				}
 		}
+		
 	}
 }

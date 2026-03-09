@@ -168,7 +168,7 @@ public class GameManager extends Canvas implements Runnable {
 		}
 		
 		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-		g.setColor(new Color(0x1F1F1F));
+		g.setColor(new Color(0xFF000000)); // 0x1F1F1F
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
 		float targetAspect = (float) Globals.WIDTH / Globals.HEIGHT; // 250/220

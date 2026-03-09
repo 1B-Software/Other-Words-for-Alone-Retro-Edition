@@ -1,6 +1,7 @@
 package robatortas.code.files.project.entities.mobs;
 
 import robatortas.code.files.core.entities.Mob;
+import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
 import robatortas.code.files.core.sound.SoundEngine;
@@ -128,23 +129,42 @@ public class MobAddons extends Mob {
 	// Collision //
 	///////////////
 	
+//	public boolean collision(float xs, float ys) {
+//		boolean solid = false;
+//		for(int c = 0; c < 4; c++) {
+//			int xt = (int)((y + xs) + c % 2 * TileManager.colX - 6) >> 4;
+//			int yt = (int)((x + ys) + c / 2 * TileManager.colY - 4) >> 4;
+//			// if (SolidMethod() == true) solid = true 
+//			if(level.getLevel(xt, yt).solid(level, xt, yt, this)) {
+//				solid = true;
+//			}
+//			if(level.getPost(xt, yt).solid(level, xt, yt, this)) {
+//				solid = true;
+//			}
+//			if(level.getFront(xt, yt).solid(level, xt, yt, this)) {
+//				solid = true;
+//			}
+//		}
+////		System.out.println("SOLID = " + solid);
+//		return solid;
+//	}
+	
 	public boolean collision(float xs, float ys) {
 		boolean solid = false;
 		for(int c = 0; c < 4; c++) {
-			int xt = (int)((x + xs) + c % 2 * 8 - 6) >> 4;
-			int yt = (int)((y + ys) + c / 2 * 4 - 4) >> 4;
-			// if (SolidMethod() == true) solid = true 
-			if(level.getLevel(xt, yt).solid(level, xt, yt, this)) {
-				solid = true;
-			}
-			if(level.getPost(xt, yt).solid(level, xt, yt, this)) {
-				solid = true;
-			}
-			if(level.getFront(xt, yt).solid(level, xt, yt, this)) {
-				solid = true;
-			}
+			float px = (x + xs) + c % 2 * 8 - 6;
+			float py = (y + ys) + c / 2 * 4 - 4;
+			int xt = (int) px >> 4;
+			int yt = (int) py >> 4;
+
+			if(checkTile(level.getLevel(xt, yt), xt, yt, px, py)) solid = true;
+			if(checkTile(level.getPost(xt, yt), xt, yt, px, py)) solid = true;
+			if(checkTile(level.getFront(xt, yt), xt, yt, px, py)) solid = true;
 		}
-//		System.out.println("SOLID = " + solid);
 		return solid;
+	}
+
+	private boolean checkTile(TileManager tile, int xt, int yt, float px, float py) {
+		return tile.solidAt(level, xt, yt, px, py, this);
 	}
 }

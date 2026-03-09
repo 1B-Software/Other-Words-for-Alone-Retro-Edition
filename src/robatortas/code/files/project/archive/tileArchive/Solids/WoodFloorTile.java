@@ -26,6 +26,8 @@ public class WoodFloorTile extends TileManager {
 
 	public WoodFloorTile(SpriteManager sprite, int id) {
 		super(sprite, id);
+
+		super.seamsToWall = true;
 	}
 
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
