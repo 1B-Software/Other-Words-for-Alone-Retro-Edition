@@ -10,6 +10,7 @@ public class SpriteArchive {
 	private static SpriteSheetManager foliage = SheetArchive.foliage;
 	private static SpriteSheetManager solids = SheetArchive.solids;
 	private static SpriteSheetManager interior = SheetArchive.interior;
+	private static SpriteSheetManager interior_walls = SheetArchive.interior_walls;
 	
 	public static SpriteManager voidSprite = new SpriteManager(16, 0, 0, new SpriteSheetManager("/textures/spritesheet/NULL_TEXTURE.png", 16));
 	
@@ -45,6 +46,7 @@ public class SpriteArchive {
 	public static SpriteManager woodFloor = new SpriteManager(16, 4, 0, interior);
 	public static SpriteManager woodWall_Front = new SpriteManager(16, 5, 0, interior);
 	public static SpriteManager woodWall = new SpriteManager(16, 0, 1, solids);
+	public static SpriteManager roomWall = new SpriteManager(16, 1, 1, interior_walls);
 	
 	// Stone
 	public static SpriteManager cobblestone = new SpriteManager(16, 1, 0, solids);
@@ -96,11 +98,12 @@ public class SpriteArchive {
 	public static final int col_cobblePath = 0xff61705F;
 	public static final int col_stoneBricks = 0xff8D8D8D;
 	public static final int col_bricks = 0xff9B6666;
-	public static final int col_flowersRedDouble = 0xffff6666;
-	public static final int col_woodWall = 0xff3D2D19;
-	public static final int col_dirtGrass = 0xff72692f;
-	public static final int col_table = 0xff683A14;
-	public static final int col_void = 0xff000000;
+	public static final int col_flowersRedDouble = 0xFFFF6666;
+	public static final int col_woodWall = 0xFF3D2D19;
+	public static final int col_dirtGrass = 0xFF72692f;
+	public static final int col_table = 0xFF683A14;
+	public static final int col_void = 0xFF000000;
+	public static final int col_placeHolder = 0xFF4800FF;
 	public static final int col_chair = 0xffa05920;
 	
 	public static final int col_wood_floor = 0xff7F3300;
@@ -118,4 +121,5 @@ public class SpriteArchive {
 	public static final int col_tv = 0xff333333;
 	public static final int col_nightStand = 0xffFFC03A;
 	public static final int col_water = 0xff000080;
+	public static final int col_room_walls = 0xFFE0D08B;
 }

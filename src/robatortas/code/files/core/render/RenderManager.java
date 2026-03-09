@@ -69,7 +69,8 @@ public class RenderManager {
 	        int r = Math.min(255, (int)(((c >> 16) & 0xFF) * lightmapR[i]));
 	        int g = Math.min(255, (int)(((c >> 8)  & 0xFF) * lightmapG[i]));
 	        int bl = Math.min(255, (int)(( c       & 0xFF) * lightmapB[i]));
-	        pixels[i] = 0xFF000000 | (r << 16) | (g << 8) | bl;
+	        int a = (pixels[i] >> 24) & 0xFF;
+	        pixels[i] = (a << 24) | (r << 16) | (g << 8) | bl;
 	    }
 	}
 	
@@ -137,7 +138,10 @@ public class RenderManager {
 				float xa = x+xp;
 				if(xa < -w || xa >= pixelWidth || ya < 0 || ya >= pixelHeight) break;
 				if(xa < 0) xa = 0;
-				color = (alpha << 24) | (color & 0x00FFFFFF);
+				
+				int srcA = (color >> 24) & 0xFF;
+				srcA = (srcA * alpha) / 255;
+				color = (srcA << 24) | (color & 0x00FFFFFF);
 				pixels[(int)xa+(int)ya*pixelWidth] = blendPixel(pixels[(int)xa+(int)ya*pixelWidth], color);
 			}
 		}
@@ -164,7 +168,11 @@ public class RenderManager {
 
 				int color = tile.sprite.pixels[xs + ys * tile.sprite.width];
 				if(color == 0xffff00ff) continue;
-				if(color != 0) color = (tile.sprite.alpha << 24) | (color & 0x00FFFFFF);
+				if(color != 0) {
+					int srcA = (color >> 24) & 0xFF;
+					srcA = (srcA * tile.sprite.alpha) / 255;
+					color = (srcA << 24) | (color & 0x00FFFFFF);
+				}
 				pixels[(int)xa + (int)ya * pixelWidth] = blendPixel(pixels[(int)xa + (int)ya * pixelWidth], color);
 			}
 		}
@@ -203,7 +211,39 @@ public class RenderManager {
 
 				int color = sprite.pixels[xs + (int)ys * sprite.width];
 				if(color == 0xffff00ff) continue;
-				if(color != 0) color = (sprite.alpha << 24) | (color & 0x00FFFFFF);
+				int srcA = (color >> 24) & 0xFF;
+				srcA = (srcA * sprite.alpha) / 255;
+				color = (srcA << 24) | (color & 0x00FFFFFF);
+				pixels[(int)xa + (int)ya * pixelWidth] = blendPixel(pixels[(int)xa + (int)ya * pixelWidth], color);
+			}
+		}
+	}
+
+	// Renders a sub-region of a sprite (used for quadrant-based tile rendering)
+	public void renderSpriteRegion(float xp, float yp, SpriteManager sprite, int srcX, int srcY, int srcW, int srcH, float scale) {
+		int rs = Globals.RENDER_SCALE;
+		xp = (xp - xOffset) * rs;
+		yp = (yp - yOffset) * rs;
+		scale *= rs;
+		
+		int outW = (int)(srcW * scale);
+		int outH = (int)(srcH * scale);
+		
+		for(int dy = 0; dy < outH; dy++) {
+			float ya = dy + yp;
+			if(ya < 0 || ya >= pixelHeight) continue;
+			int ys = srcY + (int)(dy / scale);
+			for(int dx = 0; dx < outW; dx++) {
+				float xa = dx + xp;
+				if(xa < 0 || xa >= pixelWidth) continue;
+				int xs = srcX + (int)(dx / scale);
+				int color = sprite.pixels[xs + ys * sprite.width];
+				if(color == 0xffff00ff) continue;
+				if(color != 0) {
+					int srcA = (color >> 24) & 0xFF;
+					srcA = (srcA * sprite.alpha) / 255;
+					color = (srcA << 24) | (color & 0x00FFFFFF);
+				}
 				pixels[(int)xa + (int)ya * pixelWidth] = blendPixel(pixels[(int)xa + (int)ya * pixelWidth], color);
 			}
 		}
@@ -260,7 +300,9 @@ public class RenderManager {
 				if(xa < 0) xa = 0;
 				int color = mob.getSprite().pixels[xs + ys * sprite.width];
 				if(color != 0xffff00ff) {
-					color = (mob.alpha << 24) | (color & 0x00FFFFFF);
+					int srcA = (color >> 24) & 0xFF;
+					srcA = (srcA * mob.alpha) / 255;
+					color = (srcA << 24) | (color & 0x00FFFFFF);
 					pixels[(int)xa+(int)ya*pixelWidth] = blendPixel(pixels[(int)xa+(int)ya*pixelWidth], color);
 //					if(mob.hurtTime > 0) pixels[xa+ya*pixelWidth] = 0xff << 24 | random.nextInt(0xffffff);
 					if(mob.hurtTime > 0) pixels[(int)xa+(int)ya*pixelWidth] = blendPixel(pixels[(int)xa+(int)ya*pixelWidth], color >> 2 | 0x00);

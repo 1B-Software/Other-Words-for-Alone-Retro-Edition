@@ -39,11 +39,12 @@ public class GrassTile extends TileManager {
 	// Connects when for example down = there is water one tile down the grass tile!!!
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
 		// << equals multiply because its a binary operation
-		
+		screen.renderTile(x << 4, y << 4, 1, this);
 		connect = new ConnectTile(screen, level, x, y);
 		connect.full(upSprite, downSprite, leftSprite, rightSprite);
 		connect.sides(ulSprite, urSprite, dlSprite, drSprite);
 		connect.below = TileArchive.water.sprite;
+		connect.base = this.sprite;
 		connect.init();
 		
 		if(!connect.connects()) screen.renderTile(x << 4, y << 4, 1, this);

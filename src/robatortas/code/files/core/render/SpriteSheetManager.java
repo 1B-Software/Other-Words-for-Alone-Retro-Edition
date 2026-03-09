@@ -16,6 +16,7 @@ public class SpriteSheetManager {
 	public int WIDTH;
 	public int HEIGHT;
 	public final int SIZE;
+	public int alpha;
 	public String path;
 	private String nullPath = "/textures/spritesheet/NULL_TEXTURE.png";
 	
@@ -50,6 +51,8 @@ public class SpriteSheetManager {
 		this.WIDTH = w;
 		this.HEIGHT = h;
 		pixels = new int[w*h];
+		this.path = sheet.path;
+//		load();
 		
 		// Gets single sprite
 		for(int y0 = 0; y0 < h; y0++) {
@@ -72,7 +75,7 @@ public class SpriteSheetManager {
 				// PIXEL precision
 				for(int y1 = 0; y1 < frameSize; y1++) {
 					for(int x1 = 0; x1 < frameSize; x1++) {
-						spritePixels[x1 + y1 * frameSize] = pixels[(x1 + x0 * frameSize) + (y1 + y0 * frameSize) * frameSize];
+						spritePixels[x1 + y1 * frameSize] = pixels[(x1 + x0 * frameSize) + (y1 + y0 * frameSize) * WIDTH];
 					}
 				}
 				SpriteManager sprite = new SpriteManager(spritePixels, frameSize, frameSize);
@@ -88,8 +91,8 @@ public class SpriteSheetManager {
 	
 	int i = 1;
 	
+	public BufferedImage image = null;
 	public void load() {
-		BufferedImage image = null;
 		try {
 			System.out.print("Loading " + path + " ------->");
 			image = ImageIO.read(SpriteSheetManager.class.getResource(path));
