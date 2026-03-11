@@ -11,7 +11,7 @@ public class Globals {
 	
 	public static final String VERSION = "Alpha 1.7";
 	
-	public static String levelPath = "";
+	public static String levelPath = "/textures/level/player_room";
 	public static String levelPathPost = "";
 	public static String levelPathDoors = ""; ///textures/level/
 	public static String levelDoorsTxt = "";

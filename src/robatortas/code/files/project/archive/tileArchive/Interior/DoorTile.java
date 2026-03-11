@@ -1,9 +1,7 @@
 package robatortas.code.files.project.archive.tileArchive.Interior;
 
-import java.awt.List;
-import java.util.ArrayList;
-
 import robatortas.code.files.core.entities.EntityManager;
+import robatortas.code.files.core.level.GameLevel;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.CollisionShape;
 import robatortas.code.files.core.level.tiles.ConnectTile;
@@ -16,7 +14,8 @@ import robatortas.code.files.project.archive.SpriteArchive;
 
 public class DoorTile extends WallType {
 	
-	String targetLevel;
+	GameLevel targetLevel;
+	String targetLevelPath;
     int spawnX;
     int spawnY;
 	
@@ -57,8 +56,8 @@ public class DoorTile extends WallType {
 		return px >= left && px < left + s.w && py >= top && py < top + s.h;
 	}
 	
-	public void setTargetLevel(String level) {
-		this.targetLevel = level;
+	public void setTargetLevelPath(String level) {
+		this.targetLevelPath = level;
 	}
 
 	public void setSpawn(int spawnX, int spawnY) {
@@ -66,7 +65,8 @@ public class DoorTile extends WallType {
 		this.spawnY = spawnY;
 	}
 
-	public String getTargetLevel() { return targetLevel; }
+	public String getTargetLevelPath() { return targetLevelPath; }
+	public GameLevel getTargetLevel() {return targetLevel;}
 	public int getSpawnX() { return spawnX; }
 	public int getSpawnY() { return spawnY; }
 

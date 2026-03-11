@@ -21,6 +21,7 @@ import robatortas.code.files.project.archive.tileArchive.TileArchive;
 import robatortas.code.files.project.archive.tileArchive.Interior.DoorTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.WaterTile;
 import robatortas.code.files.project.entities.mobs.mobArchive.Player;
+import robatortas.code.files.project.level.Level;
 import robatortas.code.files.project.level.LevelAddons;
 import robatortas.code.files.project.level.LevelRenderManager;
 import robatortas.code.files.project.settings.Globals;
@@ -38,8 +39,6 @@ public class LevelManager {
 	public int[] doorTiles;
 	public int[] tileData; // per-cell state (example: damage taken)
 	
-	public String currentLevel = "player_room";
-	
 	// Lists
 	public List<EntityManager> entities = new LinkedList<EntityManager>();
 	public List<EntityManager>[] entitiesInTiles;
@@ -55,7 +54,7 @@ public class LevelManager {
 	public static Player player;
 	
 	public LevelManager() {
-		load(currentLevel);
+		load(Level.currentLevelName);
 		addons = new LevelAddons(this);
 		for(int y = 0; y < height; y++) {
 			for(int x = 0; x < width; x++) {
@@ -118,7 +117,7 @@ public class LevelManager {
 			        Console.logError("Warning: no door tile found at " + x + "," + y);
 			        continue;
 			    }
-			    door.setTargetLevel(level);
+			    door.setTargetLevelPath(level);
 			    door.setSpawn(spawnX, spawnY);
 			}
 		} catch (FileNotFoundException e) {

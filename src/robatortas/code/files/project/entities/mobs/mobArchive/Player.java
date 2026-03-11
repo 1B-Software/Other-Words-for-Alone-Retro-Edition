@@ -87,7 +87,7 @@ public class Player extends MobAddons {
 				if (door != null) {
 					SoundEngine.swim.play();
 					LevelManager.level.unload();
-					LevelManager.level.load(door.getTargetLevel());
+					LevelManager.level.load(door.getTargetLevelPath());
 					LevelManager.player.x = door.getSpawnX() << 4;
 					LevelManager.player.y = door.getSpawnY() << 4;
 				}

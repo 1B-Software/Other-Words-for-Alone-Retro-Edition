@@ -5,9 +5,7 @@ import java.util.Random;
 import robatortas.code.files.core.entities.Mob;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.TileManager;
-import robatortas.code.files.core.utils.CrashHandler;
-import robatortas.code.files.core.utils.MathUtils;
-import robatortas.code.files.project.archive.SheetArchive;
+import robatortas.code.files.project.level.Level;
 import robatortas.code.files.project.settings.Globals;
 
 /**<NEWLINE>
@@ -57,7 +55,7 @@ public class RenderManager {
 				pixels[i] = 0;
 			}
 			for(int i = 0; i < lightmapR.length; i++) {
-				lightmapR[i] = lightmapG[i] = lightmapB[i] = 0.1f;
+				lightmapR[i] = lightmapG[i] = lightmapB[i] = Level.environmentLight;
 			}
 		}
 	}

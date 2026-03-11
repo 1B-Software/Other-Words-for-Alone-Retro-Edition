@@ -6,17 +6,9 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import robatortas.code.files.core.entities.EntityManager;
-import robatortas.code.files.core.level.LevelManager.TileState;
 import robatortas.code.files.core.utils.CrashHandler;
 import robatortas.code.files.core.utils.CrashHandler.ErrorType;
-import robatortas.code.files.project.archive.SpriteArchive;
-import robatortas.code.files.project.archive.tileArchive.TileArchive;
-import robatortas.code.files.project.entities.mobs.mobArchive.Bee;
-import robatortas.code.files.project.entities.mobs.mobArchive.Butterfly;
-import robatortas.code.files.project.entities.mobs.mobArchive.Chicken;
-import robatortas.code.files.project.entities.mobs.mobArchive.Cow;
-import robatortas.code.files.project.entities.mobs.mobArchive.Player;
-import robatortas.code.files.project.entities.mobs.mobArchive.Sheep;
+import robatortas.code.files.project.level.Level;
 import robatortas.code.files.project.settings.Globals;
 
 public class GameLevel extends LevelManager {
@@ -31,15 +23,9 @@ public class GameLevel extends LevelManager {
 		levelDoorReader(Globals.levelPathDoors);
 		entitiesIteration();
 		
-		player = new Player(3<<4, 5<<4, input);
-		add(player);
-		
-//		add(new Chicken(100<<4, 100<<4));
-//		add(new Cow(4 << 4, 4 << 4));
-//		add(new Sheep(4 << 4, 4 << 4));
-		
-		for(int i = 0; i < 10; i++) add(new Bee(7 << 4, 5 << 4));
-		for(int i = 0; i < 10; i++) add(new Butterfly(7 << 4, 5 << 4));
+//		new PlayerRoomLevel(this).init();
+		Level level = new Level(this);
+		level.loadCurrentLevel();
 	}
 	
 	public void unload() {
