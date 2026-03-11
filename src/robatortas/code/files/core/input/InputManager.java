@@ -12,6 +12,7 @@ public class InputManager extends AssignInput implements KeyListener {
 	// For updating input
 	public void update() {
 		assignKeys();
+		
 	}
 	
 	public void keyPressed(KeyEvent e) {

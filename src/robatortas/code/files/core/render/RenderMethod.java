@@ -82,7 +82,7 @@ public class RenderMethod {
 	
 	int debugColor = 0x6f0000ff;
 	public void renderDebug() {
-		font.setSize(8*2);
+		font.setSize(1);
 		if(game.DEBUG) {
 			font.setColor(0xff222222);
 			font.draw("E:" + level.entities.size(),0, 5, false, screen);

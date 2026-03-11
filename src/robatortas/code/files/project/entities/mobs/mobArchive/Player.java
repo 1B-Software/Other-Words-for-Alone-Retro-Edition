@@ -58,12 +58,12 @@ public class Player extends MobAddons {
 	public int tickTime;
 	int doorTime = 0;
 	
+	float speed = 0.7f;
+	
 	public void update() {
 		super.update();
 		this.xa = 0;
 		this.ya = 0;
-		
-		float speed = 0.7f;
 		
 		tickTime++;
 		
@@ -79,17 +79,16 @@ public class Player extends MobAddons {
 		}
 		else swimTime = 0;
 		
+		if(!isSwimming && speed != 0) speed = 0.7f;
 		
-		if((doorTime % 2 == 0)) {
+		if((doorTime % 2 == 0) && GameManager.fadeAlpha == 0) {
 			if(LevelManager.level.getDoors((int)x >> 4, (int)y >> 4) == TileArchive.doorTile) {
 				DoorTile door = LevelManager.level.findDoorAt((int)x >> 4, (int)y >> 4);
 				doorTime++;
 				if (door != null) {
-					SoundEngine.swim.play();
-					LevelManager.level.unload();
-					LevelManager.level.load(door.getTargetLevelPath());
-					LevelManager.player.x = door.getSpawnX() << 4;
-					LevelManager.player.y = door.getSpawnY() << 4;
+					SoundEngine.drop.play();
+					LevelManager.enterDoor(door);
+					speed = 0;
 				}
 			}
 		}

@@ -16,6 +16,8 @@ import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.utils.CrashHandler;
 import robatortas.code.files.core.utils.CrashHandler.ErrorType;
+import robatortas.code.files.project.GameManager;
+import robatortas.code.files.project.GameManager.PLAYSTATE;
 import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.archive.tileArchive.TileArchive;
 import robatortas.code.files.project.archive.tileArchive.Interior.DoorTile;
@@ -129,6 +131,18 @@ public class LevelManager {
 			e.printStackTrace();
 		}
 
+	}
+	
+
+    
+	public static DoorTile pendingDoor = null;
+
+	public static void enterDoor(DoorTile door) {
+		if (!GameManager.fadingOut && !GameManager.fadingIn) {
+			pendingDoor = door;
+			GameManager.fadingOut = true;
+			GameManager.fadeAlpha = 0;
+		}
 	}
 	
 	public DoorTile findDoorAt(int x, int y) {

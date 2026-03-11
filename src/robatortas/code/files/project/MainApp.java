@@ -3,6 +3,7 @@ package robatortas.code.files.project;
 import discord_sdk.UserActivity;
 import robatortas.code.files.core.console.Console;
 import robatortas.code.files.core.sound.SoundEngine;
+import robatortas.code.files.project.menu.main_menu.MainMenu;
 
 public class MainApp {
 	
@@ -14,6 +15,7 @@ public class MainApp {
 		else Console.log("Starting: Other Words for Alone RETRO EDITION in Client Mode" + "\n");
 		
 		SoundEngine.enter.play();
+		
 		game = new GameManager();
 //		discordInit();
 		new Console(game).start();

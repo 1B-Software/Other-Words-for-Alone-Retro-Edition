@@ -11,6 +11,7 @@ public class OutsideLevel extends Level {
 	}
 
 	public void init() {
+//		levelManager.unload();
 		environmentLight = 1f;
 		LevelManager.player = new Player(3<<4, 5<<4, levelManager.input);
 		levelManager.add(LevelManager.player);

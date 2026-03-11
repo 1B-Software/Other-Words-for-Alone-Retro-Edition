@@ -31,7 +31,7 @@ public class Particle extends MobAddons {
 	public void update() {
 		time++;
 		
-		alpha -= (time/3);
+		alpha -= (time/10);
 		
 		physicsEngine.calculations.physics();
 		move2((int)physicsEngine.calculations.x0 - x, (int)physicsEngine.calculations.y0 - y);

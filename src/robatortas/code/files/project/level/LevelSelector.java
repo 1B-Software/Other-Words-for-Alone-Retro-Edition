@@ -14,7 +14,6 @@ public class LevelSelector {
 
 	private LevelManager levelManager;
 	private Level currentLevel;
-	private String currentLevelName;
 	
 	private List<Level> allLevels = new LinkedList<>();
 	private List<String> allLevelNames = new LinkedList<>();
@@ -24,8 +23,7 @@ public class LevelSelector {
 	Level outsideLevel;
 	
 	
-	public LevelSelector(String currentLevelName, LevelManager level) {
-		this.currentLevelName = currentLevelName;
+	public LevelSelector(LevelManager level) {
 		this.levelManager = level;
 		
 		addLevel();

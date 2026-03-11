@@ -10,6 +10,8 @@ public class AssignInput {
 	public boolean up, down, left, right;
 	public boolean space, f, shift;
 	public boolean c, e;
+	public boolean upMenu, downMenu, enter;
+	
 	
 	public boolean f3;
 	
@@ -21,6 +23,7 @@ public class AssignInput {
 	public void assignKeys() { 
 		gamePlayKeys();
 		hotKeys();
+		mainMenuKeys();
 	}
 	
 	// checks if key is toggled
@@ -66,6 +69,12 @@ public class AssignInput {
 		
 		c = keys[KeyEvent.VK_C];
 		e = keys[KeyEvent.VK_E];
+	}
+	
+	public void mainMenuKeys() {
+		upMenu = keys[KeyEvent.VK_UP] || keys[KeyEvent.VK_UP];
+		downMenu = keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN];
+		enter = keys[KeyEvent.VK_ENTER];
 	}
 	
 	// Assign all hotkeys here!

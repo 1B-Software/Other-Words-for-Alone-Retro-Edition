@@ -30,6 +30,6 @@ public class Level {
 	
 	// Selects which level to load
 	public void loadCurrentLevel() {
-		new LevelSelector(currentLevelName, this.levelManager);
+		new LevelSelector(this.levelManager);
 	}
 }

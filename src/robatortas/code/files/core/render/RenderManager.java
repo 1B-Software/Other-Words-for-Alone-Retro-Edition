@@ -369,30 +369,29 @@ public class RenderManager {
 		}
 	}
 
-	public void renderFont(int xp, int yp, SpriteManager sprite, int scale, int color, int flip) {
+	public void renderFont(int xp, int yp, SpriteManager sprite, float scale, int color, int flip) {
 		int rs = Globals.RENDER_SCALE;
 		float sxp = (xp - xOffset) * rs;
 		float syp = (yp - yOffset) * rs;
+		float sc = scale * rs;
 
-		int outW = scale * rs;
-		int outH = scale * rs;
+		int outW = (int)(sprite.width  * sc);
+		int outH = (int)(sprite.height * sc);
 
 		for(int dy = 0; dy < outH; dy++) {
 			int ya = (int)(dy + syp);
-			int ys = dy / rs;
-			if(flip == 2 || flip == 3) ys = (scale - 1) - (dy / rs);
+			int ys = (int)(dy / sc);
+			if(flip == 2 || flip == 3) ys = (sprite.height - 1) - (int)(dy / sc);
 			for(int dx = 0; dx < outW; dx++) {
 				int xa = (int)(dx + sxp);
-				int xs = dx / rs;
-				if(flip == 1 || flip == 3) xs = (scale - 1) - (dx / rs);
+				int xs = (int)(dx / sc);
+				if(flip == 1 || flip == 3) xs = (sprite.width - 1) - (int)(dx / sc);
 				if(xa < -outW || xa >= pixelWidth || ya < 0 || ya >= pixelHeight) break;
 				if(xa < 0) xa = 0;
 				int colorPix = sprite.pixels[xs + ys * sprite.width];
 				if (colorPix != 0xffff00ff) {
-//					if(color == 0) if(scale <= sprite.width) pixels[(((xa*scale)/sprite.width)+(sprite.width-scale))+(((ya*scale)/sprite.height)+(sprite.height-scale))*pixelWidth] = colorPix;
-//					else if(scale <= sprite.width) pixels[(((xa*scale)/sprite.width)+(sprite.width-scale))+(((ya*scale)/sprite.height)+(sprite.height-scale))*pixelWidth] = color;
-					if(color != 0) pixels[xa+ya*pixelWidth] = color;
-					else pixels[xa+ya*pixelWidth] = 0xff000000;
+					int finalColor = (color != 0) ? color : 0xff000000;
+					pixels[xa+ya*pixelWidth] = blendPixel(pixels[xa+ya*pixelWidth], finalColor);
 				}
 			}
 		}
