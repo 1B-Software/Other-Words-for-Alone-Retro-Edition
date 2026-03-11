@@ -100,6 +100,15 @@ public class LevelRenderManager {
 				}
 			}
 		}
+		for(int y = y0; y < y1; y++) {
+			for(int x = x0; x < x1; x++) {
+				if(x < 0 || y < 0 || x >= level.width || y >= level.height) continue;
+				TileManager dt = level.getDoors(x, y);
+				if(dt != TileArchive.voidTile) {
+					frontTiles.add(new FrontTileEntry(x, y, dt));
+				}
+			}
+		}
 
 		// Collect all entities in the viewport (each entity lives in exactly one tile cell)
 		List<EntityManager> allEntities = new ArrayList<EntityManager>();

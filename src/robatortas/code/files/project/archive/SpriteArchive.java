@@ -47,6 +47,7 @@ public class SpriteArchive {
 	public static SpriteManager woodWall_Front = new SpriteManager(16, 5, 0, interior);
 	public static SpriteManager woodWall = new SpriteManager(16, 0, 1, solids);
 	public static SpriteManager roomWall = new SpriteManager(16, 1, 1, interior_walls);
+	public static SpriteManager door = new SpriteManager(16, 1, 1, interior_walls);
 	
 	// Stone
 	public static SpriteManager cobblestone = new SpriteManager(16, 1, 0, solids);
@@ -122,4 +123,5 @@ public class SpriteArchive {
 	public static final int col_nightStand = 0xffFFC03A;
 	public static final int col_water = 0xff000080;
 	public static final int col_room_walls = 0xFFE0D08B;
+	public static final int col_door = 0xFFFF0033;
 }

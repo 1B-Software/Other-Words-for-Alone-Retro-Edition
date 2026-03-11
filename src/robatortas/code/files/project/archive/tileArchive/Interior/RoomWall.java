@@ -11,11 +11,13 @@ import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
 import robatortas.code.files.core.render.SpriteSheetManager;
 import robatortas.code.files.project.archive.SheetArchive;
+import robatortas.code.files.project.archive.SpriteArchive;
 
 public class RoomWall extends WallType {
 
 	public RoomWall(SpriteManager sprite, int id) {
 		super(sprite, id);
+		super.color = SpriteArchive.col_room_walls;
 	}
 
 	ConnectTile connect;

@@ -12,6 +12,6 @@ public class VoidTile extends TileManager {
 	}
 
 	public void render(int x, int y, RenderManager screen) {
-		screen.renderTile(x << 4, y << 4, 1, this);
+//		screen.renderTile(x << 4, y << 4, 1, this);
 	}
 }

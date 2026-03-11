@@ -21,14 +21,14 @@ import robatortas.code.files.project.settings.Globals;
 
 public class GameLevel extends LevelManager {
 	
-	public GameLevel(String path) {
-		super(path);
+	public GameLevel() {
 	}
-	
-	public void loadLevel(String path) {
+
+	public void loadLevel() {
 //		NoiseMap.main(null);
-		levelReader(path);
+		levelReader(Globals.levelPath);
 		levelPostReader(Globals.levelPathPost);
+		levelDoorReader(Globals.levelPathDoors);
 		entitiesIteration();
 		
 		player = new Player(3<<4, 5<<4, input);
@@ -40,6 +40,10 @@ public class GameLevel extends LevelManager {
 		
 		for(int i = 0; i < 10; i++) add(new Bee(7 << 4, 5 << 4));
 		for(int i = 0; i < 10; i++) add(new Butterfly(7 << 4, 5 << 4));
+	}
+	
+	public void unload() {
+		flushEntities();
 	}
 	
 	BufferedImage image = null;
@@ -72,11 +76,29 @@ public class GameLevel extends LevelManager {
 		}
 	}
 	
+	public void levelDoorReader(String path) {
+		try {
+			image = ImageIO.read(GameLevel.class.getResource(path));
+			int w = width = image.getWidth();
+			int h = height = image.getHeight();
+			doorTiles = new int[w*h];
+			image.getRGB(0, 0, w, h, doorTiles, 0 , w);
+		} catch(Exception e) {
+			new CrashHandler().handle(e, "Level file is null at location: " + path, ErrorType.SERIOUS);
+		}
+	}
+	
 	@SuppressWarnings("unchecked")
 	public void entitiesIteration() {
 		entitiesInTiles = new ArrayList[width*height];
 		for (int i = 0; i < width*height; i++) {
 			entitiesInTiles[i] = new ArrayList<EntityManager>();
 		}
+	}
+	public void flushEntities() {
+		for (int i = 0; i < entities.size(); i++) {
+			remove(entities.get(i));
+		}
+		remove(player);
 	}
 }

@@ -1,5 +1,10 @@
 package robatortas.code.files.core.level;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,9 +14,11 @@ import robatortas.code.files.core.input.InputManager;
 import robatortas.code.files.core.input.MouseManager;
 import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
+import robatortas.code.files.core.utils.CrashHandler;
+import robatortas.code.files.core.utils.CrashHandler.ErrorType;
 import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.archive.tileArchive.TileArchive;
-import robatortas.code.files.project.archive.tileArchive.Interior.RoomWall;
+import robatortas.code.files.project.archive.tileArchive.Interior.DoorTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.WaterTile;
 import robatortas.code.files.project.entities.mobs.mobArchive.Player;
 import robatortas.code.files.project.level.LevelAddons;
@@ -20,13 +27,18 @@ import robatortas.code.files.project.settings.Globals;
 
 public class LevelManager {
 
-	public int width, height;
+	public static int width;
+
+	public static int height;
 	
 	public RenderManager screen;
 	
 	public int[] tiles;
-	int[] postTiles;
+	public int[] postTiles;
+	public int[] doorTiles;
 	public int[] tileData; // per-cell state (example: damage taken)
+	
+	public String currentLevel = "player_room";
 	
 	// Lists
 	public List<EntityManager> entities = new LinkedList<EntityManager>();
@@ -34,7 +46,7 @@ public class LevelManager {
 	
 	public List<TileManager> allTiles = new LinkedList<TileManager>();
 	
-	public static LevelManager level = new GameLevel(Globals.levelPath);
+	public static LevelManager level = new GameLevel();
 	
 	// Classes
 	public LevelAddons addons;
@@ -42,8 +54,8 @@ public class LevelManager {
 	// Mobs
 	public static Player player;
 	
-	public LevelManager(String path) {
-		loadLevel(path);
+	public LevelManager() {
+		load(currentLevel);
 		addons = new LevelAddons(this);
 		for(int y = 0; y < height; y++) {
 			for(int x = 0; x < width; x++) {
@@ -54,13 +66,89 @@ public class LevelManager {
 		}
 	}
 	
+	// Folder name of the level (e.g. player_room)
+	public void load(String folderName) {
+		String initDir = "res/textures/level/";
+		String finalDir = String.join("", initDir, folderName, "/");
+		Console.log("Loading Level "  + folderName + ": "+ finalDir);
+		File file = new File(finalDir);
+		File[] allFilesInDir = file.listFiles();
+		for(File f : allFilesInDir) {
+			if(f.isFile()) {
+				String name = f.getName();
+
+		        if(name.equals("level.png")) Globals.levelPath = finalDir.substring(3) + name;
+		        if(name.equals("level_doors.png")) Globals.levelPathDoors = finalDir.substring(3) + name;
+		        if(name.equals("level_post.png")) Globals.levelPathPost = finalDir.substring(3) + name;
+		        if(name.equals("level_doors.txt")) Globals.levelDoorsTxt = finalDir.substring(3) + name;
+			}
+		}
+		
+		loadLevel();
+
+		if (!Globals.levelDoorsTxt.isEmpty()) {
+			doorParser("res" + Globals.levelDoorsTxt);
+		}
+	}
+	
+	public void unload() {}
+	
+	public void doorParser(String path) {
+		BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader(path));
+			String line;
+	
+			while((line = reader.readLine()) != null) {
+	
+			    String[] parts = line.split("->");
+	
+			    String[] doorPos = parts[0].trim().split(",");
+			    String[] target = parts[1].trim().split(",");
+	
+			    int x = Integer.parseInt(doorPos[0]);
+			    int y = Integer.parseInt(doorPos[1]);
+	
+			    String level = target[0];
+			    int spawnX = Integer.parseInt(target[1]);
+			    int spawnY = Integer.parseInt(target[2]);
+	
+			    DoorTile door = findDoorAt(x,y);
+			    if (door == null) {
+			        Console.logError("Warning: no door tile found at " + x + "," + y);
+			        continue;
+			    }
+			    door.setTargetLevel(level);
+			    door.setSpawn(spawnX, spawnY);
+			}
+		} catch (FileNotFoundException e) {
+			CrashHandler crash = new CrashHandler();
+			crash.handle(e, e.getMessage(), ErrorType.SERIOUS);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public DoorTile findDoorAt(int x, int y) {
+		if (doorTiles == null) return null;
+		TileManager tile = getDoors(x, y);
+
+	    if(tile instanceof DoorTile) {
+	        return (DoorTile) tile;
+	    }
+		return null;
+	}
+	
 	public class TileState {
 	    public int health;
 	}
 	public TileState[] tileStates;
 	
 	
-	public void loadLevel(String path) {
+	public void loadLevel() {
 	}
 		
 	// Input Declarations
@@ -212,9 +300,6 @@ public class LevelManager {
 		// Trees
 		if(tiles[x + y * width] == SpriteArchive.col_oakTree) return TileArchive.grass;
 		if(tiles[x + y * width] == SpriteArchive.col_birchTree) return TileArchive.grass;
-		
-//		if(tiles[x + y * width] == SpriteArchive.col_bed) return TileArchive.woodFloor;
-//		if(tiles[x + y * width] == SpriteArchive.col_tv) return TileArchive.woodFloor;
 		return TileArchive.voidTile;
 	}
 	
@@ -247,7 +332,7 @@ public class LevelManager {
 	 * @param y Tile coordinate on the y axis
 	 */
 	public TileManager getFront(int x, int y) {
-		if(x < 0 || y < 0 || x >= width || y >= height) return  TileArchive.voidTile;
+		if(x < 0 || y < 0 || x >= width || y >= height) return TileArchive.voidTile;
 		if(postTiles[x + y * width] == SpriteArchive.col_placeHolder) return TileArchive.placeHolderTile;
 		if(postTiles[x + y * width] == SpriteArchive.col_oakTree) return TileArchive.tree;
 		if(postTiles[x + y * width] == SpriteArchive.col_bed) return TileArchive.bed;
@@ -257,6 +342,12 @@ public class LevelManager {
 		if(postTiles[x + y * width] == SpriteArchive.col_flowerRed) return TileArchive.flowerRed;
 		if(postTiles[x + y * width] == SpriteArchive.col_yellowDahlia) return TileArchive.yellowDahlia;
 		if(postTiles[x + y * width] == SpriteArchive.col_bush) return TileArchive.bushTile;
+		return TileArchive.voidTile;
+	}
+	
+	public TileManager getDoors(int x, int y) {
+		if(x < 0 || y < 0 || x >= width || y >= height) return TileArchive.voidTile;
+		if(doorTiles[x + y * width] == SpriteArchive.col_door) return TileArchive.doorTile;
 		return TileArchive.voidTile;
 	}
 }

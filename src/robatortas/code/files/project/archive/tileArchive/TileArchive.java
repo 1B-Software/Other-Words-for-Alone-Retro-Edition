@@ -4,6 +4,7 @@ import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.archive.tileArchive.Interior.BedTile;
 import robatortas.code.files.project.archive.tileArchive.Interior.ChairTile;
+import robatortas.code.files.project.archive.tileArchive.Interior.DoorTile;
 import robatortas.code.files.project.archive.tileArchive.Interior.NightStand;
 import robatortas.code.files.project.archive.tileArchive.Interior.RoomWall;
 import robatortas.code.files.project.archive.tileArchive.Interior.TableTile;
@@ -30,33 +31,34 @@ public class TileArchive {
 	
 	// Nature
 	public static TileManager voidTile = new VoidTile(SpriteArchive.voidSprite, 0);
-	public static TileManager grass = new GrassTile(SpriteArchive.grass, 1);
-	public static TileManager tree = new TreeTile(SpriteArchive.tree, 2);
-	public static TileManager water = new WaterTile(SpriteArchive.voidSprite, 3);
-	public static TileManager rock = new PebbleTile(SpriteArchive.pebble, 4);
-	public static TileManager yellowDahlia = new FlowerTile(SpriteArchive.yellowDahlia, 7);
-	public static TileManager flowerRed = new PoppyTile(SpriteArchive.poppy, 9);
-	public static TileManager woodFloor = new WoodFloorTile(SpriteArchive.woodFloor, 12);
-	public static TileManager dirtTile = new DirtTile(SpriteArchive.dirt, 14);
-	public static TileManager bushTile = new BushTile(SpriteArchive.bush, 15);
-	public static TileManager cobblePath = new CobblePathTile(SpriteArchive.cobblePath, 16);
+	public static TileManager grass = new GrassTile(SpriteArchive.grass, SpriteArchive.col_grass);
+	public static TileManager tree = new TreeTile(SpriteArchive.tree, SpriteArchive.col_oakTree);
+	public static TileManager water = new WaterTile(SpriteArchive.voidSprite, SpriteArchive.col_water);
+	public static TileManager rock = new PebbleTile(SpriteArchive.pebble, SpriteArchive.col_solidRock);
+	public static TileManager yellowDahlia = new FlowerTile(SpriteArchive.yellowDahlia, SpriteArchive.col_yellowDahlia);
+	public static TileManager flowerRed = new PoppyTile(SpriteArchive.poppy, SpriteArchive.col_flowerRed);
+	public static TileManager woodFloor = new WoodFloorTile(SpriteArchive.woodFloor, SpriteArchive.col_wood_floor);
+	public static TileManager dirtTile = new DirtTile(SpriteArchive.dirt, SpriteArchive.col_dirt);
+	public static TileManager bushTile = new BushTile(SpriteArchive.bush, SpriteArchive.col_bush);
+	public static TileManager cobblePath = new CobblePathTile(SpriteArchive.cobblePath, SpriteArchive.col_cobblePath);
 	
 	// Solids
-	public static TileManager cobblestone = new CobblestoneTile(SpriteArchive.cobblestone, 17);
-	public static TileManager stoneBricks = new StoneBricksTile(SpriteArchive.stoneBrick, 18);
-	public static TileManager bricksTile = new BricksTile(SpriteArchive.bricks, 19);
-	public static TileManager woodWall = new WoodWallTile(SpriteArchive.woodWall, 20);
+	public static TileManager cobblestone = new CobblestoneTile(SpriteArchive.cobblestone, SpriteArchive.col_cobblestone);
+	public static TileManager stoneBricks = new StoneBricksTile(SpriteArchive.stoneBrick, SpriteArchive.col_stoneBricks);
+	public static TileManager bricksTile = new BricksTile(SpriteArchive.bricks, SpriteArchive.col_bricks);
+	public static TileManager woodWall = new WoodWallTile(SpriteArchive.woodWall, SpriteArchive.col_wood_wall_front);
 	public static TileManager solidRock = new SolidRockTile(null, 21);
 	
 	// Interior
 	public static TileManager table = new TableTile(SpriteArchive.table, 22);
 	public static TileManager chair = new ChairTile(SpriteArchive.chair, 23);
-	public static TileManager bed = new BedTile(SpriteArchive.bed, 24);
+	public static TileManager bed = new BedTile(SpriteArchive.bed, SpriteArchive.col_bed);
 	public static TileManager sand = new GrassTile(SpriteArchive.sand, 25);
 	public static TileManager grassBlades = new GrassBladeTile(SpriteArchive.grass, 26);
 	public static TileManager woodWallFront = new WoodWallFrontTile(SpriteArchive.woodWall_Front, 27);
-	public static TileManager TvTile = new TVTile(SpriteArchive.tv, 28);
-	public static TileManager nightStand = new NightStand(SpriteArchive.nightStand, 29);
-	public static TileManager roomWall = new RoomWall(SpriteArchive.roomWall, 30);
-	public static TileManager placeHolderTile = new PlaceHolderTile(SpriteArchive.voidSprite, 31);
+	public static TileManager TvTile = new TVTile(SpriteArchive.tv, SpriteArchive.col_tv);
+	public static TileManager nightStand = new NightStand(SpriteArchive.nightStand, SpriteArchive.col_nightStand);
+	public static TileManager roomWall = new RoomWall(SpriteArchive.roomWall, SpriteArchive.col_room_walls);
+	public static TileManager placeHolderTile = new PlaceHolderTile(SpriteArchive.voidSprite, SpriteArchive.col_placeHolder);
+	public static TileManager doorTile = new DoorTile(SpriteArchive.door, SpriteArchive.col_door);
 }

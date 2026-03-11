@@ -4,6 +4,7 @@ import java.util.List;
 
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.input.InputManager;
+import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.lighting.LightSource;
 import robatortas.code.files.core.render.Animate;
 import robatortas.code.files.core.render.RenderManager;
@@ -14,6 +15,8 @@ import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.archive.Animations;
 import robatortas.code.files.project.archive.SheetArchive;
 import robatortas.code.files.project.archive.SpriteArchive;
+import robatortas.code.files.project.archive.tileArchive.Interior.DoorTile;
+import robatortas.code.files.project.archive.tileArchive.TileArchive;
 import robatortas.code.files.project.entities.Particle;
 import robatortas.code.files.project.entities.mobs.MobAddons;
 import robatortas.code.files.project.inventory.Inventory;
@@ -53,6 +56,7 @@ public class Player extends MobAddons {
 	public float xa, ya;
 	
 	public int tickTime;
+	int doorTime = 0;
 	
 	public void update() {
 		super.update();
@@ -74,6 +78,21 @@ public class Player extends MobAddons {
 			speed = 0.4f;
 		}
 		else swimTime = 0;
+		
+		
+		if((doorTime % 2 == 0)) {
+			if(LevelManager.level.getDoors((int)x >> 4, (int)y >> 4) == TileArchive.doorTile) {
+				DoorTile door = LevelManager.level.findDoorAt((int)x >> 4, (int)y >> 4);
+				doorTime++;
+				if (door != null) {
+					SoundEngine.swim.play();
+					LevelManager.level.unload();
+					LevelManager.level.load(door.getTargetLevel());
+					LevelManager.player.x = door.getSpawnX() << 4;
+					LevelManager.player.y = door.getSpawnY() << 4;
+				}
+			}
+		}
 		
 		// Reset Animations (AVOIDS CRASHING!)
 		animSprite.resetAnimation(animSprite, walking);
@@ -193,7 +212,7 @@ public class Player extends MobAddons {
 //		float px = (x - RenderMethod.xScroll) * Globals.RENDER_SCALE;
 //		float py = (y - RenderMethod.yScroll) * Globals.RENDER_SCALE;
 		light = new LightSource(screen);
-//		light.add(x, y-5, 100, 0.6f, 0xFFFFFFFF, 2f);
+		light.add(x-2, y-8, 100, 0.5f, 0xFFFFFFFF, 2f);
 		////////////
 		// GROUND //
 		////////////

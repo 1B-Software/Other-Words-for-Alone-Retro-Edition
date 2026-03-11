@@ -57,7 +57,7 @@ public class RenderManager {
 				pixels[i] = 0;
 			}
 			for(int i = 0; i < lightmapR.length; i++) {
-				lightmapR[i] = lightmapG[i] = lightmapB[i] = 0.3f;
+				lightmapR[i] = lightmapG[i] = lightmapB[i] = 0.1f;
 			}
 		}
 	}

@@ -10,7 +10,7 @@ public class SheetArchive {
 	
 	public static SpriteSheetManager interior = new SpriteSheetManager("/textures/spritesheet/interior/furniture/Furniturev1.png", 144);
 
-	public static SpriteSheetManager interior_walls = new SpriteSheetManager("/textures/spritesheet/interior/walls.png", 48);
+	public static SpriteSheetManager interior_walls = new SpriteSheetManager("/textures/spritesheet/interior/walls.png", 96, 48);
 
 	public static SpriteSheetManager solids = new SpriteSheetManager("/textures/spritesheet/solid/solid.png", 144);
 	
