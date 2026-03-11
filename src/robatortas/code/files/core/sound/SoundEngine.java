@@ -23,6 +23,7 @@ public class SoundEngine {
 	public static final SoundEngine select = new SoundEngine("/sound/sound/select3.wav");
 	public static final SoundEngine enter = new SoundEngine("/sound/sound/enter.wav");
 	public static final SoundEngine drop = new SoundEngine("/sound/sound/drop.wav");
+	public static final SoundEngine hard_step = new SoundEngine("/sound/sound/hard_step.wav");
 	
 	public static final SoundEngine whiteNoise = null;
 	

@@ -93,6 +93,10 @@ public class Player extends MobAddons {
 			}
 		}
 		
+		if(tickTime % 17 == 0 && !isSwimming && walking) {
+			SoundEngine.hard_step.play();
+		}
+		
 		// Reset Animations (AVOIDS CRASHING!)
 		animSprite.resetAnimation(animSprite, walking);
 		
