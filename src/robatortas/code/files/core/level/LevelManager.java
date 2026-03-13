@@ -41,6 +41,8 @@ public class LevelManager {
 	public int[] doorTiles;
 	public int[] tileData; // per-cell state (example: damage taken)
 	
+	public Level currentLevel;
+	
 	// Lists
 	public List<EntityManager> entities = new LinkedList<EntityManager>();
 	public List<EntityManager>[] entitiesInTiles;
@@ -119,6 +121,7 @@ public class LevelManager {
 			        Console.logError("Warning: no door tile found at " + x + "," + y);
 			        continue;
 			    }
+			    Level.currentLevelName = level;
 			    door.setTargetLevelPath(level);
 			    door.setSpawn(spawnX, spawnY);
 			}
@@ -174,6 +177,9 @@ public class LevelManager {
 		
 		mouse.update();
 		
+
+		currentLevel.levelSelector.getCurrentLevel().update();
+		
 		for (int i = 0; i < entities.size(); i++) {
 			EntityManager e = entities.get(i);
 			int xto = (int)e.x >> 4;
@@ -207,6 +213,9 @@ public class LevelManager {
 		levelRender.pinPoints(xScroll, yScroll);
 				
 		levelRender.render(this);
+		
+//		System.out.println(currentLevel.currentLevelName);
+		currentLevel.levelSelector.getCurrentLevel().render(player.x, player.y, screen);
 	}
 	
 	public void add(EntityManager e) {

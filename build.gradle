@@ -1,0 +1,70 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+def lwjglVersion = '3.3.3'
+
+// Detect OS for LWJGL native classifier
+def osName = System.getProperty('os.name').toLowerCase()
+if (osName.contains('windows')) {
+    project.ext.lwjglNatives = 'natives-windows'
+} else if (osName.contains('mac') || osName.contains('darwin')) {
+    project.ext.lwjglNatives = 'natives-macos'
+} else {
+    project.ext.lwjglNatives = 'natives-linux'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+        resources {
+            srcDirs = ['res']
+        }
+    }
+}
+
+dependencies {
+    // LWJGL BOM for version management
+    implementation platform("org.lwjgl:lwjgl-bom:${lwjglVersion}")
+
+    // LWJGL core
+    implementation "org.lwjgl:lwjgl"
+    implementation "org.lwjgl:lwjgl-glfw"
+    implementation "org.lwjgl:lwjgl-opengl"
+    implementation "org.lwjgl:lwjgl-stb"
+
+    // Native libraries
+    runtimeOnly "org.lwjgl:lwjgl::${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-glfw::${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-opengl::${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-stb::${lwjglNatives}"
+
+    // Discord SDK (existing dependency)
+    implementation files('discord-files/discord-game-sdk4j-0.5.5.jar')
+}
+
+application {
+    mainClass = 'robatortas.code.files.project.MainApp'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'robatortas.code.files.project.MainApp'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

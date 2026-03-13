@@ -3,6 +3,7 @@ package robatortas.code.files.project.entities;
 import robatortas.code.files.core.physics.PhysicsEngine;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
+import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.entities.mobs.MobAddons;
 
 public class Particle extends MobAddons {
@@ -14,6 +15,9 @@ public class Particle extends MobAddons {
 	
 	private int color;
 	private SpriteManager sprite;
+	
+	public int width = 2;
+	public int height = 2;
 	
 	public Particle(float x, float y) {
 		this.x = x;
@@ -31,7 +35,9 @@ public class Particle extends MobAddons {
 	public void update() {
 		time++;
 		
-		alpha -= (time/10);
+		if(time >= (life-life/3)) {
+			alpha -= ((time)/2);
+		}
 		
 		physicsEngine.calculations.physics();
 		move2((int)physicsEngine.calculations.x0 - x, (int)physicsEngine.calculations.y0 - y);
@@ -48,7 +54,7 @@ public class Particle extends MobAddons {
 	}
 	
 	public void render(RenderManager screen) {
-		if(sprite == null) screen.renderBox(x, y - (int) physicsEngine.calculations.z0, 2, 2, color, alpha, false);
+		if(sprite == null) screen.renderBox(x, y - (int) physicsEngine.calculations.z0, width, height, color, alpha, false);
 		else screen.renderSprite(x, y - (int) physicsEngine.calculations.z0, sprite, sprite.SIZE, 0);
 	}
 	

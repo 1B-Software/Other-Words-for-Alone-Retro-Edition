@@ -16,7 +16,7 @@ public class NightStand extends TileManager {
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
 		screen.renderTile(x << 4, y << 4, 1, this);
 		LightSource light = new LightSource(screen);
-		light.add((x << 4) + 8, (y << 4) +15, 200, 1, 0xFFFFFFFF, 2f);
+		light.add((x << 4) + 8, (y << 4) +15, 40, 1, 0xFFFFFFFF, 2f);
 	}
 	
 	public boolean solid(LevelManager level, int x, int y, EntityManager e) {

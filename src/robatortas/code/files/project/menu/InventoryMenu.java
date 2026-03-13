@@ -18,7 +18,7 @@ public class InventoryMenu {
 	
 	public void render(RenderManager screen, GameManager game) {
 		screen.renderSpriteSheet(screen.width/5 + 6, screen.height/8, inventorySheet, 0, true);
-		grid = game.mouse.toggle(MouseManager.LEFT, grid);
+		if (game.mouse != null) grid = game.mouse.toggle(MouseManager.LEFT, grid);
 		if(grid) clickBoxes(screen, game);
 	}
 	

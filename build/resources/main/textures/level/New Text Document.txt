@@ -1,0 +1,1 @@
+10,15 = doorCoordsofCurrentLevel, -> = goesTo, player_room = nameOfLevel, 5,8 = playerSpawnCoords

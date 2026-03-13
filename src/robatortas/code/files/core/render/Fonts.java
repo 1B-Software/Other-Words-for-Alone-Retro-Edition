@@ -22,7 +22,7 @@ public class Fonts {
 	public void draw(String msg, int x, int y, boolean scroll, RenderManager screen) {
 		this.x = x;
 		this.y = y;
-
+		
 		msg = msg.toUpperCase();
 		for (int i = 0; i < msg.length(); i++) {
 			int ix = chars.indexOf(msg.charAt(i));

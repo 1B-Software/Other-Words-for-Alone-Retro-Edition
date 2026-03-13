@@ -5,9 +5,6 @@ public class Globals {
 	public static int WIDTH = 250;
 	public static int HEIGHT = 220; // 150
 	public static final int SCALE = 5;
-
-	/** Internal render buffer runs at RENDER_SCALE * WIDTH/HEIGHT for sub-pixel smoothness */
-	public static final int RENDER_SCALE = 4;
 	
 	public static final String VERSION = "Alpha 1.7";
 

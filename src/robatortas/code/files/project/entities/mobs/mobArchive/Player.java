@@ -215,7 +215,7 @@ public class Player extends MobAddons {
 //		float px = (x - RenderMethod.xScroll) * Globals.RENDER_SCALE;
 //		float py = (y - RenderMethod.yScroll) * Globals.RENDER_SCALE;
 		light = new LightSource(screen);
-		light.add(x-2, y-8, 100, 0.5f, 0xFFFFFFFF, 2f);
+		light.add(x-2, y-8, 20, 0.5f, 0xFFFFFFFF, 3f);
 		////////////
 		// GROUND //
 		////////////

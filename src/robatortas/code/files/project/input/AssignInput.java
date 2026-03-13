@@ -1,41 +1,35 @@
 package robatortas.code.files.project.input;
 
-import java.awt.event.KeyEvent;
+import static org.lwjgl.glfw.GLFW.*;
 
 import robatortas.code.files.core.input.InputManager;
+import robatortas.code.files.core.render.gl.GLWindow;
 
 // To assign inputs like movement and interaction keys, also for mouse input.
+// Now reads from GLWindow.keys[] using GLFW key codes instead of AWT KeyEvent.
 public class AssignInput {
-	public boolean[] keys = new boolean[120];
+	// Point to GLWindow's key array (GLFW key codes, up to 512)
+	public boolean[] keys = GLWindow.keys;
+
 	public boolean up, down, left, right;
 	public boolean space, f, shift;
 	public boolean c, e;
 	public boolean upMenu, downMenu, enter;
-	
-	
+
 	public boolean f3;
-	
-	/* 
+
+	/*
 	 * Assigns all the keys to get them updated for each tick.
-	 * 
 	 * Called on InputManager's update method.
 	 */
-	public void assignKeys() { 
+	public void assignKeys() {
 		gamePlayKeys();
 		hotKeys();
 		mainMenuKeys();
 	}
-	
+
 	// checks if key is toggled
 	protected boolean toggle = false;
-	/*
-	 * toggles keys.
-	 * 
-	 * The first boolean parameter (key) is the key that you want to toggle press.
-	 * 
-	 * The second boolean parameter (b) is the boolean variable you want to use as 
-	 * an indicator of the toggling of the action.
-	 */
 	public boolean toggle(boolean key, boolean b) {
 		if(key && !toggle && !InputManager.released) {
 			b = !b;
@@ -45,40 +39,34 @@ public class AssignInput {
 		}
 		return b;
 	}
-	
-	/* 
-	 * Checks if key is pressed with the inputted key
-	 * The boolean parameter is the key that you are wanting to check if it is pressed or not.
-	 * 
-	 * This will just return the boolean value making it in my perspective a bit cleaner.
-	 */
+
 	public boolean isKeyPressed(boolean key) {
 	    return key;
 	}
-	
-	// Assign core gameplay keys here!
+
+	// Assign core gameplay keys here! (GLFW key codes)
 	private void gamePlayKeys() {
-		up = keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP];
-		down = keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN];
-		left = keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT];
-		right = keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT];
-		
-		f = keys[KeyEvent.VK_F];
-		space = keys[KeyEvent.VK_SPACE];
-		shift = keys[KeyEvent.VK_SHIFT];
-		
-		c = keys[KeyEvent.VK_C];
-		e = keys[KeyEvent.VK_E];
+		up    = keys[GLFW_KEY_W]     || keys[GLFW_KEY_UP];
+		down  = keys[GLFW_KEY_S]     || keys[GLFW_KEY_DOWN];
+		left  = keys[GLFW_KEY_A]     || keys[GLFW_KEY_LEFT];
+		right = keys[GLFW_KEY_D]     || keys[GLFW_KEY_RIGHT];
+
+		f     = keys[GLFW_KEY_F];
+		space = keys[GLFW_KEY_SPACE];
+		shift = keys[GLFW_KEY_LEFT_SHIFT] || keys[GLFW_KEY_RIGHT_SHIFT];
+
+		c = keys[GLFW_KEY_C];
+		e = keys[GLFW_KEY_E];
 	}
-	
+
 	public void mainMenuKeys() {
-		upMenu = keys[KeyEvent.VK_UP] || keys[KeyEvent.VK_UP];
-		downMenu = keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN];
-		enter = keys[KeyEvent.VK_ENTER];
+		upMenu   = keys[GLFW_KEY_UP];
+		downMenu = keys[GLFW_KEY_S] || keys[GLFW_KEY_DOWN];
+		enter    = keys[GLFW_KEY_ENTER];
 	}
-	
+
 	// Assign all hotkeys here!
 	private void hotKeys() {
-		f3 = keys[KeyEvent.VK_F3];
+		f3 = keys[GLFW_KEY_F3];
 	}
 }

@@ -10,7 +10,7 @@ import robatortas.code.files.core.utils.CrashHandler;
 import robatortas.code.files.core.utils.CrashHandler.ErrorType;
 
 public class SpriteSheetManager {
-	
+
 	public int[] pixels;
 	private SpriteManager[] sprites;
 	public int WIDTH;
@@ -19,6 +19,31 @@ public class SpriteSheetManager {
 	public int alpha;
 	public String path;
 	private String nullPath = "/textures/spritesheet/NULL_TEXTURE.png";
+
+	// GPU texture (uploaded lazily after OpenGL context exists)
+	private robatortas.code.files.core.render.gl.TextureManager gpuTexture;
+	private boolean gpuUploaded = false;
+
+	/**
+	 * Upload this spritesheet to the GPU as an OpenGL texture.
+	 * Must be called AFTER the OpenGL context is created.
+	 */
+	public void uploadToGPU() {
+		if (!gpuUploaded && pixels != null && WIDTH > 0 && HEIGHT > 0) {
+			gpuTexture = new robatortas.code.files.core.render.gl.TextureManager(pixels, WIDTH, HEIGHT);
+			gpuUploaded = true;
+		}
+	}
+
+	public int getGPUTextureId() {
+		if (!gpuUploaded) uploadToGPU();
+		return gpuTexture != null ? gpuTexture.getId() : 0;
+	}
+
+	public robatortas.code.files.core.render.gl.TextureManager getGPUTexture() {
+		if (!gpuUploaded) uploadToGPU();
+		return gpuTexture;
+	}
 	
 	public SpriteSheetManager(String path, int size) {
 		this.path = path;
@@ -79,6 +104,11 @@ public class SpriteSheetManager {
 					}
 				}
 				SpriteManager sprite = new SpriteManager(spritePixels, frameSize, frameSize);
+				// Wire to original parent sheet for GPU rendering
+				sprite.sheet = sheet;
+				sprite.x = xx + x0 * frameSize;
+				sprite.y = yy + y0 * frameSize;
+				sprite.computeUVs();
 				sprites[frames++] = sprite;
 			}
 		}

@@ -24,8 +24,8 @@ public class GameLevel extends LevelManager {
 		entitiesIteration();
 		
 //		new PlayerRoomLevel(this).init();
-		Level level = new Level(this);
-		level.loadCurrentLevel();
+		this.currentLevel = new Level(this);
+		this.currentLevel.loadCurrentLevel();
 	}
 	
 	public void unload() {

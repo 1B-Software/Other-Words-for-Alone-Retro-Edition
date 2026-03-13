@@ -59,7 +59,7 @@ public class MainMenu {
 		}
 		
 		if(fadeOutQuit) {
-			game.removeKeyListener(input);
+//			game.removeKeyListener(input);
 			GameManager.fadeAlpha += GameManager.FADE_SPEED;
 			if(GameManager.fadeAlpha > 255) {
 				GameManager.fadeAlpha = 255;
@@ -76,14 +76,14 @@ public class MainMenu {
 	}
 	
 	public void render(RenderManager screen, GameManager game) {
-		screen.renderBox(0, 0, game.getWidth(), game.getHeight(), 0xffffffff, 0xff, true);
+		screen.renderBox(0, 0, Globals.WIDTH, Globals.HEIGHT, 0xffffffff, 0xff, true);
 		font.setSize(2);
 		font.color = 0xFF000000;
 		String firstRow = "Other Words";
 		String secondRow = "for Alone"; // Saints Row hhehehemmm
 		
 		font.draw(firstRow, Globals.CENTER_X - font.getTextWidth(firstRow) / 2, 10, false, screen);
-		font.draw(secondRow, Globals.CENTER_X - font.getTextWidth(secondRow) / 2, (int)font.getSize()*Globals.RENDER_SCALE*5, false, screen);
+		font.draw(secondRow, Globals.CENTER_X - font.getTextWidth(secondRow) / 2, (int)font.getSize()*18, false, screen);
 		
 		font.setSize(1);
 		if(buttonsState[0]) font.setColor(0xff999999);

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la /c/Users/robat/Documents/Programming/Other-Words-for-Alone-Retro-Edition/*.gradle)",
+      "Bash(cmd.exe /c \"cd /d C:\\\\Users\\\\robat\\\\Documents\\\\Programming\\\\Other-Words-for-Alone-Retro-Edition && gradlew.bat compileJava\")",
+      "Bash(./gradlew compileJava)"
+    ]
+  }
+}

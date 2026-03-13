@@ -1,5 +1,7 @@
 package robatortas.code.files.core.utils;
 
+import static org.lwjgl.glfw.GLFW.glfwSetWindowTitle;
+
 import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.settings.Globals;
 
@@ -28,7 +30,7 @@ public class LoopingUtils {
 		if(System.currentTimeMillis() - timer > 1000) {
 			timer+=1000;
 			
-			game.frame.setTitle(Globals.TITLE + "  ||  " + tps + " TPS " + fps + " FPS");
+			glfwSetWindowTitle(game.window.getHandle(), Globals.TITLE + "  ||  " + tps + " TPS " + fps + " FPS");
 			function.func();
 			
 
