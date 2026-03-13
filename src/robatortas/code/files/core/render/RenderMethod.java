@@ -64,7 +64,7 @@ public class RenderMethod {
 //		if(yScroll > level.height * 16 - screen.height + 6) yScroll = level.width * 16 - screen.height + 6;
 //		if(yScroll < level.height - screen.height/6) yScroll = level.height * 6 - screen.height + 22;
 		
-		level.render(xScroll, yScroll, screen);
+		level.render((int) Math.floor(xScroll), (int) Math.floor(yScroll), screen);
 	}
 
 	/**

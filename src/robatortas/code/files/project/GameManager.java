@@ -2,6 +2,14 @@ package robatortas.code.files.project;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL30.GL_COLOR_ATTACHMENT0;
+import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
+import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER_COMPLETE;
+import static org.lwjgl.opengl.GL30.GL_RGBA16F;
+import static org.lwjgl.opengl.GL30.glBindFramebuffer;
+import static org.lwjgl.opengl.GL30.glCheckFramebufferStatus;
+import static org.lwjgl.opengl.GL30.glFramebufferTexture2D;
+import static org.lwjgl.opengl.GL30.glGenFramebuffers;
 
 import java.util.List;
 
@@ -56,6 +64,8 @@ public class GameManager implements Runnable {
 	private LightRenderer lightRenderer;
 	public static RainRenderer rainRenderer;
 	public static ShaderProgram rainShader;
+	public static int fbo;
+	public int fboTex;
 
 	public LevelManager level;
 
@@ -107,6 +117,25 @@ public class GameManager implements Runnable {
 	 * This is where shaders, batches, textures get set up.
 	 */
 	private void initGL() {
+		
+		// Create FBO with float-precision color attachment
+		fbo = glGenFramebuffers();
+		fboTex = glGenTextures();
+		glBindTexture(GL_TEXTURE_2D, fboTex);
+		// FBO Image
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, Globals.WIDTH, Globals.HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, (java.nio.FloatBuffer) null);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		
+		// Start Framebuffer
+		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fboTex, 0);
+		
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		
+		
 		// Load shaders from classpath resources
 		rainShader = new ShaderProgram("/shaders/rain.vert", "/shaders/rain.frag");
 		spriteShader = new ShaderProgram("/shaders/sprite.vert", "/shaders/sprite.frag");
@@ -174,6 +203,7 @@ public class GameManager implements Runnable {
 	public int tickTime = 0;
 
 	public void update() {
+		
 		tickTime++;
 		if (PLAYSTATE.IN_GAME.state) {
 			level.update();
@@ -219,6 +249,9 @@ public class GameManager implements Runnable {
 	 *   4. Render GUI + fade overlay on top (unlit)
 	 */
 	public void render() {
+		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+		glViewport(0, 0, Globals.WIDTH, Globals.HEIGHT);
+		
 		glClearColor(0, 0, 0, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -250,9 +283,9 @@ public class GameManager implements Runnable {
 			}
 			lightRenderer.end();
 			screen.clearPendingLights();
-
-			// Restore window viewport after FBO rendering
-			window.updateViewport();
+			
+			glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+			glViewport(0, 0, Globals.WIDTH, Globals.HEIGHT);
 
 			// Multiply lightmap onto the scene
 			glBlendFunc(GL_DST_COLOR, GL_ZERO);
@@ -262,23 +295,27 @@ public class GameManager implements Runnable {
 					0, 1, 1, 0, 1, 1, 1, 1, lightRenderer.getLightTexture());
 			spriteBatch.end();
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		} else if (PLAYSTATE.IN_GAME.state && Level.environmentLight < 1.0f) {
 			// No dynamic lights but environment is dark — still apply darkening
 			lightRenderer.begin(Level.environmentLight);
 			lightRenderer.end();
 			screen.clearPendingLights();
 
-			window.updateViewport();
-
+			glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+			glViewport(0, 0, Globals.WIDTH, Globals.HEIGHT);
 			glBlendFunc(GL_DST_COLOR, GL_ZERO);
 			spriteBatch.begin();
 			spriteBatch.draw(0, 0, Globals.WIDTH, Globals.HEIGHT,
 					0, 1, 1, 0, 1, 1, 1, 1, lightRenderer.getLightTexture());
 			spriteBatch.end();
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		}
 
 		// === PASS 3: GUI overlay (unlit) + fade ===
+		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+		glViewport(0, 0, Globals.WIDTH, Globals.HEIGHT);
 		spriteBatch.begin();
 
 		if (PLAYSTATE.IN_GAME.state) {
@@ -293,7 +330,19 @@ public class GameManager implements Runnable {
 		}
 
 		spriteBatch.end();
-
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		window.updateViewport();
+		glClear(GL_COLOR_BUFFER_BIT);
+		spriteBatch.begin();
+		glBindTexture(GL_TEXTURE, fboTex);
+		float fracX = xScroll - (float) Math.floor(xScroll);
+		float fracY = yScroll - (float) Math.floor(yScroll);
+		
+		spriteBatch.draw(-fracX, -fracY, Globals.WIDTH, Globals.HEIGHT,
+				0, 1, 1, 0, 1, 1, 1, 1, fboTex);
+		spriteBatch.end();
 		window.swapBuffers();
 	}
 
