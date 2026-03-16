@@ -21,6 +21,7 @@ public class GameLevel extends LevelManager {
 		levelReader(Globals.levelPath);
 		levelPostReader(Globals.levelPathPost);
 		levelDoorReader(Globals.levelPathDoors);
+		unload();
 		entitiesIteration();
 		
 //		new PlayerRoomLevel(this).init();
@@ -82,9 +83,6 @@ public class GameLevel extends LevelManager {
 		}
 	}
 	public void flushEntities() {
-		for (int i = 0; i < entities.size(); i++) {
-			remove(entities.get(i));
-		}
-		remove(player);
+		entities.clear();
 	}
 }

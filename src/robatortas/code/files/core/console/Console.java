@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import robatortas.code.files.core.level.LevelManager;
-import robatortas.code.files.core.utils.CustFunc;
 import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.entities.ItemEntity;
 import robatortas.code.files.project.inventory.Item;
+import robatortas.code.files.project.level.Level;
 
 // CONSOLE IS IN TESTDEV!
 
@@ -98,10 +98,12 @@ public class Console implements Runnable {
 		errorHandler();
 	}
 	
+	private Level level;
+	
 	// COMMAND FUNCTIONS
 	public void commands() {
 		if(!msg.startsWith("!")) logPlayer(msg);
-		
+		level =game.level.currentLevel.levelSelector.getCurrentLevel();
 		parser();
 		
 		// Help
@@ -142,7 +144,7 @@ public class Console implements Runnable {
 			try {
 				if(first.equals(new Item().getItem(first).getName())) {
 					for(int i = 0; i < Integer.parseInt(second); i++) {
-						game.level.add(new ItemEntity(LevelManager.player.x, LevelManager.player.y, new Item().getItem(first)));
+						level.add(new ItemEntity(LevelManager.player.x, LevelManager.player.y, new Item().getItem(first)));
 					}
 					log(Integer.parseInt(getPart(0, 2)) + " " + first + " spawned at your location");
 				}

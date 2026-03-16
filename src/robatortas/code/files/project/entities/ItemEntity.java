@@ -29,10 +29,10 @@ public class ItemEntity extends EntityManager {
 	public void update() {
 		tickTime++;
 		
-		if(tickTime >= lifeTime) {
-			this.remove();
-			return;
-		}
+//		if(tickTime >= lifeTime) {
+//			this.remove();
+//			return;
+//		}
 		
 		physicsEngine.calculations.physics();
 		move2((int) physicsEngine.calculations.x0 - x, (int) physicsEngine.calculations.y0 - y);
@@ -59,17 +59,16 @@ public class ItemEntity extends EntityManager {
 	int zTime = 0;
 	public void render(RenderManager screen) {
 		// Blinking when death is close
-		if(tickTime >= (lifeTime - 240)) {
-			int deathTime = 0x00;
-			System.out.println("Death Time Start !");
-			deathTime+=0x0F;
-//			if((tickTime / 10) % 2 == 0) return;
-			if((tickTime / 10) % 2 == 0) {
-				if(item.getSprite().alpha != 0x00)item.getSprite().alpha -= deathTime;
-			} else {
-			    item.getSprite().alpha = 0xFF;
-			}
-		}
+//		if(tickTime >= (lifeTime - 240)) {
+//			int deathTime = 0x00;
+//			deathTime+=0x0F;
+////			if((tickTime / 10) % 2 == 0) return;
+//			if((tickTime / 10) % 2 == 0) {
+//				if(item.getSprite().alpha != 0x00)item.getSprite().alpha -= deathTime;
+//			} else {
+//			    item.getSprite().alpha = 0xFF;
+//			}
+//		}
 		int yy = 0;
 		if(physicsEngine.calculations.z0 == 0 && tickTime > 60) {
 			if((tickTime / 20) % 2 == 0) yy=1;

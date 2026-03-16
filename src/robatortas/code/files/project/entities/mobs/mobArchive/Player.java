@@ -58,7 +58,7 @@ public class Player extends MobAddons {
 	public int tickTime;
 	int doorTime = 0;
 	
-	float speed = 0.7f;
+	float speed = 0.5f;
 	
 	public void update() {
 		super.update();
@@ -79,7 +79,7 @@ public class Player extends MobAddons {
 		}
 		else swimTime = 0;
 		
-		if(!isSwimming && speed != 0) speed = 0.7f;
+		if(!isSwimming && speed != 0) speed = 0.5f;
 		
 		if((doorTime % 2 == 0) && GameManager.fadeAlpha == 0) {
 			if(LevelManager.level.getDoors((int)x >> 4, (int)y >> 4) == TileArchive.doorTile) {
@@ -214,8 +214,8 @@ public class Player extends MobAddons {
 		// Pixel coordinates instead of world coordinates.
 //		float px = (x - RenderMethod.xScroll) * Globals.RENDER_SCALE;
 //		float py = (y - RenderMethod.yScroll) * Globals.RENDER_SCALE;
-		light = new LightSource(screen);
-		light.add(x-2, y-8, 20, 0.5f, 0xFFFFFFFF, 3f);
+//		light = new LightSource(screen);
+//		light.add(x-2, y-8, 20, 0.5f, 0xFFFFFFFF, 3f);
 		////////////
 		// GROUND //
 		////////////
@@ -269,8 +269,9 @@ public class Player extends MobAddons {
 		// Render Mob
 		sprite = animSprite.getSprite();
 		
+		
 		beforeLayer(screen);
-		screen.renderMob(x - renderAxysConstX, y - renderAxysConstY, this, sprite, 0);
+		screen.renderMob((int)x - renderAxysConstX, (int)y - renderAxysConstY, this, sprite, 0);
 		afterLayer(screen);
 	}
 	

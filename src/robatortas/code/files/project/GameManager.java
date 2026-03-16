@@ -66,6 +66,8 @@ public class GameManager implements Runnable {
 	public static ShaderProgram rainShader;
 	public static int fbo;
 	public int fboTex;
+	public static int guiFBO;
+	public int guiFBOTex;
 
 	public LevelManager level;
 
@@ -132,6 +134,28 @@ public class GameManager implements Runnable {
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fboTex, 0);
+		if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+		    System.out.println("FBO ERROR");
+		}
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		
+		// GUI FBO
+		guiFBO = glGenFramebuffers();
+		guiFBOTex = glGenTextures();
+		glBindTexture(GL_TEXTURE_2D, guiFBOTex);
+		// FBO Image
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, Globals.WIDTH, Globals.HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		
+		// Start Framebuffer
+		glBindFramebuffer(GL_FRAMEBUFFER, guiFBO);
+
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, guiFBOTex, 0);
+		if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+		    System.out.println("FBO ERROR");
+		}
 		
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		
@@ -263,11 +287,6 @@ public class GameManager implements Runnable {
 			xScroll = RenderMethod.xScroll;
 			yScroll = RenderMethod.yScroll;
 		}
-
-		if (PLAYSTATE.MAIN_MENU.state && mainMenu != null) {
-			mainMenu.render(screen, this);
-		}
-
 		spriteBatch.end();
 
 		// PASS 2: Lighting (only when in-game and lights were queued)
@@ -314,14 +333,24 @@ public class GameManager implements Runnable {
 		}
 
 		// === PASS 3: GUI overlay (unlit) + fade ===
-		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+		glBindFramebuffer(GL_FRAMEBUFFER, guiFBO);
+//		glViewport(0, 0, window.getWidth(), window.getHeight());
+
 		glViewport(0, 0, Globals.WIDTH, Globals.HEIGHT);
+		
+		glClearColor(0,0,0,0);
+		glClear(GL_COLOR_BUFFER_BIT);
+		
 		spriteBatch.begin();
 
 		if (PLAYSTATE.IN_GAME.state) {
 			renderMethod.renderOverlay();
 		}
 
+		if (PLAYSTATE.MAIN_MENU.state && mainMenu != null) {
+			mainMenu.render(screen, this);
+		}
+		
 		// Fade overlay
 		if (fadeAlpha > 0) {
 			float a = fadeAlpha / 255f;
@@ -331,18 +360,23 @@ public class GameManager implements Runnable {
 
 		spriteBatch.end();
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		window.updateViewport();
-		glClear(GL_COLOR_BUFFER_BIT);
+//		glClear(GL_COLOR_BUFFER_BIT);
+//		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		spriteBatch.begin();
-		glBindTexture(GL_TEXTURE, fboTex);
+		glBindTexture(GL_TEXTURE_2D, fboTex);
+		glBindTexture(GL_TEXTURE_2D, guiFBOTex);
 		float fracX = xScroll - (float) Math.floor(xScroll);
 		float fracY = yScroll - (float) Math.floor(yScroll);
 		
-		spriteBatch.draw(-fracX, -fracY, Globals.WIDTH, Globals.HEIGHT,
+		spriteBatch.draw(-fracX, -fracY, Globals.WIDTH+2, Globals.HEIGHT+2,
 				0, 1, 1, 0, 1, 1, 1, 1, fboTex);
+		
+		spriteBatch.draw(0, 0, Globals.WIDTH, Globals.HEIGHT,
+		        0, 1, 1, 0, 1, 1, 1, 1, guiFBOTex);
 		spriteBatch.end();
+		
 		window.swapBuffers();
 	}
 

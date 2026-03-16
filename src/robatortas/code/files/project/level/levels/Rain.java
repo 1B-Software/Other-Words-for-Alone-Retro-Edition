@@ -20,7 +20,7 @@ public class Rain {
 	
 	int density = 0;
 	
-	public int rainColor = 0x770000ff;
+	public int rainColor = 0xFF9595ED;
 	
 	float r,g,b,a;
 	
@@ -68,6 +68,23 @@ public class Rain {
 				particle.life = 60;
 				particle.physicsEngine.calculations.gravityForce = 0.53;
 				particle.physicsEngine.calculations.z0 = 400;
+				zz0 = (float) particle.physicsEngine.calculations.z0;
+				particle.physicsEngine.calculations.elasticity = 0.2;
+				particle.physicsEngine.calculations.x1 = -wind;
+				particles.add(particle);
+			}
+			
+			for(int i = 0; i < this.density; i++) {
+				random = new Random();
+				Particle particle = new Particle(screen.xOffset+(float)random.nextInt(screen.width+124), screen.yOffset+screen.height/3 + (float)random.nextInt(screen.height) - 32);
+				particle.level = level.levelManager;
+				rainColor = 0xffffffff;
+				particle.setColor(rainColor);
+				particle.height = 1;
+				particle.width = 1;
+				particle.life = 60;
+				particle.physicsEngine.calculations.gravityForce = 0.53;
+				particle.physicsEngine.calculations.z0 = 10;
 				zz0 = (float) particle.physicsEngine.calculations.z0;
 				particle.physicsEngine.calculations.elasticity = 0.2;
 				particle.physicsEngine.calculations.x1 = -wind;

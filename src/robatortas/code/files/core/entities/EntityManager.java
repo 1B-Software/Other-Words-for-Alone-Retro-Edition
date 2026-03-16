@@ -83,8 +83,8 @@ public class EntityManager {
 	
 	protected int xp = 8;
 	protected int yp = 8;
-	public boolean intersects(float f, float g, float h, float i2) {
-		return (x + xp < f || y + yp < g || x - xp > h || y - yp > i2);
+	public boolean intersects(float x0, float y0, float x1, float y1) {
+		return (x + xp < x0 || y + yp < y0 || x - xp > x1 || y - yp > y1);
 	}
 	
 	public SpriteManager getSprite() {

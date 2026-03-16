@@ -1,5 +1,6 @@
 package robatortas.code.files.project.level.levels;
 
+import robatortas.code.files.core.console.Console;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.project.entities.mobs.mobArchive.Player;
@@ -18,10 +19,12 @@ public class OutsideLevel extends Level {
 		rain = new Rain(10, 2f, this);
 		environmentLight = 0.7f;
 		LevelManager.player = new Player(3<<4, 5<<4, levelManager.input);
-		levelManager.add(LevelManager.player);
+		add(LevelManager.player);
 	}
 	
+	int tick = 0;
 	public void update() {
+		tick++;
 		rain.update();
 	}
 	

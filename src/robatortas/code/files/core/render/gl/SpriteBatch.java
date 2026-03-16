@@ -134,6 +134,8 @@ public class SpriteBatch {
 			currentTextureId = textureId;
 			glBindTexture(GL_TEXTURE_2D, currentTextureId);
 		}
+		
+		// Writing into a CPU BUFFER ! ! !
 
 		// Top-left
 		vertexBuffer.put(x).put(y).put(u0).put(v0).put(r).put(g).put(b).put(a);

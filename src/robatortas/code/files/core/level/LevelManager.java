@@ -59,6 +59,7 @@ public class LevelManager {
 	
 	public LevelManager() {
 		load(Level.currentLevelName);
+		Level cLevel = currentLevel.levelSelector.getCurrentLevel();
 		addons = new LevelAddons(this);
 		for(int y = 0; y < height; y++) {
 			for(int x = 0; x < width; x++) {
@@ -171,12 +172,13 @@ public class LevelManager {
 	public InputManager input = new InputManager();
 	public MouseManager mouse = new MouseManager();
 	
+	int tick = 0;
 	public void update() {
+		tick++;
 		WaterTile.tick();
 		input.update();
 		
 		mouse.update();
-		
 
 		currentLevel.levelSelector.getCurrentLevel().update();
 		

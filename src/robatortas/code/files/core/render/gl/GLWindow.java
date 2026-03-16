@@ -144,6 +144,7 @@ public class GLWindow {
 		glfwFreeCallbacks(window);
 		glfwDestroyWindow(window);
 		glfwTerminate();
+		System.exit(0);
 		GLFWErrorCallback ec = glfwSetErrorCallback(null);
 		if (ec != null) ec.free();
 	}

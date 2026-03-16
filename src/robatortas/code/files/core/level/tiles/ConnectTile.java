@@ -122,8 +122,8 @@ public class ConnectTile {
 		}
 		
 		if(up && (!left && !right)) {
-			screen.renderSpriteRegion(xt+half, yt+half, upSprite, half*2, half-1, half, half, 1);
-			screen.renderSpriteRegion(xt, yt+half, upSprite, half*2, half-1, half, half, 1);
+			screen.renderSpriteRegion(xt+half, yt+half, upSprite, half*2, half, half, half, 1);
+			screen.renderSpriteRegion(xt, yt+half, upSprite, half*2, half, half, half, 1);
 		} 
 		
 		if(down) {

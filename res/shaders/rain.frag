@@ -29,12 +29,14 @@ float noise(vec2 p) {
 
 void main()
 {
+
+	float wind = sin(uTime * 2.0) * 0.2;
     // Soft edges: fade at top and bottom of the raindrop streak
     float edge = smoothstep(0.0, 0.3, vTexCoord.y) * smoothstep(1.0, 0.7, vTexCoord.y);
 
     // Brightness shimmer from noise — each game pixel gets a different value
     float n = noise(floor(vWorldPos) + vec2(uTime * 2.0, uTime * 3.0));
-    float brightness = 0.7 + 0.3 * n;
+    float brightness = 0.3 + 0.9 * n;
 
     fragColor = vec4(vColor.rgb * brightness, vColor.a * edge * 0.4);
 }
