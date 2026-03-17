@@ -271,6 +271,8 @@ public class Player extends MobAddons {
 		
 		
 		beforeLayer(screen);
+		float xs = x - (float) Math.floor(x);
+		float ys = y - (float) Math.floor(x);
 		screen.renderMob((int)x - renderAxysConstX, (int)y - renderAxysConstY, this, sprite, 0);
 		afterLayer(screen);
 	}

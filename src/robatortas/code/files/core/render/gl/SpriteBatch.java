@@ -1,14 +1,30 @@
 package robatortas.code.files.core.render.gl;
 
+import static org.lwjgl.opengl.GL11.GL_FLOAT;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
+import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL11.glDrawElements;
+import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_DYNAMIC_DRAW;
+import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
+import static org.lwjgl.opengl.GL15.glBindBuffer;
+import static org.lwjgl.opengl.GL15.glBufferData;
+import static org.lwjgl.opengl.GL15.glBufferSubData;
+import static org.lwjgl.opengl.GL15.glDeleteBuffers;
+import static org.lwjgl.opengl.GL15.glGenBuffers;
+import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
+import static org.lwjgl.opengl.GL30.glBindVertexArray;
+import static org.lwjgl.opengl.GL30.glDeleteVertexArrays;
+import static org.lwjgl.opengl.GL30.glGenVertexArrays;
+
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import org.lwjgl.system.MemoryUtil;
-
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.*;
 
 /**
  * Batched quad renderer. Accumulates sprite quads and flushes them in a single draw call.
@@ -29,9 +45,9 @@ public class SpriteBatch {
 	private int currentTextureId = -1;
 
 	// Orthographic projection matrix (column-major for OpenGL)
-	private float[] projectionMatrix;
+	private float[] projectionMatrix = Camera.getProjectionMatrix();
 
-	public SpriteBatch(ShaderProgram shader) {
+	public SpriteBatch(ShaderProgram shader, Camera camera) {
 		this.shader = shader;
 
 		vertexBuffer = MemoryUtil.memAllocFloat(MAX_QUADS * VERTICES_PER_QUAD * FLOATS_PER_VERTEX);
@@ -69,16 +85,6 @@ public class SpriteBatch {
 
 		MemoryUtil.memFree(indices);
 		glBindVertexArray(0);
-	}
-
-	public void setProjection(float width, float height) {
-		// Orthographic: left=0, right=width, top=0, bottom=height (Y-down like AWT)
-		projectionMatrix = new float[] {
-			2f / width,  0,            0, 0,
-			0,          -2f / height,  0, 0,
-			0,           0,           -1, 0,
-			-1,          1,            0, 1
-		};
 	}
 
 	public void begin() {

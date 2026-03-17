@@ -1,11 +1,28 @@
 package robatortas.code.files.project;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DST_COLOR;
+import static org.lwjgl.opengl.GL11.GL_NEAREST;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_RGBA;
+import static org.lwjgl.opengl.GL11.GL_RGBA8;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_BYTE;
+import static org.lwjgl.opengl.GL11.GL_ZERO;
+import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.glGenTextures;
+import static org.lwjgl.opengl.GL11.glTexImage2D;
+import static org.lwjgl.opengl.GL11.glTexParameteri;
+import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.opengl.GL30.GL_COLOR_ATTACHMENT0;
 import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
 import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER_COMPLETE;
-import static org.lwjgl.opengl.GL30.GL_RGBA16F;
 import static org.lwjgl.opengl.GL30.glBindFramebuffer;
 import static org.lwjgl.opengl.GL30.glCheckFramebufferStatus;
 import static org.lwjgl.opengl.GL30.glFramebufferTexture2D;
@@ -17,6 +34,7 @@ import robatortas.code.files.core.input.MouseManager;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.RenderMethod;
+import robatortas.code.files.core.render.gl.Camera;
 import robatortas.code.files.core.render.gl.GLWindow;
 import robatortas.code.files.core.render.gl.LightRenderer;
 import robatortas.code.files.core.render.gl.RainRenderer;
@@ -56,6 +74,7 @@ public class GameManager implements Runnable {
 	}
 
 	public RenderManager screen;
+	public Camera camera;
 	private RenderMethod renderMethod = new RenderMethod();
 
 	public static ShaderProgram spriteShader;
@@ -119,6 +138,8 @@ public class GameManager implements Runnable {
 	 * This is where shaders, batches, textures get set up.
 	 */
 	private void initGL() {
+		camera = new Camera(xScroll, yScroll);
+		camera.setProjection(Globals.WIDTH, Globals.HEIGHT);
 		
 		// Create FBO with float-precision color attachment
 		fbo = glGenFramebuffers();
@@ -166,8 +187,7 @@ public class GameManager implements Runnable {
 		lightShader = new ShaderProgram("/shaders/light.vert", "/shaders/light.frag");
 
 		// Create sprite batch and set orthographic projection to game coordinates
-		spriteBatch = new SpriteBatch(spriteShader);
-		spriteBatch.setProjection(Globals.WIDTH, Globals.HEIGHT);
+		spriteBatch = new SpriteBatch(spriteShader, camera);
 
 		// Initialize RenderManager's GL resources (white texture)
 		screen.initGL();
@@ -365,10 +385,16 @@ public class GameManager implements Runnable {
 //		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		spriteBatch.begin();
-		glBindTexture(GL_TEXTURE_2D, fboTex);
-		glBindTexture(GL_TEXTURE_2D, guiFBOTex);
 		float fracX = xScroll - (float) Math.floor(xScroll);
 		float fracY = yScroll - (float) Math.floor(yScroll);
+		spriteShader.setUniform2f("uResidue", fracX, fracY);
+		spriteShader.setUniform1f("xScroll", camera.getX());
+		spriteShader.setUniform1f("yScroll", camera.getY());
+		screen.getBatch().flush();
+		glBindTexture(GL_TEXTURE_2D, fboTex);
+		
+		glBindTexture(GL_TEXTURE_2D, guiFBOTex);
+		
 		
 		spriteBatch.draw(-fracX, -fracY, Globals.WIDTH+2, Globals.HEIGHT+2,
 				0, 1, 1, 0, 1, 1, 1, 1, fboTex);
@@ -376,6 +402,9 @@ public class GameManager implements Runnable {
 		spriteBatch.draw(0, 0, Globals.WIDTH, Globals.HEIGHT,
 		        0, 1, 1, 0, 1, 1, 1, 1, guiFBOTex);
 		spriteBatch.end();
+		
+//		glBindTexture(GL_TEXTURE_2D, 0);
+//		glBindTexture(GL_TEXTURE_2D, 0);
 		
 		window.swapBuffers();
 	}
