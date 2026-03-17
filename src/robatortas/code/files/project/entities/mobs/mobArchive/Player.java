@@ -67,6 +67,9 @@ public class Player extends MobAddons {
 		
 		tickTime++;
 		
+
+		if(!isSwimming && speed != 0) speed = 0.5f;
+		
 		// Controls
 		controls();
 		
@@ -78,8 +81,6 @@ public class Player extends MobAddons {
 			speed = 0.4f;
 		}
 		else swimTime = 0;
-		
-		if(!isSwimming && speed != 0) speed = 0.5f;
 		
 		if((doorTime % 2 == 0) && GameManager.fadeAlpha == 0) {
 			if(LevelManager.level.getDoors((int)x >> 4, (int)y >> 4) == TileArchive.doorTile) {
@@ -123,11 +124,8 @@ public class Player extends MobAddons {
 		
 		if(GameManager.DEV_MODE) {
 			if(input.shift) {
-				velX = 1.5f;
-				velY = 1.5f;
-			} else {
-				velX = 1;
-				velY = 1;
+				speed = 0.75f;
+				speed = 0.75f;
 			}
 		}
 	}
