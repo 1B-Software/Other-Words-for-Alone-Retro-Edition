@@ -2,6 +2,8 @@ package robatortas.code.files.project.utils;
 
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
+import robatortas.code.files.project.GameManager;
+import robatortas.code.files.project.settings.Globals;
 
 /**<NEWLINE>
  * <b>Graphical class</b>
@@ -36,10 +38,10 @@ public class Graphical {
 	 * 
 	 */
 	public void buildBox(int portionWidth, int portionHeight, int width, int height, int xOffset, int yOffset, float x, float y, int color, boolean fixed, RenderManager screen) {
-		if(fixed) {
-			x += screen.xOffset;
-			y += screen.yOffset;
-		}
+//		if(fixed) {
+//			x += GameManager.camera.getX()-Globals.WIDTH/2;
+//			y += GameManager.camera.getY()-Globals.HEIGHT/2;
+//		}
 		
 		if(xOffset == 0) xOffset = portionWidth;
 		if(yOffset == 0) yOffset = portionHeight;

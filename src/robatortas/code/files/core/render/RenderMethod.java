@@ -49,9 +49,6 @@ public class RenderMethod {
 		float targetX = LevelManager.player.x - (Globals.WIDTH) / 2 + 3;
 		float targetY = LevelManager.player.y - (Globals.HEIGHT) / 2;
 		float smooth = 1.6f;
-
-		xScroll += (targetX - xScroll) * smooth * game.renderDt;
-		yScroll += (targetY - yScroll) * smooth * game.renderDt;
 		
 //		xScroll = (int)(LevelManager.player.x - Globals.WIDTH / 2 + 3);
 //		yScroll = (int)(LevelManager.player.y - Globals.HEIGHT / 2);
@@ -64,7 +61,9 @@ public class RenderMethod {
 //		if(yScroll > level.height * 16 - screen.height + 6) yScroll = level.width * 16 - screen.height + 6;
 //		if(yScroll < level.height - screen.height/6) yScroll = level.height * 6 - screen.height + 22;
 		
-		level.render((int) Math.floor(xScroll), (int) Math.floor(yScroll), screen);
+		float viewX = GameManager.camera.getX() - Globals.WIDTH / 2f;
+		float viewY = GameManager.camera.getY() - Globals.HEIGHT / 2f;
+		level.render((int) Math.floor(viewX), (int) Math.floor(viewY), screen);
 	}
 
 	/**

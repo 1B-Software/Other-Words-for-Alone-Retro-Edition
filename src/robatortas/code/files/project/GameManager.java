@@ -74,7 +74,7 @@ public class GameManager implements Runnable {
 	}
 
 	public RenderManager screen;
-	public Camera camera;
+	public static Camera camera;
 	private RenderMethod renderMethod = new RenderMethod();
 
 	public static ShaderProgram spriteShader;
@@ -292,15 +292,22 @@ public class GameManager implements Runnable {
 	 *   3. Multiply lightmap onto the scene (GL_DST_COLOR blend)
 	 *   4. Render GUI + fade overlay on top (unlit)
 	 */
-	public void render() {
+	public void render() {		
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 		glViewport(0, 0, Globals.WIDTH, Globals.HEIGHT);
+		
+//		camera.setCoords(level.player.x, level.player.y);
 		
 		glClearColor(0, 0, 0, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// === PASS 1: Scene ===
 		spriteBatch.begin();
+		
+		float smooth = 1.6f;
+		camera.setX(camera.getX() + (LevelManager.player.x - camera.getX()) * smooth * renderDt);
+		camera.setY(camera.getY() + (LevelManager.player.y - camera.getY()) * smooth * renderDt);
+		spriteShader.setUniform2f("uCamera", (float)Math.floor(camera.getX()-(Globals.WIDTH/2f)), (float)Math.floor(camera.getY()-(Globals.HEIGHT/2f)));
 
 		if (PLAYSTATE.IN_GAME.state) {
 			renderMethod.render(this);
@@ -322,13 +329,14 @@ public class GameManager implements Runnable {
 			}
 			lightRenderer.end();
 			screen.clearPendingLights();
-			
+
 			glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 			glViewport(0, 0, Globals.WIDTH, Globals.HEIGHT);
 
 			// Multiply lightmap onto the scene
 			glBlendFunc(GL_DST_COLOR, GL_ZERO);
 			spriteBatch.begin();
+			spriteShader.setUniform2f("uCamera", 0, 0);
 			// V-flipped because FBO textures are Y-up but our projection is Y-down
 			spriteBatch.draw(0, 0, Globals.WIDTH, Globals.HEIGHT,
 					0, 1, 1, 0, 1, 1, 1, 1, lightRenderer.getLightTexture());
@@ -345,6 +353,7 @@ public class GameManager implements Runnable {
 			glViewport(0, 0, Globals.WIDTH, Globals.HEIGHT);
 			glBlendFunc(GL_DST_COLOR, GL_ZERO);
 			spriteBatch.begin();
+			spriteShader.setUniform2f("uCamera", 0, 0);
 			spriteBatch.draw(0, 0, Globals.WIDTH, Globals.HEIGHT,
 					0, 1, 1, 0, 1, 1, 1, 1, lightRenderer.getLightTexture());
 			spriteBatch.end();
@@ -357,11 +366,12 @@ public class GameManager implements Runnable {
 //		glViewport(0, 0, window.getWidth(), window.getHeight());
 
 		glViewport(0, 0, Globals.WIDTH, Globals.HEIGHT);
-		
+
 		glClearColor(0,0,0,0);
 		glClear(GL_COLOR_BUFFER_BIT);
-		
+
 		spriteBatch.begin();
+		spriteShader.setUniform2f("uCamera", 0, 0);
 
 		if (PLAYSTATE.IN_GAME.state) {
 			renderMethod.renderOverlay();
@@ -384,15 +394,13 @@ public class GameManager implements Runnable {
 //		glClear(GL_COLOR_BUFFER_BIT);
 //		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		spriteBatch.begin();
-		float fracX = xScroll - (float) Math.floor(xScroll);
-		float fracY = yScroll - (float) Math.floor(yScroll);
-		spriteShader.setUniform2f("uResidue", fracX, fracY);
-		spriteShader.setUniform1f("xScroll", camera.getX());
-		spriteShader.setUniform1f("yScroll", camera.getY());
-		screen.getBatch().flush();
-		glBindTexture(GL_TEXTURE_2D, fboTex);
 		
+		spriteBatch.begin();
+		spriteShader.setUniform2f("uCamera", 0, 0);
+		float fracX = (camera.getX() - Globals.WIDTH/2) - (float) Math.floor((camera.getX() - Globals.WIDTH/2));
+		float fracY = (camera.getY() - Globals.WIDTH/2) - (float) Math.floor((camera.getY() - Globals.WIDTH/2));
+//		spriteShader.setUniform2f("uResidue", fracX, fracY);
+		glBindTexture(GL_TEXTURE_2D, fboTex);
 		glBindTexture(GL_TEXTURE_2D, guiFBOTex);
 		
 		

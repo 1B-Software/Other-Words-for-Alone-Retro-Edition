@@ -73,8 +73,8 @@ public class RenderManager {
 	public void renderBox(float xp, float yp, int w, int h, int color, int alpha, boolean fixed) {
 		float drawX, drawY;
 		if (!fixed) {
-			drawX = xp - xOffset;
-			drawY = yp - yOffset;
+			drawX = xp;
+			drawY = yp;
 		} else {
 			drawX = xp;
 			drawY = yp;
@@ -89,8 +89,8 @@ public class RenderManager {
 	}
 
 	public void renderTile(float xp, float yp, float scale, TileManager tile) {
-		float drawX = xp - xOffset;
-		float drawY = yp - yOffset;
+		float drawX = xp;
+		float drawY = yp;
 		float w = tile.sprite.width * scale;
 		float h = tile.sprite.height * scale;
 		float a = tile.sprite.alpha / 255f;
@@ -112,8 +112,8 @@ public class RenderManager {
 	 * @param flip Flips the sprite; 1 flips it on x, 2 flips it on y, 3 flips it on x & y
 	 */
 	public void renderSprite(float xp, float yp, SpriteManager sprite, float scale, int flip) {
-		float drawX = xp - xOffset;
-		float drawY = yp - yOffset;
+		float drawX = xp;
+		float drawY = yp;
 		float w = sprite.width * scale;
 		float h = sprite.height * scale;
 		float a = sprite.alpha / 255f;
@@ -130,8 +130,8 @@ public class RenderManager {
 
 	// Renders a sub-region of a sprite (used for quadrant-based tile rendering)
 	public void renderSpriteRegion(float xp, float yp, SpriteManager sprite, int srcX, int srcY, int srcW, int srcH, float scale) {
-		float drawX = xp - xOffset;
-		float drawY = yp - yOffset;
+		float drawX = xp;
+		float drawY = yp;
 		float w = srcW * scale;
 		float h = srcH * scale;
 		float a = sprite.alpha / 255f;
@@ -153,8 +153,8 @@ public class RenderManager {
 	public void renderSpriteSheet(int xp, int yp, SpriteSheetManager sheet, int flip, boolean fixed) {
 		float drawX, drawY;
 		if (!fixed) {
-			drawX = xp - xOffset;
-			drawY = yp - yOffset;
+			drawX = xp;
+			drawY = yp;
 		} else {
 			drawX = xp;
 			drawY = yp;
@@ -171,8 +171,8 @@ public class RenderManager {
 
 	// Rendering Mobs
 	public void renderMob(float xp, float yp, Mob mob, SpriteManager sprite, int flip) {
-		float drawX = xp - xOffset;
-		float drawY = yp - yOffset;
+		float drawX = xp;
+		float drawY = yp;
 		float w = sprite.width;
 		float h = sprite.height;
 		float a = mob.alpha / 255f;
@@ -194,8 +194,8 @@ public class RenderManager {
 	}
 
 	public void renderColor(int xp, int yp, SpriteManager sprite, int flip, int inputColor) {
-		float drawX = xp - xOffset;
-		float drawY = yp - yOffset;
+		float drawX = xp;
+		float drawY = yp;
 
 		float r = ((inputColor >> 16) & 0xFF) / 255f;
 		float g = ((inputColor >> 8) & 0xFF) / 255f;
@@ -230,8 +230,8 @@ public class RenderManager {
 	}
 
 	public void renderFont(int xp, int yp, SpriteManager sprite, float scale, int color, int flip) {
-		float drawX = xp - xOffset;
-		float drawY = yp - yOffset;
+		float drawX = xp;
+		float drawY = yp;
 		float w = sprite.width * scale;
 		float h = sprite.height * scale;
 
@@ -261,8 +261,8 @@ public class RenderManager {
 	}
 
 	public void debug(int xp, int yp, int w, int h, int color, int perimeter) {
-		float drawX = xp - xOffset;
-		float drawY = yp - yOffset;
+		float drawX = xp;
+		float drawY = yp;
 		float r = ((color >> 16) & 0xFF) / 255f;
 		float g = ((color >> 8) & 0xFF) / 255f;
 		float b = (color & 0xFF) / 255f;

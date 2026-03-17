@@ -11,9 +11,11 @@ uniform mat4 uProjection;
 uniform vec4 rColor;
 uniform float uWind;
 
+uniform vec2 uCamera;
+
 void main()
 {
-    vec2 pos = aPos;
+	vec2 pos = vec2(aPos.x - uCamera.x, aPos.y - uCamera.y);
     // Shift top vertices by wind — top has texCoord.y=0, bottom has texCoord.y=1
     // So (1.0 - aTexCoord.y) is 1 at top, 0 at bottom — top leans with wind
     pos.x += (uWind*2) * (1.0 - aTexCoord.y);

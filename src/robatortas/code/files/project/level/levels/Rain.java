@@ -9,6 +9,7 @@ import robatortas.code.files.core.render.gl.ShaderProgram;
 import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.entities.Particle;
 import robatortas.code.files.project.level.Level;
+import robatortas.code.files.project.settings.Globals;
 
 public class Rain {
 
@@ -55,12 +56,14 @@ public class Rain {
 		GameManager.rainShader.setUniform1f("uZ0", zz0);
 		GameManager.rainShader.setUniform2f("uResolution", screen.width, screen.height);
 
+		GameManager.rainShader.setUniform2f("uCamera", (float)Math.floor(GameManager.camera.getX() - Globals.WIDTH / 2f), (float)Math.floor(GameManager.camera.getY() - Globals.HEIGHT / 2f));
+
 		spawnAccumulator += GameManager.renderDt;
 
 		while (spawnAccumulator >= spawnRate) {
 			for(int i = 0; i < this.density; i++) {
 				random = new Random();
-				Particle particle = new Particle(screen.xOffset+(float)random.nextInt(screen.width+124), screen.yOffset+screen.height/3 + (float)random.nextInt(screen.height) - 32);
+				Particle particle = new Particle((float)random.nextInt(screen.width+124), screen.yOffset+screen.height/3 + (float)random.nextInt(screen.height) - 32);
 				particle.level = level.levelManager;
 				particle.setColor(rainColor);
 				particle.height = 8;

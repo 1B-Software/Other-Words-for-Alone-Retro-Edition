@@ -12,16 +12,17 @@ out vec2 vWorldPos;
 uniform mat4 uProjection;
 uniform vec2 uResidue;
 
-uniform float xScroll;
-uniform float yScroll;
+uniform vec2 uCamera;
 
 void main() {
     vTexCoord = aTexCoord;
     vColor = aColor;
 
+    vec2 cameraPos = vec2(aPos.x-uCamera.x, aPos.y-uCamera.y);
+
 //    float xResidue = xScroll - floor(xScroll);
 //    float yResidue = yScroll - floor(yScroll);
 //    vWorldPos -= vec2(xResidue, yResidue);
 
-    gl_Position = uProjection * vec4(aPos.x, aPos.y, 0.0, 1.0);
+    gl_Position = uProjection * vec4(cameraPos, 0.0, 1.0);
 }
