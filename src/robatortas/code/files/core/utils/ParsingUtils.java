@@ -1,16 +1,19 @@
 package robatortas.code.files.core.utils;
 
+import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
 
 // Using Gson (not goon) to parse !
-//{} = Object
+// {} = Object
 // "key" = key
 // Values can be strings, ints, floats, even arrays.
 // : = separates from the key
@@ -19,7 +22,7 @@ import com.google.gson.stream.JsonReader;
 // Cuz I hate docs.
 public class ParsingUtils {
 
-	static Gson gson = new Gson();
+	public static Gson gson = new Gson();
 	
 	// Gets the file to read in basically.
 	// The JsonReader class is heavily used to findNext and just querying tokens and objects in general.
@@ -33,14 +36,20 @@ public class ParsingUtils {
 		return result;
 	}
 	
-	public JsonObject createObject() {
+	public JsonObject createObject(String path) {
 		JsonObject object = new JsonObject();
+		try (FileReader reader = new FileReader(path)) {
+		    object = JsonParser.parseReader(reader).getAsJsonObject();
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
 		return object;
 	}
 	
 	// Generic that returns the correct data type according to the 'type' parameter
 	public <T> T getValue(String key, Class<T> type, JsonObject object) {
-		JsonObject element = (JsonObject) object.get(key);
+		JsonElement element = object.get(key);
+		if (element == null || element.isJsonNull()) throw new IllegalArgumentException("Key '" + key + "' not found!");
 		if 		(type == String.class)	return type.cast(element.getAsString());
 	    else if (type == Integer.class) return type.cast(element.getAsInt());
 	    else if (type == Boolean.class) return type.cast(element.getAsBoolean());
@@ -48,6 +57,7 @@ public class ParsingUtils {
 		throw new IllegalArgumentException("Unsoported json type !" + type);
 	}
 	
+	// TODO: FINISH THIS SHIT !
 	public <T> void setValue(String key, Class<T> value) {
 		if 		(value == String.class)		;
 		else if (value == Integer.class)	; 

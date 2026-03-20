@@ -2,7 +2,7 @@ package robatortas.code.files.project;
 
 import robatortas.code.files.core.console.Console;
 import robatortas.code.files.core.sound.SoundEngine;
-import robatortas.code.files.project.menu.main_menu.MainMenu;
+import robatortas.code.files.project.save_system.FileSystem;
 
 public class MainApp {
 	
@@ -12,6 +12,10 @@ public class MainApp {
 	public static void main(String[] args) {
 		if(GameManager.DEV_MODE) Console.log("Starting: Other Words for Alone RETRO EDITION in Developer Mode" + "\n");
 		else Console.log("Starting: Other Words for Alone RETRO EDITION in Client Mode" + "\n");
+		
+		FileSystem file = new FileSystem("res/test.json");
+//		fs.createFile("test", "res/");
+		file.changeKeyValue("name", "NoFall");
 		
 		SoundEngine.enter.play();
 		
