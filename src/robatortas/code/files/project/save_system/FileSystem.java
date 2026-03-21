@@ -38,6 +38,8 @@ public class FileSystem {
 	public String filePath, fileName;
 	private File file;
 	
+	private JsonObject object;
+	
 	private ParsingUtils parsingUtils = new ParsingUtils();
 	
 	public FileSystem(String filePath) {
@@ -45,6 +47,17 @@ public class FileSystem {
 		Path pPath = Paths.get(filePath);
 		this.fileName = Paths.get(filePath).getFileName().toString();
 		this.file = new File(Paths.get(filePath).toString());
+		
+		object = parsingUtils.createObject(file.getPath());
+		
+		if (!exists()) {
+            Console.logError("File not found: " + file.getPath());
+            return;
+        }        
+        if (object == null) {
+            Console.logError("Failed to parse json or its an empty file.");
+            return;
+        }
 	}
 	
 	public void createFile(String fileName, String path) {
@@ -93,39 +106,26 @@ public class FileSystem {
 	}
 	
 	// Overwrites the selected file with the contents of the string parameter
-	public void overWriteFile(String contents) {
-		Path pPath = Paths.get(file.getPath());
-		if(Files.exists(pPath)) {
-			try {
-				BufferedReader reader = new BufferedReader(new FileReader(file));
-				String line;
-				while((line = reader.readLine()) != null) {
-					
-				}
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+//	public void overWriteFile(String contents) {
+//		Path pPath = Paths.get(file.getPath());
+//		if(Files.exists(pPath)) {
+//			try {
+//				BufferedReader reader = new BufferedReader(new FileReader(file));
+//				String line;
+//				while((line = reader.readLine()) != null) {
+//					
+//				}
+//			} catch (FileNotFoundException e) {
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 	
 	
 	// Need to make this either generic, or create a function for every type
 	public void changeKeyValue(String key, Object value) {
-        if (!exists()) {
-            Console.logError("File not found: " + file.getPath());
-            return;
-        }
-
-        // Loads the current JSON from the file
-        JsonObject object = parsingUtils.createObject(file.getPath());
-        
-        if (object == null) {
-            Console.logError("Failed to parse json or its an empty file.");
-            return;
-        }
-        
         // For all instances of
         if (value instanceof String) {
             object.addProperty(key, (String) value);
@@ -142,4 +142,25 @@ public class FileSystem {
             Console.logError("Error accessing key '" + key + "': " + e.getMessage());
         }
     }
+	
+	// This function reads the key value and applies it to the desired game variable
+	// To set the positions of the player from the file, etc.
+	public <T> Object  getKeyValue(String key, Object varToBeChanged) {
+		Object obj = null;
+		try (FileReader reader = new FileReader(file)) {
+        	if (varToBeChanged instanceof String) {
+        		obj = object.get(key).getAsString();
+            } else if (varToBeChanged instanceof Integer) {
+            	obj = object.get(key).getAsInt();
+            } else if(varToBeChanged instanceof Double) {
+            	obj = object.get(key).getAsDouble();
+            } else if (varToBeChanged instanceof Boolean) {
+            	obj = object.get(key).getAsBoolean();
+            }
+        	return obj;
+        } catch (Exception e) {
+            Console.logError("Error accessing key '" + key + "': " + e.getMessage());
+        }
+		return obj;
+	}
 }
