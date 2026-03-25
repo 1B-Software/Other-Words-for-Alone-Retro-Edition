@@ -25,4 +25,8 @@ public class BedTile extends TileManager {
 	public boolean solid(LevelManager level, int x, int y, EntityManager e) {
 		return true;
 	}
+	
+	public boolean isInteractable() {
+		return true;
+	}
 }

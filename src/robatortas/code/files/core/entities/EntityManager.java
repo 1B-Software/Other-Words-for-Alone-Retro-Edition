@@ -4,10 +4,11 @@ import java.util.List;
 import java.util.Random;
 
 import robatortas.code.files.core.level.LevelManager;
+import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
+import robatortas.code.files.project.archive.tileArchive.TileArchive;
 import robatortas.code.files.project.entities.ItemEntity;
-import robatortas.code.files.project.settings.Globals;
 
 public class EntityManager {
 	
@@ -23,9 +24,7 @@ public class EntityManager {
 	
 	protected ItemEntity iE;
 	
-	public EntityManager() {
-		
-	}
+	public EntityManager() {}
 	
 	public EntityManager(float x, float y, SpriteManager sprite) {
 		this.x = x;
@@ -33,13 +32,9 @@ public class EntityManager {
 		this.sprite = sprite;
 	}
 	
-	public void render(RenderManager screen) {
-		
-	}
+	public void render(RenderManager screen) {}
 	
-	public void update() {
-		
-	}
+	public void update() {}
 	
 	public void move(float xa, float ya) {
 		x+=xa;
@@ -57,13 +52,23 @@ public class EntityManager {
 		y+=ya;
 	}
 	
-	public void touched(EntityManager entity) {
-		
+	public void touched(EntityManager entity) {}
+	
+	public boolean canInteractWith(TileManager tile) {
+		if(tile.isInteractable()) {
+			List<TileManager> tn = level.getNeighborTiles((int)x, (int)y);
+//			System.out.println(tn);
+			EntityManager e = this;
+			if(tn == TileArchive.bed) System.out.println("BED");
+//			for(int i = 0; i < tn.size(); i++) {
+//				System.out.println(tn.get(i));
+//				if(tile == tn.get(i)) return true;
+//			}
+		}
+		return false;
 	}
 	
-	public void hurt(Mob mob, int damage, int attackDir) {
-		
-	}
+	public void hurt(Mob mob, int damage, int attackDir) {}
 	
 	public boolean isRemoved() {
 		return removed;
@@ -91,9 +96,7 @@ public class EntityManager {
 		return this.sprite;
 	}
 	
-	public void takeItem(EntityManager entity) {
-		
-	}
+	public void takeItem(EntityManager entity) {}
 	
 	public ItemEntity getItem(ItemEntity iE) {
 		return this.iE = iE;

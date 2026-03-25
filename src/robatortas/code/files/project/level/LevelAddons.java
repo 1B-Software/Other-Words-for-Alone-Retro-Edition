@@ -1,11 +1,12 @@
 package robatortas.code.files.project.level;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.level.LevelManager;
+import robatortas.code.files.core.level.tiles.TileManager;
+import robatortas.code.files.project.archive.tileArchive.TileArchive;
 
 public class LevelAddons {
 
@@ -34,5 +35,24 @@ public class LevelAddons {
 			}
 		}
 		return result;
+	}
+	
+	// Gets the neighbouring tiles in relation to the player coordinates.
+	public List<TileManager> getNeighborTiles(float px, float py) {
+	    List<TileManager> result = new ArrayList<>();
+	    int tx = (int)px >> 4;
+	    int ty = (int)py >> 4;
+		
+		switch(LevelManager.player.dir) {
+			case 0: result.add(level.getFront(tx, ty - 1));
+			break;
+			case 1: result.add(level.getFront(tx + 1, ty));
+			break;
+			case 2: result.add(level.getFront(tx - 1, ty));
+			break;
+			case 3: result.add(level.getFront(tx, ty + 1));
+			break;
+		}
+	    return result;
 	}
 }

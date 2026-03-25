@@ -31,4 +31,8 @@ public class DirtTile extends TileManager {
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
 		screen.renderTile(x << 4, y << 4, 1, this);
 	}
+	
+	public boolean isInteractable() {
+		return true;
+	}
 }

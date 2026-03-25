@@ -91,11 +91,21 @@ public class TileManager {
 	public boolean solid(LevelManager level, int xt, int yt, EntityManager e) {
 		return false;
 	}
+	
+	protected int xp = 8;
+	protected int yp = 8;
+	public boolean intersects(float x0, float y0, float x1, float y1) {
+		return (x + xp < x0 || y + yp < y0 || x - xp > x1 || y - yp > y1);
+	}
 
 	public boolean solidAt(LevelManager level, int xt, int yt, float px, float py, EntityManager e) {
 		if(!solid(level, xt, yt, e)) return false;
 		float left = (xt << 4) + colX;
 		float top = (yt << 4) + colY;
 		return px >= left && px < left + colW && py >= top && py < top + colH;
+	}
+
+	public boolean isInteractable() {
+		return false;
 	}
 }

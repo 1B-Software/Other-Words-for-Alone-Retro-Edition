@@ -279,6 +279,10 @@ public class LevelManager {
 		return addons.getEntities(f, g, h, i);
 	}
 	
+	public List<TileManager> getNeighborTiles(int px, int py) {
+		return addons.getNeighborTiles(px, py);
+	}
+	
 	public void insertTile(int x, int y, int color) {
 		if(x < 0 || y < 0 || x >= width || y >= height) return;
 		tiles[x+y*width] = color;

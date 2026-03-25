@@ -5,26 +5,27 @@ import java.util.List;
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.input.InputManager;
 import robatortas.code.files.core.level.LevelManager;
+import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.lighting.LightSource;
 import robatortas.code.files.core.render.Animate;
 import robatortas.code.files.core.render.RenderManager;
-import robatortas.code.files.core.render.RenderMethod;
 import robatortas.code.files.core.render.SpriteManager;
 import robatortas.code.files.core.sound.SoundEngine;
 import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.archive.Animations;
 import robatortas.code.files.project.archive.SheetArchive;
 import robatortas.code.files.project.archive.SpriteArchive;
-import robatortas.code.files.project.archive.tileArchive.Interior.DoorTile;
 import robatortas.code.files.project.archive.tileArchive.TileArchive;
+import robatortas.code.files.project.archive.tileArchive.Interior.BedTile;
+import robatortas.code.files.project.archive.tileArchive.Interior.DoorTile;
 import robatortas.code.files.project.entities.Particle;
 import robatortas.code.files.project.entities.mobs.MobAddons;
 import robatortas.code.files.project.inventory.Inventory;
-import robatortas.code.files.project.settings.Globals;
+import robatortas.code.files.project.save_system.FileSystem;
 
 public class Player extends MobAddons {
 	
-	public String name = "Robatortas";
+	public String name = "";
 	
 	public InputManager input;
 	
@@ -41,10 +42,14 @@ public class Player extends MobAddons {
 	
 	public int stamina = 10;
 	
+	FileSystem file;
+	
 	public Player(float x, float y, InputManager input) {
 		this.x = x;
 		this.y = y;
 		this.input = input;
+		file = new FileSystem("res/save/player.json");
+		this.name = (String) file.getKeyValue("name", name);
 		this.sprite = new SpriteManager(16, 0, 0, SheetArchive.player);
 		super.dir = 2;
 		this.inventory = new Inventory();
@@ -98,6 +103,16 @@ public class Player extends MobAddons {
 			SoundEngine.hard_step.play();
 		}
 		
+//		if(canInteractWith(TileArchive.dirtTile)) {
+//			System.out.println("TOUCHING BED");
+//		}
+		
+		for (TileManager t : level.getNeighborTiles((int)x, (int)y)) {
+		    if (t instanceof BedTile) {
+		        System.out.println("Yell O!");
+		    }
+		}
+		
 		// Reset Animations (AVOIDS CRASHING!)
 		animSprite.resetAnimation(animSprite, walking);
 		
@@ -106,6 +121,13 @@ public class Player extends MobAddons {
 			walking = true;
 		} else walking = false;
 	}
+	
+	// For bed implementation
+	// Returns true if its neigbouring a tile.
+//	public boolean canInteractWith(TileManager tile) {
+//		if(intersects(x, y, x+16, y+16)) return true;
+//		return false;
+//	}
 	
 	private void controls() {
 		// Controls
@@ -273,6 +295,7 @@ public class Player extends MobAddons {
 		float ys = y - (float) Math.floor(x);
 		screen.renderMob((int)x - renderAxysConstX, (int)y - renderAxysConstY, this, sprite, 0);
 		afterLayer(screen);
+//		screen.renderSprite(x, y, SpriteArchive.bed, 1, 1);
 	}
 	
 	private int punchY = 0;

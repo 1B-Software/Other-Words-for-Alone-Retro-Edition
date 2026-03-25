@@ -13,16 +13,12 @@ public class MainApp {
 		if(GameManager.DEV_MODE) Console.log("Starting: Other Words for Alone RETRO EDITION in Developer Mode" + "\n");
 		else Console.log("Starting: Other Words for Alone RETRO EDITION in Client Mode" + "\n");
 		
-		FileSystem file = new FileSystem("res/save/player.json");
-		file.changeKeyValue("name", "Juno");
-		String name = "";
-		name = (String) file.getKeyValue("name", name);
-		System.out.println("NAME: " + name);
-		
 		SoundEngine.enter.play();
 		
 		game = new GameManager();
 		game.start();
+
+		System.out.println("Current Player: " + game.level.player.name);
 //		discordInit();
 		new Console(game).start();
 	}

@@ -145,7 +145,7 @@ public class FileSystem {
 	
 	// This function reads the key value and applies it to the desired game variable
 	// To set the positions of the player from the file, etc.
-	public <T> Object  getKeyValue(String key, Object varToBeChanged) {
+	public <T> Object getKeyValue(String key, Object varToBeChanged) {
 		Object obj = null;
 		try (FileReader reader = new FileReader(file)) {
         	if (varToBeChanged instanceof String) {
