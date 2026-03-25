@@ -48,9 +48,9 @@ public class LevelAddons {
 			break;
 			case 1: result.add(level.getFront(tx + 1, ty));
 			break;
-			case 2: result.add(level.getFront(tx - 1, ty));
+			case 2: result.add(level.getFront(tx, ty + 1));
 			break;
-			case 3: result.add(level.getFront(tx, ty + 1));
+			case 3: result.add(level.getFront(tx - 1, ty));
 			break;
 		}
 	    return result;

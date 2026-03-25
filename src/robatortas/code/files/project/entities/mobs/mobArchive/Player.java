@@ -18,6 +18,7 @@ import robatortas.code.files.project.archive.SpriteArchive;
 import robatortas.code.files.project.archive.tileArchive.TileArchive;
 import robatortas.code.files.project.archive.tileArchive.Interior.BedTile;
 import robatortas.code.files.project.archive.tileArchive.Interior.DoorTile;
+import robatortas.code.files.project.archive.tileArchive.Interior.NightStand;
 import robatortas.code.files.project.entities.Particle;
 import robatortas.code.files.project.entities.mobs.MobAddons;
 import robatortas.code.files.project.inventory.Inventory;
@@ -59,6 +60,9 @@ public class Player extends MobAddons {
 	private static float velX = 1;
 	private static float velY = 1;	
 	public float xa, ya;
+	
+	// If the player is interacting with something
+	private boolean interacts;
 	
 	public int tickTime;
 	int doorTime = 0;
@@ -111,6 +115,14 @@ public class Player extends MobAddons {
 		    if (t instanceof BedTile) {
 		        System.out.println("Yell O!");
 		    }
+		    if(t instanceof NightStand) {
+		    	// TODO: if interacts with, then itll toggle the light off.
+		    	if(t.isInteractable() && interacts) {
+		    		
+		    		if(((NightStand) t).lightIntensity == 1) ((NightStand) t).lightIntensity = 0;
+		    		else ((NightStand) t).lightIntensity = 1;
+		    	}
+		    }
 		}
 		
 		// Reset Animations (AVOIDS CRASHING!)
@@ -135,6 +147,7 @@ public class Player extends MobAddons {
 		if(input.down) ya += velY;
 		if(input.left) xa -= velX;
 		if(input.right) xa += velX;
+		interacts = input.toggle(input.f, false);
 		
 		if(input.f || input.space) {
 			if(punch == false && stamina > 0) {

@@ -54,19 +54,14 @@ public class EntityManager {
 	
 	public void touched(EntityManager entity) {}
 	
-	public boolean canInteractWith(TileManager tile) {
-		if(tile.isInteractable()) {
-			List<TileManager> tn = level.getNeighborTiles((int)x, (int)y);
-//			System.out.println(tn);
-			EntityManager e = this;
-			if(tn == TileArchive.bed) System.out.println("BED");
-//			for(int i = 0; i < tn.size(); i++) {
-//				System.out.println(tn.get(i));
-//				if(tile == tn.get(i)) return true;
-//			}
-		}
-		return false;
-	}
+//	public boolean canInteractWith(TileManager tile) {
+//		if(tile.isInteractable()) {
+//			List<TileManager> tn = level.getNeighborTiles((int)x, (int)y);
+//			EntityManager e = this;
+//			if(tn == TileArchive.bed) System.out.println("BED");
+//		}
+//		return false;
+//	}
 	
 	public void hurt(Mob mob, int damage, int attackDir) {}
 	

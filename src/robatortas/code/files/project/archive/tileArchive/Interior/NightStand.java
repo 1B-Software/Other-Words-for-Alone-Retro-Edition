@@ -9,6 +9,8 @@ import robatortas.code.files.core.render.SpriteManager;
 
 public class NightStand extends TileManager {
 
+	public float lightIntensity = 1;
+	
 	public NightStand(SpriteManager sprite, int id) {
 		super(sprite, id);
 	}
@@ -16,10 +18,14 @@ public class NightStand extends TileManager {
 	public void render(int x, int y, LevelManager level, RenderManager screen) {
 		screen.renderTile(x << 4, y << 4, 1, this);
 		LightSource light = new LightSource(screen);
-		light.add((x << 4) + 8, (y << 4) +15, 40, 1, 0xFFFFFFFF, 2f);
+		light.add((x << 4) + 8, (y << 4) +15, 40, lightIntensity, 0xFFFFFFFF, 2f);
 	}
 	
 	public boolean solid(LevelManager level, int x, int y, EntityManager e) {
+		return true;
+	}
+	
+	public boolean isInteractable() {
 		return true;
 	}
 
