@@ -124,4 +124,5 @@ public class SpriteArchive {
 	public static final int col_water = 0xff000080;
 	public static final int col_room_walls = 0xFFE0D08B;
 	public static final int col_door = 0xFFFF0033;
+	public static final int col_linked = 0xFFFD96FF;
 }

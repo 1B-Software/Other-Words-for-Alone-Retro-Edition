@@ -2,6 +2,7 @@ package robatortas.code.files.project.archive.tileArchive.Interior;
 
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.level.LevelManager;
+import robatortas.code.files.core.level.tiles.CollisionShape;
 import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.SpriteManager;
@@ -18,12 +19,20 @@ public class BedTile extends TileManager {
 		screen.renderSprite(x << 4, ((y+1) << 4), SpriteArchive.bed2, 1, 0);
 	}
 	
-	public boolean inter() {
+	public boolean solid(LevelManager level, int x, int y, EntityManager e) {
 		return true;
 	}
 	
-	public boolean solid(LevelManager level, int x, int y, EntityManager e) {
-		return true;
+	public boolean solidAt(LevelManager level, int xt, int yt, float px, float py, EntityManager e) {
+		if(!solid(level, xt, yt, e)) return false;
+
+		if(!solid(level, xt, yt, e)) return false;
+
+	    CollisionShape s = new CollisionShape(0, 0, 16, 32);
+
+	    float left = (xt << 4) + s.x;
+	    float top  = (yt << 4) + s.y;
+		return px >= left && px < left + s.w && py >= top && py < top + s.h;
 	}
 	
 	public boolean isInteractable() {

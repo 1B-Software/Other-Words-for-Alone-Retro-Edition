@@ -113,7 +113,7 @@ public class Player extends MobAddons {
 		
 		for (TileManager t : level.getNeighborTiles((int)x, (int)y)) {
 		    if (t instanceof BedTile) {
-		        System.out.println("Yell O!");
+		    	
 		    }
 		    if(t instanceof NightStand) {
 		    	// TODO: if interacts with, then itll toggle the light off.
