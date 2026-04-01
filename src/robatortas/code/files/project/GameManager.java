@@ -283,17 +283,13 @@ public class GameManager implements Runnable {
 		}
 	}
 
-	/** <NEWLINE>
+	/**
 	 * Main render function. Renders scene, applies lightmap, then overlays GUI.
-	 * <br>
+	 *
 	 * Pipeline:
-	 * 	 <br>
 	 *   1. Render scene (level + entities) — lights are queued during this pass
-	 *   <br>
 	 *   2. Render queued lights into lightmap FBO
-	 *   <br>
 	 *   3. Multiply lightmap onto the scene (GL_DST_COLOR blend)
-	 *   <br>
 	 *   4. Render GUI + fade overlay on top (unlit)
 	 */
 	public void render() {		
@@ -303,6 +299,7 @@ public class GameManager implements Runnable {
 //		camera.setCoords(level.player.x, level.player.y);
 		
 		glClearColor(0, 0, 0, 1);
+		glClear(GL_COLOR_BUFFER_BIT);
 
 		// === PASS 1: Scene ===
 		spriteBatch.begin();
@@ -418,8 +415,6 @@ public class GameManager implements Runnable {
 //		glBindTexture(GL_TEXTURE_2D, 0);
 		
 		window.swapBuffers();
-
-		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
 	public void generalPurposeKeys() {
