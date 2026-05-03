@@ -5,18 +5,25 @@ import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
 
-// This just allows for tiles that are bigger than 16x16 to be able to have extra collision and interactability outside
-// the 16x space. One such case is the bed tile (16x32)
 public class LinkedTile extends TileManager {
 
     public TileManager parent;
+    public boolean visible;
 
-    public LinkedTile(TileManager parent, int id) {
-        super(null, id);
+    public LinkedTile(TileManager parent, boolean visible) {
+        super(null);
         this.parent = parent;
+        this.visible = visible;
     }
 
-    public void render(int x, int y, LevelManager level, RenderManager screen) {}
+    // Invisible by default
+    public LinkedTile(TileManager parent) {
+        this(parent, false);
+    }
+
+    public void render(int x, int y, LevelManager level, RenderManager screen) {
+        if (visible) parent.render(x, y, level, screen);
+    }
 
     public boolean solid(LevelManager level, int x, int y, EntityManager e) {
         return parent.solid(level, x, y, e);

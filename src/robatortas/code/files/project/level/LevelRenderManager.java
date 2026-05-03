@@ -88,7 +88,7 @@ public class LevelRenderManager {
 				level.getPost(x, y).render(x, y, level, screen);
 			}
 		}
-
+		
 		// Collect all front tiles in the viewport
 		List<FrontTileEntry> frontTiles = new ArrayList<FrontTileEntry>();
 		for(int y = y0; y < y1; y++) {
@@ -109,6 +109,7 @@ public class LevelRenderManager {
 				}
 			}
 		}
+		
 
 		// Collect all entities in the viewport (each entity lives in exactly one tile cell)
 		List<EntityManager> allEntities = new ArrayList<EntityManager>();

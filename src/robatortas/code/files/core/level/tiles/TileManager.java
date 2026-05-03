@@ -142,4 +142,8 @@ public class TileManager {
 	public boolean isInteractable() {
 		return false;
 	}
+
+	public List<LinkedTileDescriptor> getLinkedOffsets() {
+		return List.of();
+	}
 }

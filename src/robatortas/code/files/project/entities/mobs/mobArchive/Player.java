@@ -4,6 +4,8 @@ import java.util.List;
 
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.input.InputManager;
+import robatortas.code.files.core.interaction.DialogueBox;
+import robatortas.code.files.core.interaction.DialogueSystem;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.lighting.LightSource;
@@ -43,6 +45,10 @@ public class Player extends MobAddons {
 	
 	public int stamina = 10;
 	
+
+	// If the player is interacting with something
+	private boolean interacts = false;
+	
 	FileSystem file;
 	
 	public Player(float x, float y, InputManager input) {
@@ -61,11 +67,10 @@ public class Player extends MobAddons {
 	private static float velY = 1;	
 	public float xa, ya;
 	
-	// If the player is interacting with something
-	private boolean interacts;
-	
 	public int tickTime;
 	int doorTime = 0;
+	
+	public boolean isInInteractibleRange = false;
 	
 	float speed = 0.5f;
 	
@@ -75,6 +80,7 @@ public class Player extends MobAddons {
 		this.ya = 0;
 		
 		tickTime++;
+		this.isInInteractibleRange = false;
 		
 
 		if(!isSwimming && speed != 0) speed = 0.5f;
@@ -111,6 +117,7 @@ public class Player extends MobAddons {
 //			System.out.println("TOUCHING BED");
 //		}
 		
+		// TILE INTERACTION
 		for (TileManager t : level.getNeighborTiles((int)x, (int)y)) {
 		    if (t instanceof BedTile) {
 		    	
@@ -121,6 +128,17 @@ public class Player extends MobAddons {
 		    		
 		    		if(((NightStand) t).lightIntensity == 1) ((NightStand) t).lightIntensity = 0;
 		    		else ((NightStand) t).lightIntensity = 1;
+		    	}
+		    }
+		}
+		
+		// ENTITY INTERACTION
+		for (EntityManager e : level.getEntities(x-1, y-1, x+1, y+1)) {
+		    if(e instanceof NPC && ((NPC)e).isInteractible) {
+		    	this.isInInteractibleRange = true;
+		    	if(GameManager.dialogueSystem.inDialogue) {
+		    		new DialogueBox("Hey !", ((NPC) e).getName(), GameManager.dialogueSystem);
+		    		System.out.println("Interacts");
 		    	}
 		    }
 		}
@@ -147,15 +165,15 @@ public class Player extends MobAddons {
 		if(input.down) ya += velY;
 		if(input.left) xa -= velX;
 		if(input.right) xa += velX;
-		interacts = input.toggle(input.f, false);
 		
-		if(input.f || input.space) {
+		if(input.space) {
 			if(punch == false && stamina > 0) {
 				punch = true;
 				attack();
 			}
 		} else punch = false;
 		if(attackTime > 0) attackTime--;
+		
 		
 		if(GameManager.DEV_MODE) {
 			if(input.shift) {
@@ -247,8 +265,8 @@ public class Player extends MobAddons {
 		// Pixel coordinates instead of world coordinates.
 //		float px = (x - RenderMethod.xScroll) * Globals.RENDER_SCALE;
 //		float py = (y - RenderMethod.yScroll) * Globals.RENDER_SCALE;
-//		light = new LightSource(screen);
-//		light.add(x-2, y-8, 20, 0.5f, 0xFFFFFFFF, 3f);
+		light = new LightSource(screen);
+		light.add(x-2, y-8, 20, 0.5f, 0xFFFFFFFF, 3f);
 		////////////
 		// GROUND //
 		////////////

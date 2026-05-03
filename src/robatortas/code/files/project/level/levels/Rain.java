@@ -21,7 +21,7 @@ public class Rain {
 	
 	int density = 0;
 	
-	public int rainColor = 0xFF9595ED;
+	public int rainColor = 0xBB9595ED;
 	
 	float r,g,b,a;
 	

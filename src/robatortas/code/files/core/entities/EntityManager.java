@@ -32,6 +32,11 @@ public class EntityManager {
 		this.sprite = sprite;
 	}
 	
+	public EntityManager(String name, float x, float y) {
+		this.x = x;
+		this.y = y;
+	}
+	
 	public void render(RenderManager screen) {}
 	
 	public void update() {}

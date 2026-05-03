@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,13 +13,14 @@ import robatortas.code.files.core.console.Console;
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.input.InputManager;
 import robatortas.code.files.core.input.MouseManager;
+import robatortas.code.files.core.level.tiles.LinkedTileDescriptor;
 import robatortas.code.files.core.level.tiles.TileManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.utils.CrashHandler;
 import robatortas.code.files.core.utils.CrashHandler.ErrorType;
 import robatortas.code.files.project.GameManager;
-import robatortas.code.files.project.GameManager.PLAYSTATE;
 import robatortas.code.files.project.archive.SpriteArchive;
+import robatortas.code.files.project.archive.tileArchive.LinkedTile;
 import robatortas.code.files.project.archive.tileArchive.TileArchive;
 import robatortas.code.files.project.archive.tileArchive.Interior.DoorTile;
 import robatortas.code.files.project.archive.tileArchive.Nature.WaterTile;
@@ -40,6 +42,9 @@ public class LevelManager {
 	public int[] postTiles;
 	public int[] doorTiles;
 	public int[] tileData; // per-cell state (example: damage taken)
+	public LinkedList<TileManager> ALLTILES = new LinkedList<>();
+
+	private HashMap<Integer, LinkedTile> linkedTileMap = new HashMap<>();
 	
 	public Level currentLevel;
 	
@@ -49,7 +54,9 @@ public class LevelManager {
 	
 	public List<TileManager> allTiles = new LinkedList<TileManager>();
 	
-	public static LevelManager level = new GameLevel();
+	public static GameManager game;
+
+	public static LevelManager level = new GameLevel(game);
 	
 	// Classes
 	public LevelAddons addons;
@@ -57,10 +64,12 @@ public class LevelManager {
 	// Mobs
 	public static Player player;
 	
-	public LevelManager() {
+	public LevelManager(GameManager game) {
+		LevelManager.game = game;
 		load(Level.currentLevelName);
 		Level cLevel = currentLevel.levelSelector.getCurrentLevel();
 		addons = new LevelAddons(this);
+		spawnLinkedTiles();
 		for(int y = 0; y < height; y++) {
 			for(int x = 0; x < width; x++) {
 				allTiles.add(getLevel(x,y));
@@ -68,6 +77,40 @@ public class LevelManager {
 				allTiles.add(getFront(x,y));
 			}
 		}
+	}
+
+	private void spawnLinkedTiles() {
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				TileManager tile = getFrontRaw(x, y);
+				List<LinkedTileDescriptor> offsets = tile.getLinkedOffsets();
+				for(LinkedTileDescriptor desc : offsets) {
+					int tx = x + desc.dx;
+					int ty = y + desc.dy;
+					if(tx < 0 || ty < 0 || tx >= width || ty >= height) continue;
+					int key = tx + ty * width;
+					// Don't overwrite an existing tile or a previously placed linked tile
+					if(linkedTileMap.containsKey(key)) continue;
+					if(getFrontRaw(tx, ty) != TileArchive.voidTile) continue;
+					linkedTileMap.put(key, new LinkedTile(tile, desc.visible));
+				}
+			}
+		}
+	}
+
+	// Raw getFront without the linkedTileMap check — used internally during spawn
+	private TileManager getFrontRaw(int x, int y) {
+		if(x < 0 || y < 0 || x >= width || y >= height) return TileArchive.voidTile;
+		if(postTiles[x + y * width] == SpriteArchive.col_placeHolder) return TileArchive.placeHolderTile;
+		if(postTiles[x + y * width] == SpriteArchive.col_oakTree) return TileArchive.tree;
+		if(postTiles[x + y * width] == SpriteArchive.col_bed) return TileArchive.bed;
+		if(postTiles[x + y * width] == SpriteArchive.col_tv) return TileArchive.TvTile;
+		if(postTiles[x + y * width] == SpriteArchive.col_room_walls) return TileArchive.roomWall;
+		if(postTiles[x + y * width] == SpriteArchive.col_nightStand) return TileArchive.nightStand;
+		if(postTiles[x + y * width] == SpriteArchive.col_flowerRed) return TileArchive.flowerRed;
+		if(postTiles[x + y * width] == SpriteArchive.col_yellowDahlia) return TileArchive.yellowDahlia;
+		if(postTiles[x + y * width] == SpriteArchive.col_bush) return TileArchive.bushTile;
+		return TileArchive.voidTile;
 	}
 	
 	// Folder name of the level (e.g. player_room)
@@ -89,6 +132,14 @@ public class LevelManager {
 		}
 		
 		loadLevel();
+		
+//		for(int y = 0; y < level.height; y++ ) {
+//			for(int x = 0; x < level.width; x++) {
+//				ALLTILES.add(getLevel(x,y));
+//				ALLTILES.add(getPost(x,y));
+//				ALLTILES.add(getFront(x,y));
+//			}
+//		}
 
 		if (!Globals.levelDoorsTxt.isEmpty()) {
 			doorParser("res" + Globals.levelDoorsTxt);
@@ -288,6 +339,11 @@ public class LevelManager {
 		tiles[x+y*width] = color;
 	}
 	
+	public void insertTile(int x, int y, int color, int[] layer) {
+		if(x < 0 || y < 0 || x >= width || y >= height) return;
+		layer[x+y*width] = color;
+	}
+	
 	/**<NEWLINE>
 	 * <b>getLevel function on LevelManager class</b>
 	 * <br><br>
@@ -361,16 +417,9 @@ public class LevelManager {
 	 */
 	public TileManager getFront(int x, int y) {
 		if(x < 0 || y < 0 || x >= width || y >= height) return TileArchive.voidTile;
-		if(postTiles[x + y * width] == SpriteArchive.col_placeHolder) return TileArchive.placeHolderTile;
-		if(postTiles[x + y * width] == SpriteArchive.col_oakTree) return TileArchive.tree;
-		if(postTiles[x + y * width] == SpriteArchive.col_bed) return TileArchive.bed;
-		if(postTiles[x + y * width] == SpriteArchive.col_tv) return TileArchive.TvTile;
-		if(postTiles[x + y * width] == SpriteArchive.col_room_walls) return TileArchive.roomWall;
-		if(postTiles[x + y * width] == SpriteArchive.col_nightStand) return TileArchive.nightStand;
-		if(postTiles[x + y * width] == SpriteArchive.col_flowerRed) return TileArchive.flowerRed;
-		if(postTiles[x + y * width] == SpriteArchive.col_yellowDahlia) return TileArchive.yellowDahlia;
-		if(postTiles[x + y * width] == SpriteArchive.col_bush) return TileArchive.bushTile;
-		return TileArchive.voidTile;
+		LinkedTile linked = linkedTileMap.get(x + y * width);
+		if(linked != null) return linked;
+		return getFrontRaw(x, y);
 	}
 	
 	public TileManager getDoors(int x, int y) {

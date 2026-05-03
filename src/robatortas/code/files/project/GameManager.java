@@ -31,6 +31,7 @@ import static org.lwjgl.opengl.GL30.glGenFramebuffers;
 import java.util.List;
 
 import robatortas.code.files.core.input.MouseManager;
+import robatortas.code.files.core.interaction.DialogueSystem;
 import robatortas.code.files.core.level.LevelManager;
 import robatortas.code.files.core.render.RenderManager;
 import robatortas.code.files.core.render.RenderMethod;
@@ -56,15 +57,14 @@ import robatortas.code.files.project.settings.Globals;
  */
 public class GameManager implements Runnable {
 
-	private static final long serialVersionUID = 1L;
-
 	public static boolean DEV_MODE = true;
 	public boolean DEBUG = false;
 
 	public static enum PLAYSTATE {
 		MAIN_MENU(true),
 		IN_GAME(false),
-		PAUSE_MENU(false);
+		PAUSE_MENU(false),
+		IN_DIALOGUE(false);
 
 		public boolean state;
 
@@ -113,10 +113,13 @@ public class GameManager implements Runnable {
 	public MainMenu mainMenu;
 	
 	public static float renderDt;
-
+	
+	public static DialogueSystem dialogueSystem;
+	
 	public GameManager() {
 		window = new GLWindow();
 		screen = new RenderManager(Globals.WIDTH, Globals.HEIGHT);
+		dialogueSystem = new DialogueSystem(this, LevelManager.player.input);
 	}
 
 	// Threading and game loop
@@ -247,9 +250,10 @@ public class GameManager implements Runnable {
 	public int tickTime = 0;
 
 	public void update() {
-		
+
+		dialogueSystem.update();
 		tickTime++;
-		if (PLAYSTATE.IN_GAME.state) {
+		if (PLAYSTATE.IN_GAME.state && !PLAYSTATE.IN_DIALOGUE.state) {
 			level.update();
 			generalPurposeKeys();
 		}

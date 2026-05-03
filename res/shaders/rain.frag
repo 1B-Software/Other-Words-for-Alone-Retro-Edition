@@ -6,6 +6,7 @@ in vec2 vWorldPos;
 
 uniform sampler2D uTexture;
 uniform float uTime;
+uniform vec4 rColor;
 
 out vec4 fragColor;
 
@@ -38,5 +39,5 @@ void main()
     float n = noise(floor(vWorldPos) + vec2(uTime * 2.0, uTime * 3.0));
     float brightness = 0.3 + 0.9 * n;
 
-    fragColor = vec4(vColor.rgb * brightness, vColor.a * edge * 0.4);
+    fragColor = vec4(vColor.rgb * brightness, rColor.a * edge * 0.4);
 }

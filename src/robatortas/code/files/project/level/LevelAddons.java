@@ -26,11 +26,11 @@ public class LevelAddons {
 
 		for(int y = yt0; y <= yt1; y++) {
 			for(int x = xt0; x <= xt1; x++) {
-				if(x < 0 || y < 0 || x >= level.width || y >= level.height) continue;
-				List<EntityManager> entities = level.entitiesInTiles[x + y * level.width];
+				if(x < 0 || y < 0 || x >= LevelManager.width || y >= LevelManager.height) continue;
+				List<EntityManager> entities = level.entitiesInTiles[x + y * LevelManager.width];
 				for(int i = 0; i < entities.size(); i++) {
 					EntityManager e = entities.get(i);
-					if(e.intersects(x0, y0, x1, y1)) result.add(e);
+					if(e.intersects(xt0, yt0, xt1, yt1)) result.add(e);
 				}
 			}
 		}

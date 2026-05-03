@@ -8,12 +8,14 @@ import javax.imageio.ImageIO;
 import robatortas.code.files.core.entities.EntityManager;
 import robatortas.code.files.core.utils.CrashHandler;
 import robatortas.code.files.core.utils.CrashHandler.ErrorType;
+import robatortas.code.files.project.GameManager;
 import robatortas.code.files.project.level.Level;
 import robatortas.code.files.project.settings.Globals;
 
 public class GameLevel extends LevelManager {
 	
-	public GameLevel() {
+	public GameLevel(GameManager game) {
+		super(game);
 	}
 
 	public void loadLevel() {
